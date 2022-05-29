@@ -293,7 +293,7 @@ public class CardManager : Singleton<CardManager>
             targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
             // }
 
-            results.Add(new PRS(targetPos + new Vector3(0, 0, -5f), targetRot, scale));
+            results.Add(new PRS(targetPos + new Vector3(0, 0, -5.8f), targetRot, scale));
 
         }
         return results;

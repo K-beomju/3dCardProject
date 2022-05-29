@@ -39,7 +39,6 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
             FieldManager.Instance.Spawn(pos, CreateCard());
         }
 
-        print("AAA");
         /* foreach (var item in fieldsHaveCard)
          {
              if (item.downField.isPlayerField)
