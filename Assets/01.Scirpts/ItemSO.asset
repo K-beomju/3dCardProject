@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
+  m_Name: ItemSO
+  m_EditorClassIdentifier: 
+  items:
+  - cost: 1
+    name: "\uC778\uBA74\uC870"
+    sprite: {fileID: 0}
+    isMagic: 0
+    figure: 200
+    description: "\uC62C\uB9BC\uD53D\uC758 \uC8FC\uC778\uACF5(\uC774\uC5C8\uB358\uAC83)"
+    count: 10
+    OnSpawn:
+    - action: {fileID: 1837434318954340887, guid: 9cdb96bc3eb113c4b9454a03791f60c0, type: 3}
+      condition:
+      - {fileID: 6983218963857086349, guid: 943014cc394f5ef47b83e261e1cbb69a, type: 3}
+    OnDie:
+    - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
+      condition: []
+    OnAttack: []
+    OnDamage: []
