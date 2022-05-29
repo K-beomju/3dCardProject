@@ -27,7 +27,6 @@ public class CardManager : Singleton<CardManager>
 
     public static bool isFullMyCard = false;
 
-    public static TurnType type;
     private Camera mainCam;
     public Ray ray;
     public RaycastHit hitData;
@@ -45,7 +44,6 @@ public class CardManager : Singleton<CardManager>
     private void Start()
     {
         StartCoroutine(SpawnCardCo());
-        type = TurnType.Player;
         arrowObject.ActiveArrow(false);
     }
 
@@ -59,6 +57,7 @@ public class CardManager : Singleton<CardManager>
             AddCard();
             yield return new WaitForSeconds(0.2f);
         }
+        TurnManager.ChangeTurn(TurnType.Player);
 
     }
 
