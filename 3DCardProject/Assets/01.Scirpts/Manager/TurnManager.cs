@@ -14,9 +14,9 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] private TurnType type;
 
     // 턴 바꿈 
-    public static void ChangeTurn(bool isTurn)
+    public static void ChangeTurn(TurnType _type)
     {
-        Instance.type = isTurn ? TurnType.Player : TurnType.Enemy;
+        Instance.type = _type;
     }
 
     // 현재 타입 반환 
