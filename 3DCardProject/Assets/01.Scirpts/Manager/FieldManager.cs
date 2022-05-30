@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,7 +47,7 @@ public class FieldManager : Singleton<FieldManager>
         var card = cardObj.GetComponent<Card>();
         card.Setup(PlayerManager.Instance.playerItem, true, true);
         card.GetComponent<Order>().SetOriginOrder(1);
-        Spawn(PlayerManager.Instance.playerPos, card);
+        CheckingSpawn(PlayerManager.Instance.playerPos, card);
     }
 
 
@@ -61,27 +62,29 @@ public class FieldManager : Singleton<FieldManager>
             return false;
         }
     }
-    public void Spawn(Field field, Card card)
+    public void CheckingSpawn(Field field, Card card)
     {
         if (GetGridPos(field) != DEFINENULLPOS)
         {
-            if (field != null)
-            {
-                if (field.curCard == null)
-                {
-                    field.SetUp(card);
-                }
-            }
+            Spawn(field,card);
         }
 
     }
-    public void Spawn(Vector2Int gridPos, Card card)
+    public void CheckingSpawn(Vector2Int gridPos, Card card)
     {
         Field field = GetField(gridPos);
+        Spawn(field, card);
+    }
+
+    private void Spawn(Field field,Card card)
+    {
         if (field != null)
         {
             if (field.curCard == null)
             {
+                card.transform.DOScaleZ(card.transform.localScale.z * .8f, 0.15f);
+                card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
+                card.transform.DOScaleY(card.transform.localScale.y * .8f, 0.15f);
                 field.SetUp(card);
             }
         }

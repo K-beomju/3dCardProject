@@ -36,7 +36,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         Vector2Int pos = new Vector2Int(2, 3);
         if (FieldManager.Instance.CanAssign(pos))
         {
-            FieldManager.Instance.Spawn(pos, CreateCard());
+            FieldManager.Instance.CheckingSpawn(pos, CreateCard());
         }
 
         /* foreach (var item in fieldsHaveCard)

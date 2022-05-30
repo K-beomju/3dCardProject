@@ -113,7 +113,7 @@ public class CardManager : Singleton<CardManager>
                     Field field = hitData.transform.GetComponent<Field>();
                     if (field != null && field.isPlayerField && field.curCard == null)
                     {
-                        FieldManager.Instance.Spawn(field, selectCard);
+                        FieldManager.Instance.CheckingSpawn(field, selectCard);
                         RemoveCard(false);
                         CardAlignment();
                     }
