@@ -11,6 +11,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 
     private WaitForSeconds turnDelay = new WaitForSeconds(1f);
 
+    public int spawnCardCount = 0;
+
     private void Start()
     {
         actionButton.OnMouseDownAct += CreateCardCoMethod;
@@ -27,6 +29,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         var card = cardObj.GetComponent<Card>();
         card.Setup(PopItem(), true, false);
         card.GetComponent<Order>().SetOriginOrder(1);
+        spawnCardCount++;
         return card;
     }
     private void CallOnActionButtonClick()
@@ -38,25 +41,6 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         {
             FieldManager.Instance.CheckingSpawn(pos, CreateCard());
         }
-
-        /* foreach (var item in fieldsHaveCard)
-         {
-             if (item.downField.isPlayerField)
-             {
-                 print("BBB");
-                 item.curCard.Attack(item.downField);
-             }
-             else
-             {
-                 if (item.downField.curCard == null)
-                 {
-                     print("AAAA");
-                     item.downField.SetUp(item.curCard);
-                     item.RemoveCard();
-                 }
-             }
-         }*/
-
     }
 
     public IEnumerator CreateCardCo()

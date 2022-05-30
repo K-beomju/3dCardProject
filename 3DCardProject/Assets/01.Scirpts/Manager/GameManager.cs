@@ -17,10 +17,10 @@ public class GameManager : Singleton<GameManager>
 
     public void CallOnWinGame()
     {
-
+        print("GAMEWIN");
     }
     public void CallOnLoseGame()
     {
-
+        print("GAMELOSE");
     }
 }
