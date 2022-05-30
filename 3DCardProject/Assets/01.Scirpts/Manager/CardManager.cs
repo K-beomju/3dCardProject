@@ -327,7 +327,10 @@ public class CardManager : Singleton<CardManager>
         {
             isCardDrag = true;
             selectCard = card;
+
             arrowObject.ActiveArrow(true);
+            float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
+            arrowObject.transform.position = new Vector3(x, 540, 0);
         }
         else
         {
