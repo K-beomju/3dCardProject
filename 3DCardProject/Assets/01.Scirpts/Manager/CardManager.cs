@@ -114,6 +114,7 @@ public class CardManager : Singleton<CardManager>
                     if (field != null && field.isPlayerField && field.curCard == null)
                     {
                         FieldManager.Instance.Spawn(field, selectCard);
+                        PlayerManager.Instance.spawnCardList.Add(selectCard);
                         RemoveCard(false);
                         CardAlignment();
                     }
@@ -340,6 +341,8 @@ public class CardManager : Singleton<CardManager>
     }
     public void SelectMovingCardAroundField(bool Inbool)
     {
+        if (movingCard.isMove) return;
+
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(movingCard.curField);
 
         Vector2Int downLeftPos = gridPos - new Vector2Int(1, 1);

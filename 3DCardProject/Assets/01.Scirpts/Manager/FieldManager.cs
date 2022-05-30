@@ -47,6 +47,7 @@ public class FieldManager : Singleton<FieldManager>
         card.Setup(PlayerManager.Instance.playerItem, true, true);
         card.GetComponent<Order>().SetOriginOrder(1);
         Spawn(PlayerManager.Instance.playerPos, card);
+        PlayerManager.Instance.spawnCardList.Add(card);
     }
 
 
@@ -83,6 +84,7 @@ public class FieldManager : Singleton<FieldManager>
             if (field.curCard == null)
             {
                 field.SetUp(card);
+
             }
         }
     }
@@ -103,6 +105,7 @@ public class FieldManager : Singleton<FieldManager>
                         card.curField.RemoveCard();
                     }
                     field.SetUp(card);
+                    card.isMove = true;
                 }
             }
         }

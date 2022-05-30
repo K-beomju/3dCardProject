@@ -21,6 +21,7 @@ public class Card : MonoBehaviour
     public bool isOnField = false;
 
     public bool isPlayerCard = true;
+    public bool isMove = false;
 
     public Field curField;
     public bool isAttack = false;
@@ -106,6 +107,7 @@ public class Card : MonoBehaviour
     }
     public void Emphasize(Action act)
     {
+
         transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
         transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
         {

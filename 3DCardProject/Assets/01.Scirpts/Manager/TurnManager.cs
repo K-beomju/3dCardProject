@@ -29,6 +29,7 @@ public class TurnManager : Singleton<TurnManager>
         Instance.type = _type;
         if (_type == TurnType.Player)
         {
+            PlayerManager.TurnReset();
             Instance.mainCam.transform.DOMoveZ(-10.5f, 0.5f);
             Instance.mainCam.transform.DORotate(new Vector3(45, 0, 0), 0.5f);
         }
