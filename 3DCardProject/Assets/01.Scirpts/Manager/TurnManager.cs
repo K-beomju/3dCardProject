@@ -34,7 +34,7 @@ public class TurnManager : Singleton<TurnManager>
         }
         else
         {
-            Instance.mainCam.transform.DOMoveZ(-5.5f, 0.5f);
+            Instance.mainCam.transform.DOMoveZ(-5f, 0.5f);
             Instance.mainCam.transform.DORotate(new Vector3(55, 0, 0), 0.5f);
         }
         
