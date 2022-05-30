@@ -65,7 +65,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         CallOnActionButtonClick();
 
         yield return turnDelay;
-        TurnManager.ChangeTurn(TurnType.Player);
+        TurnManager.ChangeTurn(TurnType.Player, ref TurnManager.isClick);
 
         //if (CardManager.Instance.MyCardIsFull())
         //    CardManager.Instance.AddCard();

@@ -57,7 +57,7 @@ public class CardManager : Singleton<CardManager>
             AddCard();
             yield return new WaitForSeconds(0.2f);
         }
-        TurnManager.ChangeTurn(TurnType.Player);
+        TurnManager.ChangeTurn(TurnType.Player,  ref TurnManager.isClick);
 
     }
 
