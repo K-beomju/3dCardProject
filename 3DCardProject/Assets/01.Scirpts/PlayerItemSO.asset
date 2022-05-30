@@ -15,7 +15,7 @@ MonoBehaviour:
   items:
   - cost: 1
     name: "\uC778\uBA74\uC870"
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 2aec81099606fd74fa36ebd4a193178c, type: 3}
     isMagic: 0
     figure: 200
     description: "\uC62C\uB9BC\uD53D\uC758 \uC8FC\uC778\uACF5(\uC774\uC5C8\uB358\uAC83)"
