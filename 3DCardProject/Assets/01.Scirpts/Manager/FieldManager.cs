@@ -48,6 +48,7 @@ public class FieldManager : Singleton<FieldManager>
         card.Setup(PlayerManager.Instance.playerItem, true, true);
         card.GetComponent<Order>().SetOriginOrder(1);
         CheckingSpawn(PlayerManager.Instance.playerPos, card);
+        PlayerManager.Instance.spawnCardList.Add(card);
     }
 
 
@@ -86,33 +87,24 @@ public class FieldManager : Singleton<FieldManager>
                 card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
                 card.transform.DOScaleY(card.transform.localScale.y * .8f, 0.15f);
                 field.SetUp(card);
+
             }
         }
     }
-    public void MoveToGrid(Field field, Card card)
+    public void MoveToField(Field field, Card card)
     {
         if (GetGridPos(field) != DEFINENULLPOS)
         {
-            if (field != null)
-            {
-                if (field.curCard != null)
-                {
-                    card.Attack(field);
-                }
-                else
-                {
-                    if (card.curField != null)
-                    {
-                        card.curField.RemoveCard();
-                    }
-                    field.SetUp(card);
-                }
-            }
+            Move(field, card);
         }
     }
     public void MoveToGrid(Vector2Int gridPos, Card card)
     {
         Field field = GetField(gridPos);
+        Move(field, card);
+    }
+    public void Move(Field field,Card card)
+    {
         if (field != null)
         {
             if (field.curCard != null)
@@ -126,6 +118,7 @@ public class FieldManager : Singleton<FieldManager>
                     card.curField.RemoveCard();
                 }
                 field.SetUp(card);
+                card.isMove = true;
             }
         }
     }

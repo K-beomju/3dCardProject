@@ -21,6 +21,7 @@ public class Card : MonoBehaviour
     public bool isOnField = false;
 
     public bool isPlayerCard = true;
+    public bool isMove = false;
 
     public Field curField;
     public bool isAttack = false;

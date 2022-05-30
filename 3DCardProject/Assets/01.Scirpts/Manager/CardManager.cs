@@ -114,6 +114,7 @@ public class CardManager : Singleton<CardManager>
                     if (field != null && field.isPlayerField && field.curCard == null)
                     {
                         FieldManager.Instance.CheckingSpawn(field, selectCard);
+                        PlayerManager.Instance.spawnCardList.Add(selectCard);
                         RemoveCard(false);
                         CardAlignment();
                     }
@@ -136,17 +137,18 @@ public class CardManager : Singleton<CardManager>
                     if (field != null && field.curCard == null && field.isSelected)
                     {
                         SelectMovingCardAroundField(false);
-                        FieldManager.Instance.MoveToGrid(field, movingCard);
+                        FieldManager.Instance.MoveToField(field, movingCard);
                     }
                     if (card != null && card.curField.isSelected && !card.isPlayerCard)
                     {
 
-                        FieldManager.Instance.MoveToGrid(card.curField, movingCard);
+                        FieldManager.Instance.MoveToField(card.curField, movingCard);
                         SelectMovingCardAroundField(false);
                     }
                 }
             }
         }
+
         if (Input.GetMouseButton(0) && selectCard != null && selectCard.curField == null)
         {
             if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
@@ -160,6 +162,7 @@ public class CardManager : Singleton<CardManager>
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
         }
+
     }
 
 
@@ -326,7 +329,10 @@ public class CardManager : Singleton<CardManager>
         {
             isCardDrag = true;
             selectCard = card;
+
             arrowObject.ActiveArrow(true);
+            float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
+            arrowObject.transform.position = new Vector3(x, 540, 0);
         }
         else
         {
@@ -340,6 +346,8 @@ public class CardManager : Singleton<CardManager>
     }
     public void SelectMovingCardAroundField(bool Inbool)
     {
+        if (movingCard.isMove) return;
+
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(movingCard.curField);
 
         Vector2Int downLeftPos = gridPos - new Vector2Int(1, 1);
