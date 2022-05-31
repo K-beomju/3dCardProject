@@ -140,7 +140,6 @@ public class Card : MonoBehaviour
             Vector3 fieldPos = field.transform.position;
             fieldPos.y += 1f;
             transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
-                OnAttack();
 
 
                 transform.DOMove(firstPos, .3f).OnComplete(() => {
@@ -170,6 +169,8 @@ public class Card : MonoBehaviour
                         }
                     }
                     isAttack = false;
+                    OnAttack();
+
                 });
             });
 
@@ -181,14 +182,16 @@ public class Card : MonoBehaviour
     {
         foreach (var item in item.OnAttack)
         {
+            int check = 0;
             foreach (var condition in item.condition)
             {
                 if (!condition.CheckCondition())
                 {
-                    return;
+                    check++;
                 }
             }
-            item.action.TakeAction(this);
+            if (check == 0)
+                item.action.TakeAction(this);
         }
     }
     /*  public void OnDamage()
@@ -209,14 +212,16 @@ public class Card : MonoBehaviour
     {
         foreach (var item in item.OnDie)
         {
+            int check = 0;
             foreach (var condition in item.condition)
             {
                 if (!condition.CheckCondition())
                 {
-                    return;
+                    check++;
                 }
             }
-            item.action.TakeAction(this);
+            if (check == 0)
+                item.action.TakeAction(this);
         }
     }
 }

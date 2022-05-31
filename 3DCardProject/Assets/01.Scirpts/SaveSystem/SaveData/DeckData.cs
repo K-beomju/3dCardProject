@@ -72,8 +72,8 @@ public class DeckData : ISerializeble
         Deck deck = new Deck();
         foreach (var item in arraySO.items)
         {
-            Debug.Log(item);
-            Debug.Log(deck.DeckData);
+            /*Debug.Log(item);
+            Debug.Log(deck.DeckData);*/
             deck.DeckData.Add(item.item);
         }
         return deck.ShallowCopy().DeckData;

@@ -22,6 +22,8 @@ MonoBehaviour:
       \uC804\uBD80 \uC0AD\uC81C]"
     count: 3
     OnSpawn:
+    - action: {fileID: 5765799227747641977, guid: 3fc2d2dd19bdb8641af7ef2f99dd092c, type: 3}
+      condition: []
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
     OnDie:

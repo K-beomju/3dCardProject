@@ -54,7 +54,7 @@ MonoBehaviour:
     count: 0
     OnSpawn: []
     OnDie:
-    - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
+    - action: {fileID: 5588762342787785400, guid: ce39556d70ef85b489921d987127b0e5, type: 3}
       condition: []
     OnAttack: []
     OnDamage: []

@@ -112,7 +112,7 @@ public class CardManager : Singleton<CardManager>
                 if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
                 {
                     Field field = hitData.transform.GetComponent<Field>();
-                    if (field != null && field.isPlayerField && field.curCard == null)
+                    if (field != null && (field.isPlayerField || selectCard.item.isMagic) && field.curCard == null)
                     {
                         FieldManager.Instance.CheckingSpawn(field, selectCard);
                         PlayerManager.Instance.playerCards.Add(selectCard);

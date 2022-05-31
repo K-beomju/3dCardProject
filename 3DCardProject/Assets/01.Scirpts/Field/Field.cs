@@ -25,7 +25,7 @@ public class Field : MonoBehaviour
     public void HitColor(bool _isHit)
     {
         isHit = true;
-        sr.color = _isHit ? (isPlayerField ? aColor : cColor) : sColor;
+        sr.color = _isHit ? (isPlayerField ? aColor : CardManager.Instance.selectCard.item.isMagic ? aColor:cColor) : sColor;
     }
 
     public void FieldSelect(bool inBool)
@@ -59,14 +59,16 @@ public class Field : MonoBehaviour
             curCard.Emphasize(() => {
                 foreach (var item in curCard.item.OnSpawn)
                 {
+                    int check = 0;
                     foreach (var condition in item.condition)
                     {
                         if (!condition.CheckCondition())
                         {
-                            return;
+                            check++;
                         }
                     }
-                    item.action.TakeAction(curCard);
+                    if (check == 0)
+                        item.action.TakeAction(curCard);
                 }
             });
 

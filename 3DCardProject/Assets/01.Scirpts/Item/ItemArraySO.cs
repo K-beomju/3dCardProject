@@ -23,6 +23,10 @@ public class Item
     public CardActionCondition[] OnAttack;
     //공격받을 때
     public CardActionCondition[] OnDamage;
+    public Item ShallowCopy()
+    {
+        return (Item)this.MemberwiseClone();
+    }
 }
 
 
