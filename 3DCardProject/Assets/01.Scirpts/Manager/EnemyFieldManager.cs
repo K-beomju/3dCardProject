@@ -13,9 +13,14 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 
     public int spawnCardCount = 0;
 
+    public List<Card> enemyCards = new List<Card>();
+
     private void Start()
     {
         actionButton.OnMouseDownAct += CreateCardCoMethod;
+
+        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard());
+
     }
     protected override void Awake()
     {
@@ -30,23 +35,33 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         card.Setup(PopItem(), true, false);
         card.GetComponent<Order>().SetOriginOrder(1);
         spawnCardCount++;
+        enemyCards.Add(card);
         return card;
     }
     private void CallOnActionButtonClick()
     {
-
+        
 
         int x = FieldManager.Instance.x;
         int y = FieldManager.Instance.y;
         Vector2Int pos = new Vector2Int(2, 3);
-      
-        if(FieldManager.Instance.GetField(pos).curCard != null)
-            return;
 
-        if (FieldManager.Instance.CanAssign(pos))
+        if (FieldManager.Instance.GetField(pos).curCard != null)
         {
-            FieldManager.Instance.CheckingSpawn(pos, CreateCard());
+            int index = enemyCards.IndexOf(FieldManager.Instance.GetField(pos).curCard);
+            Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[index].curField);
+            var randPos = gridPos + new Vector2Int(Random.Range(-1, 1), Random.Range(-1, 1));
+            FieldManager.Instance.MoveToGrid(randPos, enemyCards[index]);
+            return;
         }
+        
+            
+
+
+        //if (FieldManager.Instance.CanAssign(pos))
+        //{
+        //    FieldManager.Instance.CheckingSpawn(pos, CreateCard());
+        //}
     }
 
     public IEnumerator CreateCardCo()

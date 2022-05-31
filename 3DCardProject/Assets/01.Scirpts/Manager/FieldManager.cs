@@ -48,7 +48,7 @@ public class FieldManager : Singleton<FieldManager>
         card.Setup(PlayerManager.Instance.playerItem, true, true);
         card.GetComponent<Order>().SetOriginOrder(1);
         CheckingSpawn(PlayerManager.Instance.playerPos, card);
-        PlayerManager.Instance.spawnCardList.Add(card);
+        PlayerManager.Instance.playerCards.Add(card);
     }
 
 

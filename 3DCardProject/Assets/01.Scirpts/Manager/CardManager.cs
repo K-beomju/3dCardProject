@@ -114,7 +114,7 @@ public class CardManager : Singleton<CardManager>
                     if (field != null && field.isPlayerField && field.curCard == null)
                     {
                         FieldManager.Instance.CheckingSpawn(field, selectCard);
-                        PlayerManager.Instance.spawnCardList.Add(selectCard);
+                        PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
                         CardAlignment();
                     }
