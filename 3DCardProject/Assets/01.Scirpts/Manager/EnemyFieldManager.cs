@@ -44,6 +44,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     private IEnumerator StartTurnActionCo()
     {
         // 움직임, 공격순 
+        yield return new WaitForSeconds(1f);
+
         isDone = true;
         enemyCards.ForEach((x => x.isMove = false));
 
@@ -65,8 +67,9 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         if (FieldManager.Instance.GetField(randPos).curCard == null)
             FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
 
-        yield return new WaitForSeconds(3f);
         yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
+        yield return new WaitForSeconds(1f);
+
         TurnManager.ChangeTurn(TurnType.Player, ref TurnManager.isClick);
 
     }
