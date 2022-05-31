@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class CardManager : Singleton<CardManager>
 {
-    [SerializeField] protected ItemSO itemSO;
+    [SerializeField] protected ItemArraySO itemSO;
     [SerializeField] public GameObject cardPrefab;
 
     [SerializeField] public Transform cardSpawnPoint;
@@ -184,7 +184,7 @@ public class CardManager : Singleton<CardManager>
         // ADD
         for (int i = 0; i < itemSO.items.Length; i++)
         {
-            Item item = itemSO.items[i];
+            Item item = itemSO.items[i].item;
             for (int j = 0; j < item.count; j++)
                 itemBuffer.Add(item);
         }

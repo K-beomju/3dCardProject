@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81eab60accda1214d89700901afc755a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSO: {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}
+  itemSO: {fileID: 11400000, guid: 3202f0975cff4cd48b2c682d707dd8ce, type: 2}
   cardPrefab: {fileID: 8368915300404675851, guid: 0b330f0091ff83c49a635a8aa2aedf66, type: 3}
   cardSpawnPoint: {fileID: 1519402594}
   cardDeletePoint: {fileID: 1718917874}
@@ -870,7 +870,7 @@ MonoBehaviour:
     OnAttack: []
     OnDamage: []
   PlayerHP: 0
-  spawnCardList: []
+  playerCards: []
 --- !u!1 &1426128313
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +975,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControllerInputBlocked: 0
+  m_MouseUp: 0
+  m_MouseBtn: 0
 --- !u!1 &1718917873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,8 +1191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionButton: {fileID: 1763384183}
-  itemSO: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
+  itemSO: {fileID: 11400000, guid: 6b963e237ab622a40ade1f63c1e86c28, type: 2}
   spawnCardCount: 0
+  enemyCards: []
 --- !u!1 &1975163764
 GameObject:
   m_ObjectHideFlags: 0
