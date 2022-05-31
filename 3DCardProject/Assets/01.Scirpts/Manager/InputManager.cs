@@ -22,12 +22,11 @@ public class InputManager : Singleton<InputManager>
 
     void Update()
     {
-            m_MouseUp = false;
+        m_MouseUp = false;
         if (Input.GetMouseButtonUp(0))
-        {
             m_MouseUp = true;
-        }
 
+        m_MouseBtn = false;
         if (Input.GetMouseButton(0))
             m_MouseBtn = true;
     }

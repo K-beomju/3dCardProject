@@ -149,7 +149,7 @@ public class CardManager : Singleton<CardManager>
             }
         }
 
-        if (Input.GetMouseButton(0) && selectCard != null && selectCard.curField == null)
+        if (InputManager.Instance.MouseDown && selectCard != null && selectCard.curField == null)
         {
             if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
             {
