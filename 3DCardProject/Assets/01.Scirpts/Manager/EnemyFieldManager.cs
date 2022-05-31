@@ -36,19 +36,26 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         enemyCards.Add(card);
         return card;
     }
+
     private void EnemyCardAction()
     {
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[0].curField);
-        int randX = Random.Range(-1, 2);
-        int randY = Random.Range(-1, 2);
-        print(randX);
-        print(randY);
+
+        int randX = 0;
+        int randY = 0;
+
+        while (randX == 0 && randY == 0)
+        {
+            randX = Random.Range(-1, 2);
+            randY = Random.Range(-1, 2);
+        }
 
         var randPos = gridPos + new Vector2Int(randX, randY);
+        if (!FieldManager.Instance.CanAssign(randPos))
+            return;
 
-        if (FieldManager.Instance.GetField(randPos).curCard == null && FieldManager.Instance.CanAssign(randPos))
+        if (FieldManager.Instance.GetField(randPos).curCard == null)
             FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
-
 
     }
 
