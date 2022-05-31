@@ -12,12 +12,12 @@ public class InputManager : Singleton<InputManager>
 
     public bool MouseUp
     {
-        get { return m_MouseUp; }
+        get { return m_MouseUp && !playerControllerInputBlocked; }
     }
 
-    public bool MouseDown
+    public bool MouseBtn
     {
-        get { return m_MouseBtn; }
+        get { return m_MouseBtn && !playerControllerInputBlocked; }
     }
 
     void Update()
