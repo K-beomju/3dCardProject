@@ -44,7 +44,10 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     private IEnumerator StartTurnActionCo()
     {
         // 움직임, 공격순 
+        TurnManager.CurChangeType(TurnType.Change);
         yield return new WaitForSeconds(1f);
+        TurnManager.CurChangeType(TurnType.Enemy);
+
 
         isDone = true;
         enemyCards.ForEach((x => x.isMove = false));
@@ -53,16 +56,16 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 
         int randX = 0;
         int randY = 0;
+        Vector2Int randPos = default;
 
-        while (randX == 0 && randY == 0)
+        do
         {
             randX = Random.Range(-1, 2);
             randY = Random.Range(-1, 2);
+            randPos = gridPos + new Vector2Int(randX, randY);
         }
-
-        var randPos = gridPos + new Vector2Int(randX, randY);
-        if (!FieldManager.Instance.CanAssign(randPos))
-            yield break;
+        while (!FieldManager.Instance.CanAssign(randPos));
+     
 
         if (FieldManager.Instance.GetField(randPos).curCard == null)
             FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);

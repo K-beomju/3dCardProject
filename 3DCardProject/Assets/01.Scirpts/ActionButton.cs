@@ -9,7 +9,10 @@ public class ActionButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        OnMouseDownAct?.Invoke();
-        TurnManager.ChangeTurn(TurnType.Enemy,ref TurnManager.isClick);
+        if (TurnManager.CurReturnType() == TurnType.Player)
+        {
+            OnMouseDownAct?.Invoke();
+            TurnManager.ChangeTurn(TurnType.Enemy, ref TurnManager.isClick);
+        }
     }
 }

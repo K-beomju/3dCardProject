@@ -42,6 +42,17 @@ public class TurnManager : Singleton<TurnManager>
         }
     }
 
+    public static TurnType CurReturnType()
+    {
+        return Instance.type;
+    }
 
-   
+    public static void CurChangeType(TurnType type)
+    {
+        Instance.type = type;
+    }
+
+
+
+
 }
