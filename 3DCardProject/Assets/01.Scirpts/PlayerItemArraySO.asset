@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: PlayerItemArraySO
   m_EditorClassIdentifier: 
   items:
+  - {fileID: 11400000, guid: 07a92cc3b8871304f85a97e0162a0932, type: 2}
+  - {fileID: 11400000, guid: 8a9f957db9e57cc4eb0c00840b3a3883, type: 2}
   - {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}
+  - {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}
+  - {fileID: 11400000, guid: 8e4437a2478b8e840a5bc522d642ecb3, type: 2}
+  - {fileID: 11400000, guid: d33cc0e8986483a4898e58082b81f6b4, type: 2}
