@@ -13,9 +13,9 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     public int spawnCardCount = 0;
 
     public List<Card> enemyCards = new List<Card>();
-    public  bool isDone = false;
+    public bool isDone = false;
 
-  
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,37 +45,37 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     {
         // 움직임, 공격순 
         TurnManager.CurChangeType(TurnType.Change);
+        enemyCards.ForEach((x => x.isMove = false));
+
         yield return new WaitForSeconds(1f);
         TurnManager.CurChangeType(TurnType.Enemy);
 
 
         isDone = true;
-        enemyCards.ForEach((x => x.isMove = false));
 
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[0].curField);
 
-        int randX = 0;
-        int randY = 0;
         Vector2Int randPos = default;
-
         do
         {
-            randX = Random.Range(-1, 2);
-            randY = Random.Range(-1, 2);
+            int randX = Random.Range(-1, 2);
+            int randY = Random.Range(-1, 2);
             randPos = gridPos + new Vector2Int(randX, randY);
         }
-        while (!FieldManager.Instance.CanAssign(randPos));
-     
+        while (!FieldManager.Instance.CanAssign(randPos) && randPos == gridPos &&
+        FieldManager.Instance.GetField(randPos).curCard == null);
 
-        if (FieldManager.Instance.GetField(randPos).curCard == null)
-            FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
+
+        FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
 
         yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
         yield return new WaitForSeconds(1f);
 
-        TurnManager.ChangeTurn(TurnType.Player, ref TurnManager.isClick);
+        TurnManager.ChangeTurn(TurnType.Player);
 
     }
+
+
 
 
 

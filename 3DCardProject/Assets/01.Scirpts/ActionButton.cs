@@ -12,7 +12,7 @@ public class ActionButton : MonoBehaviour
         if (TurnManager.CurReturnType() == TurnType.Player)
         {
             OnMouseDownAct?.Invoke();
-            TurnManager.ChangeTurn(TurnType.Enemy, ref TurnManager.isClick);
+            TurnManager.ChangeTurn(TurnType.Change);
         }
     }
 }

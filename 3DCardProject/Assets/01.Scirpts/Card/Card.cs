@@ -66,6 +66,8 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (TurnManager.CurReturnType() != TurnType.Player) return;
+
         CardManager.Instance.CardMouseDown(this);
 
         if (!isOnField)
