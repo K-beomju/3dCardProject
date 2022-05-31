@@ -2,17 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool playerControllerInputBlocked;
+
+    public bool m_MouseUp;
+    public bool m_MouseBtn;
+
+
+    public bool MouseUp
     {
-        
+        get { return m_MouseUp; }
     }
 
-    // Update is called once per frame
+    public bool MouseDown
+    {
+        get { return m_MouseBtn; }
+    }
+
     void Update()
     {
-        
+            m_MouseUp = false;
+        if (Input.GetMouseButtonUp(0))
+        {
+            m_MouseUp = true;
+        }
+
+        if (Input.GetMouseButton(0))
+            m_MouseBtn = true;
     }
+
+
 }

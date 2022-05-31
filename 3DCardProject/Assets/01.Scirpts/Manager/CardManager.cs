@@ -104,7 +104,7 @@ public class CardManager : Singleton<CardManager>
 
         ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-        if (Input.GetMouseButtonUp(0))
+        if (InputManager.Instance.MouseUp)
         {
             if (selectCard != null)
             {
