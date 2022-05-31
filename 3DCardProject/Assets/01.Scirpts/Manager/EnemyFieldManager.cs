@@ -6,7 +6,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 {
     public ActionButton actionButton;
 
-    [SerializeField] protected ItemSO itemSO;
+    [SerializeField] protected ItemArraySO itemSO;
     public List<Item> itemBuffer { get; set; }
 
     private WaitForSeconds turnDelay = new WaitForSeconds(1f);
@@ -100,7 +100,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         // ADD
         for (int i = 0; i < itemSO.items.Length; i++)
         {
-            Item item = itemSO.items[i];
+            Item item = itemSO.items[i].item;
             for (int j = 0; j < item.count; j++)
                 itemBuffer.Add(item);
         }
