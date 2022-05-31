@@ -131,7 +131,7 @@ public class Card : MonoBehaviour
     }
     public void Attack(Field field)
     {
-        if (!isAttack)
+        if (!isAttack && field.curCard != this)
         {
             isAttack = true;
             int originOrder = GetComponent<Order>().GetOriginalOrder();
