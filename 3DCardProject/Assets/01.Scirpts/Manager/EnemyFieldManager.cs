@@ -17,10 +17,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 
     private void Start()
     {
-        actionButton.OnMouseDownAct += CreateCardCoMethod;
-
+        actionButton.OnMouseDownAct += EnemyAction;
         FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard());
-
     }
     protected override void Awake()
     {
@@ -38,46 +36,32 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         enemyCards.Add(card);
         return card;
     }
-    private void CallOnActionButtonClick()
+    private void EnemyCardAction()
     {
-        
+        Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[0].curField);
+        int randX = Random.Range(-1, 2);
+        int randY = Random.Range(-1, 2);
+        print(randX);
+        print(randY);
 
-        int x = FieldManager.Instance.x;
-        int y = FieldManager.Instance.y;
-        Vector2Int pos = new Vector2Int(2, 3);
+        var randPos = gridPos + new Vector2Int(randX, randY);
 
-        if (FieldManager.Instance.GetField(pos).curCard != null)
-        {
-            int index = enemyCards.IndexOf(FieldManager.Instance.GetField(pos).curCard);
-            Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[index].curField);
-            var randPos = gridPos + new Vector2Int(Random.Range(-1, 1), Random.Range(-1, 1));
-            FieldManager.Instance.MoveToGrid(randPos, enemyCards[index]);
-            return;
-        }
-        
-            
+        if (FieldManager.Instance.GetField(randPos).curCard == null && FieldManager.Instance.CanAssign(randPos))
+            FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
 
 
-        //if (FieldManager.Instance.CanAssign(pos))
-        //{
-        //    FieldManager.Instance.CheckingSpawn(pos, CreateCard());
-        //}
     }
 
     public IEnumerator CreateCardCo()
     {
         yield return turnDelay;
-        CallOnActionButtonClick();
+        EnemyCardAction();
 
         yield return turnDelay;
         TurnManager.ChangeTurn(TurnType.Player, ref TurnManager.isClick);
-
-        //if (CardManager.Instance.MyCardIsFull())
-        //    CardManager.Instance.AddCard();
-
     }
 
-    public void CreateCardCoMethod()
+    public void EnemyAction()
     {
         StartCoroutine(CreateCardCo());
     }
