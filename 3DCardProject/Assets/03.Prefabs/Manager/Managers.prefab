@@ -421,18 +421,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2106903846842785240, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
-      propertyPath: cardLeft
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2106903846842785240, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
-      propertyPath: cardRight
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2106903846842785240, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
-      propertyPath: arrowObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2106903846842785241, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
       propertyPath: m_RootOrder
       value: 2

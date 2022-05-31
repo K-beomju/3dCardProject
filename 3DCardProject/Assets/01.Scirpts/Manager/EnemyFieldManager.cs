@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyFieldManager : Singleton<EnemyFieldManager>
 {
-    public ActionButton actionButton;
+    private ActionButton actionButton;
 
     [SerializeField] protected ItemArraySO itemSO;
     public List<Item> itemBuffer { get; set; }
@@ -15,15 +15,18 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     public List<Card> enemyCards = new List<Card>();
     public  bool isDone = false;
 
-    private void Start()
-    {
-        actionButton.OnMouseDownAct += EnemyAction;
-        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard());
-    }
+  
     protected override void Awake()
     {
         base.Awake();
         SetupItemBuffer();
+    }
+
+    public void Reseting()
+    {
+        actionButton = FindObjectOfType<ActionButton>();
+        actionButton.OnMouseDownAct += EnemyAction;
+        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard());
     }
 
     private Card CreateCard()
