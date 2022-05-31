@@ -34,9 +34,15 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     }
     private void CallOnActionButtonClick()
     {
+
+
         int x = FieldManager.Instance.x;
         int y = FieldManager.Instance.y;
         Vector2Int pos = new Vector2Int(2, 3);
+      
+        if(FieldManager.Instance.GetField(pos).curCard != null)
+            return;
+
         if (FieldManager.Instance.CanAssign(pos))
         {
             FieldManager.Instance.CheckingSpawn(pos, CreateCard());
