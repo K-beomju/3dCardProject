@@ -9,6 +9,7 @@ using System;
 public enum TurnType
 {
     Player,
+    Change,
     Enemy
 }
 
@@ -41,14 +42,6 @@ public class TurnManager : Singleton<TurnManager>
         }
     }
 
- 
 
-    // 현재 타입 반환 
-    public static TurnType CurReturnType()
-    {
-        return Instance.type;
-    }
-
- 
-
+   
 }
