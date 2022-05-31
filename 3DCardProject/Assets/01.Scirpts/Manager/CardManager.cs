@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class CardManager : Singleton<CardManager>
 {
-    [SerializeField] protected ItemArraySO itemSO;
     [SerializeField] public GameObject cardPrefab;
 
     [SerializeField] public Transform cardSpawnPoint;
@@ -18,6 +17,7 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] protected Transform cardLeft;
     [SerializeField] protected Transform cardRight;
 
+    private DeckManager deckManager;
     public List<Item> itemBuffer { get; set; }
     public Card selectCard;
     public Card movingCard;
@@ -37,7 +37,7 @@ public class CardManager : Singleton<CardManager>
     protected override void Awake()
     {
         base.Awake();
-        SetupItemBuffer();
+        //SetupItemBuffer();
         mainCam = Camera.main;
     }
 
@@ -45,6 +45,7 @@ public class CardManager : Singleton<CardManager>
     {
         StartCoroutine(SpawnCardCo());
         arrowObject.ActiveArrow(false);
+        deckManager = GetComponent<DeckManager>();
     }
 
 
@@ -167,49 +168,22 @@ public class CardManager : Singleton<CardManager>
 
 
     #region CardSystem
-    public Item PopItem()
-    {
-        if (itemBuffer.Count == 0)
-            SetupItemBuffer();
-
-        Item item = itemBuffer[0];
-        itemBuffer.RemoveAt(0);
-        return item;
-    }
-
-    private void SetupItemBuffer()
-    {
-        itemBuffer = new List<Item>();
-
-        // ADD
-        for (int i = 0; i < itemSO.items.Length; i++)
-        {
-            Item item = itemSO.items[i].item;
-            for (int j = 0; j < item.count; j++)
-                itemBuffer.Add(item);
-        }
-
-        // Shuffle
-        for (int i = 0; i < itemBuffer.Count; i++)
-        {
-            int rand = UnityEngine.Random.Range(i, itemBuffer.Count);
-            Item temp = itemBuffer[i];
-            itemBuffer[i] = itemBuffer[rand];
-            itemBuffer[rand] = temp;
-
-        }
-    }
 
     public void AddCard()
     {
-        var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
-        var card = cardObj.GetComponent<Card>();
-        card.Setup(PopItem(), true, true);
-        myCards.Add(card);
+        Item popItem = deckManager.PopItem();
+        if(popItem != null)
+        {
+            var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
+            var card = cardObj.GetComponent<Card>();
+            card.Setup(popItem, true, true);
+            myCards.Add(card);
 
-        SetOriginOrder();
+            SetOriginOrder();
 
-        CardAlignment();
+            CardAlignment();
+        }
+        
 
     }
 

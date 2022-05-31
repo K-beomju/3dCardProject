@@ -35,7 +35,8 @@ public class SaveManager : MonoBehaviour
 
     public List<ISerializeble> ObjToSaveList = new List<ISerializeble>();
 
-    public PlayerDeckData saveDeckData = new PlayerDeckData();
+    public DeckData saveDeckData = new DeckData();
+    public PlayerGameData gameData = new PlayerGameData();
     Rijndael myRijndael;
 
     public Action OnEndOfLoadGame;
@@ -184,6 +185,11 @@ public class SaveManager : MonoBehaviour
 
 
             // 덮어쓰기 할때
+            if(gameData.isFirst) // 처음 시작했거나 리셋 했을경우 
+            {
+                saveDeckData.CurDeck = new Deck();
+                
+            }
             OnEndOfLoadGame?.Invoke();
         }
         else

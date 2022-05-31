@@ -28,5 +28,5 @@ public class Item
 [CreateAssetMenu(fileName = "ItemArraySO", menuName = "Scriptable Object/ItemArraySO")]
 public class ItemArraySO : ScriptableObject
 {
-    public ItemSO[] items;
+    public List<ItemSO> items;
 }

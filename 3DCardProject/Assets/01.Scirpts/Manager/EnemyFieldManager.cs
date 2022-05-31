@@ -91,7 +91,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         itemBuffer = new List<Item>();
 
         // ADD
-        for (int i = 0; i < itemSO.items.Length; i++)
+        for (int i = 0; i < itemSO.items.Count; i++)
         {
             Item item = itemSO.items[i].item;
             for (int j = 0; j < item.count; j++)
