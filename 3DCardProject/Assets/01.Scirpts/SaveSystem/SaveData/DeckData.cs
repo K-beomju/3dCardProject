@@ -74,7 +74,7 @@ public class DeckData : ISerializeble
         {
             /*Debug.Log(item);
             Debug.Log(deck.DeckData);*/
-            deck.DeckData.Add(item.item);
+            deck.DeckData.Add(item.item.ShallowCopy());
         }
         return deck.ShallowCopy().DeckData;
     }

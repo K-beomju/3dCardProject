@@ -17,7 +17,7 @@ MonoBehaviour:
     name: "\uC801"
     sprite: {fileID: 0}
     isMagic: 0
-    hp: 300
+    hp: 200
     description: "\uC801\uC785\uB2C8\uB2E4."
     count: 10
     OnSpawn: []
