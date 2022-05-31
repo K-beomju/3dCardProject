@@ -49,7 +49,7 @@ MonoBehaviour:
     name: "\uD50C\uB808\uC774\uC5B4"
     sprite: {fileID: 21300000, guid: d91d808167aa2fd4d9211b5ee3d56be5, type: 3}
     isMagic: 0
-    figure: 500
+    hp: 1000
     description: "\uD50C\uB808\uC774\uC5B4\uC785\uB2C8\uB2E4."
     count: 0
     OnSpawn: []

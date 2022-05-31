@@ -11,6 +11,7 @@ public class Card : MonoBehaviour
     [SerializeField] private SpriteRenderer cardImage;
 
     [SerializeField] private TMP_Text costTMP;
+    [SerializeField] private TMP_Text hpTMP;
     [SerializeField] private TMP_Text nameTMP;
     [SerializeField] private TMP_Text descriptionTMP;
 
@@ -45,6 +46,7 @@ public class Card : MonoBehaviour
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;
+            RefreshHPText();
         }
         else
         {
@@ -116,6 +118,17 @@ public class Card : MonoBehaviour
             act?.Invoke();
         });
     }
+    public void RefreshHPText()
+    {
+        if (!item.isMagic)
+        {
+            hpTMP.text = this.item.hp.ToString();
+        }
+        else
+        {
+            hpTMP.text = "";
+        }
+    }
     public void Attack(Field field)
     {
         if (!isAttack)
@@ -132,36 +145,27 @@ public class Card : MonoBehaviour
 
                 transform.DOMove(firstPos, .3f).OnComplete(() => {
                     GetComponent<Order>().SetOriginOrder(originOrder);
-                    if (field.curCard == null) // 명치 공격
-                    {
-                        print("명치 공격");
-                        if (field.isPlayerField)
-                        {
-                            // 플레이어 피격
-                        }
-                        else
-                        {
-                            // 적 피격
-
-                        }
-                    }
-                    else // 카드 공격
+                    if (field.curCard != null)
                     {
                         print("카드 공격");
-                        if (field.curCard.item.figure < item.figure) // 공격 대상보다 쌜때
+                        if (field.curCard.item.hp < item.hp) // 공격 대상보다 쌜때
                         {
                             print("대상 파괴");
+                            item.hp -= field.curCard.item.hp;
+                            RefreshHPText();
                             field.curCard.OnDie();
                         }
-                        else if (field.curCard.item.figure == item.figure) // 같을때
+                        else if (field.curCard.item.hp == item.hp) // 같을때
                         {
                             print("둘다 파괴");
                             field.curCard.OnDie();
                             OnDie();
                         }
-                        else if (field.curCard.item.figure > item.figure) // 공격대상이 더 썔때
+                        else if (field.curCard.item.hp > item.hp) // 공격대상이 더 썔때
                         {
                             print("자신 파괴");
+                            field.curCard.item.hp -= item.hp;
+                            field.curCard.RefreshHPText();
                             OnDie();
                         }
                     }
