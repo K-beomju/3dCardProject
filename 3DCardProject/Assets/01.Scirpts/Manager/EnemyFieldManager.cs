@@ -9,11 +9,11 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     [SerializeField] protected ItemArraySO itemSO;
     public List<Item> itemBuffer { get; set; }
 
-    private WaitForSeconds turnDelay = new WaitForSeconds(1f);
 
     public int spawnCardCount = 0;
 
     public List<Card> enemyCards = new List<Card>();
+    public  bool isDone = false;
 
     private void Start()
     {
@@ -37,8 +37,13 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         return card;
     }
 
-    private void EnemyCardAction()
+
+    private IEnumerator StartTurnActionCo()
     {
+        // 움직임, 공격순 
+        isDone = true;
+        enemyCards.ForEach((x => x.isMove = false));
+
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[0].curField);
 
         int randX = 0;
@@ -52,25 +57,22 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 
         var randPos = gridPos + new Vector2Int(randX, randY);
         if (!FieldManager.Instance.CanAssign(randPos))
-            return;
+            yield break;
 
         if (FieldManager.Instance.GetField(randPos).curCard == null)
             FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
 
-    }
-
-    public IEnumerator CreateCardCo()
-    {
-        yield return turnDelay;
-        EnemyCardAction();
-
-        yield return turnDelay;
+        yield return new WaitForSeconds(3f);
+        yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
         TurnManager.ChangeTurn(TurnType.Player, ref TurnManager.isClick);
+
     }
+
+
 
     public void EnemyAction()
     {
-        StartCoroutine(CreateCardCo());
+        StartCoroutine(StartTurnActionCo());
     }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using System;
 
 [System.Serializable]
 public enum TurnType
@@ -16,8 +17,6 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] private TurnType type;
     private Camera mainCam;
     public static bool isClick = true;
-    //[SerializeField] private CanvasGroup turnPanel;
-    //[SerializeField] private TMP_Text turnText;
 
     private void Start()
     {
@@ -40,13 +39,9 @@ public class TurnManager : Singleton<TurnManager>
             Instance.mainCam.transform.DOMoveZ(-5f, 0.5f);
             Instance.mainCam.transform.DORotate(new Vector3(55, 0, 0), 0.5f);
         }
-        
-
-
-        //Instance.turnText.text = "플레이어 턴";
-        //Instance.turnText.text = "적 턴";
-        //Instance.turnPanel.DOFade(1, 0.5f).OnComplete(() => Instance.turnPanel.DOFade(0, 0.5f));
     }
+
+ 
 
     // 현재 타입 반환 
     public static TurnType CurReturnType()
