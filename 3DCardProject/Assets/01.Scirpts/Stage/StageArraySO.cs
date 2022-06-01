@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class StageData
 {
-    public ItemSO item;
+    public ItemSO itemSo;
     public Vector2Int vector2Int;
 }
 

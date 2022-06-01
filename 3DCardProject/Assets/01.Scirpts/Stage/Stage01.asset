@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Stage01
   m_EditorClassIdentifier: 
   StageData:
-  - item: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
+  - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
     vector2Int: {x: 0, y: 0}

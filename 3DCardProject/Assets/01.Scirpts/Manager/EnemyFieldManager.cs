@@ -6,9 +6,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 {
     private ActionButton actionButton;
 
-    [SerializeField] protected ItemArraySO itemSO;
     [SerializeField] protected StageArraySO stageSO;
-    public List<Item> itemBuffer;
+    public List<Item> itemBuffer { get; set; }
 
 
 
@@ -90,23 +89,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     {
         itemBuffer = new List<Item>();
 
-        // ADD
-        for (int i = 0; i < itemSO.items.Count; i++)
-        {
-            Item item = itemSO.items[i].item;
-            for (int j = 0; j < item.count; j++)
-                itemBuffer.Add(item);
-        }
+        itemBuffer = StageManager.SetStageBuffer(itemBuffer);
 
-        // Shuffle
-        for (int i = 0; i < itemBuffer.Count; i++)
-        {
-            int rand = UnityEngine.Random.Range(i, itemBuffer.Count);
-            Item temp = itemBuffer[i];
-            itemBuffer[i] = itemBuffer[rand];
-            itemBuffer[rand] = temp;
-
-        }
         List<Item> tempBuffer = new List<Item>();
 
         foreach (var item in itemBuffer)
