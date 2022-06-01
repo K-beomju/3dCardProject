@@ -28,18 +28,28 @@ public class TurnManager : Singleton<TurnManager>
     {
         if (_type == TurnType.Player)
         {
-            Instance.mainCam.transform.DOMoveZ(-2f, 0.5f).OnComplete(() => 
+            Instance.mainCam.transform.DOMove(new Vector3(0,1, -10.5f), 0.5f).OnComplete(() => 
             {
                 Instance.type = _type;
                 PlayerManager.TurnReset();
             });
-            Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
+            Instance.mainCam.transform.DORotate(new Vector3(45, 0, 0), 0.5f);
+            CardManager.Instance.MyCardMove(false);
+
         }
         else
         {
-            Instance.mainCam.transform.DOMoveZ(-5f, 0.5f).OnComplete(() => Instance.type = _type);
-            Instance.mainCam.transform.DORotate(new Vector3(55, 0, 0), 0.5f);
+            Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f).OnComplete(() => Instance.type = _type);
+            Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
+            CardManager.Instance.MyCardMove(true);
+
         }
+    }
+
+    public static void PlayerCardMove()
+    {
+        Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
+        Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
     }
 
     public static TurnType CurReturnType()

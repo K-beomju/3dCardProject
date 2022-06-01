@@ -37,7 +37,6 @@ public class CardManager : Singleton<CardManager>
     protected override void Awake()
     {
         base.Awake();
-        //SetupItemBuffer();
         mainCam = Camera.main;
     }
 
@@ -118,6 +117,8 @@ public class CardManager : Singleton<CardManager>
                         PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
                         CardAlignment();
+                        TurnManager.PlayerCardMove();
+                        MyCardMove(true);
                     }
                     else
                     {
@@ -172,7 +173,7 @@ public class CardManager : Singleton<CardManager>
     public void AddCard()
     {
         Item popItem = deckManager.PopItem();
-        if(popItem != null)
+        if (popItem != null)
         {
             var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
             var card = cardObj.GetComponent<Card>();
@@ -183,7 +184,7 @@ public class CardManager : Singleton<CardManager>
 
             CardAlignment();
         }
-        
+
 
     }
 
@@ -303,7 +304,6 @@ public class CardManager : Singleton<CardManager>
         {
             isCardDrag = true;
             selectCard = card;
-
             arrowObject.ActiveArrow(true);
             float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
             arrowObject.transform.position = new Vector3(x, 540, 0);
@@ -453,5 +453,24 @@ public class CardManager : Singleton<CardManager>
             return isFullMyCard;
         }
         return !isFullMyCard;
+    }
+
+    public void MyCardMove(bool isSpawn)
+    {
+        if (isSpawn)
+        {
+            for (int i = 0; i < myCards.Count; i++)
+            {
+                myCards[i].transform.DOMoveZ(-7, 0.3f);
+            }
+
+        }
+        else
+        {
+            for (int i = 0; i < myCards.Count; i++)
+            {
+                myCards[i].transform.DOMoveZ(-5.8f, 0.3f);
+            }
+        }
     }
 }
