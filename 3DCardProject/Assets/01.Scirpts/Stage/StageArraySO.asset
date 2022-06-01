@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 469a8d861713d6b4a98d2b487e3212c7, type: 3}
-  m_Name: Stage01
+  m_Script: {fileID: 11500000, guid: dca570cd342acef469ddce4ed1dc1174, type: 3}
+  m_Name: StageArraySO
   m_EditorClassIdentifier: 
-  StageData:
-  - item: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
-    vector2Int: {x: 0, y: 0}
+  stages:
+  - {fileID: 11400000, guid: de555c15db498754eb3d5d6e89a7037e, type: 2}
