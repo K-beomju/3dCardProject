@@ -7,11 +7,12 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     private ActionButton actionButton;
 
     [SerializeField] protected ItemArraySO itemSO;
-    public List<Item> itemBuffer { get; set; }
+    [SerializeField] protected StageArraySO stageSO;
+    public List<Item> itemBuffer;
+
 
 
     public int spawnCardCount = 0;
-
     public List<Card> enemyCards = new List<Card>();
 
 
@@ -69,11 +70,6 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         TurnManager.ChangeTurn(TurnType.Player);
 
     }
-
-
-
-
-
     public void EnemyAction()
     {
         StartCoroutine(StartTurnActionCo());
