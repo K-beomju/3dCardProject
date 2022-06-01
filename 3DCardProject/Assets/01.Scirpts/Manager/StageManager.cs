@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stages")]
-    public static int targetStage = 0;
+    public int targetStage = 0;
     public int debug_targetStage = 0; 
-    [SerializeField] protected StageArraySO stageSO;
+    [field: SerializeField]
+    public StageArraySO stageSO { get; private set; }
 
     protected override void Awake()
     {
@@ -20,12 +21,17 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+    public StageSO GetCurrentStageData()
+    {
+        return stageSO.stages[debug_targetStage];
+    }
+
     // TODO: 플레이어도 스테이지도 공유해서 씀 개인작업이 다 끝나면 Utills 스크립트로 이전?
     public static List<Item> SetStageBuffer(List<Item> itemList)
     {
-        for(int i = 0; i < Instance.stageSO.stages[targetStage].StageData.Length; i++)
+        for(int i = 0; i < Instance.stageSO.stages[Instance.targetStage].StageData.Length; i++)
         {
-            Item item = Instance.stageSO.stages[targetStage].StageData[i].itemSo.item;
+            Item item = Instance.stageSO.stages[Instance.targetStage].StageData[i].itemSo.item;
             for (int j = 0; j < item.count; j++)
                 itemList.Add(item);
         }

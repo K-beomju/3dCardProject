@@ -12,7 +12,7 @@ public class CardActionVLineClear : CardAction
         {
             Vector2Int getPos = new Vector2Int(gridPos.x, y);
             Field field = FieldManager.Instance.GetField(getPos);
-            Debug.Log(getPos);
+            //Debug.Log(getPos);
             if (field != null)
             {
                 if (field.curCard != null)

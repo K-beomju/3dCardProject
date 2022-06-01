@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 607578651187059090}
   - component: {fileID: 607578651187059091}
+  - component: {fileID: 4163482580381536708}
   m_Layer: 0
   m_Name: EnemyFieldManager
   m_TagString: Untagged
@@ -43,8 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c2ce0c1c832a845a0ca005fc3f751e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionButton: {fileID: 0}
-  itemSO: {fileID: 11400000, guid: 6b963e237ab622a40ade1f63c1e86c28, type: 2}
   spawnCardCount: 0
   enemyCards: []
-  isDone: 0
+--- !u!114 &4163482580381536708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607578651187059093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fd4ec989ab35546be02f493be383b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemBuffer>k__BackingField: []

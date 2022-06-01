@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -18,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     public void CallOnWinGame()
     {
         print("GAMEWIN");
+        SceneManager.LoadScene("StageScene");
     }
     public void CallOnLoseGame()
     {

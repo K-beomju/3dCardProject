@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 469a8d861713d6b4a98d2b487e3212c7, type: 3}
-  m_Name: Stage01
+  m_Name: Stage02
   m_EditorClassIdentifier: 
   StageData:
   - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
-    vector2Int: {x: 2, y: 3}
+    vector2Int: {x: 1, y: 0}
+  - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
+    vector2Int: {x: 0, y: 0}

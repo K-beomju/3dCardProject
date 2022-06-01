@@ -21,11 +21,6 @@ public abstract class Singleton<T> : Singleton where T : Singleton<T>
         }
     }
 
-    protected virtual void OnDestroy()
-    {
-        _instance = null;
-    }
-
 }
 
 public abstract class Singleton : MonoBehaviour

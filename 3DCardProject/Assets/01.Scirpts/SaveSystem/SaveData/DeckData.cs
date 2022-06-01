@@ -29,7 +29,7 @@ public class Deck
 public class DeckData : ISerializeble
 {
     
-    [SerializeField]
+   /* [SerializeField]
     private List<Deck> deckListData = new List<Deck>();
 
     public List<Deck> DeckList
@@ -43,7 +43,7 @@ public class DeckData : ISerializeble
             deckListData = value;
         }
     }
-
+*/
 
     [SerializeField]
     private Deck deckData = new Deck();
@@ -52,10 +52,10 @@ public class DeckData : ISerializeble
     {
         get
         {
-            if(deckListData.Count < 1)
+            if(deckData.DeckData.Count < 1)
             {
                 deckData.DeckData = ArraySOToItemList(defaultDeck);
-                DeckList.Add(deckData.ShallowCopy());
+                //DeckList.Add(deckData.ShallowCopy());
             }
             return deckData;
         }

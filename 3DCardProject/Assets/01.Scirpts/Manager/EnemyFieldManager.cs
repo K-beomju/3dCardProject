@@ -6,38 +6,48 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 {
     private ActionButton actionButton;
 
-    public List<Item> itemBuffer { get; set; }
+    //public List<Item> itemBuffer { get; set; }
 
 
 
     public int spawnCardCount = 0;
     public List<Card> enemyCards = new List<Card>();
 
+    private DeckManager dm;
 
-    protected override void Awake()
+    /* protected override void Awake()
+     {
+         base.Awake();
+         SetupItemBuffer();
+     }
+ */
+    private void Start()
     {
-        base.Awake();
-        SetupItemBuffer();
-    }
-
-    public void Reseting()
-    {
+        dm = GetComponent<DeckManager>();
         actionButton = FindObjectOfType<ActionButton>();
         actionButton.OnMouseDownAct += EnemyAction;
-        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard());
     }
+    public void Reseting()
+    {
+        StageSO stageData = StageManager.Instance.GetCurrentStageData();
+        int cardCount = stageData.StageData.Length;
+        for (int i = 0; i < cardCount; i++)
+        {
+            FieldManager.Instance.CheckingSpawn(stageData.StageData[i].vector2Int, CreateCard());
+        }
+    }
+
 
     private Card CreateCard()
     {
         var cardObj = Instantiate(CardManager.Instance.cardPrefab, transform.position, Utils.QI);
         var card = cardObj.GetComponent<Card>();
-        card.Setup(PopItem(), true, false);
+        card.Setup(dm.PopItem(), true, false);
         card.GetComponent<Order>().SetOriginOrder(1);
         spawnCardCount++;
         enemyCards.Add(card);
         return card;
     }
-
 
     private IEnumerator StartTurnActionCo()
     {
@@ -74,7 +84,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     }
 
 
-    public Item PopItem()
+  /*  public Item PopItem()
     {
         if (itemBuffer.Count == 0)
             SetupItemBuffer();
@@ -103,5 +113,5 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         {
             itemBuffer.Remove(temp);
         }
-    }
+    }*/
 }

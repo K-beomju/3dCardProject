@@ -25,22 +25,33 @@ public class DeckManager : MonoBehaviour
         itemBuffer = new List<Item>();
 
         // ADD
+
         for (int i = 0; i < items.Count; i++)
         {
             Item item = items[i];
-            for (int j = 0; j < item.count; j++)
-                itemBuffer.Add(item);
+            AddCardToItemBuffer(item, item.count);
         }
 
         // Shuffle
+        SuffleItemBuffer();
+    }
+
+    protected virtual void AddCardToItemBuffer(Item item,float count)
+    {
+        for (int j = 0; j < count; j++)
+        {
+            itemBuffer.Add(item);
+        }
+    }
+
+    protected virtual void SuffleItemBuffer()
+    {
         for (int i = 0; i < itemBuffer.Count; i++)
         {
             int rand = UnityEngine.Random.Range(i, itemBuffer.Count);
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
             itemBuffer[rand] = temp;
-
         }
     }
-   
 }

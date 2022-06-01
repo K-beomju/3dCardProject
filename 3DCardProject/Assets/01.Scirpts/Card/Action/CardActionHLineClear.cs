@@ -13,7 +13,7 @@ public class CardActionHLineClear : CardAction
         {
             Vector2Int getPos = new Vector2Int(x, gridPos.y);
             Field field = FieldManager.Instance.GetField(getPos);
-            Debug.Log(getPos);
+            //Debug.Log(getPos);
             if (field != null)
             {
                 if (field.curCard != null)
