@@ -6,7 +6,6 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
 {
     private ActionButton actionButton;
 
-    [SerializeField] protected StageArraySO stageSO;
     public List<Item> itemBuffer { get; set; }
 
 

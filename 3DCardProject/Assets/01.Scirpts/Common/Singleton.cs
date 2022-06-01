@@ -17,6 +17,7 @@ public abstract class Singleton<T> : Singleton where T : Singleton<T>
         else
         {
             _instance = (T)this;
+           
         }
     }
 

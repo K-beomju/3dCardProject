@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stages")]
     public static int targetStage = 0;
     public int debug_targetStage = 0; 
-    [SerializeField] private StageArraySO stageSO;
+    [SerializeField] protected StageArraySO stageSO;
 
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(this);
         if (debug_targetStage != -1)
         {
             targetStage = debug_targetStage;
@@ -40,4 +42,10 @@ public class StageManager : Singleton<StageManager>
 
         return itemList;
     }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("Minsang 2");
+    }
+
 }
