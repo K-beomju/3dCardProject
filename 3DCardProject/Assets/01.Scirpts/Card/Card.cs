@@ -127,7 +127,7 @@ public class Card : MonoBehaviour
     }
     public void OnDamage(float damage)
     {
-        if(item.hp >= damage)
+        if(item.hp <= damage)
         {
             OnDie();
         }
@@ -171,37 +171,20 @@ public class Card : MonoBehaviour
     }
     public void OnAttack()
     {
-        foreach (var item in item.OnAttack)
-        {
-            int check = 0;
-            foreach (var condition in item.condition)
-            {
-                if (!condition.CheckCondition())
-                {
-                    check++;
-                }
-            }
-            if (check == 0)
-                item.action.TakeAction(this);
-        }
+        CardAction(item.OnAttack);
     }
     public void OnDamage()
     {
-        foreach (var item in item.OnDamage)
-        {
-            foreach (var condition in item.condition)
-            {
-                if (!condition.CheckCondition())
-                {
-                    return;
-                }
-            }
-            item.action.TakeAction(this);
-        }
+        CardAction(item.OnDamage);
     }
     public void OnDie()
     {
-        foreach (var item in item.OnDie)
+        CardAction(item.OnDie);
+    }
+
+    private void CardAction(CardActionCondition[] act)
+    {
+        foreach (var item in act)
         {
             int check = 0;
             foreach (var condition in item.condition)

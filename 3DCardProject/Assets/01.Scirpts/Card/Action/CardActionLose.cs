@@ -6,13 +6,6 @@ public class CardActionLose : CardAction
 {
     public override void TakeAction(Card card)
     {
-        if (card.isPlayerCard)
-        {
-            GameManager.Instance.OnLoseGame?.Invoke();
-        }
-        else
-        {
-            GameManager.Instance.OnWinGame?.Invoke();
-        }
+        GameManager.Instance.OnLoseGame?.Invoke();
     }
 }
