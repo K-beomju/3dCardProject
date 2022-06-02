@@ -8,12 +8,13 @@ public class DieAction : CardAction
     {
 
         PRS prs;
-        if (card.curField.isPlayerField)
+        if (card.isPlayerCard)
         {
             prs = new PRS(CardManager.Instance.cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
         else
         {
+            EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
         card.curField.RemoveCard();

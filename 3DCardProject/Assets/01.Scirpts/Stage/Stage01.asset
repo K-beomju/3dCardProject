@@ -15,3 +15,7 @@ MonoBehaviour:
   StageData:
   - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
     vector2Int: {x: 2, y: 3}
+  - itemSo: {fileID: 11400000, guid: 8e4437a2478b8e840a5bc522d642ecb3, type: 2}
+    vector2Int: {x: 4, y: 3}
+  - itemSo: {fileID: 11400000, guid: d33cc0e8986483a4898e58082b81f6b4, type: 2}
+    vector2Int: {x: 0, y: 3}

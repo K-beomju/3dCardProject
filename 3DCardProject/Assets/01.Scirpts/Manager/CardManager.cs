@@ -141,9 +141,8 @@ public class CardManager : Singleton<CardManager>
                         SelectMovingCardAroundField(false);
                         FieldManager.Instance.MoveToField(field, movingCard);
                     }
-                    if (card != null && card.curField.isSelected && !card.isPlayerCard)
+                    if (card != null && card.curField != null && card.curField.isSelected && !card.isPlayerCard)
                     {
-
                         FieldManager.Instance.MoveToField(card.curField, movingCard);
                         SelectMovingCardAroundField(false);
                     }

@@ -58,21 +58,26 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         yield return new WaitForSeconds(1f);
         TurnManager.CurChangeType(TurnType.Enemy);
 
-
+        for (int i = 0; i < enemyCards.Count; i++)
+        {
             int randX = Random.Range(-1, 2);
             int randY = Random.Range(-1, 2);
-        Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[0].curField);
-        Vector2Int randPos = gridPos + new Vector2Int(randX, randY);
-        if(FieldManager.Instance.GetField(randPos) != null)
-        {
-            FieldManager.Instance.MoveToGrid(randPos, enemyCards[0]);
-            yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
-        }
-        else
-        {
+            Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[i].curField);
+            Vector2Int randPos = gridPos + new Vector2Int(randX, randY);
+            Field randField = FieldManager.Instance.GetField(randPos);
+            if (randField != null)
+            {
+                FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
+                // return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
+            }
+            /*else
+            {
+
+            }*/
             yield return new WaitForSeconds(0.5f);
 
         }
+
 
         yield return new WaitForSeconds(1f);
         TurnManager.ChangeTurn(TurnType.Player);

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StageData:
   - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
-    vector2Int: {x: 1, y: 0}
-  - itemSo: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
-    vector2Int: {x: 0, y: 0}
+    vector2Int: {x: 2, y: 3}
+  - itemSo: {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}
+    vector2Int: {x: 0, y: 3}
+  - itemSo: {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}
+    vector2Int: {x: 4, y: 3}
