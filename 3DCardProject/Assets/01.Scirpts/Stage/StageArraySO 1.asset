@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62fe600a31ccf2a43bcd8c528601dd0f, type: 3}
-  m_Name: StageArraySO
+  m_Name: StageArraySO 1
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}

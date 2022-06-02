@@ -13,6 +13,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     public int spawnCardCount = 0;
     public List<Card> enemyCards = new List<Card>();
 
+    public Item enemyItem;
+
     private DeckManager dm;
 
     /* protected override void Awake()
@@ -29,21 +31,18 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     }
     public void Reseting()
     {
-        StageSO stageData = StageManager.Instance.GetCurrentStageData();
-        int cardCount = stageData.StageData.Length;
-        for (int i = 0; i < cardCount; i++)
-        {
-            FieldManager.Instance.CheckingSpawn(stageData.StageData[i].vector2Int, CreateCard());
-        }
+        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard(enemyItem));
+
     }
 
 
-    private Card CreateCard()
+    private Card CreateCard(Item item)
     {
         var cardObj = Instantiate(CardManager.Instance.cardPrefab, transform.position, Utils.QI);
         var card = cardObj.GetComponent<Card>();
-        card.Setup(dm.PopItem(), true, false);
+        card.Setup(item, true, false);
         card.GetComponent<Order>().SetOriginOrder(1);
+        card.isMove = true;
         spawnCardCount++;
         enemyCards.Add(card);
         return card;
@@ -58,6 +57,14 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         yield return new WaitForSeconds(1f);
         TurnManager.CurChangeType(TurnType.Enemy);
 
+        // ½ºÆù
+        Vector2Int pos = new Vector2Int(Random.Range(0, FieldManager.Instance.x), FieldManager.Instance.y - 1);
+        Field field = FieldManager.Instance.GetField(pos);
+        if (field != null && field.curCard == null)
+            FieldManager.Instance.CheckingSpawn(pos, CreateCard(dm.PopItem()));
+
+        yield return new WaitForSeconds(0.4f);
+
         for (int i = 0; i < enemyCards.Count; i++)
         {
             int randX = Random.Range(-1, 2);
@@ -65,21 +72,22 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
             Vector2Int gridPos = FieldManager.Instance.GetGridPos(enemyCards[i].curField);
             Vector2Int randPos = gridPos + new Vector2Int(randX, randY);
             Field randField = FieldManager.Instance.GetField(randPos);
-            if (randField != null)
+            if (randField != null )
             {
-                FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
-                // return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
+                if (!enemyCards[i].isMove)
+                    FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
             }
-            /*else
+            else
             {
-
-            }*/
+                enemyCards[i].isMove = true;
+            }
             yield return new WaitForSeconds(0.5f);
 
         }
+        yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
 
+        //yield return new WaitForSeconds(1f);
 
-        yield return new WaitForSeconds(1f);
         TurnManager.ChangeTurn(TurnType.Player);
 
     }

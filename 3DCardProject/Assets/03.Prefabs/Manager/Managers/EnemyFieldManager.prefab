@@ -46,6 +46,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCardCount: 0
   enemyCards: []
+  enemyItem:
+    cost: 0
+    name: "\uC801"
+    sprite: {fileID: 0}
+    isMagic: 0
+    atk: 200
+    hp: 200
+    description: "\uC801\uC785\uB2C8\uB2E4"
+    count: 1
+    OnSpawn: []
+    OnDie:
+    - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
+      condition: []
+    OnAttack: []
+    OnDamage: []
 --- !u!114 &4163482580381536708
 MonoBehaviour:
   m_ObjectHideFlags: 0

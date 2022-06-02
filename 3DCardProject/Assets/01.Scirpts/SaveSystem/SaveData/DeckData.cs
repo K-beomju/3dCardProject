@@ -67,7 +67,7 @@ public class DeckData : ISerializeble
     [field:SerializeField]
     public ItemArraySO defaultDeck { get; set; }
 
-    public List<Item> ArraySOToItemList(ItemArraySO arraySO)
+    public static List<Item> ArraySOToItemList(ItemArraySO arraySO)
     {
         Deck deck = new Deck();
         foreach (var item in arraySO.items)

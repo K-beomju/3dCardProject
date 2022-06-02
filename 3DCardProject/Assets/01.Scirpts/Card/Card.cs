@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
         this.isPlayerCard = isPlayerCard;
         this.item = item;
         this.isFront = isFront;
-        if (item.isMagic)
+        if (this.item.isMagic)
         {
             card.color = new Color(0.5137255f, 0.6470588f, 0.9137256f);
         }
@@ -47,7 +47,7 @@ public class Card : MonoBehaviour
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;
-            atkTMP.text = item.isMagic? "" : this.item.atk.ToString();
+            atkTMP.text = this.item.isMagic? "" : this.item.atk.ToString();
             RefreshHPText();
         }
         else

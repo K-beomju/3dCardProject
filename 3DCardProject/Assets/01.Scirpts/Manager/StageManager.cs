@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stages")]
-    public int targetStage = 0;
+    public int curStageIndex = 0;
     public int debug_targetStage = 0; 
     [field: SerializeField]
-    public StageArraySO stageSO { get; private set; }
+    public List<ItemArraySO> stageArray { get; private set; }
 
     protected override void Awake()
     {
@@ -17,15 +17,16 @@ public class StageManager : Singleton<StageManager>
         DontDestroyOnLoad(this);
         if (debug_targetStage != -1)
         {
-            targetStage = debug_targetStage;
+            curStageIndex = debug_targetStage;
         }
     }
 
-    public StageSO GetCurrentStageData()
+    public List<Item> GetCurrentStageData()
     {
-        return stageSO.stages[debug_targetStage];
+        List<Item> data = DeckData.ArraySOToItemList(stageArray[curStageIndex]);
+        return data;
     }
-
+/*
     // TODO: 플레이어도 스테이지도 공유해서 씀 개인작업이 다 끝나면 Utills 스크립트로 이전?
     public static List<Item> SetStageBuffer(List<Item> itemList)
     {
@@ -47,7 +48,7 @@ public class StageManager : Singleton<StageManager>
         }
 
         return itemList;
-    }
+    }*/
 
     public void ChangeScene()
     {
