@@ -11,6 +11,7 @@ public class Card : MonoBehaviour
     [SerializeField] private SpriteRenderer cardImage;
 
     [SerializeField] private TMP_Text costTMP;
+    [SerializeField] private TMP_Text atkTMP;
     [SerializeField] private TMP_Text hpTMP;
     [SerializeField] private TMP_Text nameTMP;
     [SerializeField] private TMP_Text descriptionTMP;
@@ -46,10 +47,12 @@ public class Card : MonoBehaviour
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;
+            atkTMP.text = item.isMagic? "" : this.item.atk.ToString();
             RefreshHPText();
         }
         else
         {
+            atkTMP.text = "";
             nameTMP.text = "";
             costTMP.text = "";
             descriptionTMP.text = "";
@@ -120,14 +123,20 @@ public class Card : MonoBehaviour
     }
     public void RefreshHPText()
     {
-        if (!item.isMagic)
+        hpTMP.text = item.isMagic ? "" : this.item.hp.ToString();
+    }
+    public void OnDamage(float damage)
+    {
+        if(item.hp >= damage)
         {
-            hpTMP.text = this.item.hp.ToString();
+            OnDie();
         }
         else
         {
-            hpTMP.text = "";
+            item.hp -= damage;
+            OnDamage();
         }
+        RefreshHPText();
     }
     public void Attack(Field field)
     {
@@ -147,26 +156,8 @@ public class Card : MonoBehaviour
                     if (field.curCard != null)
                     {
                         print("카드 공격");
-                        if (field.curCard.item.hp < item.hp) // 공격 대상보다 쌜때
-                        {
-                            print("대상 파괴");
-                            item.hp -= field.curCard.item.hp;
-                            RefreshHPText();
-                            field.curCard.OnDie();
-                        }
-                        else if (field.curCard.item.hp == item.hp) // 같을때
-                        {
-                            print("둘다 파괴");
-                            field.curCard.OnDie();
-                            OnDie();
-                        }
-                        else if (field.curCard.item.hp > item.hp) // 공격대상이 더 썔때
-                        {
-                            print("자신 파괴");
-                            field.curCard.item.hp -= item.hp;
-                            field.curCard.RefreshHPText();
-                            OnDie();
-                        }
+                        field.curCard.OnDamage(item.atk);
+                        OnDamage(field.curCard.item.atk);
                     }
                     isAttack = false;
                     OnAttack();
@@ -194,20 +185,20 @@ public class Card : MonoBehaviour
                 item.action.TakeAction(this);
         }
     }
-    /*  public void OnDamage()
-      {
-          foreach (var item in item.OnDamage)
-          {
-              foreach (var condition in item.condition)
-              {
-                  if (!condition.CheckCondition())
-                  {
-                      return;
-                  }
-              }
-              item.action.TakeAction();
-          }
-      }*/
+    public void OnDamage()
+    {
+        foreach (var item in item.OnDamage)
+        {
+            foreach (var condition in item.condition)
+            {
+                if (!condition.CheckCondition())
+                {
+                    return;
+                }
+            }
+            item.action.TakeAction(this);
+        }
+    }
     public void OnDie()
     {
         foreach (var item in item.OnDie)

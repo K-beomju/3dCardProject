@@ -17,7 +17,8 @@ MonoBehaviour:
     name: "\uC0AC\uACFC \uB9C8\uBC95"
     sprite: {fileID: 21300000, guid: 2aec81099606fd74fa36ebd4a193178c, type: 3}
     isMagic: 1
-    hp: 200
+    atk: 0
+    hp: 0
     description: "\uBE68\uAC04\uAC74 \uC0AC\uACFC\n\uC0AC\uACFC\uB294 \uB9DB\uC788\uC5B4\n[\uAC00\uB85C\uCE78
       \uC804\uBD80 \uC0AD\uC81C]"
     count: 3
