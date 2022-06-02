@@ -55,7 +55,8 @@ public class Field : MonoBehaviour
         curCard.isOnField = true;
     
         curCard.transform.DOMove(new Vector3(transform.position.x, transform.position.y + .15f, transform.position.z), .2f).OnComplete(() => {
-            curCard.transform.DORotateQuaternion(transform.rotation, .1f);
+            Vector3 rot = transform.eulerAngles;
+            curCard.transform.DORotate(curCard.isPlayerCard ? rot:new Vector3(rot.x,rot.y,rot.z-180 ) , .1f);
             curCard.Emphasize(() => {
                 foreach (var item in curCard.item.OnSpawn)
                 {

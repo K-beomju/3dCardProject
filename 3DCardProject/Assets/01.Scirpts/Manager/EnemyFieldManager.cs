@@ -31,8 +31,10 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     }
     public void Reseting()
     {
-        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), CreateCard(enemyItem));
-
+        Card card = CreateCard(enemyItem);
+        Vector3 rot = card.transform.eulerAngles;
+        card.transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z - 180);
+        FieldManager.Instance.CheckingSpawn(new Vector2Int(2, 3), card);
     }
 
 
@@ -75,7 +77,9 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
             if (randField != null )
             {
                 if (!enemyCards[i].isMove)
+                {
                     FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
+                }
             }
             else
             {

@@ -86,6 +86,7 @@ public class FieldManager : Singleton<FieldManager>
             if (field.curCard == null)
             {
                 card.isMove = true;
+              
                 card.transform.DOScaleZ(card.transform.localScale.z * .8f, 0.15f);
                 card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
                 card.transform.DOScaleY(card.transform.localScale.y * .8f, 0.15f);
@@ -112,7 +113,8 @@ public class FieldManager : Singleton<FieldManager>
         {
             if (field.curCard != null)
             {
-                card.Attack(field);
+                if (field.curCard.isPlayerCard != card.isPlayerCard)
+                    card.Attack(field);
             }
             else
             {
@@ -121,8 +123,8 @@ public class FieldManager : Singleton<FieldManager>
                     card.curField.RemoveCard();
                 }
                 field.SetUp(card);
-                card.isMove = true;
             }
+            card.isMove = true;
         }
     }
     public Vector2Int GetGridPos(Field field)
