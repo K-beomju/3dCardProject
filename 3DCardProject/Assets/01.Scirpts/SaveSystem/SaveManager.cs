@@ -27,9 +27,8 @@ public class GenericClass<T>
 
 }
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : Singleton<SaveManager>
 {
-    public static SaveManager Instance;
 
     const string saveFileName = "Magical.sav";
 
@@ -40,21 +39,13 @@ public class SaveManager : MonoBehaviour
     Rijndael myRijndael;
 
     public Action OnEndOfLoadGame;
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
+        base.Awake();
+        DontDestroyOnLoad(this);
 
-            myRijndael = Rijndael.Create();
-            ObjToSaveList.Add(saveDeckData);
-
-        }
-
+        myRijndael = Rijndael.Create();
+        ObjToSaveList.Add(saveDeckData);
     }
     private void Start()
     {
