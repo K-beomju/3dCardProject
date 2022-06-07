@@ -215,25 +215,25 @@ Material:
     - EMISSION_ANI: 0
     - MOSSLAYER: 1
     - Vector1_1C212B02: 0
-    - Vector1_27F4563C: 0
-    - Vector1_2F05CBFC: 1
-    - Vector1_34CBA231: 2
+    - Vector1_27F4563C: 1.8
+    - Vector1_2F05CBFC: 0.186
+    - Vector1_34CBA231: 1.04
     - Vector1_36E10A09: 0.02
     - Vector1_3AD4F289: 1
-    - Vector1_3E7579F5: 1
+    - Vector1_3E7579F5: 0.37
     - Vector1_3F6510D5: 0.04
     - Vector1_4D2493FC: 0.58
     - Vector1_4E714DEF: 0
     - Vector1_50DE430D: 0
     - Vector1_56070B55: 4.37
-    - Vector1_5882A43A: 0.072
+    - Vector1_5882A43A: 0.372
     - Vector1_59D074A3: 10
     - Vector1_5AB1E12D: 2
     - Vector1_6F323EAC: -2.04
     - Vector1_7261A750: 0
-    - Vector1_73D6ABBC: 0
-    - Vector1_79D49E42: 1.55
-    - Vector1_7C21D00B: 0.047
+    - Vector1_73D6ABBC: 0.712
+    - Vector1_79D49E42: 2.78
+    - Vector1_7C21D00B: 0.041
     - Vector1_7E80E06: 1
     - Vector1_7FAD4BB5: -3.5
     - Vector1_8A8366DA: 0
@@ -242,18 +242,18 @@ Material:
     - Vector1_9AEC64E3: -20
     - Vector1_9F45A997: 0
     - Vector1_A3B2A0FD: -1
-    - Vector1_A8FA7E71: 0
+    - Vector1_A8FA7E71: 4.69
     - Vector1_AD8592C4: 0
     - Vector1_B14EFD3E: 0.316
     - Vector1_B83988F6: 0
     - Vector1_CECF23E6: 0.1
-    - Vector1_D3224A15: 0
-    - Vector1_D55A8D16: 0.205
+    - Vector1_D3224A15: 6.2
+    - Vector1_D55A8D16: 0.235
     - Vector1_DE1EE159: 0.016
-    - Vector1_DFCA6C31: 1
+    - Vector1_DFCA6C31: 0.734
     - Vector1_E19DA037: 0.57
-    - Vector1_E3284158: 0
-    - Vector1_F0921479: 3.9
+    - Vector1_E3284158: 1.99
+    - Vector1_F0921479: 10
     - Vector1_F82D82A1: 0
     - Vector1_FE69C59C: 0
     - _AlphaClip: 0
