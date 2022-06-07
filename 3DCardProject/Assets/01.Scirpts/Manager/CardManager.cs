@@ -412,8 +412,8 @@ public class CardManager : Singleton<CardManager>
     {
         if (isEnlarge)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -4.49f);
-            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(45, 0, 0), cardPrefab.transform.localScale), false);
+            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -6f);
+            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
         else
             card.MoveTransform(card.originPRS, false);
