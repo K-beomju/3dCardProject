@@ -40,6 +40,8 @@ public class TotemMove : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             steps--;
             routePosition++;
+
+            CheckNode();
         }
 
         isMove = false;
@@ -48,6 +50,16 @@ public class TotemMove : MonoBehaviour
     private bool MoveNextNode(Vector3 goal)
     {
         return goal != (transform.position  = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
+    }
+
+    public void CheckNode()
+    {
+        switch(routePosition)
+        {
+            case 8:
+                board.ChangeCam(1);
+                break;
+        }
     }
 
 }

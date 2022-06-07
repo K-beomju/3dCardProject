@@ -7,6 +7,9 @@ public class BoardManager : MonoBehaviour
     private Transform[] childObjs;
     public List<Transform> childNodeList = new List<Transform>();
 
+    [SerializeField] private List<GameObject> boardCams;
+    [SerializeField] private TotemMove totem;
+
     #region
     private void OnDrawGizmos()
     {
@@ -40,4 +43,16 @@ public class BoardManager : MonoBehaviour
         }
     }
     #endregion
+
+
+    public GameObject ChangeCam(int num)
+    {
+
+        for(int i = 0; i < boardCams.Count; i++)
+        {
+            boardCams[i].SetActive(false);
+        }
+        boardCams[num].SetActive(true);
+        return boardCams[num].gameObject;
+    }
 }
