@@ -708,7 +708,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8368915300404675851}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
   m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1.3, y: 1.7, z: 1}
   m_Children:
@@ -720,7 +720,7 @@ Transform:
   - {fileID: 6302825916912905890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
 --- !u!212 &8368915300404675849
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -795,7 +795,7 @@ MonoBehaviour:
     cost: 0
     name: 
     sprite: {fileID: 0}
-    isMagic: 0
+    isSpecial: 0
     atk: 0
     hp: 0
     description: 
@@ -847,8 +847,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 2.6215737, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0.00000033760352}
+  m_Size: {x: 2.56, y: 3.915567, z: 0.2}
+  m_Center: {x: 0, y: -0.64700097, z: 0.0000019814308}
 --- !u!331 &116325830691401236
 SpriteMask:
   m_ObjectHideFlags: 0

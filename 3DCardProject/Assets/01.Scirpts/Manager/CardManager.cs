@@ -281,7 +281,7 @@ public class CardManager : Singleton<CardManager>
             targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
             // }
 
-            results.Add(new PRS(targetPos + new Vector3(0, 0, -5.8f), targetRot, scale));
+            results.Add(new PRS(targetPos + new Vector3(0, 0, -7.5f), targetRot, scale));
 
         }
         return results;
@@ -409,8 +409,8 @@ public class CardManager : Singleton<CardManager>
     {
         if (isEnlarge)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -4.49f);
-            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(45, 0, 0), cardPrefab.transform.localScale), false);
+            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -6f);
+            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
         else
             card.MoveTransform(card.originPRS, false);
@@ -490,7 +490,7 @@ public class CardManager : Singleton<CardManager>
         {
             for (int i = 0; i < myCards.Count; i++)
             {
-                myCards[i].transform.DOMoveZ(-7, 0.3f);
+                myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
             }
 
         }
@@ -498,7 +498,7 @@ public class CardManager : Singleton<CardManager>
         {
             for (int i = 0; i < myCards.Count; i++)
             {
-                myCards[i].transform.DOMoveZ(-5.8f, 0.3f);
+                myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
             }
         }
     }

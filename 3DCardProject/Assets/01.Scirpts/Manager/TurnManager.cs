@@ -28,14 +28,9 @@ public class TurnManager : Singleton<TurnManager>
     {
         if (_type == TurnType.Player)
         {
-            Instance.mainCam.transform.DOMove(new Vector3(0,1, -10.5f), 0.5f).OnComplete(() => 
-            {
-                Instance.type = _type;
-                PlayerManager.TurnReset();
-            });
-            Instance.mainCam.transform.DORotate(new Vector3(45, 0, 0), 0.5f);
-            CardManager.Instance.MyCardMove(false);
-
+           Instance.type = _type;
+           PlayerManager.TurnReset();
+           CardManager.Instance.MyCardMove(false);
         }
         else
         {
