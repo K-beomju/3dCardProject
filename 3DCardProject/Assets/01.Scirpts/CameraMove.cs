@@ -14,7 +14,7 @@ public class CameraMove : MonoBehaviour
 
         if (!isLock)
         {
-            if (yFieldPos < 0.1f)
+            if (yFieldPos < 0.05f)
             {
                 transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
                 isLock = true;
@@ -23,7 +23,7 @@ public class CameraMove : MonoBehaviour
         }
         if(isLock)
         {
-            if(yGamePos > 0.4f)
+            if(yGamePos > 0.5f)
             {
                 transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
                 isLock = false;
