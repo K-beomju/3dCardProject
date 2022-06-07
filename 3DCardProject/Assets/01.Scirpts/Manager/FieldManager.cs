@@ -83,16 +83,17 @@ public class FieldManager : Singleton<FieldManager>
     {
         if (field != null)
         {
-            if (field.curCard == null)
+            /*if (field.curCard == null)
             {
-                card.isMove = true;
-              
-                card.transform.DOScaleZ(card.transform.localScale.z * .8f, 0.15f);
-                card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
-                card.transform.DOScaleY(card.transform.localScale.y * .8f, 0.15f);
-                field.SetUp(card);
+          
 
-            }
+            }*/
+            card.isMove = true;
+
+            card.transform.DOScaleZ(card.transform.localScale.z * .8f, 0.15f);
+            card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
+            card.transform.DOScaleY(card.transform.localScale.y * .8f, 0.15f);
+            field.SetUp(card);
         }
     }
     public void MoveToField(Field field, Card card)

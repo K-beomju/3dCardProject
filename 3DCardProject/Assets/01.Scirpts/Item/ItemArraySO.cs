@@ -9,7 +9,7 @@ public class Item
 
     public string name;         // 카드 이름
     public Sprite sprite;       // 카드 이미지
-    public bool isMagic;        // 마법 카드인가
+    public bool isSpecial;      // 특수 카드인가
     public float atk;        // 공격력
     public float hp;        // 체력
     [TextArea]

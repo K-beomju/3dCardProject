@@ -16,7 +16,7 @@ MonoBehaviour:
     cost: 1
     name: "\uACF0\uB3CC\uC774"
     sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
-    isMagic: 0
+    isSpecial: 1
     atk: 200
     hp: 300
     description: "\uACF0\uB3CC\uC774 \uC785\uB2C8\uB2E4"

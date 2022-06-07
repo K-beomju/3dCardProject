@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StageArraySO 2
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}
+  - {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}

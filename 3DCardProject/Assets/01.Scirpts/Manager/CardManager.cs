@@ -106,17 +106,31 @@ public class CardManager : Singleton<CardManager>
 
         if (InputManager.Instance.MouseUp)
         {
-            if (selectCard != null)
+            if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
             {
-                if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
+                Field field = hitData.transform.GetComponent<Field>();
+                Card card = hitData.transform.GetComponent<Card>();
+
+                if (selectCard != null)
                 {
-                    Field field = hitData.transform.GetComponent<Field>();
-                    if (field != null && (field.isPlayerField || selectCard.item.isMagic) && field.curCard == null)
+                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard  && card.curField != null && selectCard.item.isSpecial)
+                    {
+                        field = card.curField;
+
+                        CardDie(card);
+
+                        FieldManager.Instance.CheckingSpawn(field, selectCard);
+                        PlayerManager.Instance.playerCards.Add(selectCard);
+                        RemoveCard(false);
+                        TurnManager.PlayerCardMove();
+                        MyCardMove(true);
+
+                    }
+                    else if (field != null && (field.isPlayerField) && field.curCard == null && !selectCard.item.isSpecial)
                     {
                         FieldManager.Instance.CheckingSpawn(field, selectCard);
                         PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
-                        CardAlignment();
                         TurnManager.PlayerCardMove();
                         MyCardMove(true);
                     }
@@ -124,18 +138,13 @@ public class CardManager : Singleton<CardManager>
                     {
                         EnlargeCard(false, selectCard);
                     }
-                }
-                selectCard = null;
-                arrowObject.ActiveArrow(false);
-                isCardDrag = false;
-            }
-            else if (movingCard != null)
-            {
-                if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
-                {
-                    Field field = hitData.transform.GetComponent<Field>();
-                    Card card = hitData.transform.GetComponent<Card>();
 
+                    selectCard = null;
+                    arrowObject.ActiveArrow(false);
+                    isCardDrag = false;
+                }
+                else if (movingCard != null)
+                {
                     if (field != null && field.curCard == null && field.isSelected)
                     {
                         SelectMovingCardAroundField(false);
@@ -143,11 +152,13 @@ public class CardManager : Singleton<CardManager>
                     }
                     if (card != null && card.curField != null && card.curField.isSelected && !card.isPlayerCard)
                     {
-                        FieldManager.Instance.MoveToField(card.curField, movingCard);
                         SelectMovingCardAroundField(false);
+                        FieldManager.Instance.MoveToField(card.curField, movingCard);
                     }
+
                 }
             }
+          
         }
 
         if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
@@ -274,6 +285,25 @@ public class CardManager : Singleton<CardManager>
 
         }
         return results;
+    }
+
+    public void CardDie(Card card)
+    {
+        PRS prs;
+        if (card.isPlayerCard)
+        {
+            prs = new PRS(CardManager.Instance.cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
+        }
+        else
+        {
+            EnemyFieldManager.Instance.enemyCards.Remove(card);
+            prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
+        }
+        card.curField.RemoveCard();
+        card.curField = null;
+        card.MoveTransform(prs, true, 0.3f);
+
+        Destroy(card.gameObject, 1);
     }
     #endregion
 

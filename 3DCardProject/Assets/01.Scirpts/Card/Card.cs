@@ -33,21 +33,14 @@ public class Card : MonoBehaviour
         this.isPlayerCard = isPlayerCard;
         this.item = item;
         this.isFront = isFront;
-        if (this.item.isMagic)
-        {
-            card.color = new Color(0.5137255f, 0.6470588f, 0.9137256f);
-        }
-        else
-        {
-            card.color = new Color(0.9137255f, 0.5137255f, 0.5853466f);
-        }
+
         if (this.isFront)
         {
             cardImage.sprite = this.item.sprite;
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;
-            atkTMP.text = this.item.isMagic? "" : this.item.atk.ToString();
+            atkTMP.text = this.item.atk.ToString();
             RefreshHPText();
         }
         else
@@ -123,7 +116,7 @@ public class Card : MonoBehaviour
     }
     public void RefreshHPText()
     {
-        hpTMP.text = item.isMagic ? "" : this.item.hp.ToString();
+        hpTMP.text =  this.item.hp.ToString();
     }
     public void OnDamage(float damage)
     {

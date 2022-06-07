@@ -25,7 +25,7 @@ public class Field : MonoBehaviour
     public void HitColor(bool _isHit)
     {
         isHit = true;
-        sr.color = _isHit ? (isPlayerField ? aColor : CardManager.Instance.selectCard.item.isMagic ? aColor:cColor) : sColor;
+        sr.color = _isHit ? (isPlayerField && !CardManager.Instance.selectCard.item.isSpecial ? aColor : cColor) : sColor;
     }
 
     public void FieldSelect(bool inBool)
@@ -55,8 +55,9 @@ public class Field : MonoBehaviour
         curCard.isOnField = true;
     
         curCard.transform.DOMove(new Vector3(transform.position.x, transform.position.y + .15f, transform.position.z), .2f).OnComplete(() => {
-            Vector3 rot = transform.eulerAngles;
-            curCard.transform.DORotate(curCard.isPlayerCard ? rot:new Vector3(rot.x,rot.y,rot.z-180 ) , .1f);
+
+            print("AAAA");
+            curCard.transform.DORotateQuaternion(transform.rotation, .1f);
             curCard.Emphasize(() => {
                 foreach (var item in curCard.item.OnSpawn)
                 {
