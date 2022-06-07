@@ -36,9 +36,10 @@ public class Item
 
 public enum CardTribeType
 {
-    FLY, // 비행
-    WALK, // 지상
-    WATER, // 수상
+    NULL =  0b0000, // 없음
+    FLY =   0b0001, // 비행
+    WALK =  0b0010, // 지상
+    WATER = 0b0100, // 수상
 }
 
 

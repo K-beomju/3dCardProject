@@ -15,6 +15,21 @@ public class Field : MonoBehaviour
     private Color32 sColor;
     public bool isHit = false;
     public bool isSelected = false;
+
+    [SerializeField]
+    [EnumFlags]
+    private CardTribeType enableTribe;
+    public CardTribeType EnableTribe
+    {
+        get
+        {
+            return enableTribe;
+        }
+        set
+        {
+            enableTribe = value;
+        }
+    }
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -50,6 +65,7 @@ public class Field : MonoBehaviour
 
     public void SetUp(Card card)
     {
+        if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
         curCard = card;
         curCard.curField = this;
         curCard.isOnField = true;

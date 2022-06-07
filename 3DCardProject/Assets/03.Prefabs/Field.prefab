@@ -114,6 +114,7 @@ MonoBehaviour:
   isPlayerField: 1
   isHit: 0
   isSelected: 0
+  enableTribe: -1
 --- !u!1 &622231278785876211
 GameObject:
   m_ObjectHideFlags: 0
