@@ -9,21 +9,27 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
-        float yPos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+        float yFieldPos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+        float yGamePos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+
         if (!isLock)
         {
-            if (yPos < 0.4f)
+            if (yFieldPos < 0.1f)
             {
-                // Player
-                    transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
-            }
-            else
-            {
-                // Enemy
-                transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
+                transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
+                isLock = true;
             }
 
         }
-
+        if(isLock)
+        {
+            if(yGamePos > 0.4f)
+            {
+                transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
+                isLock = false;
+ 
+            }
+        }
+         
     }
 }
