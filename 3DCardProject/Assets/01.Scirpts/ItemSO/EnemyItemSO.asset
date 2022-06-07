@@ -16,9 +16,9 @@ MonoBehaviour:
     cost: 0
     name: "\uC801"
     sprite: {fileID: 0}
-    isMagic: 0
-    atk: 200
-    hp: 200
+    isSpecial: 0
+    atk: 20
+    hp: 20
     description: "\uC801\uC785\uB2C8\uB2E4."
     count: 1
     OnSpawn: []

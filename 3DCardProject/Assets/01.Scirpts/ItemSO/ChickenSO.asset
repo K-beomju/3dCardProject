@@ -16,9 +16,9 @@ MonoBehaviour:
     cost: 1
     name: "\uB2ED"
     sprite: {fileID: 21300000, guid: 2aec81099606fd74fa36ebd4a193178c, type: 3}
-    isMagic: 0
-    atk: 50
-    hp: 100
+    isSpecial: 0
+    atk: 5
+    hp: 10
     description: "\uB2ED \uC785\uB2C8\uB2E4"
     count: 3
     OnSpawn: []
