@@ -9,7 +9,7 @@ public class TotemMove : MonoBehaviour
     public int steps;
     
 
-    private int routePosition;
+    public int routePosition;
     private bool isMove = false;
     public float speed;
 
