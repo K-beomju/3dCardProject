@@ -17,10 +17,12 @@ public class TurnManager : Singleton<TurnManager>
 {
     [SerializeField] private TurnType type;
     private Camera mainCam;
+    private CameraMove cameraMove;
 
     private void Start()
     {
         mainCam = Camera.main;
+        cameraMove = mainCam.GetComponent<CameraMove>();
     }
 
     // ≈œ πŸ≤ﬁ 
@@ -35,7 +37,7 @@ public class TurnManager : Singleton<TurnManager>
         }
         else
         {
-            FindObjectOfType<CameraMove>().isLock = true;
+            cameraMove.isLock = true;
             Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f).OnComplete(() => Instance.type = _type);
             Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
             CardManager.Instance.MyCardMove(true);

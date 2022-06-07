@@ -15,10 +15,7 @@ public class CameraMove : MonoBehaviour
             if (yPos < 0.4f)
             {
                 // Player
-                if (!isLock)
-                {
                     transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
-                }
             }
             else
             {
