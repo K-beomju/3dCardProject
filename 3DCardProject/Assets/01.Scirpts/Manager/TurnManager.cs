@@ -38,8 +38,7 @@ public class TurnManager : Singleton<TurnManager>
         {
             Instance.cameraMove.isLock = false;
             FindObjectOfType<CameraMove>().isLock = true;
-            Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f).OnComplete(() => Instance.type = _type);
-            Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
+            Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.3f).OnComplete(() => Instance.type = _type);
             CardManager.Instance.MyCardMove(true);
 
         }
@@ -47,8 +46,7 @@ public class TurnManager : Singleton<TurnManager>
 
     public static void PlayerCardMove()
     {
-        Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
-        Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
+        Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.3f);
     }
 
     public static TurnType CurReturnType()
