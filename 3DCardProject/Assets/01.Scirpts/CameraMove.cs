@@ -18,13 +18,11 @@ public class CameraMove : MonoBehaviour
                 if (!isLock)
                 {
                     transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
-                    //transform.DORotate(new Vector3(45, 0, 0), 0.5f);
                 }
             }
             else
             {
                 // Enemy
-
                 transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
             }
 

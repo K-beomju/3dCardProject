@@ -91,7 +91,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         yield return new WaitUntil(() => enemyCards.TrueForAll(x => x.isMove));
 
         //yield return new WaitForSeconds(1f);
-
+        FindObjectOfType<CameraMove>().isLock = false;
         TurnManager.ChangeTurn(TurnType.Player);
 
     }
