@@ -33,11 +33,11 @@ public class TurnManager : Singleton<TurnManager>
            Instance.type = _type;
            PlayerManager.TurnReset();
            CardManager.Instance.MyCardMove(false);
-
         }
         else
         {
-            cameraMove.isLock = true;
+            Instance.cameraMove.isLock = false;
+            FindObjectOfType<CameraMove>().isLock = true;
             Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f).OnComplete(() => Instance.type = _type);
             Instance.mainCam.transform.DORotate(new Vector3(75, 0, 0), 0.5f);
             CardManager.Instance.MyCardMove(true);
