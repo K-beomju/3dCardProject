@@ -113,7 +113,7 @@ public class CardManager : Singleton<CardManager>
 
                 if (selectCard != null)
                 {
-                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard  && card.curField != null && selectCard.item.isSpecial)
+                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null && selectCard.item.isSpecial)
                     {
                         field = card.curField;
 
@@ -158,7 +158,7 @@ public class CardManager : Singleton<CardManager>
 
                 }
             }
-          
+
         }
 
         if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
@@ -223,7 +223,6 @@ public class CardManager : Singleton<CardManager>
             targetCard.MoveTransform(targetCard.originPRS, true, 0.3f);
         }
     }
-
     List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale)
     {
         float[] objLerps = new float[objCount];
@@ -289,6 +288,7 @@ public class CardManager : Singleton<CardManager>
 
     public void CardDie(Card card)
     {
+        SelectMovingCardAroundField(false, card);
         PRS prs;
         if (card.isPlayerCard)
         {
@@ -347,11 +347,14 @@ public class CardManager : Singleton<CardManager>
             SelectMovingCardAroundField(true);
         }
     }
-    public void SelectMovingCardAroundField(bool Inbool)
+    public void SelectMovingCardAroundField(bool Inbool, Card card = null)
     {
-        if (movingCard.isMove) return;
+        if (card == null)
+            card = movingCard;
 
-        Vector2Int gridPos = FieldManager.Instance.GetGridPos(movingCard.curField);
+        if (card.isMove) return;
+
+        Vector2Int gridPos = FieldManager.Instance.GetGridPos(card.curField);
 
         Vector2Int downLeftPos = gridPos - new Vector2Int(1, 1);
         Vector2Int upRightPos = gridPos + new Vector2Int(1, 1);
@@ -409,8 +412,8 @@ public class CardManager : Singleton<CardManager>
     {
         if (isEnlarge)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -6f);
-            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
+            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -4.49f);
+            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(45, 0, 0), cardPrefab.transform.localScale), false);
         }
         else
             card.MoveTransform(card.originPRS, false);
