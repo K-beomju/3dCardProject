@@ -6,24 +6,32 @@ using DG.Tweening;
 public class CameraMove : MonoBehaviour
 {
     public bool isLock = false;
+    public float yCardValue = 0.05f;
+    public float yGameValue = 0.5f;
 
     void Update()
     {
-        float yPos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+        float yCardPos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+        float yGamePos = Camera.main.ScreenToViewportPoint(Input.mousePosition).y;
+
         if (!isLock)
         {
-            if (yPos < 0.4f)
+            if (yCardPos < yCardValue)
             {
-                // Player
-                    transform.DOMove(new Vector3(0, 5.9f, -4f), 0.5f);
-            }
-            else
-            {
-                // Enemy
-                transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.5f);
+                transform.DOMove(new Vector3(0, 5.9f, -4f), 0.3f);
+                isLock = true;
             }
 
         }
-
+        if(isLock)
+        {
+            if(yGamePos > yGameValue)
+            {
+                transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.3f);
+                isLock = false;
+ 
+            }
+        }
+         
     }
 }

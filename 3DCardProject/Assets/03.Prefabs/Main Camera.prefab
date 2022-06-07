@@ -130,3 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabb25d9bcf62af448261ad5cd865ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLock: 0
+  yCardValue: 0.05
+  yGameValue: 0.5
