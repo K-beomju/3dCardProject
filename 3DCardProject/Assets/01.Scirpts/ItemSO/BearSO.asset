@@ -19,6 +19,7 @@ MonoBehaviour:
     isSpecial: 1
     atk: 20
     hp: 30
+    tribe: 1
     description: "\uACF0\uB3CC\uC774 \uC785\uB2C8\uB2E4"
     count: 4
     OnSpawn: []

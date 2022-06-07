@@ -10,6 +10,11 @@ public class Card : MonoBehaviour
     [SerializeField] private SpriteRenderer card;
     [SerializeField] private SpriteRenderer cardImage;
 
+    [SerializeField] private SpriteRenderer crystal;
+
+    [SerializeField] private Sprite crystal_blue;
+    [SerializeField] private Sprite crystal_red;
+
     [SerializeField] private TMP_Text costTMP;
     [SerializeField] private TMP_Text atkTMP;
     [SerializeField] private TMP_Text hpTMP;
@@ -37,6 +42,7 @@ public class Card : MonoBehaviour
         if (this.isFront)
         {
             cardImage.sprite = this.item.sprite;
+            crystal.sprite = isPlayerCard ?crystal_blue : crystal_red;
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;

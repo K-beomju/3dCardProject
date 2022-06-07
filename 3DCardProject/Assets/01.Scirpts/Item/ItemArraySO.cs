@@ -12,6 +12,9 @@ public class Item
     public bool isSpecial;      // 특수 카드인가
     public float atk;        // 공격력
     public float hp;        // 체력
+
+    public CardTribeType tribe; // 종족
+
     [TextArea]
     public string description;  // 카드 설명
 
@@ -30,6 +33,13 @@ public class Item
     }
 }
 
+
+public enum CardTribeType
+{
+    FLY, // 비행
+    WALK, // 지상
+    WATER, // 수상
+}
 
 
 [CreateAssetMenu(fileName = "ItemArraySO", menuName = "Scriptable Object/ItemArraySO")]
