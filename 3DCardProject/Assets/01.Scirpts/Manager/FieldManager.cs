@@ -115,17 +115,25 @@ public class FieldManager : Singleton<FieldManager>
             if (field.curCard != null)
             {
                 if (field.curCard.isPlayerCard != card.isPlayerCard)
+                {
                     card.Attack(field);
+                    card.isMove = true;
+
+                }
             }
             else
             {
-                if (card.curField != null)
+                if((field.EnableTribe & card.item.tribe) != CardTribeType.NULL)
                 {
-                    card.curField.RemoveCard();
+                    if (card.curField != null)
+                    {
+                        card.curField.RemoveCard();
+                    }
+                    field.SetUp(card);
+                    card.isMove = true;
                 }
-                field.SetUp(card);
+
             }
-            card.isMove = true;
         }
     }
     public Vector2Int GetGridPos(Field field)
