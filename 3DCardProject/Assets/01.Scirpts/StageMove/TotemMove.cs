@@ -33,15 +33,16 @@ public class TotemMove : MonoBehaviour
 
         while(steps > 0)
         {
-            Vector3 nextPos = board.childNodeList[routePosition + 1].position;
-            while(MoveNextNode(nextPos)) 
+            Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
+            while(MoveNextNode(nextPos))
                 yield return null;  
 
+            // 보드 클리어 검사 
+            board.ClearBoard(routePosition);
             yield return new WaitForSeconds(0.1f);
             steps--;
             routePosition++;
-
-            CheckNode();
+            board.ChangeCam();
         }
 
         isMove = false;
@@ -52,14 +53,6 @@ public class TotemMove : MonoBehaviour
         return goal != (transform.position  = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
 
-    public void CheckNode()
-    {
-        switch(routePosition)
-        {
-            case 8:
-                board.ChangeCam(1);
-                break;
-        }
-    }
+   
 
 }
