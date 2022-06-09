@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62fe600a31ccf2a43bcd8c528601dd0f, type: 3}
+  m_Name: StageArraySO_5
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}
+  avatar: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}

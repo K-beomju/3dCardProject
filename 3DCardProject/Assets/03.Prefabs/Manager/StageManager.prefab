@@ -48,4 +48,10 @@ MonoBehaviour:
   <stageArray>k__BackingField:
   - {fileID: 11400000, guid: 5106f85a45ba6da43bf5dda48afdd907, type: 2}
   - {fileID: 11400000, guid: 7f34807dc2c7ec94bbdfebfb8bfe6b04, type: 2}
-  - {fileID: 11400000, guid: c29dc443d75809145a64a19eb7fb2df7, type: 2}
+  - {fileID: 11400000, guid: 6dc45d714c9353e43b28e74ecce96b42, type: 2}
+  - {fileID: 11400000, guid: b47601af08189fb47b2cac72865cac3d, type: 2}
+  - {fileID: 11400000, guid: 56c12d759a41bdb459cb6422e3a84f12, type: 2}
+  - {fileID: 11400000, guid: e6fa55b786d1542449705b2748136cf3, type: 2}
+  - {fileID: 11400000, guid: ffcf788be560773498d0da6a59ab5dd3, type: 2}
+  - {fileID: 11400000, guid: e2b3324c6b67e204cba4037ba53d85d0, type: 2}
+  - {fileID: 11400000, guid: 4375f4f43ab9e9c499d1c191029c4db4, type: 2}

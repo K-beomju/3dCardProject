@@ -6,7 +6,6 @@ using Cinemachine;
 using DG.Tweening;
 
 
-
 public class BoardManager : MonoBehaviour
 {
     public List<Board> boardList = new List<Board>();
@@ -18,6 +17,11 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private List<Board> boardCamChList = new List<Board>();
 
     public CanvasGroup fadePanel;
+
+    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>(); 
+
+
+
     private bool isChange = false;
 
     private void Start()
@@ -28,6 +32,29 @@ public class BoardManager : MonoBehaviour
         {
             boardList.Add(childNodeList[i].GetComponent<Board>());
         }
+        for (int i = 0; i < childNodeList.Count / 6; i++)
+        {
+            boardArrayList.Add(new GenericClass<Board>());
+            boardArrayList[i].list = new List<Board>();
+            int rand = UnityEngine.Random.Range(0, 7);
+
+            for (int k = 0; k < 6; k++)
+            {
+                Board board = boardList[i * 6 + k];
+                if(k == rand)
+                {
+                    board.type = StageType.Shop;
+                }
+                board.stageData = StageManager.Instance.stageArray[i];
+                board.avatar = StageManager.Instance.stageArray[i].avatar.item.ShallowCopy();
+                boardArrayList[i].list.Add(board);
+
+            }
+        }
+
+      
+
+
     }
 
     #region

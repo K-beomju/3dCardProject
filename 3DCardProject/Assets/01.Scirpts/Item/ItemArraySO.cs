@@ -47,4 +47,6 @@ public enum CardTribeType
 public class ItemArraySO : ScriptableObject
 {
     public List<ItemSO> items;
+
+    public ItemSO avatar;
 }

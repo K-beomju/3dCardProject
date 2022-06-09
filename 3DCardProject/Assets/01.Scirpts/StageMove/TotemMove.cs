@@ -17,7 +17,7 @@ public class TotemMove : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && !isMove)
         {
-            steps = Random.Range(1, 7);
+            steps = 1;//Random.Range(1, 7);
 
             if(routePosition + steps < board.childNodeList.Count)
             {
