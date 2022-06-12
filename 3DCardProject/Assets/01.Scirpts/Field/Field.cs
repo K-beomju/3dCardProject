@@ -18,6 +18,21 @@ public class Field : MonoBehaviour
 
     [SerializeField]
     [EnumFlags]
+    private FieldType fieldType;
+    public FieldType FieldType
+    {
+        get
+        {
+            return fieldType;
+        }
+        set
+        {
+            fieldType = value;
+        }
+    }
+
+    [SerializeField]
+    [EnumFlags]
     private CardTribeType enableTribe;
     public CardTribeType EnableTribe
     {
@@ -99,4 +114,12 @@ public class Field : MonoBehaviour
         curCard = null;
     }
 
+}
+
+public enum FieldType
+{
+    NORMAL = 0b0000,
+    BUSH = 0b0001,
+    WALL = 0b0010,
+    BUFF = 0b0100,
 }
