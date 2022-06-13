@@ -27,17 +27,18 @@ public class CardManager : Singleton<CardManager>
 
     public static bool isFullMyCard = false;
 
-    private Camera mainCam;
     public Ray ray;
     public RaycastHit hitData;
     public Field hitField;
 
     public BezeirArrows arrowObject;
 
+    private Camera mainCam;
+
     protected override void Awake()
     {
         base.Awake();
-        mainCam = Camera.main;
+       
     }
 
     private void Start()
@@ -45,6 +46,7 @@ public class CardManager : Singleton<CardManager>
         StartCoroutine(SpawnCardCo());
         arrowObject.ActiveArrow(false);
         deckManager = GetComponent<DeckManager>();
+        mainCam = Camera.main;
     }
 
 
@@ -123,7 +125,7 @@ public class CardManager : Singleton<CardManager>
                         PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
                         TurnManager.PlayerCardMove();
-                        MyCardMove(true);
+                        //MyCardMove(true);
 
                     }
                     else if (field != null && (field.isPlayerField) && field.curCard == null && !selectCard.item.isSpecial)
@@ -132,7 +134,7 @@ public class CardManager : Singleton<CardManager>
                         PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
                         TurnManager.PlayerCardMove();
-                        MyCardMove(true);
+                        //MyCardMove(true);
                     }
                     else
                     {
@@ -272,13 +274,11 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < objCount; i++)
         {
             var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
-            var targetRot = Quaternion.Euler(45, 0, 0);
-            //if (objCount >= 2)
-            // {
+            var targetRot = Quaternion.Euler(45,0, 0);
+
             float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
             targetPos.y += curve;
             targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
-            // }
 
             results.Add(new PRS(targetPos + new Vector3(0, 0, -7.5f), targetRot, scale));
 
@@ -478,31 +478,31 @@ public class CardManager : Singleton<CardManager>
         CardAlignment();
     }
 
-    public bool MyCardIsFull()
-    {
-        if (myCards.Count >= 8)
-        {
-            return isFullMyCard;
-        }
-        return !isFullMyCard;
-    }
+    //public bool MyCardIsFull()
+    //{
+    //    if (myCards.Count >= 8)
+    //    {
+    //        return isFullMyCard;
+    //    }
+    //    return !isFullMyCard;
+    //}
 
-    public void MyCardMove(bool isSpawn)
-    {
-        if (isSpawn)
-        {
-            for (int i = 0; i < myCards.Count; i++)
-            {
-                myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
-            }
+    //public void MyCardMove(bool isSpawn)
+    //{
+    //    if (isSpawn)
+    //    {
+    //        for (int i = 0; i < myCards.Count; i++)
+    //        {
+    //            myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
+    //        }
 
-        }
-        else
-        {
-            for (int i = 0; i < myCards.Count; i++)
-            {
-                myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
-            }
-        }
-    }
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < myCards.Count; i++)
+    //        {
+    //            myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
+    //        }
+    //    }
+    //}
 }

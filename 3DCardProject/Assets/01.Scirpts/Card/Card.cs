@@ -74,14 +74,14 @@ public class Card : MonoBehaviour
 
         CardManager.Instance.CardMouseDown(this);
 
-        if (!isOnField)
-        {
-            if (!CardManager.Instance.MyCardIsFull())
-            {
-                CardManager.Instance.DeleteMyCard(this);
-                CardManager.Instance.CardAlignment();
-            }
-        }
+        //if (!isOnField)
+        //{
+        //    if (!CardManager.Instance.MyCardIsFull())
+        //    {
+        //        CardManager.Instance.DeleteMyCard(this);
+        //        CardManager.Instance.CardAlignment();
+        //    }
+        //}
 
 
     }
