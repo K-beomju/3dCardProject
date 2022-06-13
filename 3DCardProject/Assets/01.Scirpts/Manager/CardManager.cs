@@ -115,7 +115,7 @@ public class CardManager : Singleton<CardManager>
 
                 if (selectCard != null)
                 {
-                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null && selectCard.item.isSpecial)
+                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null )
                     {
                         field = card.curField;
 
@@ -128,7 +128,7 @@ public class CardManager : Singleton<CardManager>
                         //MyCardMove(true);
 
                     }
-                    else if (field != null && (field.isPlayerField) && field.curCard == null && !selectCard.item.isSpecial)
+                    else if (field != null && (field.isPlayerField) && field.curCard == null )
                     {
                         FieldManager.Instance.CheckingSpawn(field, selectCard);
                         PlayerManager.Instance.playerCards.Add(selectCard);

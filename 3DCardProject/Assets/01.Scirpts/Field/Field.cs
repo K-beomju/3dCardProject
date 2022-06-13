@@ -55,7 +55,7 @@ public class Field : MonoBehaviour
     public void HitColor(bool _isHit)
     {
         isHit = true;
-        sr.color = _isHit ? (isPlayerField && !CardManager.Instance.selectCard.item.isSpecial ? aColor : cColor) : sColor;
+        sr.color = _isHit ? (isPlayerField ? aColor : cColor) : sColor;
     }
 
     public void FieldSelect(bool inBool)

@@ -46,8 +46,6 @@ public class Card : MonoBehaviour
             nameTMP.text = this.item.name;
             costTMP.text = this.item.cost.ToString();
             descriptionTMP.text = this.item.description;
-            atkTMP.text = this.item.atk.ToString();
-            RefreshHPText();
         }
         else
         {
@@ -120,23 +118,7 @@ public class Card : MonoBehaviour
             act?.Invoke();
         });
     }
-    public void RefreshHPText()
-    {
-        hpTMP.text =  this.item.hp.ToString();
-    }
-    public void OnDamage(float damage)
-    {
-        if(item.hp <= damage)
-        {
-            OnDie();
-        }
-        else
-        {
-            item.hp -= damage;
-            OnDamage();
-        }
-        RefreshHPText();
-    }
+   
     public void Attack(Field field)
     {
         if (!isAttack && field.curCard != this)
@@ -155,8 +137,8 @@ public class Card : MonoBehaviour
                     if (field.curCard != null)
                     {
                         print("카드 공격");
-                        field.curCard.OnDamage(item.atk);
-                        OnDamage(field.curCard.item.atk);
+                       /* field.curCard.OnDamage(item.atk);
+                        OnDamage(field.curCard.item.atk);*/
                     }
                     isAttack = false;
                     OnAttack();

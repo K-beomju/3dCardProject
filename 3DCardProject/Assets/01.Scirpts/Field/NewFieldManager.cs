@@ -77,6 +77,15 @@ public class NewFieldManager : Singleton<NewFieldManager>
             }
         }
     }
+    
+    public void Spawn(Field field, Card card)
+    {
+        if (field != null)
+        {
+            card.isMove = true;
+            field.SetUp(card);
+        }
+    }
 
     public void Move(Field field, Card card)
     {

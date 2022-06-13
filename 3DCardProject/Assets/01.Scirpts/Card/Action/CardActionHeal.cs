@@ -6,6 +6,6 @@ public class CardActionHeal : CardAction
 {
     public override void TakeAction(Card card)
     {
-        card.item.hp += 50;
+        //card.item.hp += 50;
     }
 }
