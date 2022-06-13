@@ -1160,7 +1160,7 @@ GameObject:
   - component: {fileID: 8368915300404675849}
   - component: {fileID: 8368915300404675855}
   - component: {fileID: 8368915300404675848}
-  - component: {fileID: 8368915300404675854}
+  - component: {fileID: 7488188750764011708}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -1175,7 +1175,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8368915300404675851}
-  m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
@@ -1189,7 +1189,7 @@ Transform:
   - {fileID: 7984938632944528061}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!212 &8368915300404675849
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   - {fileID: 3012308058567979685}
   - {fileID: 5409099860390450278}
   sortingLayerName: Card
---- !u!65 &8368915300404675854
+--- !u!65 &7488188750764011708
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1322,8 +1322,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 3.915567, z: 0.2}
-  m_Center: {x: 0, y: -0.64700097, z: 0.0000019814308}
+  m_Size: {x: 6, y: 8.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8766395415126554790
 GameObject:
   m_ObjectHideFlags: 0

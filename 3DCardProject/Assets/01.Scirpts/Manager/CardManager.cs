@@ -214,7 +214,7 @@ public class CardManager : Singleton<CardManager>
     public void CardAlignment()
     {
         List<PRS> originCardPRss = new List<PRS>();
-        originCardPRss = RoundAlignment(cardRight, cardLeft, myCards.Count, 0.5f, cardPrefab.transform.localScale);
+        originCardPRss = RoundAlignment(cardRight, cardLeft, myCards.Count, 0.5f, cardPrefab.transform.localScale * 0.8f);
 
         var targetCards = myCards;
         for (int i = 0; i < targetCards.Count; i++)
@@ -237,8 +237,8 @@ public class CardManager : Singleton<CardManager>
             case 1:
                 objLerps = new float[] { 0.5f };
                 {
-                    cardLeft.transform.position = new Vector3(-1.5f, cardLeft.position.y);
-                    cardRight.transform.position = new Vector3(1.5f, cardRight.position.y);
+                    cardLeft.transform.position = new Vector3(-.5f, cardLeft.position.y);
+                    cardRight.transform.position = new Vector3(.5f, cardRight.position.y);
                 }
                 break;
             case 2:
@@ -247,19 +247,19 @@ public class CardManager : Singleton<CardManager>
                 objLerps = new float[] { 0.1f, 0.9f };
                 break;
             case 3:
-                cardLeft.transform.position = new Vector3(-3.5f, cardLeft.position.y);
-                cardRight.transform.position = new Vector3(3.5f, cardRight.position.y);
+                cardLeft.transform.position = new Vector3(-2.5f, cardLeft.position.y);
+                cardRight.transform.position = new Vector3(2.5f, cardRight.position.y);
                 objLerps = new float[] { 0.1f, 0.5f, 0.9f };
                 break;
             case 4:
-                cardLeft.transform.position = new Vector3(-5f, cardLeft.position.y);
-                cardRight.transform.position = new Vector3(5f, cardRight.position.y);
+                cardLeft.transform.position = new Vector3(-3.5f, cardLeft.position.y);
+                cardRight.transform.position = new Vector3(3.5f, cardRight.position.y);
                 for (int i = 0; i < objCount; i++)
                     objLerps[i] = 1f / (objCount - 1) * i;
                 break;
             case 5:
-                cardLeft.transform.position = new Vector3(-6f, cardLeft.position.y);
-                cardRight.transform.position = new Vector3(6f, cardRight.position.y);
+                cardLeft.transform.position = new Vector3(-4.5f, cardLeft.position.y);
+                cardRight.transform.position = new Vector3(4.5f, cardRight.position.y);
                 for (int i = 0; i < objCount; i++)
                     objLerps[i] = 1f / (objCount - 1) * i;
                 break;
@@ -280,7 +280,7 @@ public class CardManager : Singleton<CardManager>
             targetPos.y += curve;
             targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
 
-            results.Add(new PRS(targetPos + new Vector3(0, 0, 3f), targetRot, scale));
+            results.Add(new PRS(targetPos + new Vector3(0, 0, -9f), targetRot, scale));
 
         }
         return results;
@@ -412,7 +412,7 @@ public class CardManager : Singleton<CardManager>
     {
         if (isEnlarge)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, -13.14f, -6f);
+            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y, card.originPRS.pos.z + 1.5f);
             card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
         else
