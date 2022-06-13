@@ -9,7 +9,10 @@ public class Item
 
     public string name;         // 카드 이름
     public Sprite sprite;       // 카드 이미지
-
+    public bool isAvatar;       // 아바타 카드 인가
+    public bool canStandOn;     // 위에 서있을 수 있는가
+    public bool isTakeBackCard; // 받아치기 카드인가
+    public bool isUpperCard; // 위에 올릴 수 있는 카드인가
 
     public CardTribeType tribe; // 종족
 

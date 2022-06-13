@@ -20,7 +20,7 @@ public class CardManager : Singleton<CardManager>
     private DeckManager deckManager;
     public List<Item> itemBuffer { get; set; }
     public Card selectCard;
-    public Card movingCard;
+    //public Card movingCard;
     private bool isCardDrag;
 
     private bool onCardArea;
@@ -115,7 +115,7 @@ public class CardManager : Singleton<CardManager>
 
                 if (selectCard != null)
                 {
-                    if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null )
+                    /*if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null )
                     {
                         field = card.curField;
 
@@ -128,12 +128,13 @@ public class CardManager : Singleton<CardManager>
                         //MyCardMove(true);
 
                     }
-                    else if (field != null && (field.isPlayerField) && field.curCard == null )
+                    else */if (field != null && (field.isPlayerField) && field.curCard == null )
                     {
-                        FieldManager.Instance.CheckingSpawn(field, selectCard);
+                        NewFieldManager.Instance.Spawn(field, selectCard);
+                        //FieldManager.Instance.CheckingSpawn(field, selectCard);
                         PlayerManager.Instance.playerCards.Add(selectCard);
                         RemoveCard(false);
-                        TurnManager.PlayerCardMove();
+                        //TurnManager.PlayerCardMove();
                         //MyCardMove(true);
                     }
                     else
@@ -145,7 +146,7 @@ public class CardManager : Singleton<CardManager>
                     arrowObject.ActiveArrow(false);
                     isCardDrag = false;
                 }
-                else if (movingCard != null)
+                /*else if (movingCard != null)
                 {
                     if (field != null && field.curCard == null && field.isSelected)
                     {
@@ -158,7 +159,7 @@ public class CardManager : Singleton<CardManager>
                         FieldManager.Instance.MoveToField(card.curField, movingCard);
                     }
 
-                }
+                }*/
             }
 
         }
@@ -288,7 +289,7 @@ public class CardManager : Singleton<CardManager>
 
     public void CardDie(Card card)
     {
-        SelectMovingCardAroundField(false, card);
+        //SelectMovingCardAroundField(false, card);
         PRS prs;
         if (card.isPlayerCard)
         {
@@ -337,7 +338,7 @@ public class CardManager : Singleton<CardManager>
             float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
             arrowObject.transform.position = new Vector3(x, 540, 0);
         }
-        else
+        /*else
         {
             if (movingCard != null)
                 SelectMovingCardAroundField(false);
@@ -345,12 +346,12 @@ public class CardManager : Singleton<CardManager>
             movingCard = card;
 
             SelectMovingCardAroundField(true);
-        }
+        }*/
     }
     public void SelectMovingCardAroundField(bool Inbool, Card card = null)
     {
-        if (card == null)
-            card = movingCard;
+        /*if (card == null)
+            card = movingCard;*/
 
         if (card.isMove) return;
 

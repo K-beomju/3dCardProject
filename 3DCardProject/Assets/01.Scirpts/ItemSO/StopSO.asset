@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
-  m_Name: RabbitSO
+  m_Name: StopSO
   m_EditorClassIdentifier: 
   item:
     cost: 1
-    name: "\uD1A0\uB07C"
-    sprite: {fileID: 21300000, guid: 2aec81099606fd74fa36ebd4a193178c, type: 3}
-    isSpecial: 0
-    atk: 10
-    hp: 25
-    tribe: 1
-    description: "\uD1A0\uB07C \uC785\uB2C8\uB2E4"
-    count: 3
-    OnSpawn: []
-    OnDie:
+    name: "\uC2A4\uD0D1"
+    sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
+    isAvatar: 0
+    canStandOn: 0
+    isTakeBackCard: 0
+    isUpperCard: 0
+    tribe: 2
+    description: "\uCE74\uB4DC \uC0AC\uC6A9 \uD6C4 \uC774\uB3D9\uD558\uC9C0 \uC54A\uB294\uB2E4."
+    count: 1
+    OnSpawn:
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
-    OnAttack:
-    - action: {fileID: 1398142281028326631, guid: 3ce249e6c8fce5740886afa718bb9a3e, type: 3}
-      condition: []
+    OnDie: []
+    OnAttack: []
     OnDamage: []

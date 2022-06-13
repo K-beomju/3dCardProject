@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: PlayerItemArraySO
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: b5553dc7e2544d741824655c77416084, type: 2}
-  - {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}
-  - {fileID: 11400000, guid: 8e4437a2478b8e840a5bc522d642ecb3, type: 2}
-  - {fileID: 11400000, guid: d33cc0e8986483a4898e58082b81f6b4, type: 2}
+  - {fileID: 11400000, guid: b96f5c6a2a779f4468458d5ce4be7ee0, type: 2}
+  - {fileID: 11400000, guid: c396f80de7ad98a4490c799eb65c648b, type: 2}
+  - {fileID: 11400000, guid: 8e44dacc12707b04a80bb6c8af7742b3, type: 2}
+  - {fileID: 11400000, guid: 4b5adcf502a1d15408a8138812b78aa5, type: 2}
+  - {fileID: 11400000, guid: 7f1d931faab4a15468a2bbf19ce49543, type: 2}
+  - {fileID: 11400000, guid: d8417036de350e84f887fa64a9240ce0, type: 2}
+  avatar: {fileID: 0}

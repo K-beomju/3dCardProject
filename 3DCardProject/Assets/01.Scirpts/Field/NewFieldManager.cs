@@ -69,7 +69,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             var node = fields.GetNodeByIndex(i);
             Card card = node.Data.curCard;
-            if (card != null && !card.isMove)
+            if (card != null && !card.isMove && card.item.isAvatar)
             {
                 card.isMove = true;
                 Move(node.NextNode.Data, card);
@@ -93,11 +93,19 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             if (field.curCard != null)
             {
-                if (field.curCard.isPlayerCard != card.isPlayerCard)
+                if (field.curCard.item.canStandOn)
+                {
+                    if (card.curField != null)
+                    {
+                        card.curField.RemoveCard();
+                    }
+                    field.SetUp(card);
+                    card.isMove = true;
+                }
+                else
                 {
                     card.Attack(field);
                     card.isMove = true;
-
                 }
             }
             else
@@ -110,6 +118,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     }
                     field.SetUp(card);
                     card.isMove = true;
+        print("AAAAAA");
                 }
 
             }

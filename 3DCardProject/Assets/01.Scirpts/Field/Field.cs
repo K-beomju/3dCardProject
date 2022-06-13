@@ -7,6 +7,8 @@ public class Field : MonoBehaviour
 {
     [field: SerializeField]
     public Card curCard { get; private set; }
+    public Card upperCard { get; private set; }
+
     public bool isPlayerField = true;
 
     private SpriteRenderer sr;
@@ -81,20 +83,28 @@ public class Field : MonoBehaviour
     public void SetUp(Card card)
     {
         if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
-        curCard = card;
-        curCard.curField = this;
-        curCard.isOnField = true;
+        if(card.item.isUpperCard)
+        {
+            upperCard = card;
+            upperCard.curField = this;
+            upperCard.isOnField = true;
+        }
+        else
+        {
+            curCard = card;
+            curCard.curField = this;
+            curCard.isOnField = true;
+        }
+        card.transform.DOScaleZ(transform.localScale.z * .7f, 0.15f);
+        card.transform.DOScaleX(transform.localScale.x * .7f, 0.15f);
+        card.transform.DOScaleY(transform.localScale.y * .7f, 0.15f);
 
-        curCard.transform.DOScaleZ(transform.localScale.z * .2f, 0.15f);
-        curCard.transform.DOScaleX(transform.localScale.x * .2f, 0.15f);
-        curCard.transform.DOScaleY(transform.localScale.y * .2f, 0.15f);
+        card.transform.DOMove(new Vector3(transform.position.x, transform.position.y + .15f, transform.position.z), .2f).OnComplete(() => {
 
-        curCard.transform.DOMove(new Vector3(transform.position.x, transform.position.y + .15f, transform.position.z), .2f).OnComplete(() => {
 
-            print("AAAA");
-            curCard.transform.DORotateQuaternion(transform.rotation, .1f);
-            curCard.Emphasize(() => {
-                foreach (var item in curCard.item.OnSpawn)
+            card.transform.DORotateQuaternion(transform.rotation, .1f);
+            card.Emphasize(() => {
+                foreach (var item in card.item.OnSpawn)
                 {
                     int check = 0;
                     foreach (var condition in item.condition)
@@ -105,7 +115,7 @@ public class Field : MonoBehaviour
                         }
                     }
                     if (check == 0)
-                        item.action.TakeAction(curCard);
+                        item.action.TakeAction(card);
                 }
             });
 

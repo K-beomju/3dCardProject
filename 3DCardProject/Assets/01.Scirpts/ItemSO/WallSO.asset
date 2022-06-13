@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
-  m_Name: ChangeSO
+  m_Name: WallSO
   m_EditorClassIdentifier: 
   item:
     cost: 1
-    name: "\uCCB4\uC778\uC9C0"
+    name: "\uBCBD"
     sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
     isAvatar: 0
     canStandOn: 0
     isTakeBackCard: 0
     isUpperCard: 0
     tribe: 2
-    description: "\uC774\uB3D9 \uBC29\uD5A5\uC744 \uBC14\uAFBC\uB2E4."
+    description: "[\uC124\uCE58\uCE74\uB4DC]\n\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C
+      \uC774\uB3D9\uD560 \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774
+      \uCE74\uB4DC\uAC00 \uC0AC\uB77C\uC9C4\uB2E4."
     count: 1
-    OnSpawn:
-    - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
-      condition: []
+    OnSpawn: []
     OnDie: []
     OnAttack: []
     OnDamage: []

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
-  m_Name: ChickenSO
+  m_Name: TrapSO
   m_EditorClassIdentifier: 
   item:
     cost: 1
-    name: "\uB2ED"
-    sprite: {fileID: 21300000, guid: 2aec81099606fd74fa36ebd4a193178c, type: 3}
-    isSpecial: 0
-    atk: 5
-    hp: 10
+    name: "\uB36B"
+    sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
+    isAvatar: 0
+    canStandOn: 1
+    isTakeBackCard: 0
+    isUpperCard: 0
     tribe: 1
-    description: "\uB2ED \uC785\uB2C8\uB2E4"
-    count: 3
+    description: "[\uC124\uCE58\uCE74\uB4DC]\n\uBC1F\uC744 \uACBD\uC6B0 50% \uD655\uB960\uB85C
+      \uCE74\uB4DC\uB97C \uBC84\uB9B0\uB2E4."
+    count: 1
     OnSpawn: []
-    OnDie:
-    - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
-      condition: []
+    OnDie: []
     OnAttack: []
     OnDamage: []
