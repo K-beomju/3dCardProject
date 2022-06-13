@@ -11,37 +11,66 @@ public class MyLinkedList<T>
         public Node NextNode;
     }
 
-    public Node head,tail;
+    public Node head;
 
     private List<Node> nodes = new List<Node>();
 
     public MyLinkedList(List<T> fields)
     {
         head = new Node();
-        tail = new Node();
 
-        head.Data = fields[0];
-        tail.Data = fields[fields.Count-1];
+        Init_Head(fields[0]);
         
-        head.NextNode = tail;
-        tail.PrevNode = head;
         nodes.Add(head);
-        for (int i = 1; i < fields.Count -1; i++)
+        for (int i = 1; i < fields.Count ; i++)
         {
-            Node node = new Node();
-            node.Data = fields[i];
-            node.NextNode = head.NextNode;
-            head.NextNode = node;
-            node.PrevNode = node.NextNode.PrevNode;
-            node.NextNode.PrevNode = node;
-            nodes.Add(node);
+            Insert_Head(fields[i]);
+            /*Node node = new Node();
+                node.Data = fields[i];
+                node.NextNode = head.NextNode;
+                head.NextNode = node;
+                node.PrevNode = node.NextNode.PrevNode;
+                node.NextNode.PrevNode = node;*/
         }
 
-        tail.NextNode = head;
-        head.PrevNode = tail;
-        nodes.Add(tail);
+    }
+    private void Init_Head(T data)
+    {
+        head = CreateNode(data);
+
+        if (head == null) return;
+
+        head.Data = data;
+        head.PrevNode = head.NextNode = head;
+    }
+    Node CreateNode(T data)
+    {
+        Node New_Node = new Node();
+
+        if (New_Node == null) return New_Node;
+
+        New_Node.Data = data;
+        New_Node.PrevNode= New_Node.NextNode = null;
+
+        return New_Node;
     }
 
+    void Insert_Head(T data)
+    {
+        Node New_Node = CreateNode(data);
+        nodes.Add(New_Node);
+
+        if (New_Node == null) return;
+
+        // 새로운 노드 연결.
+        New_Node.PrevNode = head;
+        New_Node.NextNode= head.NextNode;
+        New_Node.PrevNode.NextNode= New_Node;
+        New_Node.NextNode.PrevNode = New_Node;
+
+        // data 삽입.
+        New_Node.Data = data;
+    }
     public Node GetNodeByIndex(int idx)
     {
         return nodes[idx];
