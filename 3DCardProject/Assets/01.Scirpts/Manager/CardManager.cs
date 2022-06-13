@@ -280,7 +280,7 @@ public class CardManager : Singleton<CardManager>
             targetPos.y += curve;
             targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
 
-            results.Add(new PRS(targetPos + new Vector3(0, 0, -7.5f), targetRot, scale));
+            results.Add(new PRS(targetPos + new Vector3(0, 0, 3f), targetRot, scale));
 
         }
         return results;
