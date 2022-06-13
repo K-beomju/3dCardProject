@@ -7,11 +7,13 @@ public class MyLinkedList<T>
     public class Node
     {
         public T Data;
-        public Node LastNode;
+        public Node PrevNode;
         public Node NextNode;
     }
 
     public Node head,tail;
+
+    private List<Node> nodes = new List<Node>();
 
     public MyLinkedList(List<T> fields)
     {
@@ -20,23 +22,34 @@ public class MyLinkedList<T>
 
         head.Data = fields[0];
         tail.Data = fields[fields.Count-1];
+        
         head.NextNode = tail;
-        head.LastNode = tail;
-
-        tail.NextNode = head;
-        tail.LastNode = head;
-
+        tail.PrevNode = head;
+        nodes.Add(head);
         for (int i = 1; i < fields.Count -1; i++)
         {
             Node node = new Node();
             node.Data = fields[i];
-            node.LastNode = head;
-            node.NextNode = tail;
+            node.NextNode = head.NextNode;
             head.NextNode = node;
-            tail.LastNode = node;
+            node.PrevNode = node.NextNode.PrevNode;
+            node.NextNode.PrevNode = node;
+            nodes.Add(node);
         }
+
+        tail.NextNode = head;
+        head.PrevNode = tail;
+        nodes.Add(tail);
     }
 
+    public Node GetNodeByIndex(int idx)
+    {
+        return nodes[idx];
+    }
+    public int GetNodeCount()
+    {
+        return nodes.Count;
+    }
     public bool isForward = true;
 
 

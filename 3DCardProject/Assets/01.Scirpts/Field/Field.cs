@@ -84,7 +84,11 @@ public class Field : MonoBehaviour
         curCard = card;
         curCard.curField = this;
         curCard.isOnField = true;
-    
+
+        curCard.transform.DOScaleZ(transform.localScale.z * .2f, 0.15f);
+        curCard.transform.DOScaleX(transform.localScale.x * .2f, 0.15f);
+        curCard.transform.DOScaleY(transform.localScale.y * .2f, 0.15f);
+
         curCard.transform.DOMove(new Vector3(transform.position.x, transform.position.y + .15f, transform.position.z), .2f).OnComplete(() => {
 
             print("AAAA");
