@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StageScene.unity
     guid: 95938d9748da27c4c8446dbf2a8e408c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Minsang 2.unity
     guid: 4e98d2c670e488d43a427604eaea2234
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Minsang.unity
     guid: 771bd4393d114e045a34e6bbbbad0541
+  - enabled: 1
+    path: Assets/Scenes/MinSangSang.unity
+    guid: f07d054791406244bbfa08983be0396c
   m_configObjects: {}
