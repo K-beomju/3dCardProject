@@ -77,7 +77,16 @@ public class NewFieldManager : Singleton<NewFieldManager>
             }
         }
     }
-    
+    public void Move(Field field)
+    {
+        var node = fields.GetNodeByData(field);
+        Card card = node.Data.curCard;
+        if (card != null && !card.isMove && card.item.isAvatar)
+        {
+            card.isMove = true;
+            Move(node.NextNode.Data, card);
+        }
+    }
     public void Spawn(Field field, Card card)
     {
         if (field != null)

@@ -75,6 +75,17 @@ public class MyLinkedList<T>
     {
         return nodes[idx];
     }
+    public Node GetNodeByData(T data)
+    {
+        foreach (var item in nodes)
+        {
+            if (item.Data.Equals(data))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
     public int GetNodeCount()
     {
         return nodes.Count;

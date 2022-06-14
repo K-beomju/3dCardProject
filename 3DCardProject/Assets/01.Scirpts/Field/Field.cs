@@ -83,7 +83,7 @@ public class Field : MonoBehaviour
     public void SetUp(Card card)
     {
         if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
-        if(card.item.isUpperCard)
+        if (card.item.isUpperCard)
         {
             upperCard = card;
             upperCard.curField = this;
@@ -94,6 +94,10 @@ public class Field : MonoBehaviour
             curCard = card;
             curCard.curField = this;
             curCard.isOnField = true;
+            if (upperCard != null)
+            {
+
+            }
         }
         card.transform.DOScaleZ(transform.localScale.z * .7f, 0.15f);
         card.transform.DOScaleX(transform.localScale.x * .7f, 0.15f);
