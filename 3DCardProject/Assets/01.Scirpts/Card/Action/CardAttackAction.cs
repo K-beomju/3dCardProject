@@ -7,6 +7,5 @@ public class CardAttackAction : CardAction
     public override void TakeAction(Card card)
     {
         FindObjectOfType<Hack>().ChangeHack(card);
-        print("ASd");
     }
 }
