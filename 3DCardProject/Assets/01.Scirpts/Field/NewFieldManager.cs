@@ -7,6 +7,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
     private MyLinkedList<Field> fields;
 
     public List<Field> fieldList = new List<Field>();
+    public Card playerCard;
+    public Card enemyCard;
+
 
     protected override void Awake()
     {
@@ -20,14 +23,14 @@ public class NewFieldManager : Singleton<NewFieldManager>
         for (int i = 0; i < fields.GetNodeCount(); i++)
         {
             var node = fields.GetNodeByIndex(i);
-            Quaternion q = Quaternion.Euler(new Vector3(90, 30 * (i + i + 1), 0));
+            Quaternion q = Quaternion.Euler(new Vector3(90, 30 * (i + i), 0));
             node.Data.transform.rotation = q;
         }
 
-        var playerCard = CreateCard(PlayerManager.Instance.playerItem);
-        var enemyCard = CreateCard(EnemyManager.Instance.enemyItem);
-        fields.GetNodeByIndex(3).Data.SetUp(playerCard);
-        fields.GetNodeByIndex(0).Data.SetUp(enemyCard);
+        playerCard = CreateCard(PlayerManager.Instance.playerItem);
+        enemyCard = CreateCard(EnemyManager.Instance.enemyItem);
+        fields.GetNodeByIndex(5).Data.SetUp(playerCard);
+        fields.GetNodeByIndex(2).Data.SetUp(enemyCard);
         PlayerManager.Instance.playerCards.Add(playerCard);
 
        

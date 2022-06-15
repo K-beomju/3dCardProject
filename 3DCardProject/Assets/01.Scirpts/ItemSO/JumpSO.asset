@@ -24,7 +24,9 @@ MonoBehaviour:
     description: "[\uC124\uCE58\uCE74\uB4DC]\n\uD55C\uCE78 \uB6F0\uC5B4\uB118\uC5B4
       \uAC08 \uC218 \uC788\uB2E4."
     count: 1
-    OnSpawn: []
+    OnSpawn:
+    - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
+      condition: []
     OnDie: []
     OnAttack: []
     OnDamage: []

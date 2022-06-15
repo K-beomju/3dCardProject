@@ -25,7 +25,9 @@ MonoBehaviour:
       \uC774\uB3D9\uD560 \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774
       \uCE74\uB4DC\uAC00 \uC0AC\uB77C\uC9C4\uB2E4."
     count: 1
-    OnSpawn: []
+    OnSpawn:
+    - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
+      condition: []
     OnDie: []
     OnAttack: []
     OnDamage: []

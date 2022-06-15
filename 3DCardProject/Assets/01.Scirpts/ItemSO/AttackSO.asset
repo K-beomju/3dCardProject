@@ -28,6 +28,8 @@ MonoBehaviour:
       condition: []
     - action: {fileID: 5554671917425128623, guid: 2db65cd7f2b8f204e8f0e76ea4fd0364, type: 3}
       condition: []
+    - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
+      condition: []
     OnDie: []
     OnAttack: []
     OnDamage: []
