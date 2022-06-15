@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewFieldManager : Singleton<NewFieldManager>
 {
@@ -13,7 +14,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
     public Card playerCard;
     public Card enemyCard;
 
-    public bool isClockDir { get; private set; } = true; // 시계방향인가?
+    public bool IsClockDir { get; private set; } = true; // 시계방향인가?
+    [SerializeField]
+    private RectTransform dirImage = null;
+
     protected override void Awake()
     {
         base.Awake();
@@ -53,7 +57,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         if (card != null  && card.item.isAvatar)
         {
             Debug.Log("avatarMoveTry");
-            if (isClockDir)
+            if (IsClockDir)
             {
                 Debug.Log(node.NextNode.Data);
                 Move(node.NextNode.Data, card);
@@ -68,7 +72,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     public void ChangeDir()
     {
-        isClockDir = !isClockDir;
+        IsClockDir = !IsClockDir;
+        dirImage.localScale = new Vector3(1, IsClockDir?1:-1, 1);
     }
     public void Spawn(Field field, Card card)
     {
