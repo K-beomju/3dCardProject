@@ -177,10 +177,12 @@ public class Card : MonoBehaviour
     }
     public void OnDamage()
     {
+        Debug.Log("ONDAMAGE: " + item.name);
         CardAction(item.OnDamage);
     }
     public void OnDie()
     {
+        Debug.Log("ONDIE: " + item.name);
         CardAction(item.OnDie);
     }
     public void OnSpawn()

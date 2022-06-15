@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,12 @@ public class NewFieldManager : Singleton<NewFieldManager>
     private MyLinkedList<Field> fields;
 
     public List<Field> fieldList = new List<Field>();
+
+
     public Card playerCard;
     public Card enemyCard;
 
-
+    public bool isClockDir { get; private set; } = true; // 시계방향인가?
     protected override void Awake()
     {
         base.Awake();
@@ -49,12 +52,24 @@ public class NewFieldManager : Singleton<NewFieldManager>
         Card card = node.Data.avatarCard;
         if (card != null  && card.item.isAvatar)
         {
-            Debug.Log(node.NextNode.Data);
             Debug.Log("avatarMoveTry");
-            Move(node.NextNode.Data, card);
+            if (isClockDir)
+            {
+                Debug.Log(node.NextNode.Data);
+                Move(node.NextNode.Data, card);
+            }
+            else
+            {
+                Debug.Log(node.PrevNode.Data);
+                Move(node.PrevNode.Data, card);
+            }
         }
     }
 
+    public void ChangeDir()
+    {
+        isClockDir = !isClockDir;
+    }
     public void Spawn(Field field, Card card)
     {
         if (field != null)
