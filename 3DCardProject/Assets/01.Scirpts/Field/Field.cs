@@ -88,6 +88,9 @@ public class Field : MonoBehaviour
             upperCard = card;
             upperCard.curField = this;
             upperCard.isOnField = true;
+
+
+
         }
         else
         {

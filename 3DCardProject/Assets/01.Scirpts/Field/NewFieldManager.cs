@@ -107,12 +107,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
             {
                 if(field.curCard.item.name == "µ£")
                 {
-                    card.Trap(field);
-                    card.isMove = true;
+                    card.CommonAction(field);
                 }
-
-
-
 
 
                 if (field.curCard.item.canStandOn)
@@ -128,6 +124,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 {
                     card.Attack(field);
                     card.isMove = true;
+
                 }
             }
             else
@@ -140,6 +137,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     }
                     field.SetUp(card);
                     card.isMove = true;
+
                 }
             }
 

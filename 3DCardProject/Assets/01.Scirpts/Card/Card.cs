@@ -148,17 +148,17 @@ public class Card : MonoBehaviour
     }
 
     // µ£ ºÎºÐ ±¸Çö
-    public void Trap(Field field)
+    public void CommonAction(Field field)
     {
         if (field.curCard != this)
         {
             if (field.curCard != null)
             {
                 field.curCard.OnAttack();
-
             }
         }
     }
+
 
     public void OnAttack()
     {
