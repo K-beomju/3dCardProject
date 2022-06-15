@@ -155,6 +155,7 @@ public class Card : MonoBehaviour
             if (field.curCard != null)
             {
                 field.curCard.OnAttack();
+
             }
         }
     }
