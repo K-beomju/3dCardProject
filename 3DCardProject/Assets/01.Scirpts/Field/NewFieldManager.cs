@@ -32,8 +32,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         fields.GetNodeByIndex(5).Data.SetUp(playerCard);
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard);
         PlayerManager.Instance.playerCards.Add(playerCard);
-
-       
+        
     }
     private void Update()
     {
@@ -90,6 +89,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             Move(node.NextNode.Data, card);
         }
     }
+
     public void Spawn(Field field, Card card)
     {
         if (field != null)
@@ -105,6 +105,16 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             if (field.curCard != null)
             {
+                if(field.curCard.item.name == "µ£")
+                {
+                    card.Trap(field);
+                    card.isMove = true;
+                }
+
+
+
+
+
                 if (field.curCard.item.canStandOn)
                 {
                     if (card.curField != null)
@@ -130,10 +140,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     }
                     field.SetUp(card);
                     card.isMove = true;
-        print("AAAAAA");
                 }
-
             }
+
+
         }
     }
 }

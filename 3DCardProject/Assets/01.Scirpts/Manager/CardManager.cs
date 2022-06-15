@@ -38,7 +38,7 @@ public class CardManager : Singleton<CardManager>
     protected override void Awake()
     {
         base.Awake();
-       
+
     }
 
     private void Start()
@@ -82,6 +82,27 @@ public class CardManager : Singleton<CardManager>
     {
         int temp = myCards.IndexOf(card);
         myCards.RemoveAt(temp);
+    }
+
+    public void RandCardDelete()
+    {
+        int rand = UnityEngine.Random.Range(0, 2);
+        if (rand == 0)
+        {
+            int index = UnityEngine.Random.Range(0, myCards.Count);
+            myCards[index].SetDeleteObject();
+            myCards.Remove(myCards[index]);
+
+            SetOriginOrder();
+            CardAlignment();
+
+            print("µ£ ¹ßµ¿");
+
+        }
+        else
+            print("µ£ ¹ßµ¿ ½ÇÆÐ");
+
+
     }
 
 
@@ -128,7 +149,8 @@ public class CardManager : Singleton<CardManager>
                         //MyCardMove(true);
 
                     }
-                    else */if (field != null && (field.isPlayerField) && field.curCard == null )
+                    else */
+                    if (field != null && (field.isPlayerField) && field.curCard == null)
                     {
                         NewFieldManager.Instance.Spawn(field, selectCard);
                         //FieldManager.Instance.CheckingSpawn(field, selectCard);
@@ -275,7 +297,7 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < objCount; i++)
         {
             var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
-            var targetRot = Quaternion.Euler(45,0, 0);
+            var targetRot = Quaternion.Euler(45, 0, 0);
 
             float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
             targetPos.y += curve;

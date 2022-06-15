@@ -137,19 +137,28 @@ public class Card : MonoBehaviour
                     if (field.curCard != null)
                     {
                         print("카드 공격");
-                       /* field.curCard.OnDamage(item.atk);
-                        OnDamage(field.curCard.item.atk);*/
+                        field.curCard.OnDamage();
                     }
                     isAttack = false;
                     OnAttack();
 
                 });
             });
-
-
         }
-
     }
+
+    // 덫 부분 구현
+    public void Trap(Field field)
+    {
+        if (field.curCard != this)
+        {
+            if (field.curCard != null)
+            {
+                field.curCard.OnAttack();
+            }
+        }
+    }
+
     public void OnAttack()
     {
         CardAction(item.OnAttack);

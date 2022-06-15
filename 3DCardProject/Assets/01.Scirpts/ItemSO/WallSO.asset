@@ -30,4 +30,6 @@ MonoBehaviour:
       condition: []
     OnDie: []
     OnAttack: []
-    OnDamage: []
+    OnDamage:
+    - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
+      condition: []
