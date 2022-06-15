@@ -12,7 +12,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public static void TurnReset()
     {
-        Instance.playerCards.ForEach(x => x.isMove = false);
+        //Instance.playerCards.ForEach(x => x.isMove = false);
     }
 
     public static void RemoveCard(Card card)

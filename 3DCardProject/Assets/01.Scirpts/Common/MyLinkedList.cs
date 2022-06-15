@@ -81,6 +81,7 @@ public class MyLinkedList<T>
         {
             if (item.Data.Equals(data))
             {
+                Debug.Log("EQUAL");
                 return item;
             }
         }

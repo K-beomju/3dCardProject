@@ -29,22 +29,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
         playerCard = CreateCard(PlayerManager.Instance.playerItem);
         enemyCard = CreateCard(EnemyManager.Instance.enemyItem);
-        fields.GetNodeByIndex(5).Data.SetUp(playerCard);
-        fields.GetNodeByIndex(2).Data.SetUp(enemyCard);
+        fields.GetNodeByIndex(5).Data.SetUp(playerCard,playerCard.OnSpawn);
+        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, playerCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);
         
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            RefreshMove();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Advance();
-        }
-
     }
     public Card CreateCard(Item item)
     {
@@ -55,37 +43,14 @@ public class NewFieldManager : Singleton<NewFieldManager>
         return card;
     }
 
-    public void RefreshMove()
-    {
-        for (int i = 0; i < fields.GetNodeCount(); i++)
-        {
-            var node = fields.GetNodeByIndex(i);
-            Card card = node.Data.curCard;
-            if (card != null)
-                card.isMove = false;
-        }
-    }
-    public void Advance()
-    {
-        for (int i = 0; i < fields.GetNodeCount(); i++)
-        {
-            var node = fields.GetNodeByIndex(i);
-            Card card = node.Data.curCard;
-            if (card != null && !card.isMove && card.item.isAvatar)
-            {
-                card.isMove = true;
-                Move(node.NextNode.Data, card);
-
-            }
-        }
-    }
-    public void Move(Field field)
+    public void AvatarMove(Field field)
     {
         var node = fields.GetNodeByData(field);
-        Card card = node.Data.curCard;
-        if (card != null && !card.isMove && card.item.isAvatar)
+        Card card = node.Data.avatarCard;
+        if (card != null  && card.item.isAvatar)
         {
-            card.isMove = true;
+            Debug.Log(node.NextNode.Data);
+            Debug.Log("avatarMoveTry");
             Move(node.NextNode.Data, card);
         }
     }
@@ -94,54 +59,115 @@ public class NewFieldManager : Singleton<NewFieldManager>
     {
         if (field != null)
         {
-            card.isMove = true;
-            field.SetUp(card);
+            
+            field.SetUp(card,card.OnSpawn);
         }
     }
 
+    /// <summary>
+    /// 카드를 필드로이동
+    /// </summary>
+    /// <param name="field">도착 필드</param>
+    /// <param name="card">이동할 카드</param>
     public void Move(Field field, Card card)
     {
+        Debug.Log(field);
         if (field != null)
         {
-            if (field.curCard != null)
+            Debug.Log("Field != null");
+            // 나중에 새로 프로젝트 팔때 수정필요 !!!!!!!!!!!!!!!!!!!!!
+            if (field.upperCard != null)
             {
-                if(field.curCard.item.name == "덫")
+                Debug.Log("upperCard != null");
+                if (field.upperCard.item.canStandOn)
                 {
-                    card.CommonAction(field);
-                }
+                    Debug.Log("upperCard CanStandOn");
 
-
-                if (field.curCard.item.canStandOn)
-                {
                     if (card.curField != null)
                     {
-                        card.curField.RemoveCard();
+                        Debug.Log("curField != null");
+                        if(card.isPlayerCard)
+                        {
+                            card.curField.RemoveAvatarCard();
+                        }
+                        else
+                        {
+                            card.curField.RemoveUpperCard();
+                        }
                     }
-                    field.SetUp(card);
-                    card.isMove = true;
+
+                    Debug.Log("AAAAAA");
+
+                    field.SetUp(card, field.upperCard.OnAttack);
+                }
+                else
+                {
+                    Debug.Log("upperCard CantStandOn");
+                    card.Attack(field);
+                    Debug.Log("BBBB");
+
+
+                }
+                Debug.Log("CCCCC");
+
+            }
+            else if (field.curCard != null)
+            {
+                if (field.curCard.item.canStandOn)
+                {
+                    
+                    if (card.curField != null)
+                    {
+                        if (card.isPlayerCard)
+                        {
+                            card.curField.RemoveAvatarCard();
+                        }
+                        else
+                        {
+                            card.curField.RemoveCurCard();
+                        }
+                    }
+
+                    field.SetUp(card, field.curCard.OnAttack);
+                    Debug.Log("EEEE");
+
                 }
                 else
                 {
                     card.Attack(field);
-                    card.isMove = true;
+
+                    Debug.Log("FFFFF");
 
                 }
+
+            }
+            else if(field.avatarCard != null)
+            {
+                card.Attack(field);
             }
             else
             {
-                if ((field.EnableTribe & card.item.tribe) != CardTribeType.NULL)
+                if (card.curField != null)
                 {
-                    if (card.curField != null)
+                    if (card.isPlayerCard)
                     {
-                        card.curField.RemoveCard();
+                        card.curField.RemoveAvatarCard();
                     }
-                    field.SetUp(card);
-                    card.isMove = true;
-
+                    else
+                    {
+                        card.curField.RemoveCurCard();
+                    }
                 }
+                    Debug.Log("GGGGG");
+                field.SetUp(card);
+
             }
 
 
+        }
+        else
+        {
+            Debug.Log("Field == null");
         }
     }
 }

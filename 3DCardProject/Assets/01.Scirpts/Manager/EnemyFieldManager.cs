@@ -44,7 +44,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
         var card = cardObj.GetComponent<Card>();
         card.Setup(item, true, false);
         card.GetComponent<Order>().SetOriginOrder(1);
-        card.isMove = true;
+        
         spawnCardCount++;
         enemyCards.Add(card);
         return card;
@@ -54,7 +54,7 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
     {
         // 움직임, 공격순 
         TurnManager.CurChangeType(TurnType.Change);
-        enemyCards.ForEach((x => x.isMove = false));
+        //enemyCards.ForEach((x => x.isMove = false));
 
         yield return new WaitForSeconds(1f);
         TurnManager.CurChangeType(TurnType.Enemy);
@@ -76,14 +76,8 @@ public class EnemyFieldManager : Singleton<EnemyFieldManager>
             Field randField = FieldManager.Instance.GetField(randPos);
             if (randField != null )
             {
-                if (!enemyCards[i].isMove)
-                {
-                    FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
-                }
-            }
-            else
-            {
-                enemyCards[i].isMove = true;
+                FieldManager.Instance.MoveToGrid(randPos, enemyCards[i]);
+
             }
             yield return new WaitForSeconds(0.5f);
 

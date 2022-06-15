@@ -7,9 +7,10 @@ public class Field : MonoBehaviour
 {
     [field: SerializeField]
     public Card curCard { get; private set; }
+    [field: SerializeField]
     public Card upperCard { get; private set; }
-
-    public bool isPlayerField = true;
+    [field: SerializeField]
+    public Card avatarCard { get; private set; }
 
     private SpriteRenderer sr;
     private Color32 aColor;
@@ -57,7 +58,7 @@ public class Field : MonoBehaviour
     public void HitColor(bool _isHit)
     {
         isHit = true;
-        sr.color = _isHit ? (isPlayerField ? aColor : cColor) : sColor;
+        sr.color = _isHit ? aColor : sColor;
     }
 
     public void FieldSelect(bool inBool)
@@ -80,20 +81,27 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void SetUp(Card card)
+    public void SetUp(Card card,Action act = null)
     {
-        if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
-        if (card.item.isUpperCard)
+        //if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
+        if(card.item.isAvatar)
         {
+            Debug.Log("SetAvatarCard");
+            avatarCard = card;
+            avatarCard.curField = this;
+            avatarCard.isOnField = true;
+        }
+        else if (card.item.isUpperCard)
+        {
+            Debug.Log("SetUpperCard");
             upperCard = card;
             upperCard.curField = this;
             upperCard.isOnField = true;
 
-
-
         }
         else
         {
+            Debug.Log("SetCard");
             curCard = card;
             curCard.curField = this;
             curCard.isOnField = true;
@@ -110,32 +118,28 @@ public class Field : MonoBehaviour
 
 
             card.transform.DORotateQuaternion(transform.rotation, .1f);
-            card.Emphasize(() => {
-                foreach (var item in card.item.OnSpawn)
-                {
-                    int check = 0;
-                    foreach (var condition in item.condition)
-                    {
-                        if (!condition.CheckCondition())
-                        {
-                            check++;
-                        }
-                    }
-                    if (check == 0)
-                        item.action.TakeAction(card);
-                }
-            });
-
-
-
-
+            if(act != null)
+            {
+                act?.Invoke();
+            }
         });
     }
-    public void RemoveCard()
+    public void RemoveCurCard()
     {
         curCard.curField = null;
         curCard = null;
     }
+    public void RemoveUpperCard()
+    {
+        upperCard.curField = null;
+        upperCard= null;
+    }
+    public void RemoveAvatarCard()
+    {
+        avatarCard.curField = null;
+        avatarCard = null;
+    }
+
 
 }
 
