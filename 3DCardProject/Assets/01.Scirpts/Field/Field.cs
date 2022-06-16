@@ -19,6 +19,7 @@ public class Field : MonoBehaviour
     public bool isHit = false;
     public bool isSelected = false;
     public bool isEnterRange = false;
+    public bool isHackField = false;
 
     [SerializeField]
     [EnumFlags]
@@ -56,6 +57,14 @@ public class Field : MonoBehaviour
         cColor = new Color32(255, 100, 100, 255);
         sColor = new Color32(255, 255, 255, 255);
     }
+    private void Start()
+    {
+        isHackField = GetComponent<Hack>() != null;
+        if (isHackField)
+        {
+            CardManager.Instance.hackField = this;
+        }
+    }
     public void HitColor(bool _isHit)
     {
         isHit = true;
@@ -85,14 +94,14 @@ public class Field : MonoBehaviour
     public void SetUp(Card card,Action act = null)
     {
         //if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
-        if(card.item.isAvatar)
+        if(card.item.IsAvatar)
         {
             Debug.Log("SetAvatarCard");
             avatarCard = card;
             avatarCard.curField = this;
             avatarCard.isOnField = true;
         }
-        else if (card.item.isUpperCard)
+        else if (card.item.IsUpperCard)
         {
             Debug.Log("SetUpperCard");
             upperCard = card;

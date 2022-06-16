@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NewFieldManager : Singleton<NewFieldManager>
 {
-    private MyLinkedList<Field> fields;
+    public MyLinkedList<Field> fields { get; private set; }
 
     public List<Field> fieldList = new List<Field>();
 
@@ -35,7 +35,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         playerCard = CreateCard(PlayerManager.Instance.playerItem);
         enemyCard = CreateCard(EnemyManager.Instance.enemyItem);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, playerCard.OnSpawn);
-        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, playerCard.OnSpawn);
+        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);
 
         CheckCardDragSpawnRange();
@@ -53,7 +53,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     {
         var node = fields.GetNodeByData(field);
         Card card = node.Data.avatarCard;
-        if (card != null && card.item.isAvatar)
+        if (card != null && card.item.IsAvatar)
         {
             Debug.Log("avatarMoveTry");
             CheckCardDragSpawnRange();
@@ -79,8 +79,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
     {
         if (field != null)
         {
+            Debug.Log(card.name);
 
-            field.SetUp(card, card.OnSpawn);
+            field.SetUp(card, ()=> { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
         }
     }
 
@@ -99,7 +100,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             if (field.upperCard != null)
             {
                 Debug.Log("upperCard != null");
-                if (field.upperCard.item.canStandOn)
+                if (field.upperCard.item.CanStandOn)
                 {
                     Debug.Log("upperCard CanStandOn");
 
@@ -133,7 +134,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             }
             else if (field.curCard != null)
             {
-                if (field.curCard.item.canStandOn)
+                if (field.curCard.item.CanStandOn)
                 {
 
                     if (card.curField != null)
@@ -204,4 +205,20 @@ public class NewFieldManager : Singleton<NewFieldManager>
         nextField.isEnterRange = true;
 
     }
+    public void CheckCardDragSpawnRange(Field field)
+    {
+        for (int i = 0; i < fieldList.Count; i++)
+        {
+            fieldList[i].isEnterRange = false;
+        }
+
+        var node = fields.GetNodeByData(field);
+        Field prevField = node.PrevNode.Data;
+        Field nextField = node.NextNode.Data;
+        prevField.isEnterRange = true;
+        nextField.isEnterRange = true;
+
+    }
+
+    
 }

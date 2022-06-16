@@ -11,6 +11,12 @@ public class DeckManager : MonoBehaviour
         itemBuffer.Clear();
 
     }
+    public Item GetTopItem()
+    {
+        if (itemBuffer.Count < 1) return null;
+
+        return itemBuffer[0];
+    }
     public Item PopItem()
     {
         if (itemBuffer.Count < 1) return null;

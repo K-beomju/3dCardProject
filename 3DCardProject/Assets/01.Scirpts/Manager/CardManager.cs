@@ -35,6 +35,8 @@ public class CardManager : Singleton<CardManager>
 
     private Camera mainCam;
 
+    public Field hackField;
+
     protected override void Awake()
     {
         base.Awake();
@@ -210,10 +212,7 @@ public class CardManager : Singleton<CardManager>
         Item popItem = deckManager.PopItem();
         if (popItem != null)
         {
-            var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
-            var card = cardObj.GetComponent<Card>();
-            card.Setup(popItem, true, true);
-            myCards.Add(card);
+            myCards.Add(CreateCard(popItem,true));
 
             SetOriginOrder();
 
@@ -222,7 +221,15 @@ public class CardManager : Singleton<CardManager>
 
 
     }
+    public Card CreateCard(Item item,bool isPlayerCard)
+    {
+        var cardObj = Instantiate(cardPrefab, transform.position, Utils.QI);
+        var card = cardObj.GetComponent<Card>();
+        card.Setup(item, true, isPlayerCard);
+        card.GetComponent<Order>().SetOriginOrder(1);
 
+        return card;
+    }
     public void SetOriginOrder()
     {
         int count = myCards.Count;
@@ -312,6 +319,7 @@ public class CardManager : Singleton<CardManager>
     public void CardDie(Card card)
     {
         //SelectMovingCardAroundField(false, card);
+        Debug.Log("Card Die : " +card.item.name);
         PRS prs;
         if (card.isPlayerCard)
         {
@@ -319,14 +327,14 @@ public class CardManager : Singleton<CardManager>
         }
         else
         {
-            EnemyFieldManager.Instance.enemyCards.Remove(card);
+            //EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
-        if(card.item.isAvatar)
+        if(card.item.IsAvatar)
         {
             card.curField.RemoveAvatarCard();
         }
-        else if (card.item.isUpperCard)
+        else if (card.item.IsUpperCard)
         {
             card.curField.RemoveUpperCard();
         }
@@ -362,9 +370,11 @@ public class CardManager : Singleton<CardManager>
     public virtual void CardMouseDown(Card card)
     {
         if (!card.isPlayerCard) return;
+        Debug.Log("Drag");
 
         if (card.curField == null)
         {
+            Debug.Log("Drag");
             //NewFieldManager.Instance.CheckCardDragSpawnRange();
             isCardDrag = true;
             selectCard = card;

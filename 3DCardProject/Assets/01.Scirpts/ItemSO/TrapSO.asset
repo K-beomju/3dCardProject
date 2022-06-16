@@ -16,10 +16,11 @@ MonoBehaviour:
     cost: 1
     name: "\uB36B"
     sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
-    isAvatar: 0
-    canStandOn: 1
-    isTakeBackCard: 0
-    isUpperCard: 0
+    IsAvatar: 0
+    CanStandOn: 1
+    IsReflectCard: 0
+    IsUpperCard: 0
+    IsStructCard: 1
     tribe: 1
     description: "[\uC124\uCE58\uCE74\uB4DC]\n\uBC1F\uC744 \uACBD\uC6B0 50% \uD655\uB960\uB85C
       \uCE74\uB4DC\uB97C \uBC84\uB9B0\uB2E4."

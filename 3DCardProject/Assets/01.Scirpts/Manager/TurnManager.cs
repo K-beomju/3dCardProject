@@ -25,6 +25,19 @@ public class TurnManager : Singleton<TurnManager>
         cameraMove = mainCam.GetComponent<CameraMove>();
     }
 
+    public void ChangeTurn()
+    {
+        if (type == TurnType.Player)
+        {
+            type = TurnType.Enemy;
+            EnemyManager.Instance.EnemyAction();
+        }
+        else
+        {
+            type = TurnType.Player;
+        }
+    }
+
     // ≈œ πŸ≤ﬁ 
     public static void ChangeTurn(TurnType _type)
     {

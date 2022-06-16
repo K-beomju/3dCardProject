@@ -11,4 +11,73 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         dm = GetComponent<DeckManager>();
     }
+
+    public void EnemyAction()
+    {
+        StartCoroutine(EnemyProcess());
+    }
+
+    public IEnumerator EnemyProcess()
+    {
+        yield return new WaitForSeconds(1);
+        Card card = CardManager.Instance.CreateCard(dm.PopItem(),false);
+        Field setField = null;
+        
+       
+        if(!card.item.IsStructCard)
+        {
+            Debug.Log("Struct : " + card.item.name);
+            setField = CardManager.Instance.hackField;
+        }
+        else
+        {
+            Field field = NewFieldManager.Instance.enemyCard.curField;
+            var node = NewFieldManager.Instance.fields.GetNodeByData(field);
+
+            NewFieldManager.Instance.CheckCardDragSpawnRange(field);
+            int rand = Random.Range(0, 1);
+
+            Field prevField = node.PrevNode.Data;
+            Field nextField = node.NextNode.Data;
+
+            bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
+            bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
+
+            if (rand == 0)
+            {
+                if (canPrevField)
+                {
+                    setField = node.PrevNode.Data;
+
+                }
+                else if (canNextField)
+                {
+                    setField = node.NextNode.Data;
+                }
+            }
+            else
+            {
+                if (canNextField)
+                {
+                    setField = node.NextNode.Data;
+
+                }
+                else if (canPrevField)
+                {
+                    setField = node.PrevNode.Data;
+                }
+            }
+
+        }
+
+        if (setField == null)
+        {
+            CardManager.Instance.CardDie(card);
+
+        }
+        else
+        {
+            NewFieldManager.Instance.Spawn(setField, card);
+        }
+    }
 }

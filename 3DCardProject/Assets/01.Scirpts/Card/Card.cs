@@ -110,6 +110,7 @@ public class Card : MonoBehaviour
     }
     public void Emphasize(Action act)
     {
+
         transform.DOScaleZ(transform.localScale.z + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
         transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
         transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>

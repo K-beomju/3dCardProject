@@ -286,7 +286,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1406361256}
-  - {fileID: 1766716212082549394}
+  - {fileID: 2108196372}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1434,6 +1434,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6154664adff843044a09e75393ecc430, type: 3}
+--- !u!1 &2108196371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2108196372}
+  m_Layer: 0
+  m_Name: Hack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2108196372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108196371}
+  m_LocalRotation: {x: 0.6830127, y: -0.18301268, z: 0.18301268, w: 0.6830127}
+  m_LocalPosition: {x: -0.17, y: -4.11, z: 3.26}
+  m_LocalScale: {x: 5.04924, y: 5.049242, z: 5.0492406}
+  m_Children:
+  - {fileID: 1766716212082549394}
+  m_Father: {fileID: 237247516}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1766716212082549393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,13 +1492,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766716212082549393}
-  m_LocalRotation: {x: 0.6830127, y: -0.18301268, z: 0.18301268, w: 0.6830127}
-  m_LocalPosition: {x: -0.17, y: -4.11, z: 3.26}
-  m_LocalScale: {x: 5.04924, y: 5.049242, z: 5.049242}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1766716212457839767}
-  m_Father: {fileID: 237247516}
-  m_RootOrder: 1
+  m_Father: {fileID: 2108196372}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1766716212082549395
 SpriteRenderer:
@@ -1676,6 +1707,8 @@ MonoBehaviour:
   <avatarCard>k__BackingField: {fileID: 0}
   isHit: 0
   isSelected: 0
+  isEnterRange: 0
+  isHackField: 0
   fieldType: -1
   enableTribe: -1
 --- !u!1001 &4778437131000178683

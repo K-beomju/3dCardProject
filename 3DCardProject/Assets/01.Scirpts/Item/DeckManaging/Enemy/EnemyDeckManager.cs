@@ -6,7 +6,7 @@ public class EnemyDeckManager : DeckManager
 {
     void Start()
     {
-        List<Item> items = StageManager.Instance.GetCurrentStageData();
-        SetupItemBuffer(items);
+        //List<Item> items = StageManager.Instance.GetCurrentStageData();
+        SetupItemBuffer(SaveManager.Instance.saveDeckData.CurDeck.ShallowCopy().DeckData);
     }
 }
