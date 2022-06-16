@@ -150,7 +150,7 @@ public class CardManager : Singleton<CardManager>
 
                     }
                     else */
-                    if (field != null && (field.isPlayerField) && field.curCard == null)
+                    if (field != null && field.curCard == null)
                     {
                         NewFieldManager.Instance.Spawn(field, selectCard);
                         //FieldManager.Instance.CheckingSpawn(field, selectCard);
@@ -191,7 +191,7 @@ public class CardManager : Singleton<CardManager>
             if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
             {
                 Field field = hitData.transform.GetComponent<Field>();
-                if (field != null)
+                if (field != null && field.isEnterRange)
                 {
                     hitField = field;
                     field.HitColor(true);
@@ -322,7 +322,18 @@ public class CardManager : Singleton<CardManager>
             EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
-        card.curField.RemoveCard();
+        if(card.item.isAvatar)
+        {
+            card.curField.RemoveAvatarCard();
+        }
+        else if (card.item.isUpperCard)
+        {
+            card.curField.RemoveUpperCard();
+        }
+        else
+        {
+            card.curField.RemoveCurCard();
+        }
         card.curField = null;
         card.MoveTransform(prs, true, 0.3f);
 
@@ -354,6 +365,7 @@ public class CardManager : Singleton<CardManager>
 
         if (card.curField == null)
         {
+            //NewFieldManager.Instance.CheckCardDragSpawnRange();
             isCardDrag = true;
             selectCard = card;
             arrowObject.ActiveArrow(true);
@@ -374,8 +386,6 @@ public class CardManager : Singleton<CardManager>
     {
         /*if (card == null)
             card = movingCard;*/
-
-        if (card.isMove) return;
 
         Vector2Int gridPos = FieldManager.Instance.GetGridPos(card.curField);
 

@@ -32,7 +32,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
         fields.GetNodeByIndex(5).Data.SetUp(playerCard);
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard);
         PlayerManager.Instance.playerCards.Add(playerCard);
-        
+        CheckCardDragSpawnRange();
+
+
     }
     private void Update()
     {
@@ -87,6 +89,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             card.isMove = true;
             Move(node.NextNode.Data, card);
+            CheckCardDragSpawnRange();
+
         }
     }
 
@@ -143,5 +147,20 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
 
         }
+    }
+
+    public void CheckCardDragSpawnRange()
+    {
+        for (int i = 0; i < fieldList.Count; i++)
+        {
+            fieldList[i].isEnterRange = false;
+        }
+
+        var node = fields.GetNodeByData(playerCard.curField);        
+        Field prevField = node.PrevNode.Data;
+        Field nextField = node.NextNode.Data;
+        prevField.isEnterRange = true;
+        nextField.isEnterRange = true;
+
     }
 }

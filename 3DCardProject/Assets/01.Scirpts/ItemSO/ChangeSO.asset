@@ -24,6 +24,8 @@ MonoBehaviour:
     description: "\uC774\uB3D9 \uBC29\uD5A5\uC744 \uBC14\uAFBC\uB2E4."
     count: 1
     OnSpawn:
+    - action: {fileID: 5630809365139895559, guid: 75905d446ebfefa458c891059f10811f, type: 3}
+      condition: []
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
     - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}

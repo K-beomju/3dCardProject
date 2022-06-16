@@ -28,7 +28,6 @@ public class Card : MonoBehaviour
     public bool isOnField = false;
 
     public bool isPlayerCard = true;
-    public bool isMove = false;
 
     public Field curField;
     public bool isAttack = false;
@@ -121,7 +120,7 @@ public class Card : MonoBehaviour
    
     public void Attack(Field field)
     {
-        if (!isAttack && field.curCard != this)
+        if (!isAttack && (field.curCard != this || field.upperCard != this||field.avatarCard != this))
         {
             isAttack = true;
             int originOrder = GetComponent<Order>().GetOriginalOrder();
@@ -136,8 +135,18 @@ public class Card : MonoBehaviour
                     GetComponent<Order>().SetOriginOrder(originOrder);
                     if (field.curCard != null)
                     {
-                        print("카드 공격");
+                        Debug.Log("카드 공격");
                         field.curCard.OnDamage();
+                    }
+                    else if(field.upperCard != null)
+                    {
+                        Debug.Log("Upper 카드 공격");
+                        field.upperCard.OnDamage();
+                    }
+                    else if( field.avatarCard != null)
+                    {
+                        Debug.Log("아바타 카드 공격");
+                        field.avatarCard.OnDamage();
                     }
                     isAttack = false;
                     OnAttack();
@@ -162,15 +171,27 @@ public class Card : MonoBehaviour
 
     public void OnAttack()
     {
+        Debug.Log("ONATTACK : " + item.name);
+
         CardAction(item.OnAttack);
     }
     public void OnDamage()
     {
+        Debug.Log("ONDAMAGE: " + item.name);
         CardAction(item.OnDamage);
     }
     public void OnDie()
     {
+        Debug.Log("ONDIE: " + item.name);
         CardAction(item.OnDie);
+    }
+    public void OnSpawn()
+    {
+        Debug.Log("ONSPAWN : " + item.name);
+        Emphasize(() =>
+        {
+            CardAction(item.OnSpawn);
+        });
     }
 
     private void CardAction(CardActionCondition[] act)
@@ -189,4 +210,6 @@ public class Card : MonoBehaviour
                 item.action.TakeAction(this);
         }
     }
+
+  
 }

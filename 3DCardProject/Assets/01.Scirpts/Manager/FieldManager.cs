@@ -35,7 +35,7 @@ public class FieldManager : Singleton<FieldManager>
                 Vector3 worldPos = new Vector3(x, 0, y);
 
                 Field field = Instantiate(fieldPrefab, worldPos * cellSize + originPos, Quaternion.Euler(90, 0, 0)).GetComponent<Field>();
-                field.isPlayerField = y == 0 ;
+                //field.isPlayerField = y == 0 ;
 
                 fields.Add(new Vector2Int(x, y), field);
             }
@@ -88,7 +88,7 @@ public class FieldManager : Singleton<FieldManager>
           
 
             }*/
-            card.isMove = true;
+           
 
             card.transform.DOScaleZ(card.transform.localScale.z * .8f, 0.15f);
             card.transform.DOScaleX(card.transform.localScale.x * .8f, 0.15f);
@@ -117,7 +117,7 @@ public class FieldManager : Singleton<FieldManager>
                 if (field.curCard.isPlayerCard != card.isPlayerCard)
                 {
                     card.Attack(field);
-                    card.isMove = true;
+                   
 
                 }
             }
@@ -127,10 +127,10 @@ public class FieldManager : Singleton<FieldManager>
                 {
                     if (card.curField != null)
                     {
-                        card.curField.RemoveCard();
+                        card.curField.RemoveCurCard();
                     }
                     field.SetUp(card);
-                    card.isMove = true;
+                   
                 }
 
             }
