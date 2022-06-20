@@ -192,6 +192,7 @@ public class Card : MonoBehaviour
         Emphasize(() =>
         {
             CardAction(item.OnSpawn);
+            CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
         });
     }
 

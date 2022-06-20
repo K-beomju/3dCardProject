@@ -6,11 +6,10 @@ public class CardMoveAction : CardAction
 {
     public override void TakeAction(Card card)
     {
-        if(card.isPlayerCard)
+        if (card.isPlayerCard)
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField);
         else
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField);
-
     }
 
 }

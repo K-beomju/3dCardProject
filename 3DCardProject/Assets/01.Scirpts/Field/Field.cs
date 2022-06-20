@@ -108,7 +108,7 @@ public class Field : MonoBehaviour
             upperCard.curField = this;
             upperCard.isOnField = true;
 
-        }
+        } 
         else
         {
             Debug.Log("SetCard");

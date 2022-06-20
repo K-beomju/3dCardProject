@@ -37,6 +37,8 @@ public class CardManager : Singleton<CardManager>
 
     public Field hackField;
 
+    public Item LastUsedCardItem = null;
+
     protected override void Awake()
     {
         base.Awake();

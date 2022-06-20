@@ -80,7 +80,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
         if (field != null)
         {
             Debug.Log(card.name);
-
             field.SetUp(card, ()=> { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
         }
     }
@@ -126,8 +125,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     Debug.Log("upperCard CantStandOn");
                     card.Attack(field);
                     Debug.Log("BBBB");
-
-
                 }
                 Debug.Log("CCCCC");
 

@@ -72,7 +72,4 @@ public class TurnManager : Singleton<TurnManager>
         Instance.type = type;
     }
 
-
-
-
 }
