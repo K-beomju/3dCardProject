@@ -49,6 +49,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
         return card;
     }
 
+    private void Update()
+    { // 수정 예정 
+        CheckCardDragSpawnRange();
+    }
     public void AvatarMove(Field field)
     {
         var node = fields.GetNodeByData(field);
@@ -56,7 +60,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         if (card != null && card.item.IsAvatar)
         {
             Debug.Log("avatarMoveTry");
-            CheckCardDragSpawnRange();
+            //CheckCardDragSpawnRange();
 
             if (IsClockDir)
             {
@@ -116,18 +120,13 @@ public class NewFieldManager : Singleton<NewFieldManager>
                             card.curField.RemoveUpperCard();
                         }
                     }
-
-                    Debug.Log("AAAAAA");
-
                     field.SetUp(card, field.upperCard.OnAttack);
                 }
                 else
                 {
                     Debug.Log("upperCard CantStandOn");
                     card.Attack(field);
-                    Debug.Log("BBBB");
                 }
-                Debug.Log("CCCCC");
 
             }
             else if (field.curCard != null)
@@ -148,15 +147,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     }
 
                     field.SetUp(card, field.curCard.OnAttack);
-                    Debug.Log("EEEE");
-
                 }
                 else
                 {
                     card.Attack(field);
-
-                    Debug.Log("FFFFF");
-
                 }
 
             }
@@ -177,7 +171,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
                         card.curField.RemoveCurCard();
                     }
                 }
-                Debug.Log("GGGGG");
                 field.SetUp(card);
 
             }

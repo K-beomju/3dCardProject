@@ -168,7 +168,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.051999997, y: -2.51}
+  m_AnchoredPosition: {x: -0.051999997, y: -1.23}
   m_SizeDelta: {x: 23.9755, y: 12.8461}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3386574949047304251
@@ -259,8 +259,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.62
-  m_fontSizeBase: 28.62
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -508,7 +508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1.04}
+  m_AnchoredPosition: {x: 0, y: 1.7}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1271035054673628462
@@ -824,7 +824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
   m_sharedMaterial: {fileID: 8254153204252748337, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
@@ -994,7 +994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
   m_sharedMaterial: {fileID: 8254153204252748337, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
@@ -1267,9 +1267,11 @@ MonoBehaviour:
     cost: 0
     name: 
     sprite: {fileID: 0}
-    isSpecial: 0
-    atk: 0
-    hp: 0
+    IsAvatar: 0
+    CanStandOn: 0
+    IsReflectCard: 0
+    IsUpperCard: 0
+    IsStructCard: 0
     tribe: 0
     description: 
     count: 0
@@ -1283,7 +1285,6 @@ MonoBehaviour:
     scale: {x: 0, y: 0, z: 0}
   isOnField: 0
   isPlayerCard: 1
-  isMove: 0
   curField: {fileID: 0}
   isAttack: 0
 --- !u!114 &8368915300404675848
