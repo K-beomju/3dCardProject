@@ -16,10 +16,11 @@ MonoBehaviour:
     cost: 1
     name: "\uC2A4\uD0D1"
     sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
-    isAvatar: 0
-    canStandOn: 0
-    isTakeBackCard: 0
-    isUpperCard: 0
+    IsAvatar: 0
+    CanStandOn: 0
+    IsReflectCard: 0
+    IsUpperCard: 0
+    IsStructCard: 0
     tribe: 2
     description: "\uCE74\uB4DC \uC0AC\uC6A9 \uD6C4 \uC774\uB3D9\uD558\uC9C0 \uC54A\uB294\uB2E4."
     count: 1

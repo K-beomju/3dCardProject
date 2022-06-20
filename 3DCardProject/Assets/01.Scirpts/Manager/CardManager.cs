@@ -154,7 +154,7 @@ public class CardManager : Singleton<CardManager>
 
                     }
                     else */
-                    if (field != null && field.curCard == null)
+                    if (field != null && field.curCard == null && field.isEnterRange)
                     {
                         NewFieldManager.Instance.Spawn(field, selectCard);
                         //FieldManager.Instance.CheckingSpawn(field, selectCard);
