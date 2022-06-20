@@ -414,6 +414,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9095151772954268370, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095151772954268370, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095151772954268370, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
 --- !u!224 &314558693 stripped
@@ -1705,7 +1717,7 @@ GameObject:
   - component: {fileID: 3345849621921763370}
   - component: {fileID: 684884722}
   m_Layer: 0
-  m_Name: NewField (6)
+  m_Name: CommonField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1935,6 +1947,7 @@ MonoBehaviour:
   isSelected: 0
   isEnterRange: 1
   isHackField: 0
+  isCommon: 1
   fieldType: -1
   enableTribe: -1
 --- !u!1001 &4778437131000178683
