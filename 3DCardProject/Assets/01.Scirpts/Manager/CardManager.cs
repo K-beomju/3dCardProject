@@ -39,6 +39,8 @@ public class CardManager : Singleton<CardManager>
 
     public Item LastUsedCardItem = null;
 
+    public Action OnReflect = null;
+
     protected override void Awake()
     {
         base.Awake();
