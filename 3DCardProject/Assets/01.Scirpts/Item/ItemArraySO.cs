@@ -29,6 +29,8 @@ public class Item
     public CardActionCondition[] OnAttack;
     //공격받을 때
     public CardActionCondition[] OnDamage;
+    //생성되었을 때
+    public CardActionCondition[] OnCreate;
 
 
     public Item ShallowCopy()

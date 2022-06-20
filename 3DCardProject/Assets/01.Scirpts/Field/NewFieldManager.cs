@@ -85,7 +85,22 @@ public class NewFieldManager : Singleton<NewFieldManager>
         if (field != null)
         {
             Debug.Log(card.name);
-            field.SetUp(card, ()=> { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
+            if(!card.isPlayerCard)
+            {
+                if (ReflectBox.Instance.CardUIList.Count > 0)
+                {
+                    CardManager.Instance.OnReflect?.Invoke();
+                    CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); }); };
+                }
+                else
+                {
+                    field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
+                }
+            }
+            else
+            {
+                field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
+            }
         }
     }
 

@@ -20,6 +20,7 @@ public class CardManager : Singleton<CardManager>
     private DeckManager deckManager;
     public List<Item> itemBuffer { get; set; }
     public Action OnReflect { get; set; }
+    public Action WaitingActionUntilFinishOnReflect { get; set; }
 
     public Card selectCard;
     //public Card movingCard;
@@ -39,7 +40,21 @@ public class CardManager : Singleton<CardManager>
 
     public Field hackField;
 
-    public Item LastUsedCardItem = null;
+    public Action<Item> OnChangeLastUsedCard { get; set; }
+
+    private Item lastUsedCardItem = new Item();
+    public Item LastUsedCardItem
+    {
+        get
+        {
+            return lastUsedCardItem;
+        }
+        set
+        {
+            lastUsedCardItem = value;
+            OnChangeLastUsedCard?.Invoke(lastUsedCardItem);
+        }
+    }
 
     protected override void Awake()
     {
@@ -246,8 +261,12 @@ public class CardManager : Singleton<CardManager>
         Item popItem = deckManager.PopItem();
         if (popItem != null)
         {
-            myCards.Add(CreateCard(popItem,true));
+            Card card = CreateCard(popItem, true);
+            myCards.Add(card);
+            card.OnCreateCard();
 
+            if (popItem.IsReflectCard)
+                ReflectBox.Instance.AddCardUI(popItem, card);
             SetOriginOrder();
 
             CardAlignment();

@@ -40,11 +40,8 @@ public class Card : MonoBehaviour
 
         if (this.isFront)
         {
-            cardImage.sprite = this.item.sprite;
-            crystal.sprite = isPlayerCard ?crystal_blue : crystal_red;
-            nameTMP.text = this.item.name;
-            costTMP.text = this.item.cost.ToString();
-            descriptionTMP.text = this.item.description;
+            RefreshInform();
+            
         }
         else
         {
@@ -92,7 +89,14 @@ public class Card : MonoBehaviour
     {
         Destroy(gameObject, 1);
     }
-
+    public void RefreshInform()
+    {
+        cardImage.sprite = this.item.sprite;
+        crystal.sprite = isPlayerCard ? crystal_blue : crystal_red;
+        nameTMP.text = this.item.name;
+        costTMP.text = this.item.cost.ToString();
+        descriptionTMP.text = this.item.description;
+    }
     public void MoveTransform(PRS prs, bool useDotween, float dotWeenTime = 0)
     {
         if (useDotween)
@@ -170,6 +174,12 @@ public class Card : MonoBehaviour
     }
 
 
+    public void OnCreateCard()
+    {
+        Debug.Log("OnCreate : " + item.name);
+
+        CardAction(item.OnCreate);
+    }
     public void OnAttack()
     {
         Debug.Log("ONATTACK : " + item.name);

@@ -78,6 +78,7 @@ public class EnemyManager : Singleton<EnemyManager>
         else
         {
             NewFieldManager.Instance.Spawn(setField, card);
+           
         }
     }
 }
