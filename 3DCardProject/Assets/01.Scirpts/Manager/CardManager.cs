@@ -156,12 +156,27 @@ public class CardManager : Singleton<CardManager>
                     else */
                     if (field != null && field.curCard == null && field.isEnterRange)
                     {
-                        NewFieldManager.Instance.Spawn(field, selectCard);
-                        //FieldManager.Instance.CheckingSpawn(field, selectCard);
-                        PlayerManager.Instance.playerCards.Add(selectCard);
-                        RemoveCard(false);
-                        //TurnManager.PlayerCardMove();
-                        //MyCardMove(true);
+                        if (selectCard.item.IsStructCard)
+                        {
+                            if (!field.isCommon)
+                            {
+                                NewFieldManager.Instance.Spawn(field, selectCard);
+                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                RemoveCard(false);
+                            }
+                        }
+                        else
+                        {
+                            if (field.isCommon)
+                            {
+                                NewFieldManager.Instance.Spawn(field, selectCard);
+                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                RemoveCard(false);
+                            }
+                        }
+                        //NewFieldManager.Instance.Spawn(field, selectCard);
+                        //PlayerManager.Instance.playerCards.Add(selectCard);
+                        //RemoveCard(false);
                     }
                     else
                     {
@@ -199,8 +214,11 @@ public class CardManager : Singleton<CardManager>
                 {
                     if(selectCard.item.IsStructCard)
                     {
-                        hitField = field;
-                        field.HitColor(true);
+                        if (!field.isCommon)
+                        {
+                            hitField = field;
+                            field.HitColor(true);
+                        }
                     }
                     else
                     {

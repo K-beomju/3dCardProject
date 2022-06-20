@@ -57,6 +57,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             Debug.Log("avatarMoveTry");
             CheckCardDragSpawnRange();
+
             if (IsClockDir)
             {
                 Debug.Log(node.NextNode.Data);
