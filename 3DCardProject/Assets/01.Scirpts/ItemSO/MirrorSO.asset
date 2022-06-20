@@ -32,5 +32,7 @@ MonoBehaviour:
     - action: {fileID: 7853445917902415053, guid: f7e34f58fc1f07b4697d038faf23229a, type: 3}
       condition: []
     OnDie: []
-    OnAttack: []
+    OnAttack:
+    - action: {fileID: 4285635536198469241, guid: 4d110eaf4c8021d45aec429617f74a69, type: 3}
+      condition: []
     OnDamage: []

@@ -19,6 +19,8 @@ public class CardManager : Singleton<CardManager>
 
     private DeckManager deckManager;
     public List<Item> itemBuffer { get; set; }
+    public Action OnReflect { get; set; }
+
     public Card selectCard;
     //public Card movingCard;
     private bool isCardDrag;
