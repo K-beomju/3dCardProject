@@ -57,13 +57,13 @@ public class SaveManager : Singleton<SaveManager>
         string decryptedMsg = Decrypt(encryptedMsg, myRijndael.Key, myRijndael.IV);
         print(decryptedMsg);*/
 
-        LoadGameData();
+        //LoadGameData();
     }
     string GetFilePath(string fileName)
     {
         return Application.persistentDataPath + "/" + fileName;
     }
-    void Update()
+   /* void Update()
     {
         //save
         if (Input.GetKeyDown(KeyCode.K))
@@ -75,7 +75,7 @@ public class SaveManager : Singleton<SaveManager>
         {
             LoadGameData();
         }
-    }
+    }*/
 
     byte[] Encrypt(string message, byte[] key, byte[] IV)
     {
