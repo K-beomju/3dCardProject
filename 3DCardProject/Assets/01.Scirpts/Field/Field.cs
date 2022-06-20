@@ -21,6 +21,8 @@ public class Field : MonoBehaviour
     public bool isEnterRange = false;
     public bool isHackField = false;
 
+    public bool isCommon = false;
+
     [SerializeField]
     [EnumFlags]
     private FieldType fieldType;

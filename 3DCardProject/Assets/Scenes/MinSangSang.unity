@@ -3793,8 +3793,9 @@ MonoBehaviour:
   <avatarCard>k__BackingField: {fileID: 0}
   isHit: 0
   isSelected: 0
-  isEnterRange: 0
+  isEnterRange: 1
   isHackField: 0
+  isCommon: 1
   fieldType: -1
   enableTribe: -1
 --- !u!1001 &4778437131000178683

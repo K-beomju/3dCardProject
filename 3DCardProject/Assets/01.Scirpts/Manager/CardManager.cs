@@ -39,8 +39,6 @@ public class CardManager : Singleton<CardManager>
 
     public Item LastUsedCardItem = null;
 
-    public Action OnReflect = null;
-
     protected override void Awake()
     {
         base.Awake();
@@ -199,8 +197,20 @@ public class CardManager : Singleton<CardManager>
                 Field field = hitData.transform.GetComponent<Field>();
                 if (field != null && field.isEnterRange)
                 {
-                    hitField = field;
-                    field.HitColor(true);
+                    if(selectCard.item.IsStructCard)
+                    {
+                        hitField = field;
+                        field.HitColor(true);
+                    }
+                    else
+                    {
+                        if(field.isCommon)
+                        {
+                            hitField = field;
+                            field.HitColor(true);
+                        }
+                    }
+                    
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
@@ -379,7 +389,6 @@ public class CardManager : Singleton<CardManager>
         if (card.curField == null)
         {
             Debug.Log("Drag");
-            //NewFieldManager.Instance.CheckCardDragSpawnRange();
             isCardDrag = true;
             selectCard = card;
             arrowObject.ActiveArrow(true);
