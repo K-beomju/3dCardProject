@@ -6,7 +6,7 @@ public class EnemyManager : Singleton<EnemyManager>
 {
     public Item enemyItem;
 
-    private DeckManager dm;
+    public DeckManager dm { get; private set; }
     private void Start()
     {
         dm = GetComponent<DeckManager>();

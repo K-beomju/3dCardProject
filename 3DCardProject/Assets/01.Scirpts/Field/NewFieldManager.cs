@@ -32,21 +32,13 @@ public class NewFieldManager : Singleton<NewFieldManager>
             node.Data.transform.rotation = q;
         }
 
-        playerCard = CreateCard(PlayerManager.Instance.playerItem);
-        enemyCard = CreateCard(EnemyManager.Instance.enemyItem);
+        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem,true);
+        enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem,false);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, playerCard.OnSpawn);
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);
 
         CheckCardDragSpawnRange();
-    }
-    public Card CreateCard(Item item)
-    {
-        var cardObj = Instantiate(CardManager.Instance.cardPrefab, transform.position, Utils.QI);
-        var card = cardObj.GetComponent<Card>();
-        card.Setup(item, true, true);
-        card.GetComponent<Order>().SetOriginOrder(1);
-        return card;
     }
 
     private void Update()
@@ -177,9 +169,13 @@ public class NewFieldManager : Singleton<NewFieldManager>
             {
                 if (card.curField != null)
                 {
-                    if (card.isPlayerCard)
+                    if (card.item.IsAvatar)
                     {
                         card.curField.RemoveAvatarCard();
+                    }
+                    else if(card.item.IsUpperCard)
+                    {
+                        card.curField.RemoveUpperCard();
                     }
                     else
                     {

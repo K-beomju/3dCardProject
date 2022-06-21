@@ -399,19 +399,24 @@ public class CardManager : Singleton<CardManager>
             //EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
-        if (card.item.IsAvatar)
+        if (card.curField != null)
         {
-            card.curField.RemoveAvatarCard();
+            if (card.item.IsAvatar)
+            {
+                card.curField.RemoveAvatarCard();
+            }
+            else if (card.item.IsUpperCard)
+            {
+                card.curField.RemoveUpperCard();
+            }
+            else
+            {
+                card.curField.RemoveCurCard();
+            }
+
+            card.curField = null;
         }
-        else if (card.item.IsUpperCard)
-        {
-            card.curField.RemoveUpperCard();
-        }
-        else
-        {
-            card.curField.RemoveCurCard();
-        }
-        card.curField = null;
+
         card.MoveTransform(prs, true, 0.3f);
 
         Destroy(card.gameObject, 1);
