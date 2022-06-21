@@ -22,6 +22,7 @@ public class Field : MonoBehaviour
     public bool isHackField = false;
 
     public bool isCommon = false;
+    
 
     [SerializeField]
     [EnumFlags]

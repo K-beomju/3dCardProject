@@ -22,8 +22,12 @@ public class ReflectBox : Singleton<ReflectBox>
     public List<GameObject> CardUIList { get; private set; } = new List<GameObject>();
 
     private bool isActive = true;
+    public static bool isReflect = false;
+
 
     public UICard selectedCard = null;
+    public Card reflectCard;
+
     private void Start()
     {
         ReflectBoxActive(false);
@@ -39,10 +43,13 @@ public class ReflectBox : Singleton<ReflectBox>
         cardUIGO.GetComponent<UICard>().Setup(item,card);
         CardUIList.Add(cardUIGO);
     }
+
+
     public void RemoveCardUI(GameObject inGO)
     {
         
         Card card = inGO.GetComponent<UICard>().linkedCard;
+        reflectCard = card;
 
         if (!card.item.IsStructCard)
         {
@@ -51,6 +58,7 @@ public class ReflectBox : Singleton<ReflectBox>
         else
         {
             // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
+            isReflect = true;
         }
 
         CardUIList.Remove(inGO);

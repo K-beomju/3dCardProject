@@ -25,7 +25,6 @@ public class CardManager : Singleton<CardManager>
     public Card selectCard;
     //public Card movingCard;
     private bool isCardDrag;
-
     private bool onCardArea;
 
     public static bool isFullMyCard = false;
@@ -229,7 +228,7 @@ public class CardManager : Singleton<CardManager>
                 Field field = hitData.transform.GetComponent<Field>();
                 if (field != null && field.isEnterRange)
                 {
-                    if(selectCard.item.IsStructCard)
+                    if (selectCard.item.IsStructCard)
                     {
                         if (!field.isCommon)
                         {
@@ -239,15 +238,31 @@ public class CardManager : Singleton<CardManager>
                     }
                     else
                     {
-                        if(field.isCommon)
+                        if (field.isCommon)
                         {
                             hitField = field;
                             field.HitColor(true);
                         }
                     }
-                    
+
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
+            }
+        }
+
+        // ReflectBox
+        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) && ReflectBox.isReflect)
+        {
+            Field field = hitData.transform.GetComponent<Field>();
+            if (field != null && field.isEnterRange)
+            {
+                if (InputManager.Instance.MouseUp)
+                {
+                    NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
+                    PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
+                }
+                    hitField = field;
+                    field.HitColor(true);
             }
         }
 
@@ -274,15 +289,16 @@ public class CardManager : Singleton<CardManager>
 
 
     }
-    public Card CreateCard(Item item,bool isPlayerCard)
+
+    public Card CreateCard(Item item, bool isPlayerCard)
     {
         var cardObj = Instantiate(cardPrefab, transform.position, Utils.QI);
         var card = cardObj.GetComponent<Card>();
         card.Setup(item, true, isPlayerCard);
         card.GetComponent<Order>().SetOriginOrder(1);
-
         return card;
     }
+
     public void SetOriginOrder()
     {
         int count = myCards.Count;
@@ -372,7 +388,7 @@ public class CardManager : Singleton<CardManager>
     public void CardDie(Card card)
     {
         //SelectMovingCardAroundField(false, card);
-        Debug.Log("Card Die : " +card.item.name);
+        Debug.Log("Card Die : " + card.item.name);
         PRS prs;
         if (card.isPlayerCard)
         {
@@ -383,7 +399,7 @@ public class CardManager : Singleton<CardManager>
             //EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
-        if(card.item.IsAvatar)
+        if (card.item.IsAvatar)
         {
             card.curField.RemoveAvatarCard();
         }

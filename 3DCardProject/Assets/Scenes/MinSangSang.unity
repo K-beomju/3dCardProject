@@ -1957,6 +1957,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033907061}
     m_Modifications:
+    - target: {fileID: 2881419277915364864, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881419278672491386, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881419278778712409, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881419278951845080, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881419279042344372, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4778437131127519021, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -2004,6 +2024,10 @@ PrefabInstance:
     - target: {fileID: 4778437131127519022, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: m_Name
       value: NewFieldManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358301551045999383, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isEnterRange
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
