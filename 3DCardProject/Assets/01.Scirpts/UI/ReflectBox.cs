@@ -43,9 +43,15 @@ public class ReflectBox : Singleton<ReflectBox>
     {
         
         Card card = inGO.GetComponent<UICard>().linkedCard;
-        
+
         if (!card.item.IsStructCard)
+        {
             card.OnAttack();
+        }
+        else
+        {
+            // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
+        }
 
         CardUIList.Remove(inGO);
         Destroy(inGO);
@@ -67,6 +73,7 @@ public class ReflectBox : Singleton<ReflectBox>
             RemoveCardUI(selectedCard.gameObject);
             // 박스 내리기
             ReflectBoxActive(false);
+            TurnManager.Instance.ChangeTurn();
         }
         else
         {
