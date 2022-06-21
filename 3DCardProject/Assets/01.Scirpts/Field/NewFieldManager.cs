@@ -86,6 +86,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 }
                 else
                 {
+                    if(card.item.IsReflectCard)
+                    {
+                        ReflectBox.Instance.RemoveCardUI(card);
+                    }
                     field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
                 }
             }

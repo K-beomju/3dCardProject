@@ -44,7 +44,22 @@ public class ReflectBox : Singleton<ReflectBox>
         CardUIList.Add(cardUIGO);
     }
 
-
+    public void RemoveCardUI(Card card)
+    {
+        GameObject go = null;
+        foreach (var item in CardUIList)
+        {
+            if(item.GetComponent<UICard>().linkedCard == card)
+            {
+                go = item;
+                break;
+            }    
+        }
+        if( go != null)
+        {
+            RemoveCardUI(go);
+        }
+    }
     public void RemoveCardUI(GameObject inGO)
     {
         
@@ -79,6 +94,15 @@ public class ReflectBox : Singleton<ReflectBox>
         if(selectedCard != null)
         {
             RemoveCardUI(selectedCard.gameObject);
+
+            var a = selectedCard.linkedCard;
+            CardManager.Instance.myCards.Remove(a);
+            a?.GetComponent<Order>().SetOriginOrder(0);
+
+            CardManager.Instance.SetOriginOrder();
+            CardManager.Instance.CardAlignment();
+            CardManager.Instance.CardDie(a);
+            //CardManager.Instance.CardAlignment();
             // 박스 내리기
             ReflectBoxActive(false);
             TurnManager.Instance.ChangeTurn();
