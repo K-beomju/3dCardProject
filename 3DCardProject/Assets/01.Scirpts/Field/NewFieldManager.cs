@@ -141,18 +141,18 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 if (field.curCard.item.CanStandOn)
                 {
 
-                    if (card.curField != null)
+                    if (card.item.IsAvatar)
                     {
-                        if (card.isPlayerCard)
-                        {
-                            card.curField.RemoveAvatarCard();
-                        }
-                        else
-                        {
-                            card.curField.RemoveCurCard();
-                        }
+                        card.curField.RemoveAvatarCard();
                     }
-
+                    else if (card.item.IsUpperCard)
+                    {
+                        card.curField.RemoveUpperCard();
+                    }
+                    else
+                    {
+                        card.curField.RemoveCurCard();
+                    }
                     field.SetUp(card, field.curCard.OnAttack);
                 }
                 else
