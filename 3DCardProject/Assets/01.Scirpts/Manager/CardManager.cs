@@ -251,7 +251,7 @@ public class CardManager : Singleton<CardManager>
         }
 
         // ReflectBox
-        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) && ReflectBox.isReflect)
+        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) && ReflectBox.isReflect && ReflectBox.Instance.reflectCard!= null)
         {
             Field field = hitData.transform.GetComponent<Field>();
             if (field != null && field.isEnterRange)
@@ -260,6 +260,8 @@ public class CardManager : Singleton<CardManager>
                 {
                     NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
                     PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
+                    ReflectBox.Instance.reflectCard = null;
+                    ReflectBox.isReflect = false;
                 }
                     hitField = field;
                     field.HitColor(true);
@@ -427,6 +429,7 @@ public class CardManager : Singleton<CardManager>
 
     public virtual void CardMouseOver(Card card)
     {
+        if (!card.isPlayerCard) return;
         if (isCardDrag || card.isOnField) return;
 
         // if (!isCardDrag)
@@ -436,6 +439,7 @@ public class CardManager : Singleton<CardManager>
 
     public virtual void CardMouseExit(Card card)
     {
+        if (!card.isPlayerCard) return;
         if (card.isOnField || isCardDrag) return;
 
         EnlargeCard(false, card);

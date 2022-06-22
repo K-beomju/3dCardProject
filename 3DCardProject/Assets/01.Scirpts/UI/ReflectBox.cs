@@ -64,6 +64,7 @@ public class ReflectBox : Singleton<ReflectBox>
     {
         
         Card card = inGO.GetComponent<UICard>().linkedCard;
+            
         reflectCard = card;
 
         if (!card.item.IsStructCard)
@@ -97,11 +98,12 @@ public class ReflectBox : Singleton<ReflectBox>
 
             var a = selectedCard.linkedCard;
             CardManager.Instance.myCards.Remove(a);
-            a?.GetComponent<Order>().SetOriginOrder(0);
+            //a?.GetComponent<Order>().SetOriginOrder(0);
 
             CardManager.Instance.SetOriginOrder();
             CardManager.Instance.CardAlignment();
-            CardManager.Instance.CardDie(a);
+            if (a.name == "무효")
+                CardManager.Instance.CardDie(a);
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
             ReflectBoxActive(false);

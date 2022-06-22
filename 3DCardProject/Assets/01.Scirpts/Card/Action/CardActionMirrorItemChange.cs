@@ -6,6 +6,12 @@ public class CardActionMirrorItemChange : CardAction
 {
     public override void TakeAction(Card card)
     {
-        CardManager.Instance.OnChangeLastUsedCard += (Item)=> { card.item = Item;card.RefreshInform();  };
+        CardManager.Instance.OnChangeLastUsedCard += (Item)=> { 
+            if(card.curField == null)
+            {
+                card.item = Item;
+                card.RefreshInform();
+            }
+        };
     }
 }

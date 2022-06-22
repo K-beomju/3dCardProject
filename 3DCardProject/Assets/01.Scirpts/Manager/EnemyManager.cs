@@ -77,6 +77,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
         else
         {
+            CardManager.Instance.LastUsedCardItem = card.item;
             NewFieldManager.Instance.Spawn(setField, card);
            
         }
