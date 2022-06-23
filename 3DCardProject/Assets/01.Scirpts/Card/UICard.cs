@@ -28,7 +28,7 @@ public class UICard : MonoBehaviour
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
         selectButton.onClick.RemoveAllListeners();
-        selectButton.onClick.AddListener(() => { CallOnSelect(); Debug.Log("AA"); });
+        selectButton.onClick.AddListener(() => { CallOnSelect(); Debug.Log("Select"); });
     }
 
     public void CallOnSelect()

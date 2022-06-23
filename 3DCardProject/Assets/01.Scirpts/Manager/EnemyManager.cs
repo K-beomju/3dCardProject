@@ -20,66 +20,69 @@ public class EnemyManager : Singleton<EnemyManager>
     public IEnumerator EnemyProcess()
     {
         yield return new WaitForSeconds(1);
-        Card card = CardManager.Instance.CreateCard(dm.PopItem(),false);
+        Card card = CardManager.Instance.CreateCard(dm.PopItem(), false);
         Field setField = null;
-        
-       
-        if(!card.item.IsStructCard)
+
+        if (card != null)
         {
-            Debug.Log("Struct : " + card.item.name);
-            setField = CardManager.Instance.hackField;
-        }
-        else
-        {
-            Field field = NewFieldManager.Instance.enemyCard.curField;
-            var node = NewFieldManager.Instance.fields.GetNodeByData(field);
 
-            NewFieldManager.Instance.CheckCardDragSpawnRange(field);
-            int rand = Random.Range(0, 1);
-
-            Field prevField = node.PrevNode.Data;
-            Field nextField = node.NextNode.Data;
-
-            bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
-            bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
-
-            if (rand == 0)
+            if (!card.item.IsStructCard)
             {
-                if (canPrevField)
-                {
-                    setField = node.PrevNode.Data;
-
-                }
-                else if (canNextField)
-                {
-                    setField = node.NextNode.Data;
-                }
+                Debug.Log("Struct : " + card.item.name);
+                setField = CardManager.Instance.hackField;
             }
             else
             {
-                if (canNextField)
-                {
-                    setField = node.NextNode.Data;
+                Field field = NewFieldManager.Instance.enemyCard.curField;
+                var node = NewFieldManager.Instance.fields.GetNodeByData(field);
 
-                }
-                else if (canPrevField)
+                NewFieldManager.Instance.CheckCardDragSpawnRange(field);
+                int rand = Random.Range(0, 1);
+
+                Field prevField = node.PrevNode.Data;
+                Field nextField = node.NextNode.Data;
+
+                bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
+                bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
+
+                if (rand == 0)
                 {
-                    setField = node.PrevNode.Data;
+                    if (canPrevField)
+                    {
+                        setField = node.PrevNode.Data;
+
+                    }
+                    else if (canNextField)
+                    {
+                        setField = node.NextNode.Data;
+                    }
                 }
+                else
+                {
+                    if (canNextField)
+                    {
+                        setField = node.NextNode.Data;
+
+                    }
+                    else if (canPrevField)
+                    {
+                        setField = node.PrevNode.Data;
+                    }
+                }
+
             }
 
-        }
+            if (setField == null)
+            {
+                CardManager.Instance.CardDie(card);
 
-        if (setField == null)
-        {
-            CardManager.Instance.CardDie(card);
+            }
+            else
+            {
+                CardManager.Instance.LastUsedCardItem = card.item.ShallowCopy();
+                NewFieldManager.Instance.Spawn(setField, card);
 
-        }
-        else
-        {
-            CardManager.Instance.LastUsedCardItem = card.item;
-            NewFieldManager.Instance.Spawn(setField, card);
-           
+            }
         }
     }
 }

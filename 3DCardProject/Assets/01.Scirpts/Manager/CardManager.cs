@@ -258,6 +258,7 @@ public class CardManager : Singleton<CardManager>
             {
                 if (InputManager.Instance.MouseUp)
                 {
+                    //OnChangeLastUsedCard -= 
                     NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
                     PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
                     ReflectBox.Instance.reflectCard = null;

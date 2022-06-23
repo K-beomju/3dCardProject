@@ -63,20 +63,6 @@ public class ReflectBox : Singleton<ReflectBox>
     public void RemoveCardUI(GameObject inGO)
     {
         
-        Card card = inGO.GetComponent<UICard>().linkedCard;
-            
-        reflectCard = card;
-
-        if (!card.item.IsStructCard)
-        {
-            card.OnAttack();
-        }
-        else
-        {
-            // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
-            isReflect = true;
-        }
-
         CardUIList.Remove(inGO);
         Destroy(inGO);
     }
@@ -94,19 +80,46 @@ public class ReflectBox : Singleton<ReflectBox>
     {
         if(selectedCard != null)
         {
-            RemoveCardUI(selectedCard.gameObject);
 
             var a = selectedCard.linkedCard;
             if (a != null)
             {
+                reflectCard = a;
+
+                if (!a.item.IsStructCard)
+                {
+                    a.OnSpawn();
+                }
+                else
+                {
+                    // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
+                    isReflect = true;
+                }
+
+
                 CardManager.Instance.myCards.Remove(a);
                 //a?.GetComponent<Order>().SetOriginOrder(0);
 
                 CardManager.Instance.SetOriginOrder();
                 CardManager.Instance.CardAlignment();
                 CardManager.Instance.CardDie(a);
+                foreach (CardActionCondition item in a.item.OnCreate)
+                {
+                    if(item.action is CardActionMirrorItemChange)
+                    {
+                        CardActionMirrorItemChange camic = item.action as CardActionMirrorItemChange;
+                        CardManager.Instance.OnChangeLastUsedCard -= (item) => {
+                            camic.ChangeCardItem(item);
+                        };
+                        break;
+                    }
+                }
+
+                
+                RemoveCardUI(selectedCard.gameObject);
             }
-     
+
+
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
             ReflectBoxActive(false);
@@ -124,7 +137,7 @@ public class ReflectBox : Singleton<ReflectBox>
     }
     public void ReflectBoxActive(bool inBool)
     {
-        transform.DOMoveY(250 * (inBool ? -1 : 1), 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
+        transform.DOMoveY(250 * (inBool ? 1 : -1), 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isActive = inBool;
             activeBTN.transform.parent.gameObject.SetActive(inBool);
