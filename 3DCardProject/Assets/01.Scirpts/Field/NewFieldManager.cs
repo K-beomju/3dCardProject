@@ -82,6 +82,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 if (ReflectBox.Instance.CardUIList.Count > 0)
                 {
                     CardManager.Instance.OnReflect?.Invoke();
+                    ReflectBox.Instance.WaitingCard = card;
                     CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); }); };
                 }
                 else

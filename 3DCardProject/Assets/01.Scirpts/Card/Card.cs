@@ -210,6 +210,10 @@ public class Card : MonoBehaviour
     {
         foreach (var item in act)
         {
+            if (item == null || item.action == null)
+            {
+                continue;
+            }
             int check = 0;
             foreach (var condition in item.condition)
             {

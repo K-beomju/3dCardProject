@@ -24,7 +24,7 @@ public class ReflectBox : Singleton<ReflectBox>
     private bool isActive = true;
     public static bool isReflect = false;
 
-
+    public Card WaitingCard = null;
     public UICard selectedCard = null;
     public Card reflectCard;
 
@@ -84,28 +84,9 @@ public class ReflectBox : Singleton<ReflectBox>
             var a = selectedCard.linkedCard;
             if (a != null)
             {
-                reflectCard = a;
-
-                if (!a.item.IsStructCard)
+               /* foreach (CardActionCondition item in a.item.OnCreate)
                 {
-                    a.OnSpawn();
-                }
-                else
-                {
-                    // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
-                    isReflect = true;
-                }
-
-
-                CardManager.Instance.myCards.Remove(a);
-                //a?.GetComponent<Order>().SetOriginOrder(0);
-
-                CardManager.Instance.SetOriginOrder();
-                CardManager.Instance.CardAlignment();
-                CardManager.Instance.CardDie(a);
-                foreach (CardActionCondition item in a.item.OnCreate)
-                {
-                    if(item.action is CardActionMirrorItemChange)
+                    if (item.action is CardActionMirrorItemChange)
                     {
                         CardActionMirrorItemChange camic = item.action as CardActionMirrorItemChange;
                         CardManager.Instance.OnChangeLastUsedCard -= (item) => {
@@ -113,9 +94,40 @@ public class ReflectBox : Singleton<ReflectBox>
                         };
                         break;
                     }
-                }
+                }*/
+                reflectCard = a;
 
-                
+                if (!a.item.IsStructCard)
+                {
+                    int idx = 0;
+                    foreach (CardActionCondition item in a.item.OnSpawn)
+                    {
+                        if (item.action is CardMoveAction)
+                        {
+                            //CardMoveAction cma = item.action as CardMoveAction;
+                            item.action = null;
+                            break;
+                        }
+                        ++idx;
+                    }
+                    a.OnSpawn();
+
+                    CardManager.Instance.myCards.Remove(a);
+                    //a?.GetComponent<Order>().SetOriginOrder(0);
+
+                    CardManager.Instance.SetOriginOrder();
+                    CardManager.Instance.CardAlignment();
+                    CardManager.Instance.CardDie(a);
+                }
+                else
+                {
+                    // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
+                    isReflect = true;
+                }
+                if(WaitingCard != null)
+                {
+                    CardManager.Instance.CardDie(WaitingCard);
+                }
                 RemoveCardUI(selectedCard.gameObject);
             }
 
