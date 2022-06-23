@@ -7,7 +7,7 @@ public class CardActionMirrorItemChange : CardAction
     public override void TakeAction(Card card)
     {
         CardManager.Instance.OnChangeLastUsedCard += (Item)=> { 
-            if(card.curField == null)
+            if(card.curField == null && card.gameObject != null)
             {
                 card.item = Item;
                 card.RefreshInform();

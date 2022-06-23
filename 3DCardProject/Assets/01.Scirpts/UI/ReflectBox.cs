@@ -97,13 +97,16 @@ public class ReflectBox : Singleton<ReflectBox>
             RemoveCardUI(selectedCard.gameObject);
 
             var a = selectedCard.linkedCard;
-            CardManager.Instance.myCards.Remove(a);
-            //a?.GetComponent<Order>().SetOriginOrder(0);
+            if (a != null)
+            {
+                CardManager.Instance.myCards.Remove(a);
+                //a?.GetComponent<Order>().SetOriginOrder(0);
 
-            CardManager.Instance.SetOriginOrder();
-            CardManager.Instance.CardAlignment();
-            if (a.name == "무효")
+                CardManager.Instance.SetOriginOrder();
+                CardManager.Instance.CardAlignment();
                 CardManager.Instance.CardDie(a);
+            }
+     
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
             ReflectBoxActive(false);
@@ -121,7 +124,7 @@ public class ReflectBox : Singleton<ReflectBox>
     }
     public void ReflectBoxActive(bool inBool)
     {
-        transform.DOMoveY(250 * (isActive ? -1 : 1), 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
+        transform.DOMoveY(250 * (inBool ? -1 : 1), 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isActive = inBool;
             activeBTN.transform.parent.gameObject.SetActive(inBool);
