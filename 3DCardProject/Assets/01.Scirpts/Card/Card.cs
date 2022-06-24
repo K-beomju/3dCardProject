@@ -227,5 +227,8 @@ public class Card : MonoBehaviour
         }
     }
 
-  
+    public Card ShallowCopy()
+    {
+        return (Card)this.MemberwiseClone();
+    }
 }

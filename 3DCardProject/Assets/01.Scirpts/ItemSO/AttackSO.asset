@@ -34,3 +34,4 @@ MonoBehaviour:
     OnDie: []
     OnAttack: []
     OnDamage: []
+    OnCreate: []

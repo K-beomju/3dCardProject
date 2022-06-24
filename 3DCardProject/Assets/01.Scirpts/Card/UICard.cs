@@ -22,7 +22,7 @@ public class UICard : MonoBehaviour
     public void Setup(Item item,Card card)
     {
         this.item = item;
-        this.linkedCard = card;
+        this.linkedCard = card.ShallowCopy();
         cardImage.sprite = this.item.sprite;
         nameTMP.text = this.item.name;
         costTMP.text = this.item.cost.ToString();
