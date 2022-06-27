@@ -61,7 +61,10 @@ MonoBehaviour:
     - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
       condition: []
     OnAttack: []
-    OnDamage: []
+    OnDamage:
+    - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
+      condition: []
+    OnCreate: []
 --- !u!114 &4565849601157548173
 MonoBehaviour:
   m_ObjectHideFlags: 0

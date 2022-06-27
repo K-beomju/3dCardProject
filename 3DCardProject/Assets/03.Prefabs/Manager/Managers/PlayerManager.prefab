@@ -60,7 +60,10 @@ MonoBehaviour:
     OnDie:
     - action: {fileID: 5588762342787785400, guid: ce39556d70ef85b489921d987127b0e5, type: 3}
       condition: []
-    OnAttack: []
+    OnAttack:
+    - action: {fileID: 5588762342787785400, guid: ce39556d70ef85b489921d987127b0e5, type: 3}
+      condition: []
     OnDamage: []
+    OnCreate: []
   PlayerHP: 0
   playerCards: []
