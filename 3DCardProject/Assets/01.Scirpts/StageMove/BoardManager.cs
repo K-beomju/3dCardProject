@@ -46,7 +46,7 @@ public class BoardManager : MonoBehaviour
                     board.type = StageType.Shop;
                 }
                 board.stageData = StageManager.Instance.stageArray[i];
-                board.avatar = StageManager.Instance.stageArray[i].avatar.item.ShallowCopy();
+                //board.avatar = StageManager.Instance.stageArray[i].avatar.item.ShallowCopy();
                 boardArrayList[i].list.Add(board);
 
             }
