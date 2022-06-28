@@ -9,20 +9,17 @@ using DG.Tweening;
 public class BoardManager : MonoBehaviour
 {
     public List<Board> boardList = new List<Board>();
-
-    private Transform[] childObjs;
+    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>(); 
     public List<Transform> childNodeList = new List<Transform>();
 
     [SerializeField] private List<CinemachineVirtualCamera> boardCamList = new List<CinemachineVirtualCamera>();
     [SerializeField] private List<Board> boardCamChList = new List<Board>();
 
-    public CanvasGroup fadePanel;
-
-    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>(); 
-
-
-
+    private Transform[] childObjs;
     private bool isChange = false;
+
+    public GameObject battleField;
+    public GameObject shopField;
 
     private void Start()
     {
@@ -44,7 +41,15 @@ public class BoardManager : MonoBehaviour
                 if(k == rand)
                 {
                     board.type = StageType.Shop;
+                    //Instantiate(shopField, board.fieldTrm.position + new Vector3(0,0.35f,0), Quaternion.Euler(90,0,0));
+
                 }
+                else
+                {
+                    //Instantiate(battleField, board.fieldTrm.position + new Vector3(0, 0.35f, 0), Quaternion.Euler(90, 0, 0));
+
+                }
+
                 board.stageData = StageManager.Instance.stageArray[i];
                 //board.avatar = StageManager.Instance.stageArray[i].avatar.item.ShallowCopy();
                 boardArrayList[i].list.Add(board);
