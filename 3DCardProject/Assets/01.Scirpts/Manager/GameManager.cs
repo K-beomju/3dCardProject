@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
         State = GameState.RUNNING;
         resultPanel.SetActive(false);
         exitBtn.onClick.AddListener(()=> {
-            SceneManager.LoadScene("MinSangSang");
+            SceneManager.LoadScene("Chapter_1");
         });
 
         OnWinGame += (() => {
