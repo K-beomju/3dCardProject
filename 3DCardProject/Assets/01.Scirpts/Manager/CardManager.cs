@@ -175,7 +175,7 @@ public class CardManager : Singleton<CardManager>
 
                     }
                     else */
-                    if (field != null && (field.curCard == null || field.upperCard == null) && field.isEnterRange)
+                    if (field != null && ((field.curCard == null && !selectCard.item.IsUpperCard) || (field.upperCard == null && selectCard.item.IsUpperCard)) && field.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
                         {
@@ -199,7 +199,7 @@ public class CardManager : Singleton<CardManager>
                         //PlayerManager.Instance.playerCards.Add(selectCard);
                         //RemoveCard(false);
                     }
-                    else if(card != null && card.curField != null &&(card.curField.curCard == null || card.curField.upperCard == null) && card.curField.isEnterRange)
+                    else if(card != null && card.curField != null &&((card.curField.curCard == null && !selectCard.item.IsUpperCard) || (card.curField.upperCard == null && selectCard.item.IsUpperCard)) && card.curField.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
                         {
