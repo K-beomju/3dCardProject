@@ -63,14 +63,14 @@ public class CardManager : Singleton<CardManager>
 
     private void Start()
     {
-        StartCoroutine(SpawnCardCo());
+        StartCoroutine(SpawnCardCo(()=> { TurnManager.ChangeTurn(TurnType.Player); }));
         arrowObject.ActiveArrow(false);
         deckManager = GetComponent<DeckManager>();
         mainCam = Camera.main;
     }
 
 
-    private IEnumerator SpawnCardCo()
+    private IEnumerator SpawnCardCo(Action act = null)
     {
         yield return new WaitForSeconds(0.3f);
 
@@ -79,8 +79,7 @@ public class CardManager : Singleton<CardManager>
             AddCard();
             yield return new WaitForSeconds(0.2f);
         }
-        TurnManager.ChangeTurn(TurnType.Player);
-
+        act?.Invoke();
     }
 
     private IEnumerator DeleteCardCo()
@@ -93,6 +92,7 @@ public class CardManager : Singleton<CardManager>
 
         for (int i = myCards.Count - 1; i >= 0; i--)
         {
+            ReflectBox.Instance.RemoveCardUI(myCards[i]);
             myCards[i].SetDeleteObject();
             myCards.Remove(myCards[i]);
         }
@@ -103,7 +103,55 @@ public class CardManager : Singleton<CardManager>
         int temp = myCards.IndexOf(card);
         myCards.RemoveAt(temp);
     }
+    public void CardDie(Card card)
+    {
+        //SelectMovingCardAroundField(false, card);
+        Debug.Log("Card Die : " + card.item.name);
+        PRS prs;
+        ReflectBox.Instance.RemoveCardUI(card);
+        if (card.isPlayerCard)
+        {
+            prs = new PRS(CardManager.Instance.cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
+        }
+        else
+        {
+            //EnemyFieldManager.Instance.enemyCards.Remove(card);
+            prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
+        }
+        if (card.curField != null)
+        {
+            if (card.item.IsAvatar)
+            {
+                card.curField.RemoveAvatarCard();
+            }
+            else if (card.item.IsUpperCard)
+            {
+                card.curField.RemoveUpperCard();
+            }
+            else
+            {
+                card.curField.RemoveCurCard();
+            }
 
+            card.curField = null;
+        }
+
+        card.MoveTransform(prs, true, 0.3f);
+
+        Destroy(card.gameObject, 1);
+    }
+    private void RemoveCard(bool killTween)
+    {
+        var a = selectCard;
+        ReflectBox.Instance.RemoveCardUI(a);
+        myCards.Remove(a);
+        if (killTween)
+            a.transform.DOKill();
+        a?.GetComponent<Order>().SetOriginOrder(0);
+
+        SetOriginOrder();
+        CardAlignment();
+    }
     public void RandCardDelete()
     {
         int rand = UnityEngine.Random.Range(0, 2);
@@ -316,7 +364,13 @@ public class CardManager : Singleton<CardManager>
             CardAlignment();
         }
 
+        if(myCards.Count < 1)
+        {
+            PlayerDeckManager pdm = deckManager as PlayerDeckManager;
+            pdm.SetUpPlayerDeckManager();
 
+            StartCoroutine(SpawnCardCo());
+        }
     }
 
     public Card CreateCard(Item item, bool isPlayerCard)
@@ -414,42 +468,7 @@ public class CardManager : Singleton<CardManager>
         return results;
     }
 
-    public void CardDie(Card card)
-    {
-        //SelectMovingCardAroundField(false, card);
-        Debug.Log("Card Die : " + card.item.name);
-        PRS prs;
-        if (card.isPlayerCard)
-        {
-            prs = new PRS(CardManager.Instance.cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
-        }
-        else
-        {
-            //EnemyFieldManager.Instance.enemyCards.Remove(card);
-            prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
-        }
-        if (card.curField != null)
-        {
-            if (card.item.IsAvatar)
-            {
-                card.curField.RemoveAvatarCard();
-            }
-            else if (card.item.IsUpperCard)
-            {
-                card.curField.RemoveUpperCard();
-            }
-            else
-            {
-                card.curField.RemoveCurCard();
-            }
-
-            card.curField = null;
-        }
-
-        card.MoveTransform(prs, true, 0.3f);
-
-        Destroy(card.gameObject, 1);
-    }
+   
     #endregion
 
     #region MyCard
@@ -613,17 +632,7 @@ public class CardManager : Singleton<CardManager>
         */
     }
 
-    private void RemoveCard(bool killTween)
-    {
-        var a = selectCard;
-        myCards.Remove(a);
-        if (killTween)
-            a.transform.DOKill();
-        a?.GetComponent<Order>().SetOriginOrder(0);
-
-        SetOriginOrder();
-        CardAlignment();
-    }
+    
 
     //public bool MyCardIsFull()
     //{

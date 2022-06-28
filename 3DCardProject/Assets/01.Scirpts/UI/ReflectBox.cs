@@ -50,7 +50,7 @@ public class ReflectBox : Singleton<ReflectBox>
         GameObject go = null;
         foreach (var item in CardUIList)
         {
-            if(item.GetComponent<UICard>().linkedCard == card)
+            if(item.GetComponent<UICard>().linkedCard.item.name == card.item.name)
             {
                 go = item;
                 break;

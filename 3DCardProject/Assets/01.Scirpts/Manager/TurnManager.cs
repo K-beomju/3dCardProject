@@ -35,6 +35,7 @@ public class TurnManager : Singleton<TurnManager>
         else
         {
             type = TurnType.Player;
+            CardManager.Instance.AddCard();
         }
     }
 

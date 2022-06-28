@@ -35,8 +35,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
             node.Data.transform.rotation = q;
         }
 
-        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem,true);
-        enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem,false);
+        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(),true);
+        enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem.ShallowCopy(), false);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, ()=> { playerCard.OnSpawn(); canCheckRange = true; });
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);

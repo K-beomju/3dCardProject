@@ -6,6 +6,11 @@ public class PlayerDeckManager : DeckManager
 {
     private void Start()
     {
+        SetUpPlayerDeckManager();
+    }
+
+    public void SetUpPlayerDeckManager()
+    {
         SetupItemBuffer(SaveManager.Instance.saveDeckData.CurDeck.ShallowCopy().DeckData);
     }
 
