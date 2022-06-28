@@ -119,7 +119,7 @@ public class Card : MonoBehaviour
         transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
         transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
         {
-            act?.Invoke();
+            transform.DOMove(transform.position, .15f).OnComplete(()=> { act?.Invoke(); });
         });
     }
    

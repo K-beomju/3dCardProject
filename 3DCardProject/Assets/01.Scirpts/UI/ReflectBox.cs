@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using MEC;
 
 public class ReflectBox : Singleton<ReflectBox>
 {
@@ -78,23 +79,27 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public void ConfirmReflect()
     {
-        if(selectedCard != null)
+        Timing.RunCoroutine(ConfirmReflectProcess());
+    }
+    private IEnumerator<float> ConfirmReflectProcess()
+    {
+        if (selectedCard != null)
         {
 
             var a = selectedCard.linkedCard;
             if (a != null)
             {
-               /* foreach (CardActionCondition item in a.item.OnCreate)
-                {
-                    if (item.action is CardActionMirrorItemChange)
-                    {
-                        CardActionMirrorItemChange camic = item.action as CardActionMirrorItemChange;
-                        CardManager.Instance.OnChangeLastUsedCard -= (item) => {
-                            camic.ChangeCardItem(item);
-                        };
-                        break;
-                    }
-                }*/
+                /* foreach (CardActionCondition item in a.item.OnCreate)
+                 {
+                     if (item.action is CardActionMirrorItemChange)
+                     {
+                         CardActionMirrorItemChange camic = item.action as CardActionMirrorItemChange;
+                         CardManager.Instance.OnChangeLastUsedCard -= (item) => {
+                             camic.ChangeCardItem(item);
+                         };
+                         break;
+                     }
+                 }*/
                 reflectCard = a;
 
                 if (!a.item.IsStructCard)
@@ -124,22 +129,27 @@ public class ReflectBox : Singleton<ReflectBox>
                     // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
                     isReflect = true;
                 }
-                if(WaitingCard != null)
+
+                if (WaitingCard != null)
                 {
                     CardManager.Instance.CardDie(WaitingCard);
                 }
                 RemoveCardUI(selectedCard.gameObject);
+
+
             }
 
-
+            ReflectBoxActive(false);
+            yield return Timing.WaitForSeconds(0.7f);
+            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField);
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
-            ReflectBoxActive(false);
             TurnManager.Instance.ChangeTurn();
         }
         else
         {
             Debug.LogWarning("카드를 선택해야 합니다");
+            yield return 0;
         }
     }
     public void CancelReflect()

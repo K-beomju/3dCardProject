@@ -16,6 +16,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
     [SerializeField]
     private RectTransform dirImage = null;
 
+    private bool canCheckRange = false;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -34,16 +37,17 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem,true);
         enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem,false);
-        fields.GetNodeByIndex(5).Data.SetUp(playerCard, playerCard.OnSpawn);
+        fields.GetNodeByIndex(5).Data.SetUp(playerCard, ()=> { playerCard.OnSpawn(); canCheckRange = true; });
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);
 
-        CheckCardDragSpawnRange();
+      
     }
 
     private void Update()
     { // 수정 예정 
-        CheckCardDragSpawnRange();
+        if(canCheckRange)
+            CheckCardDragSpawnRange();
     }
     public void AvatarMove(Field field)
     {
