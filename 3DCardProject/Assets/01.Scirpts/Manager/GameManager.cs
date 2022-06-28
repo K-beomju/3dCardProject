@@ -45,6 +45,7 @@ public class GameManager : Singleton<GameManager>
     public void CallOnWinGame()
     {
         print("GAMEWIN");
+        ReflectBox.Instance.ReflectBoxActive(false);
         State = GameState.END;
         resultPanel.SetActive(true);
     }

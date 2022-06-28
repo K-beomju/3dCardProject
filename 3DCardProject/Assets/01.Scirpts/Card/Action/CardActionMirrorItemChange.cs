@@ -23,7 +23,7 @@ public class CardActionMirrorItemChange : CardAction
             return;
         }
 
-        if (thisCard.curField == null && thisCard.gameObject != null)
+        if (!item.IsAvatar && thisCard.curField == null && thisCard.gameObject != null)
         {
             thisCard.item = item;
             thisCard.RefreshInform();
