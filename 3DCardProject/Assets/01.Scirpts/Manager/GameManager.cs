@@ -5,44 +5,47 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    PREPARE,
+    RUNNING,
+    END
+}
+
 public class GameManager : Singleton<GameManager>
 {
     public Action OnWinGame;
     public Action OnLoseGame;
 
     [SerializeField]
-    private Button addBtn;
-    [SerializeField]
     private Button exitBtn;
     [SerializeField]
     private GameObject resultPanel;
-    public ItemSO item;
 
+    public GameState State { get; set; }
     protected override void Awake()
     {
         base.Awake();
+        State = GameState.PREPARE;
         OnWinGame += CallOnWinGame;
         OnLoseGame += CallOnLoseGame;
     }
     private void Start()
     {
+        State = GameState.RUNNING;
         resultPanel.SetActive(false);
         exitBtn.onClick.AddListener(()=> {
-            SceneManager.LoadScene("StageScene");
+            SceneManager.LoadScene("MinSangSang");
         });
-        addBtn.onClick.AddListener(() =>
-        {
-            FindObjectOfType<PlayerDeckManager>().AddCardToDeck(item.item.ShallowCopy());
-            addBtn.gameObject.SetActive(false);
-        });
+
         OnWinGame += (() => {
             resultPanel.SetActive(true);
-            addBtn.gameObject.SetActive(true);
         });
     }
     public void CallOnWinGame()
     {
         print("GAMEWIN");
+        State = GameState.END;
         resultPanel.SetActive(true);
     }
     public void CallOnLoseGame()

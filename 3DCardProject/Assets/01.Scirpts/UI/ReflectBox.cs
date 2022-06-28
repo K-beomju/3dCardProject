@@ -69,7 +69,7 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public void CallOnReflect()
     {
-        if(CardUIList.Count > 0)
+        if(CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
         {
             // ¿Ã¸®±â
             ReflectBoxActive(true);
