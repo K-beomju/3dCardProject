@@ -559,7 +559,7 @@ public class CardManager : Singleton<CardManager>
     {
         if (isEnlarge)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + 1, card.originPRS.pos.z + 1.5f);
+            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + 1.5f, card.originPRS.pos.z + 1.5f);
             card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
         else
