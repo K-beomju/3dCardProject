@@ -19,6 +19,11 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public IEnumerator EnemyProcess()
     {
+        if(GameManager.Instance.State == GameState.END)
+        {
+            yield break;
+        }
+
         yield return new WaitForSeconds(1);
         Card card = CardManager.Instance.CreateCard(dm.PopItem(), false);
         Field setField = null;

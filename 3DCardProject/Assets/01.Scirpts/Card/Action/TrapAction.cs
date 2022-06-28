@@ -6,21 +6,27 @@ public class TrapAction : CardAction
 {
     public override void TakeAction(Card card)
     {
-        Card avatar = card.curField.avatarCard;
-        if(avatar != null)
+        var node = NewFieldManager.Instance.fields.GetNodeByData(card.curField);
+        card = node.Data.avatarCard;
+        if (card != null && card.item.IsAvatar)
         {
-            if (avatar.isPlayerCard)
+            Card avatar = card.curField.avatarCard;
+            if (avatar != null)
             {
-                CardManager.Instance.RandCardDelete();
-            }
-            else
-            {
+                if (avatar.isPlayerCard)
+                {
+                    CardManager.Instance.RandCardDelete();
+                }
+                else
+                {
 
-                card = CardManager.Instance.CreateCard(EnemyManager.Instance.dm.PopItem(), false);
-                CardManager.Instance.CardDie(card);
+                    card = CardManager.Instance.CreateCard(EnemyManager.Instance.dm.PopItem(), false);
+                    CardManager.Instance.CardDie(card);
+                }
             }
+
         }
-        
+
 
     }
 }

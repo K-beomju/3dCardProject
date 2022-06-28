@@ -129,6 +129,11 @@ public class CardManager : Singleton<CardManager>
 
     private void Update()
     {
+        if (GameManager.Instance.State == GameState.END)
+        {
+            return;
+        }
+
         if (isCardDrag)
         {
             CardDrag();
@@ -170,7 +175,7 @@ public class CardManager : Singleton<CardManager>
 
                     }
                     else */
-                    if (field != null && field.curCard == null && field.isEnterRange)
+                    if (field != null && (field.curCard == null || field.upperCard == null) && field.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
                         {
@@ -193,6 +198,27 @@ public class CardManager : Singleton<CardManager>
                         //NewFieldManager.Instance.Spawn(field, selectCard);
                         //PlayerManager.Instance.playerCards.Add(selectCard);
                         //RemoveCard(false);
+                    }
+                    else if(card != null && card.curField != null &&(card.curField.curCard == null || card.curField.upperCard == null) && card.curField.isEnterRange)
+                    {
+                        if (selectCard.item.IsStructCard)
+                        {
+                            if (!card.curField.isCommon)
+                            {
+                                NewFieldManager.Instance.Spawn(card.curField, selectCard);
+                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                RemoveCard(false);
+                            }
+                        }
+                        else
+                        {
+                            if (card.curField.isCommon)
+                            {
+                                NewFieldManager.Instance.Spawn(card.curField, selectCard);
+                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                RemoveCard(false);
+                            }
+                        }
                     }
                     else
                     {
