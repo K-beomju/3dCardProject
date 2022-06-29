@@ -22,7 +22,7 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text descriptionTMP;
     [SerializeField] private GameObject modelPrefab;
 
-    public CardModelBrain linkedModel { get; private set; }
+    public CardModelBrain LinkedModel { get; private set; }
 
     public Item item;
     public PRS originPRS;
@@ -198,7 +198,7 @@ public class Card : MonoBehaviour
     {
         Debug.Log("ONDIE: " + item.name);
         CardAction(item.OnDie);
-        Destroy(linkedModel.ModelObject.gameObject);
+        Destroy(LinkedModel.ModelObject.gameObject);
     }
     public void OnSpawn()
     {
@@ -206,10 +206,10 @@ public class Card : MonoBehaviour
         Emphasize(() =>
         {
             Debug.Log("모델 생성 시작 : " + item.name);
-            linkedModel = Instantiate(modelPrefab,transform.position,Utils.QI).GetComponent<CardModelBrain>();
+            LinkedModel = Instantiate(modelPrefab,transform.position,Utils.QI).GetComponent<CardModelBrain>();
             var model = Resources.Load<GameObject>(item.uid.ToString());
             if (model != null)
-                linkedModel.ModelObject = model;
+                LinkedModel.ModelObject = model;
 
             CardAction(item.OnSpawn);
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();

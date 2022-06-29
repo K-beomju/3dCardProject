@@ -131,9 +131,9 @@ public class Field : MonoBehaviour
 
 
             card.transform.DORotateQuaternion(transform.rotation, .1f);
-            if (card.linkedModel != null && card.item.IsAvatar)
+            if (card.LinkedModel != null && card.item.IsAvatar)
             {
-                card.linkedModel.Move(card.transform.position);
+                card.LinkedModel.Move(card.transform.position);
                 Debug.Log("¿Ãµø : " + card.item.name);
             }
 

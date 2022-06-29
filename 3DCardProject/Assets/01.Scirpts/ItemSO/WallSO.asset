@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     cost: 1
+    uid: 100
     name: "\uBCBD"
     sprite: {fileID: 21300000, guid: dc051d2717a374f47aa2a366139149de, type: 3}
     IsAvatar: 0
@@ -34,3 +35,4 @@ MonoBehaviour:
     OnDamage:
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
+    OnCreate: []

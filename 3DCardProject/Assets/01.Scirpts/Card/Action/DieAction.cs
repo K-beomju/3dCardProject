@@ -7,5 +7,6 @@ public class DieAction : CardAction
     public override void TakeAction(Card card)
     {
         CardManager.Instance.CardDie(card);
+        Destroy(card.LinkedModel.ModelObject.gameObject);
     }
 }
