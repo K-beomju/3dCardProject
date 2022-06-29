@@ -1263,8 +1263,10 @@ MonoBehaviour:
   hpTMP: {fileID: 7226841039259824752}
   nameTMP: {fileID: 2111170551438980986}
   descriptionTMP: {fileID: 4311797463403797117}
+  modelPrefab: {fileID: 3571458261053660855, guid: 2acbbbcd03fb1fd458fac49e0ab24acd, type: 3}
   item:
     cost: 0
+    uid: 0
     name: 
     sprite: {fileID: 0}
     IsAvatar: 0

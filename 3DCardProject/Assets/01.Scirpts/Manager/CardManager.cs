@@ -494,11 +494,11 @@ public class CardManager : Singleton<CardManager>
     public virtual void CardMouseDown(Card card)
     {
         if (!card.isPlayerCard) return;
-        Debug.Log("Drag");
+       // Debug.Log("Drag");
 
         if (card.curField == null)
         {
-            Debug.Log("Drag");
+          //  Debug.Log("Drag");
             isCardDrag = true;
             selectCard = card;
             arrowObject.ActiveArrow(true);

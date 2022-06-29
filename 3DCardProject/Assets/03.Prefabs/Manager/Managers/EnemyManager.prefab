@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyItem:
     cost: 0
+    uid: 1000
     name: "\uC801"
     sprite: {fileID: 21300000, guid: c647bb24286b0b444855d3c9d3cb1b6b, type: 3}
     IsAvatar: 1

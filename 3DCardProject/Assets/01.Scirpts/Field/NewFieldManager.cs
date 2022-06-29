@@ -131,13 +131,17 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     if (card.curField != null)
                     {
                         Debug.Log("curField != null");
-                        if (card.isPlayerCard)
+                        if (card.item.IsAvatar)
                         {
                             card.curField.RemoveAvatarCard();
                         }
-                        else
+                        else if (card.item.IsUpperCard)
                         {
                             card.curField.RemoveUpperCard();
+                        }
+                        else
+                        {
+                            card.curField.RemoveCurCard();
                         }
                     }
                     field.SetUp(card, field.upperCard.OnAttack);

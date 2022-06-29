@@ -20,7 +20,9 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text hpTMP;
     [SerializeField] private TMP_Text nameTMP;
     [SerializeField] private TMP_Text descriptionTMP;
+    [SerializeField] private GameObject modelPrefab;
 
+    public CardModelBrain linkedModel { get; private set; }
 
     public Item item;
     public PRS originPRS;
@@ -97,6 +99,7 @@ public class Card : MonoBehaviour
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
     }
+    
     public void MoveTransform(PRS prs, bool useDotween, float dotWeenTime = 0)
     {
         if (useDotween)
@@ -195,12 +198,19 @@ public class Card : MonoBehaviour
     {
         Debug.Log("ONDIE: " + item.name);
         CardAction(item.OnDie);
+        Destroy(linkedModel.ModelObject.gameObject);
     }
     public void OnSpawn()
     {
         Debug.Log("ONSPAWN : " + item.name);
         Emphasize(() =>
         {
+            Debug.Log("모델 생성 시작 : " + item.name);
+            linkedModel = Instantiate(modelPrefab,transform.position,Utils.QI).GetComponent<CardModelBrain>();
+            var model = Resources.Load<GameObject>(item.uid.ToString());
+            if (model != null)
+                linkedModel.ModelObject = model;
+
             CardAction(item.OnSpawn);
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
         });

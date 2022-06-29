@@ -7,11 +7,12 @@ public class Item
 {
     public int cost;            // 카드 가격 
 
+    public uint uid;            // 고유 번호
     public string name;         // 카드 이름
     public Sprite sprite;       // 카드 이미지
     public bool IsAvatar;       // 아바타 카드 인가
     public bool CanStandOn;     // 위에 서있을 수 있는가
-    public bool IsReflectCard; // 받아치기 카드인가
+    public bool IsReflectCard;  // 받아치기 카드인가
     public bool IsUpperCard;    // 위에 올릴 수 있는 카드인가
     public bool IsStructCard;   // 건물, 설치 가능 카드인가
 

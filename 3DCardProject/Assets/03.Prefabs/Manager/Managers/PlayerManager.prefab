@@ -46,6 +46,7 @@ MonoBehaviour:
   playerPos: {x: 2, y: 1}
   playerItem:
     cost: 0
+    uid: 1000
     name: "\uD50C\uB808\uC774\uC5B4"
     sprite: {fileID: 21300000, guid: d91d808167aa2fd4d9211b5ee3d56be5, type: 3}
     IsAvatar: 1

@@ -97,7 +97,7 @@ public class Field : MonoBehaviour
     public void SetUp(Card card,Action act = null)
     {
         //if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
-        if(card.item.IsAvatar)
+        if (card.item.IsAvatar)
         {
             Debug.Log("SetAvatarCard");
             avatarCard = card;
@@ -131,7 +131,13 @@ public class Field : MonoBehaviour
 
 
             card.transform.DORotateQuaternion(transform.rotation, .1f);
-            if(act != null)
+            if (card.linkedModel != null && card.item.IsAvatar)
+            {
+                card.linkedModel.Move(card.transform.position);
+                Debug.Log("¿Ãµø : " + card.item.name);
+            }
+
+            if (act != null)
             {
                 act?.Invoke();
             }
