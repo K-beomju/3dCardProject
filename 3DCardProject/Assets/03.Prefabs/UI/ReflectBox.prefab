@@ -316,7 +316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 250}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9095151771312819813
@@ -374,7 +374,9 @@ MonoBehaviour:
   cancelBTN: {fileID: 3833666195643966604}
   cardUIPrefab: {fileID: 6799171531371427072, guid: 820a99adac6be0a41bef1234db979314, type: 3}
   cardUIparent: {fileID: 9095151771691775432}
+  WaitingCard: {fileID: 0}
   selectedCard: {fileID: 0}
+  reflectCard: {fileID: 0}
 --- !u!1 &9095151771337961569
 GameObject:
   m_ObjectHideFlags: 0

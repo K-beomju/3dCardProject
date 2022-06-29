@@ -22,7 +22,7 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public List<GameObject> CardUIList { get; private set; } = new List<GameObject>();
 
-    private bool isActive = true;
+    private bool isActive = false;
     public static bool isReflect = false;
 
     public Card WaitingCard = null;

@@ -29,6 +29,8 @@ MonoBehaviour:
     OnSpawn:
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
+    - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
+      condition: []
     OnDie: []
     OnAttack: []
     OnDamage: []

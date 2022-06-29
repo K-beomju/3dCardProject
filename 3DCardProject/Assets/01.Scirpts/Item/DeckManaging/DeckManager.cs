@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +15,29 @@ public class DeckManager : MonoBehaviour
         if (itemBuffer.Count < 1) return null;
 
         return itemBuffer[0];
+    }
+    public Item GetNormalItem()
+    {
+        foreach (var item in itemBuffer)
+        {
+            if(!item.IsUpperCard)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+    public Item PopNormalItem()
+    {
+        foreach (var item in itemBuffer)
+        {
+            if (!item.IsUpperCard)
+            {
+                itemBuffer.Remove(item);
+                return item;
+            }
+        }
+        return null;
     }
     public Item PopItem()
     {
@@ -41,6 +63,7 @@ public class DeckManager : MonoBehaviour
         // Shuffle
         SuffleItemBuffer();
     }
+
 
     protected virtual void AddCardToItemBuffer(Item item,float count)
     {
