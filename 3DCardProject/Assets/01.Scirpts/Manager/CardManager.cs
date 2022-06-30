@@ -375,7 +375,7 @@ public class CardManager : Singleton<CardManager>
 
     public Card CreateCard(Item item, bool isPlayerCard)
     {
-        var cardObj = Instantiate(cardPrefab, transform.position, Utils.QI);
+        var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObj.GetComponent<Card>();
         card.Setup(item, true, isPlayerCard);
         card.GetComponent<Order>().SetOriginOrder(1);
