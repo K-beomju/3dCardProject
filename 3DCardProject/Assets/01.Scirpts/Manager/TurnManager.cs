@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 [System.Serializable]
 public enum TurnType
@@ -18,6 +19,8 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] private TurnType type;
     private Camera mainCam;
     private CameraMove cameraMove;
+    [SerializeField] private CanvasGroup changePanel;
+    [SerializeField] private Text changeText;
 
     private void Start()
     {
@@ -30,6 +33,7 @@ public class TurnManager : Singleton<TurnManager>
         if (type == TurnType.Player)
         {
             type = TurnType.Enemy;
+
             EnemyManager.Instance.EnemyAction();
         }
         else
@@ -37,23 +41,24 @@ public class TurnManager : Singleton<TurnManager>
             type = TurnType.Player;
             CardManager.Instance.AddCard();
         }
+
+        ChangeTurnPanel();
     }
 
     // 턴 바꿈 
     public static void ChangeTurn(TurnType _type)
     {
+
         if (_type == TurnType.Player)
         {
            Instance.type = _type;
            PlayerManager.TurnReset();
-           //CardManager.Instance.MyCardMove(false);
         }
         else
         {
             Instance.cameraMove.isLock = false;
             FindObjectOfType<CameraMove>().isLock = true;
             Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.3f).OnComplete(() => Instance.type = _type);
-            //CardManager.Instance.MyCardMove(true);
 
         }
     }
@@ -71,6 +76,21 @@ public class TurnManager : Singleton<TurnManager>
     public static void CurChangeType(TurnType type)
     {
         Instance.type = type;
+    }
+
+    public void ChangeTurnPanel()
+    {
+        if (Instance.type == TurnType.Player)
+        {
+            changeText.text = "내 턴";
+            changePanel.DOFade(1, .5f).OnComplete(() => changePanel.DOFade(0, .5f));
+        }
+        else
+        {
+            changeText.text = "적 턴";
+            changePanel.DOFade(1, .5f).OnComplete(() => changePanel.DOFade(0, .5f));
+
+        }
     }
 
 }
