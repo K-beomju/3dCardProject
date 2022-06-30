@@ -10,12 +10,18 @@ public class CardMoveAction : CardAction
         if (card.isPlayerCard)
         {
             print("BBBB");
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField);
+            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField,()=>
+            {
+                TurnManager.ChangeTurn(TurnType.Enemy);
+            });
         }
         else
         {
             print("CCCC");
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField);
+            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
+            {
+                TurnManager.ChangeTurn(TurnType.Player);
+            });
         }
     }
 

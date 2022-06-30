@@ -36,14 +36,11 @@ public class TurnManager : Singleton<TurnManager>
 
         if (type == TurnType.Player)
         {
-            type = TurnType.Enemy;
-
-            EnemyManager.Instance.EnemyAction();
+            ChangeTurn(TurnType.Enemy);
         }
         else
         {
-            type = TurnType.Player;
-            CardManager.Instance.AddCard();
+            ChangeTurn(TurnType.Player);
         }
 
         ChangeTurnPanel();

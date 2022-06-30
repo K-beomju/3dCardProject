@@ -141,10 +141,12 @@ public class ReflectBox : Singleton<ReflectBox>
 
             ReflectBoxActive(false);
             yield return Timing.WaitForSeconds(0.7f);
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField);
+            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
+            {
+                TurnManager.Instance.ChangeTurn();
+            });
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
-            TurnManager.Instance.ChangeTurn();
         }
         else
         {

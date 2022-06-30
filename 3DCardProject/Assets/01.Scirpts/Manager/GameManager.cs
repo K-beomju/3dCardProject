@@ -42,14 +42,12 @@ public class GameManager : Singleton<GameManager>
             SceneManager.LoadScene("Chapter_1");
         });
 
-        OnWinGame += (() => {
-            resultPanel.SetActive(true);
-        });
-
         fadeGroup.DOFade(0, 2);
     }
     public void CallOnWinGame()
     {
+        TurnManager.Instance.CanChangeTurn = false;
+        resultPanel.SetActive(true);
         print("GAMEWIN");
         ReflectBox.Instance.ReflectBoxActive(false);
         State = GameState.END;
@@ -57,6 +55,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void CallOnLoseGame()
     {
+        TurnManager.Instance.CanChangeTurn = false;
         print("GAMELOSE");
     }
 }

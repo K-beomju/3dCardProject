@@ -137,7 +137,7 @@ public class Field : MonoBehaviour
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() => {
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
-                card.LinkedModel.Move(card.transform.position,()=> { act?.Invoke(); TurnManager.ChangeTurn(card.isPlayerCard ? TurnType.Enemy : TurnType.Player); });
+                card.LinkedModel.Move(card.transform.position,act);
                 Debug.Log("¿Ãµø : " + card.item.name);
             }
             else
