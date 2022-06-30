@@ -40,7 +40,7 @@ public class EnemyManager : Singleton<EnemyManager>
         Item cardItem = null;
         Field setField = null;
 
-        if (dm.GetTopItem().IsStructCard && canCatch && dm.GetNormalItem() != null)
+        if (dm.GetTopItem() != null && dm.GetTopItem().IsStructCard && canCatch && dm.GetNormalItem() != null)
         {
             cardItem = dm.PopNormalItem();
         }
