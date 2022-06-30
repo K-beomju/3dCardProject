@@ -26,6 +26,8 @@ MonoBehaviour:
     description: "\uC0C1\uB300\uBC29\uC758 \uCE74\uB4DC\uB97C \uBB34\uD6A8\uD55C\uB2E4"
     count: 1
     OnSpawn:
+    - action: {fileID: 1976720221340695496, guid: 748b3de8ba34e194bbbd3e7dd05d5e1f, type: 3}
+      condition: []
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
     OnDie: []
