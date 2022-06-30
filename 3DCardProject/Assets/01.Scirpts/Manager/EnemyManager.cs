@@ -98,7 +98,7 @@ public class EnemyManager : Singleton<EnemyManager>
             if (setField == null)
             {
                 CardManager.Instance.CardDie(card);
-                TurnManager.Instance.ChangeTurn();
+                TurnManager.ChangeTurn(TurnType.Player);
             }
             else
             {

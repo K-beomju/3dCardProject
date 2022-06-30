@@ -49,7 +49,23 @@ public class TurnManager : Singleton<TurnManager>
     public static void ChangeTurn(TurnType _type)
     {
 
-        if (_type == TurnType.Player)
+        if (Instance.type != _type)
+        {
+            Instance.type = _type;
+
+            if (Instance.type != TurnType.Player)
+            {
+                EnemyManager.Instance.EnemyAction();
+            }
+            else
+            {
+                CardManager.Instance.AddCard();
+            }
+            
+            Instance.ChangeTurnPanel();
+
+        }
+        /*if (_type == TurnType.Player)
         {
            Instance.type = _type;
            PlayerManager.TurnReset();
@@ -60,7 +76,7 @@ public class TurnManager : Singleton<TurnManager>
             FindObjectOfType<CameraMove>().isLock = true;
             Instance.mainCam.transform.DOMove(new Vector3(0, 5.9f, 0.3f), 0.3f).OnComplete(() => Instance.type = _type);
 
-        }
+        }*/
     }
 
     public static void PlayerCardMove()

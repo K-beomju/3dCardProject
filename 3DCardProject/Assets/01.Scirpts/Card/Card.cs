@@ -205,7 +205,7 @@ public class Card : MonoBehaviour
         Debug.Log("ONSPAWN : " + item.name);
         Emphasize(() =>
         {
-            if(item.IsStructCard)
+            if(item.IsStructCard || item.IsAvatar)
             {
                 Debug.Log("모델 생성 시작 : " + item.name);
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,7 +77,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         IsClockDir = !IsClockDir;
         dirImage.localScale = new Vector3(1, IsClockDir ? 1 : -1, 1);
     }
-    public void Spawn(Field field, Card card)
+    public void Spawn(Field field, Card card, Action act= null)
     {
         if (field != null)
         {
@@ -87,7 +88,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 {
                     CardManager.Instance.OnReflect?.Invoke();
                     ReflectBox.Instance.WaitingCard = card;
-                    CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); }); };
+                    CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn();}); };
                 }
                 else
                 {
@@ -95,7 +96,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     {
                         ReflectBox.Instance.RemoveCardUI(card);
                     }
-                    field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
+                    field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
                 }
             }
             else
@@ -104,7 +105,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 {
                     ReflectBox.Instance.RemoveCardUI(card);
                 }
-                field.SetUp(card, () => { card.OnSpawn(); TurnManager.Instance.ChangeTurn(); });
+                field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
             }
         }
     }

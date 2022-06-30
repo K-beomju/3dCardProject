@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class CardModelBrain : MonoBehaviour
 {
@@ -31,10 +32,12 @@ public class CardModelBrain : MonoBehaviour
            
         }
     }
-    public void Move(Vector3 pos)
+    public void Move(Vector3 pos,Action act = null)
     {
         //DOTween.Kill(transform);
 
-        modelObject.transform.DOMove(pos, .5f);
+        modelObject.transform.DOMove(pos, .5f).OnComplete(()=> {
+            act?.Invoke();
+        });
     }
 }
