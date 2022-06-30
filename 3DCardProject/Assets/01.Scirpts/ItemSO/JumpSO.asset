@@ -27,10 +27,14 @@ MonoBehaviour:
       \uAC08 \uC218 \uC788\uB2E4."
     count: 1
     OnSpawn:
+    - action: {fileID: 2164382510984654645, guid: 1b19275043b69404fb628e8eaf0e136e, type: 3}
+      condition: []
     - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
       condition: []
     OnDie: []
     OnAttack:
+    - action: {fileID: 2164382510984654645, guid: 1b19275043b69404fb628e8eaf0e136e, type: 3}
+      condition: []
     - action: {fileID: -7452064199205491114, guid: f9995229fe5086a43b1f3cc4e1e97fe1, type: 3}
       condition: []
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}

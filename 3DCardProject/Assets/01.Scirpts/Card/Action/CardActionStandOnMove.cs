@@ -6,6 +6,8 @@ public class CardActionStandOnMove : CardAction
 {
     public override void TakeAction(Card card)
     {
-        NewFieldManager.Instance.AvatarMove(card.curField);
+        NewFieldManager.Instance.AvatarMove(card.curField,()=> {
+            TurnManager.Instance.CanChangeTurn = true; 
+        });
     }
 }

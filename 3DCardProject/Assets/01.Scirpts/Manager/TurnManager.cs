@@ -22,6 +22,8 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] private CanvasGroup changePanel;
     [SerializeField] private Text changeText;
 
+    public bool CanChangeTurn { get; set; } = true;
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -30,6 +32,8 @@ public class TurnManager : Singleton<TurnManager>
 
     public void ChangeTurn()
     {
+        if (!CanChangeTurn) return;
+
         if (type == TurnType.Player)
         {
             type = TurnType.Enemy;
@@ -48,6 +52,7 @@ public class TurnManager : Singleton<TurnManager>
     // ≈œ πŸ≤ﬁ 
     public static void ChangeTurn(TurnType _type)
     {
+        if (!Instance.CanChangeTurn) return;
 
         if (Instance.type != _type)
         {

@@ -126,7 +126,7 @@ public class Card : MonoBehaviour
         });
     }
    
-    public void Attack(Field field)
+    public void Attack(Field field,Action act = null)
     {
         if (!isAttack && (field.curCard != this || field.upperCard != this||field.avatarCard != this))
         {
@@ -158,7 +158,7 @@ public class Card : MonoBehaviour
                     }
                     isAttack = false;
                     OnAttack();
-
+                    act?.Invoke();
                 });
             });
         }
