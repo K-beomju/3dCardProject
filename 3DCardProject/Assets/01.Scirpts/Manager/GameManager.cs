@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public enum GameState
 {
@@ -23,6 +24,9 @@ public class GameManager : Singleton<GameManager>
     private GameObject resultPanel;
 
     public GameState State { get; set; }
+
+    public CanvasGroup fadeGroup;
+
     protected override void Awake()
     {
         base.Awake();
@@ -41,6 +45,8 @@ public class GameManager : Singleton<GameManager>
         OnWinGame += (() => {
             resultPanel.SetActive(true);
         });
+
+        fadeGroup.DOFade(0, 2);
     }
     public void CallOnWinGame()
     {
