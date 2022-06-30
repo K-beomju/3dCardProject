@@ -232,7 +232,7 @@ public class Card : MonoBehaviour
             int check = 0;
             foreach (var condition in item.condition)
             {
-                if (!condition.CheckCondition())
+                if (!condition.CheckCondition(this))
                 {
                     check++;
                 }

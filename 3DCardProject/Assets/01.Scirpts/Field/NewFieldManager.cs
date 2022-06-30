@@ -36,25 +36,25 @@ public class NewFieldManager : Singleton<NewFieldManager>
             node.Data.transform.rotation = q;
         }
         TurnManager.Instance.CanChangeTurn = false;
-        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(),true);
+        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
         enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem.ShallowCopy(), false);
-        fields.GetNodeByIndex(5).Data.SetUp(playerCard, ()=> { 
-            playerCard.OnSpawn(); 
+        fields.GetNodeByIndex(5).Data.SetUp(playerCard, () => {
+            playerCard.OnSpawn();
             canCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;
         });
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         PlayerManager.Instance.playerCards.Add(playerCard);
 
-      
+
     }
 
     private void Update()
     { // 수정 예정 
-        if(canCheckRange)
+        if (canCheckRange)
             CheckCardDragSpawnRange();
     }
-    public void AvatarMove(Field field,Action act = null)
+    public void AvatarMove(Field field, Action act = null)
     {
         var node = fields.GetNodeByData(field);
         Card card = node.Data.avatarCard;
@@ -66,12 +66,12 @@ public class NewFieldManager : Singleton<NewFieldManager>
             if (IsClockDir)
             {
                 Debug.Log(node.NextNode.Data);
-                Move(node.NextNode.Data, card,act);
+                Move(node.NextNode.Data, card, act);
             }
             else
             {
                 Debug.Log(node.PrevNode.Data);
-                Move(node.PrevNode.Data, card,act);
+                Move(node.PrevNode.Data, card, act);
             }
         }
     }
@@ -81,22 +81,22 @@ public class NewFieldManager : Singleton<NewFieldManager>
         IsClockDir = !IsClockDir;
         dirImage.localScale = new Vector3(1, IsClockDir ? 1 : -1, 1);
     }
-    public void Spawn(Field field, Card card, Action act= null)
+    public void Spawn(Field field, Card card, Action act = null)
     {
         if (field != null)
         {
             Debug.Log(card.name);
-            if(!card.isPlayerCard)
+            if (!card.isPlayerCard)
             {
                 if (ReflectBox.Instance.CardUIList.Count > 0)
                 {
                     CardManager.Instance.OnReflect?.Invoke();
                     ReflectBox.Instance.WaitingCard = card;
-                    CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn();}); };
+                    CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); }); };
                 }
                 else
                 {
-                    if(card.item.IsReflectCard)
+                    if (card.item.IsReflectCard)
                     {
                         ReflectBox.Instance.RemoveCardUI(card);
                     }
@@ -119,7 +119,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     /// </summary>
     /// <param name="field">도착 필드</param>
     /// <param name="card">이동할 카드</param>
-    public void Move(Field field, Card card,Action act = null)
+    public void Move(Field field, Card card, Action act = null)
     {
         Debug.Log(field);
         if (field != null)
@@ -149,12 +149,12 @@ public class NewFieldManager : Singleton<NewFieldManager>
                             card.curField.RemoveCurCard();
                         }
                     }
-                    field.SetUp(card, ()=> { field.upperCard.OnAttack(); act?.Invoke(); });
+                    field.SetUp(card, () => { field.upperCard.OnAttack(); act?.Invoke(); });
                 }
                 else
                 {
                     Debug.Log("upperCard CantStandOn");
-                    card.Attack(field,act);
+                    card.Attack(field, act);
                 }
 
             }
@@ -175,7 +175,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     {
                         card.curField.RemoveCurCard();
                     }
-                    field.SetUp(card, () => { field.upperCard.OnAttack(); act?.Invoke(); });
+                    field.SetUp(card, () => { field.curCard.OnAttack(); act?.Invoke(); });
                 }
                 else
                 {
@@ -195,7 +195,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                     {
                         card.curField.RemoveAvatarCard();
                     }
-                    else if(card.item.IsUpperCard)
+                    else if (card.item.IsUpperCard)
                     {
                         card.curField.RemoveUpperCard();
                     }
@@ -222,7 +222,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             fieldList[i].isEnterRange = false;
         }
 
-        var node = fields.GetNodeByData(playerCard.curField);        
+        var node = fields.GetNodeByData(playerCard.curField);
         Field prevField = node.PrevNode.Data;
         Field nextField = node.NextNode.Data;
         prevField.isEnterRange = true;
@@ -244,5 +244,17 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     }
 
-    
+    public MyLinkedList<Field>.Node GetNodeByData(Field field)
+    {
+        return fields.GetNodeByData(field);
+    }
+
+    public MyLinkedList<Field>.Node GetPlayerNodeByData()
+    {
+        return GetNodeByData(playerCard.curField);
+    }   
+    public MyLinkedList<Field>.Node GetEnemyNodeByData()
+    {
+        return GetNodeByData(enemyCard.curField);
+    }
 }

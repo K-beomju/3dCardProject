@@ -6,5 +6,5 @@ using System;
 [Serializable]
 public abstract class CardCondition : MonoBehaviour
 {
-    public abstract bool CheckCondition();
+    public abstract bool CheckCondition(Card card);
 }
