@@ -17,6 +17,8 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private int steps;
     private bool isMove = false;
 
+    private Animator anim;
+
     #region Dice
     [SerializeField] private GameObject dice;
     [SerializeField] Camera cam;
@@ -24,7 +26,7 @@ public class TotemMove : MonoBehaviour
     private Text diceText;
     private bool isRoll = false;
 
-    private WaitForSeconds rollDelay = new WaitForSeconds(0.1f);
+    private WaitForSeconds rollDelay = new WaitForSeconds(0.05f);
     private IEnumerator rollCo;
     #endregion
 
@@ -40,6 +42,7 @@ public class TotemMove : MonoBehaviour
 
     private void Awake()
     {
+        anim = this.GetComponent<Animator>();
         diceText = dice.GetComponent<Text>();
         rollCo = RollingDice();
         dice.SetActive(false);
@@ -47,6 +50,12 @@ public class TotemMove : MonoBehaviour
 
     private void Update()
     {
+
+        if (isMove)
+            dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
+        else
+            dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.8f, 0));
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!isRoll)
@@ -66,13 +75,12 @@ public class TotemMove : MonoBehaviour
                     if (routePosition + steps < board.childNodeList.Count)
                     {
                         StartCoroutine(MoveMentCo());
+                        print("Move");
                     }
                 }
             }
         }
 
-        if (isMove)
-            dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 0.8f, 0));
 
 
     }
@@ -80,14 +88,16 @@ public class TotemMove : MonoBehaviour
     private IEnumerator MoveMentCo()
     {
         yield return new WaitForSeconds(0.5f);
-
         if (isMove) yield break;
+
         isMove = true;
         yield return new WaitForSeconds(1f);
 
         while (steps > 0)
         {
             Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
+            Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
+            transform.LookAt(lookAtPos);
             while (MoveNextNode(nextPos))
                 yield return null;
 
@@ -100,11 +110,11 @@ public class TotemMove : MonoBehaviour
             board.ChangeCam();
 
         }
-
+        anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
 
         if(board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-        FadeInOut(FadeType.FadeOut, BattleScene);
+            FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
         dice.SetActive(false);
@@ -123,6 +133,7 @@ public class TotemMove : MonoBehaviour
 
     private bool MoveNextNode(Vector3 goal)
     {
+        anim.SetBool("isMove", true);
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
 
@@ -157,4 +168,11 @@ public class TotemMove : MonoBehaviour
         SceneManager.LoadScene("MinSangSang");
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Item"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
 }

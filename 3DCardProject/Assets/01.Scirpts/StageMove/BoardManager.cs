@@ -9,7 +9,7 @@ using DG.Tweening;
 public class BoardManager : MonoBehaviour
 {
     public List<Board> boardList = new List<Board>();
-    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>(); 
+    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>();
     public List<Transform> childNodeList = new List<Transform>();
 
     [SerializeField] private List<CinemachineVirtualCamera> boardCamList = new List<CinemachineVirtualCamera>();
@@ -18,8 +18,8 @@ public class BoardManager : MonoBehaviour
     private Transform[] childObjs;
     private bool isChange = false;
 
-    public GameObject battleField;
-    public GameObject shopField;
+    [SerializeField] private GameObject battleField;
+    [SerializeField] private GameObject shopField;
 
     private void Start()
     {
@@ -38,26 +38,30 @@ public class BoardManager : MonoBehaviour
             for (int k = 0; k < 6; k++)
             {
                 Board board = boardList[i * 6 + k];
-                if(k == rand)
-                {
-                    board.type = StageType.Shop;
-                    //Instantiate(shopField, board.fieldTrm.position + new Vector3(0,0.35f,0), Quaternion.Euler(90,0,0));
 
-                }
-                else
+                if (i != 0 || k != 0)
                 {
-                    //Instantiate(battleField, board.fieldTrm.position + new Vector3(0, 0.35f, 0), Quaternion.Euler(90, 0, 0));
 
+                    if (k == rand)
+                    {
+                        board.type = StageType.Shop;
+                        Instantiate(shopField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                    }
+                    else
+                    {
+                        Instantiate(battleField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                    }
                 }
+
+
 
                 board.stageData = StageManager.Instance.stageArray[i];
-                //board.avatar = StageManager.Instance.stageArray[i].avatar.item.ShallowCopy();
                 boardArrayList[i].list.Add(board);
 
             }
         }
 
-      
+
 
 
     }
