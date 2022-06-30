@@ -18,4 +18,10 @@ public class DebugCommand : EditorWindow
         virtualCam.LookAt = GameObject.Find("Totem").transform;
 
     }
+    
+    [MenuItem("StageCamClear", menuItem = "Debug/Stage/StageValueReset")]
+    public static void StageValueReset()
+    {
+        PlayerPrefs.DeleteKey("StageValue");
+    }
 }

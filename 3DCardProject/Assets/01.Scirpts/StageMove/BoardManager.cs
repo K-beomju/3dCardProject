@@ -13,13 +13,15 @@ public class BoardManager : MonoBehaviour
     public List<Transform> childNodeList = new List<Transform>();
 
     [SerializeField] private List<CinemachineVirtualCamera> boardCamList = new List<CinemachineVirtualCamera>();
-    [SerializeField] private List<Board> boardCamChList = new List<Board>();
 
     private Transform[] childObjs;
     private bool isChange = false;
 
     [SerializeField] private GameObject battleField;
     [SerializeField] private GameObject shopField;
+    [SerializeField] private TotemMove totem;
+
+    public List<GameObject> stoneList = new List<GameObject>();
 
     private void Start()
     {
@@ -45,11 +47,14 @@ public class BoardManager : MonoBehaviour
                     if (k == rand)
                     {
                         board.type = StageType.Shop;
-                        Instantiate(shopField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                        GameObject shopFd = Instantiate(shopField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                        stoneList.Add(shopFd);
                     }
                     else
                     {
-                        Instantiate(battleField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                        GameObject battleFd = Instantiate(battleField, board.transform.position + new Vector3(0, .7f, 0), Quaternion.Euler(45, 0, 0));
+                        stoneList.Add(battleFd);
+
                     }
                 }
 
@@ -62,6 +67,7 @@ public class BoardManager : MonoBehaviour
         }
 
 
+        ChangeCam();
 
 
     }
@@ -101,12 +107,14 @@ public class BoardManager : MonoBehaviour
 
     private bool isClear = false;
     int num = 0;
+    public int[] camChangeValues;
+
     public void ChangeCam()
     {
         for (int i = num; i < boardCamList.Count; i++)
         {
             boardCamList[i].gameObject.SetActive(false);
-            if (boardCamChList[i].isClear && !isClear)
+            if (PlayerPrefs.GetInt("StageValue") > camChangeValues[i] && !isClear)
             {
                 num++;
                 isClear = true;
@@ -117,6 +125,12 @@ public class BoardManager : MonoBehaviour
         {
             boardCamList[num - 1].gameObject.SetActive(true);
             isClear = false;
+        }
+
+        if(PlayerPrefs.GetInt("StageValue") != 0)
+        for (int i = 0; i < PlayerPrefs.GetInt("StageValue"); i++)
+        {
+            stoneList[i].SetActive(false);
         }
     }
 

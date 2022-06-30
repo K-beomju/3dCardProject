@@ -13,7 +13,7 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private BoardManager board;
 
     [SerializeField] private float speed;
-    [SerializeField] private int routePosition;
+    public int routePosition;
     public int stageValue;
     [SerializeField] private int steps;
     private bool isMove = false;
@@ -183,6 +183,7 @@ public class TotemMove : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+
 
 
     
