@@ -14,6 +14,7 @@ public class TotemMove : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private int routePosition;
+    public int stageValue;
     [SerializeField] private int steps;
     private bool isMove = false;
 
@@ -48,6 +49,14 @@ public class TotemMove : MonoBehaviour
         dice.SetActive(false);
     }
 
+    private void Start()
+    {
+        stageValue = PlayerPrefs.GetInt("StageValue");
+        routePosition = stageValue;
+        transform.position = board.childNodeList[stageValue].transform.position;
+    }
+
+
     private void Update()
     {
 
@@ -80,9 +89,6 @@ public class TotemMove : MonoBehaviour
                 }
             }
         }
-
-
-
     }
 
     private IEnumerator MoveMentCo()
@@ -118,6 +124,7 @@ public class TotemMove : MonoBehaviour
             FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
+        PlayerPrefs.SetInt("StageValue", routePosition);
         dice.SetActive(false);
     }
 
@@ -176,4 +183,9 @@ public class TotemMove : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+
+
+    
+  
+
 }
