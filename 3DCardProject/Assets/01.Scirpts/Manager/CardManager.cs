@@ -494,26 +494,21 @@ public class CardManager : Singleton<CardManager>
     public virtual void CardMouseDown(Card card)
     {
         if (!card.isPlayerCard) return;
-       // Debug.Log("Drag");
 
         if (card.curField == null)
         {
-          //  Debug.Log("Drag");
             isCardDrag = true;
             selectCard = card;
             arrowObject.ActiveArrow(true);
             float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
-            arrowObject.transform.position = new Vector3(x, 540, 0);
+            arrowObject.transform.position = new Vector3(x, 470, 0);
+
+            selectCard.transform.DOScale(new Vector3(0.3f,0.3f, 0.5f), 0.05f);
+
+            Vector3 enlarPos = new Vector3(selectCard.transform.position.x, selectCard.transform.position.y , selectCard.transform.position.z - 1);
+            selectCard.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
-        /*else
-        {
-            if (movingCard != null)
-                SelectMovingCardAroundField(false);
-
-            movingCard = card;
-
-            SelectMovingCardAroundField(true);
-        }*/
+      
     }
     public void SelectMovingCardAroundField(bool Inbool, Card card = null)
     {
