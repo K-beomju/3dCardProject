@@ -205,11 +205,16 @@ public class Card : MonoBehaviour
         Debug.Log("ONSPAWN : " + item.name);
         Emphasize(() =>
         {
-            Debug.Log("모델 생성 시작 : " + item.name);
-            LinkedModel = Instantiate(modelPrefab,transform.position,Utils.QI).GetComponent<CardModelBrain>();
-            var model = Resources.Load<GameObject>(item.uid.ToString());
-            if (model != null)
-                LinkedModel.ModelObject = model;
+            if(item.IsStructCard)
+            {
+                Debug.Log("모델 생성 시작 : " + item.name);
+
+                LinkedModel = Instantiate(modelPrefab, transform.position, Utils.QI).GetComponent<CardModelBrain>();
+                var model = Resources.Load<GameObject>(item.uid.ToString());
+                if (model != null)
+                    LinkedModel.ModelObject = model;
+
+            }
 
             CardAction(item.OnSpawn);
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
