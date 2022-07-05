@@ -90,9 +90,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
             {
                 if (ReflectBox.Instance.CardUIList.Count > 0)
                 {
-                    CardManager.Instance.OnReflect?.Invoke();
                     ReflectBox.Instance.WaitingCard = card;
                     CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); }); };
+                    CardManager.Instance.OnReflect?.Invoke();
                 }
                 else
                 {

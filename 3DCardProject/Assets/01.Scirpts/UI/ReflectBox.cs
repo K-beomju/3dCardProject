@@ -25,7 +25,19 @@ public class ReflectBox : Singleton<ReflectBox>
     private bool isActive = false;
     public static bool isReflect = false;
 
-    public Card WaitingCard = null;
+    private Card waitingCard = null;
+
+    public Card WaitingCard
+    {
+        get
+        {
+            return waitingCard;
+        }
+        set
+        {
+            waitingCard = value;
+        }
+    }
     public UICard selectedCard = null;
     public Card reflectCard;
 
@@ -72,6 +84,10 @@ public class ReflectBox : Singleton<ReflectBox>
     {
         if(CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
         {
+            Vector3 pos = CardManager.Instance.hackField.transform.position;
+            pos += new Vector3(0,5f,0);
+            waitingCard.transform.DOScale(waitingCard.transform.localScale * 2f, .2f);
+             waitingCard.transform.DOMove(pos, .4f);
             // ¿Ã¸®±â
             ReflectBoxActive(true);
         }
