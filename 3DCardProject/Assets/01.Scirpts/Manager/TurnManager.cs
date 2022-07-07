@@ -57,7 +57,8 @@ public class TurnManager : Singleton<TurnManager>
 
             if (Instance.type != TurnType.Player)
             {
-                EnemyManager.Instance.EnemyAction();
+                EnemyAI.Instance.JudgementCard();
+                //EnemyManager.Instance.EnemyAction();
             }
             else
             {

@@ -33,7 +33,17 @@ public class Item
     //생성되었을 때
     public CardActionCondition[] OnCreate;
 
+    private List<int> aa = new List<int>()
+    {
+        0b0000,
+        0b0000,
+    };
+    private int a;
 
+    public void laa()
+    {
+        
+    }
     public Item ShallowCopy()
     {
         return (Item)this.MemberwiseClone();

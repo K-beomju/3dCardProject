@@ -4,30 +4,31 @@ using UnityEngine;
 using System;
 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Singleton<EnemyAI>
 {
     private Action action;
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // 아바타 어퍼 노말 플레이어 구별
     {
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
-        { 0b0000_0000_0000_0000_0000_0000_0000_0000, () => { } },
+        //유니티 event 
+        { 0b1000_0000_0000_0000_0000_1001_1111_1111, () => {Debug.Log("1"); } },
+        { 0b1000_0000_0000_0000_1001_0000_1111_1111, () => {Debug.Log("2"); } },
+        { 0b1000_0000_0000_1001_0000_0000_1111_1111, () => {Debug.Log("3"); } },
+        { 0b1000_0000_0000_0000_0000_0000_1111_1111, () => {Debug.Log("4"); } },
+        { 0b1000_0000_1001_0000_0000_0000_1111_1111, () => {Debug.Log("5"); } },
+        { 0b1000_1001_0000_0000_0000_0000_1111_1111, () => {Debug.Log("6"); } },
+        { 0b1001_1000_0000_0000_0000_0000_1111_1111, () => {Debug.Log("7"); } },
+        { 0b1001_0000_1000_0000_0000_0000_1111_1111, () => {Debug.Log("8"); } },
+        { 0b1001_0000_0000_1000_0000_0000_1111_1111, () => {Debug.Log("9"); } },
+        { 0b1001_0000_0000_0000_1000_0000_1111_1111, () => {Debug.Log("10"); } },
     };
 
 
-    private long state = 0b0000_0000_0000_0000_0000_0000_0000_0000;
+    private long currentState = 0b0000_0000_0000_0000_0000_0000_0000_0000;
 
     [ContextMenu("InitState")]
     public void InitState()
     {
-        state = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
+        currentState = 0b0000_0000_0000_0000_0000_0000_0000_0000;
 
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
@@ -37,17 +38,17 @@ public class EnemyAI : MonoBehaviour
             {
                 if (field.avatarCard.isPlayerCard)
                 {
-                    state += 0b0000_0000_0000_0000_0000_0001_0000_0000;
+                    currentState += 0b0000_0000_0000_0000_0000_0001_0000_0000;
                 }
-                state += 0b0000_0000_0000_0000_0000_1000_0000_0000;
+                currentState += 0b0000_0000_0000_0000_0000_1000_0000_0000;
             }
             if (field.upperCard != null)
-                state += 0b0000_0000_0000_0000_0000_0100_0000_0000;
+                currentState += 0b0000_0000_0000_0000_0000_0100_0000_0000;
             if (field.curCard != null)
-                state += 0b0000_0000_0000_0000_0000_0010_0000_0000;
+                currentState += 0b0000_0000_0000_0000_0000_0010_0000_0000;
 
             if (i != NewFieldManager.Instance.fieldList.Count - 1)
-                state <<= 4;
+                currentState <<= 4;
         }
 
 
@@ -58,38 +59,55 @@ public class EnemyAI : MonoBehaviour
             switch (dm.itemBuffer[i].uid)
             {
                 case 100:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_1000_0000;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_1000_0000;
                     break;
                 case 101:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0100_0000;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0100_0000;
                     break;
                 case 102:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0010_0000;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0010_0000;
                     break;
                 case 103:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0001_0000;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0001_0000;
                     break;
                 case 104:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0000_1000;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_1000;
                     break;
                 case 105:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0000_0100;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0100;
                     break;
                 case 106:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0000_0010;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0010;
                     break;
                 case 107:
-                    state += 0b0000_0000_0000_0000_0000_0000_0000_0000_0001;
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0001;
                     break;
             }
         }
-        print(Convert.ToString(state, 2));
+        //print(Convert.ToString(currentState, 2));
     }
 
-    public void CheckDrawCard()
+    [ContextMenu("JudgementCard")]
+    public void JudgementCard()
     {
-       
+        InitState();
+
+        if (_actions.ContainsKey(currentState)) // 미리 설정해둔 행동
+        {
+            Debug.Log("DO PRESET");
+            _actions[currentState]?.Invoke();
+        }
+        else // 기본 행동
+        {
+            print("경우의 수가 없음");
+            print(Convert.ToString(currentState, 2));
+            //Debug.Log("DO DEFAULT");
+            //EnemyManager.Instance.EnemyAction();
+        }
     }
 
+    public void BuildingStruct()
+    {
 
+    }
 }
