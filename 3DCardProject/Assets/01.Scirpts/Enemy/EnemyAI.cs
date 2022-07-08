@@ -10,16 +10,9 @@ public class EnemyAI : Singleton<EnemyAI>
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // 아바타 어퍼 노말 플레이어 구별
     {
         //유니티 event 
-        { 0b1000_0000_0000_0000_0000_1001_1111_1111, () => {Debug.Log("1"); } },
-        { 0b1000_0000_0000_0000_1001_0000_1111_1111, () => {Debug.Log("2"); } },
-        { 0b1000_0000_0000_1001_0000_0000_1111_1111, () => {Debug.Log("3"); } },
-        { 0b1000_0000_0000_0000_0000_0000_1111_1111, () => {Debug.Log("4"); } },
-        { 0b1000_0000_1001_0000_0000_0000_1111_1111, () => {Debug.Log("5"); } },
-        { 0b1000_1001_0000_0000_0000_0000_1111_1111, () => {Debug.Log("6"); } },
-        { 0b1001_1000_0000_0000_0000_0000_1111_1111, () => {Debug.Log("7"); } },
-        { 0b1001_0000_1000_0000_0000_0000_1111_1111, () => {Debug.Log("8"); } },
-        { 0b1001_0000_0000_1000_0000_0000_1111_1111, () => {Debug.Log("9"); } },
-        { 0b1001_0000_0000_0000_1000_0000_1111_1111, () => {Debug.Log("10"); } },
+        { 0b100000100000001001000011111111, () => {Debug.Log("1");EnemyManager.Instance.EnemyAction(); } }, // 벽
+
+
     };
 
 
@@ -28,6 +21,7 @@ public class EnemyAI : Singleton<EnemyAI>
     [ContextMenu("InitState")]
     public void InitState()
     {
+
         currentState = 0b0000_0000_0000_0000_0000_0000_0000_0000;
 
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
