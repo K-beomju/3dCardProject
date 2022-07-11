@@ -48,6 +48,19 @@ public class DeckManager : MonoBehaviour
         return item;
     }
 
+    public Item PopItem(uint uid)
+    {
+        if (itemBuffer.Count < 1) return null;
+
+        foreach (var item in itemBuffer)
+        {
+            if (item.uid == uid )
+            {
+                return item;
+            }
+        }
+        return null ;
+    }
     protected virtual void SetupItemBuffer(List<Item> items)
     {
         itemBuffer = new List<Item>();

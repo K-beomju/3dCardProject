@@ -4,13 +4,26 @@ using UnityEngine;
 using System;
 
 
+public  enum MountState
+{
+    Prev,
+    Next,
+    Hack
+}
+
 public class EnemyAI : Singleton<EnemyAI>
 {
+    
+    private MountState mountState;
     private Action action;
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // 아바타 어퍼 노말 플레이어 구별
     {
         //유니티 event 
-        { 0b100000100000001001000011111111, () => {Debug.Log("1");EnemyManager.Instance.EnemyAction(); } }, // 벽
+        { 0b100000100000001001000011111111, () => {
+            //Card card = EnemyManager.Instance.dm.PopItem(102);
+            MountState state = MountState.Prev;
+            //EnemyAI.Instance.MountingCard(card,state); 
+        } }, // 벽
 
 
     };
@@ -99,9 +112,59 @@ public class EnemyAI : Singleton<EnemyAI>
             //EnemyManager.Instance.EnemyAction();
         }
     }
+    //// 앞에 설치 (카드)
+    //public void MountingPrev(Card card)
+    //{
+    //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
+    //    Mounting(card, fieldNode.PrevNode.Data);
+    //}
+    //// 뒤에 설치 (카드)
+    //public void MountingNext(Card card)
+    //{
+    //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
+    //    Mounting(card, fieldNode.NextNode.Data);
+    //}
+    //// 핵에 설치 (카드)
+    //public void MountingOnHack(Card card)
+    //{
+    //    Mounting(card,CardManager.Instance.hackField);
+    //}
 
-    public void BuildingStruct()
+    public void MountingCard(Card card, MountState mount)
     {
+        var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
 
+        switch (mount)
+        {
+            case MountState.Prev:  //뒤에 설치 (카드)
+                Mounting(card, fieldNode.PrevNode.Data);
+                break;
+            case MountState.Next:  //앞에 설치(카드)
+                Mounting(card, fieldNode.NextNode.Data);
+                break;
+            case MountState.Hack: //핵에 설치(카드)
+                Mounting(card, CardManager.Instance.hackField);
+                break;
+        }
+    }
+
+    
+
+    // 설치 (위치 , 카드)
+    public void Mounting(Card card,Field setField)
+    {
+        if (GameManager.Instance.State == GameState.END) return;
+
+        CardManager.Instance.LastUsedCardItem = card.item.ShallowCopy();
+
+        if (setField == null)
+        {
+            CardManager.Instance.CardDie(card);
+            TurnManager.ChangeTurn(TurnType.Player);
+        }
+        else
+        {
+            NewFieldManager.Instance.Spawn(setField, card);
+        }
     }
 }
