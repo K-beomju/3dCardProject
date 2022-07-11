@@ -140,7 +140,7 @@ public class CardManager : Singleton<CardManager>
 
         Destroy(card.gameObject, 1);
     }
-    private void RemoveCard(bool killTween)
+    private void RemoveCard(bool killTween = false)
     {
         var a = selectCard;
         ReflectBox.Instance.RemoveCardUI(a);
@@ -154,18 +154,27 @@ public class CardManager : Singleton<CardManager>
     }
     public void RandCardDelete()
     {
-        int rand = UnityEngine.Random.Range(0, 2);
+        int rand = UnityEngine.Random.Range(0, 1);
         if (rand == 0)
         {
             int index = UnityEngine.Random.Range(0, myCards.Count);
-            myCards[index].SetDeleteObject();
-            myCards.Remove(myCards[index]);
+            Card delCard = myCards[index];
+            delCard.canInteract = false;
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(delCard.transform.DOMove(hackField.transform.position + new Vector3(0, 5f, 0), .15f)).AppendInterval(.3f);
+            sequence.Append(delCard.transform.DOScale(delCard.transform.localScale * 2f, .3f)).AppendInterval(.3f);
+            sequence.Append(transform.DOMove(transform.position,.2f)).OnComplete(() => {
+                myCards.Remove(delCard);
+                ReflectBox.Instance.RemoveCardUI(delCard);
 
-            SetOriginOrder();
-            CardAlignment();
+                SetOriginOrder();
+                CardAlignment();
 
-            print("µ£ ¹ßµ¿");
+                CardDie(delCard);
 
+                print("µ£ ¹ßµ¿");
+            });
+            ;
         }
         else
             print("µ£ ¹ßµ¿ ½ÇÆÐ");

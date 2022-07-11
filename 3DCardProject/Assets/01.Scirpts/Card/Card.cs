@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
 
     public Field curField;
     public bool isAttack = false;
-
+    public bool canInteract = true;
     public void Setup(Item item, bool isFront, bool isPlayerCard)
     {
         this.isPlayerCard = isPlayerCard;
@@ -56,7 +56,8 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
-        CardManager.Instance.CardMouseOver(this);
+        if (canInteract)
+            CardManager.Instance.CardMouseOver(this);
     }
 
     void OnMouseExit()
