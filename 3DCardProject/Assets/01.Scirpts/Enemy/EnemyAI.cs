@@ -26,7 +26,7 @@ public class EnemyAI : Singleton<EnemyAI>
             MountState state = MountState.Prev;
             EnemyAI.Instance.MountingCard(card,state);
 
-        } }, // 벽
+        } }, // 일반카드 
 
         {
             0b101000000000101001000011111111, () => {
@@ -35,7 +35,7 @@ public class EnemyAI : Singleton<EnemyAI>
             MountState state = MountState.Hack;
             EnemyAI.Instance.MountingCard(card,state);
 
-        } }, // 벽 -> 스탑 
+        } }, // 일반카드 -> 마법 카드  
 
 
     };
@@ -165,14 +165,15 @@ public class EnemyAI : Singleton<EnemyAI>
     // 설치 (위치 , 카드)
     public void Mounting(Card card, Field setField)
     {
+        Debug.LogError("준비");
         if (GameManager.Instance.State == GameState.END) return;
+        Debug.LogError("서공");
 
         CardManager.Instance.LastUsedCardItem = card.item.ShallowCopy();
 
         if (setField == null)
         {
             CardManager.Instance.CardDie(card);
-            TurnManager.ChangeTurn(TurnType.Player);
         }
         else
         {
