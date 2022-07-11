@@ -584,7 +584,37 @@ public class CardManager : Singleton<CardManager>
 
     #endregion
 
+    public void MountCardSupport(uint num, MountState state = MountState.NULL)
+    {
+        Item cardItem = EnemyManager.Instance.dm.PopItem(num);
+        Card card = CreateCard(cardItem, false);
+        if(state == MountState.NULL)
+        {
+            switch (num)
+            {
+                case 100:// 공격
+                case 101:// 무효
+                case 102:// 체인지
+                case 104:// 거울
+                case 105:// 스탑
+                    state = MountState.Hack;
+                    break;
+                case 103:// 뜀틀
+                case 106:// 덫
+                case 107:// 벽
+                    if (UnityEngine.Random.Range(0, 1) == 0)
+                        state = MountState.Next;
+                    else
+                        state = MountState.Prev;
+                    break;
+                default:
+                    break;
 
+            }
+        }
+      
+        EnemyAI.Instance.MountingCard(card, state);
+    }
     public virtual void UseCard()
     {
 

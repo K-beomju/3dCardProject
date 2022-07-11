@@ -6,6 +6,7 @@ using System;
 
 public enum MountState
 {
+    NULL,
     Prev,
     Next,
     Hack
