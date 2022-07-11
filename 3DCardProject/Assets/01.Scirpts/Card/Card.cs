@@ -140,6 +140,7 @@ public class Card : MonoBehaviour
 
 
                 transform.DOMove(firstPos, .3f).OnComplete(() => {
+                    act?.Invoke();
                     GetComponent<Order>().SetOriginOrder(originOrder);
                     if (field.curCard != null)
                     {
@@ -156,9 +157,9 @@ public class Card : MonoBehaviour
                         Debug.Log("아바타 카드 공격");
                         field.avatarCard.OnDamage();
                     }
+                    Debug.Log("ATACK");
                     isAttack = false;
                     OnAttack();
-                    act?.Invoke();
                 });
             });
         }
@@ -223,6 +224,8 @@ public class Card : MonoBehaviour
 
     private void CardAction(CardActionCondition[] act)
     {
+        if (act.Length < 1) return;
+
         foreach (var item in act)
         {
             if (item == null || item.action == null)
