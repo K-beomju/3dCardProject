@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public  enum MountState
+public enum MountState
 {
     Prev,
     Next,
@@ -13,17 +13,29 @@ public  enum MountState
 
 public class EnemyAI : Singleton<EnemyAI>
 {
-    
+
     private MountState mountState;
     private Action action;
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // 아바타 어퍼 노말 플레이어 구별
     {
         //유니티 event 
-        { 0b100000100000001001000011111111, () => {
-            //Card card = EnemyManager.Instance.dm.PopItem(102);
+        { 
+            0b100000100000001001000011111111, () => {
+           Item cardItem = EnemyManager.Instance.dm.PopItem(107);
+             Card card = CardManager.Instance.CreateCard(cardItem, false);
             MountState state = MountState.Prev;
-            //EnemyAI.Instance.MountingCard(card,state); 
+            EnemyAI.Instance.MountingCard(card,state);
+
         } }, // 벽
+
+        {
+            0b101000000000101001000011111111, () => {
+           Item cardItem = EnemyManager.Instance.dm.PopItem(100);
+             Card card = CardManager.Instance.CreateCard(cardItem, false);
+            MountState state = MountState.Hack;
+            EnemyAI.Instance.MountingCard(card,state);
+
+        } }, // 벽 -> 스탑 
 
 
     };
@@ -148,10 +160,10 @@ public class EnemyAI : Singleton<EnemyAI>
         }
     }
 
-    
+
 
     // 설치 (위치 , 카드)
-    public void Mounting(Card card,Field setField)
+    public void Mounting(Card card, Field setField)
     {
         if (GameManager.Instance.State == GameState.END) return;
 
