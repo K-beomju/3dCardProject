@@ -596,6 +596,13 @@ public class CardManager : Singleton<CardManager>
     public void MountCardSupport(uint num, MountState state = MountState.NULL)
     {
         Item cardItem = EnemyManager.Instance.dm.PopItem(num);
+        
+        if (cardItem == null)
+        {
+            EnemyDeckManager edm = EnemyManager.Instance.dm as EnemyDeckManager;
+            edm.SetUpEnemyDeckManager();
+            cardItem = edm.PopItem();
+        }
         Card card = CreateCard(cardItem, false);
         if(state == MountState.NULL)
         {
