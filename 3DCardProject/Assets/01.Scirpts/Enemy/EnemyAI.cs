@@ -31,7 +31,17 @@ public class EnemyAI : Singleton<EnemyAI>
                 CardManager.Instance.MountCardSupport(100);
 
         } }, // 일반카드 -> 마법 카드  
+            {
+            0b100010010000000011111111, () => {
+                CardManager.Instance.MountCardSupport(102);
 
+        } }, 
+        {
+            0b1000000100000001001000011111111, () => {
+                CardManager.Instance.MountCardSupport(0,MountState.Prev);
+        } },  
+        
+        
 
          
 
@@ -118,7 +128,7 @@ public class EnemyAI : Singleton<EnemyAI>
             print("경우의 수가 없음");
             print(Convert.ToString(currentState, 2));
             //Debug.Log("DO DEFAULT");
-            //EnemyManager.Instance.EnemyAction();
+            EnemyManager.Instance.EnemyAction();
         }
     }
     //// 앞에 설치 (카드)

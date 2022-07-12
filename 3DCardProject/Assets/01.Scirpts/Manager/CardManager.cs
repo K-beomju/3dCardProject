@@ -593,10 +593,18 @@ public class CardManager : Singleton<CardManager>
 
     #endregion
 
-    public void MountCardSupport(uint num, MountState state = MountState.NULL)
+    public void MountCardSupport(uint num , MountState state = MountState.NULL, bool canCatch = false)
     {
-        Item cardItem = EnemyManager.Instance.dm.PopItem(num);
-        
+        Item cardItem = null;
+        if (num == 0)
+        {
+            cardItem = EnemyManager.Instance.GetRandItem(canCatch);
+        }
+        else
+        {
+            cardItem = EnemyManager.Instance.PopItem(num);
+        }
+
         if (cardItem == null)
         {
             EnemyDeckManager edm = EnemyManager.Instance.dm as EnemyDeckManager;

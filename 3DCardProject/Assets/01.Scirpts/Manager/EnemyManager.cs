@@ -30,68 +30,26 @@ public class EnemyManager : Singleton<EnemyManager>
         var node = NewFieldManager.Instance.fields.GetNodeByData(field);
 
         NewFieldManager.Instance.CheckCardDragSpawnRange(field);
-        int rand = Random.Range(0, 1);
 
         Field prevField = node.PrevNode.Data;
         Field nextField = node.NextNode.Data;
 
         bool canCatch = NewFieldManager.Instance.IsClockDir ? node.NextNode.Data.avatarCard != null : node.PrevNode.Data.avatarCard != null;
 
-        Item cardItem = null;
+        Item cardItem = GetRandItem(canCatch);
         Field setField = null;
 
-        if (dm.GetTopItem() != null && dm.GetTopItem().IsStructCard && canCatch && dm.GetNormalItem() != null)
-        {
-            cardItem = dm.PopNormalItem();
-        }
-        else
-        {
-            cardItem = dm.PopItem();
-            if(cardItem == null)
-            {
-                EnemyDeckManager edm = dm as EnemyDeckManager;
-                edm.SetUpEnemyDeckManager();
-                cardItem = dm.PopItem();
-            }
-        }
 
         Card card = CardManager.Instance.CreateCard(cardItem, false);
 
         if (card != null)
         {
-         bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
-            bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
-
-            if (rand == 0)
+            var tempField = SetField(card, node);
+            if(tempField != null)
             {
-                if (canPrevField)
-                {
-                    setField = node.PrevNode.Data;
-
-                }
-                else if (canNextField)
-                {
-                    setField = node.NextNode.Data;
-                }
-            }
-            else
-            {
-                if (canNextField)
-                {
-                    setField = node.NextNode.Data;
-
-                }
-                else if (canPrevField)
-                {
-                    setField = node.PrevNode.Data;
-                }
+                setField = tempField;
             }
 
-            if (!card.item.IsStructCard)
-            {
-                Debug.Log("Struct : " + card.item.name);
-                setField = CardManager.Instance.hackField;
-            }
 
             CardManager.Instance.LastUsedCardItem = card.item.ShallowCopy();
 
@@ -106,5 +64,88 @@ public class EnemyManager : Singleton<EnemyManager>
 
             }
         }
+    }
+    public Item PopItem(uint num = 0)
+    {
+        Item cardItem;
+        EnemyDeckManager edm = dm as EnemyDeckManager;
+        if (num == 0)
+        {
+            cardItem = dm.PopItem();
+            if (cardItem == null)
+            {
+                edm.SetUpEnemyDeckManager();
+                cardItem = dm.PopItem();
+            }
+        }
+        else
+        {
+            cardItem = dm.PopItem(num);
+            if (cardItem == null)
+            {
+                edm.SetUpEnemyDeckManager();
+                cardItem = dm.PopItem(num);
+            }
+        }
+       
+        return cardItem;
+    }
+    public Field SetField(Card card,MyLinkedList<Field>.Node node)
+    {
+        if (card == null) return null;
+        Field setField = null;
+
+        bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
+        bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
+        int rand = Random.Range(0, 1);
+
+        if (rand == 0)
+        {
+            if (canPrevField)
+            {
+                setField = node.PrevNode.Data;
+
+            }
+            else if (canNextField)
+            {
+                setField = node.NextNode.Data;
+            }
+        }
+        else
+        {
+            if (canNextField)
+            {
+                setField = node.NextNode.Data;
+
+            }
+            else if (canPrevField)
+            {
+                setField = node.PrevNode.Data;
+            }
+        }
+
+        if (!card.item.IsStructCard)
+        {
+            Debug.Log("Struct : " + card.item.name);
+            setField = CardManager.Instance.hackField;
+        }
+        return setField;
+    }
+    public Item GetRandItem(bool canCatch)
+    {
+        Item cardItem = null;
+        if (dm.GetTopItem() != null && dm.GetTopItem().IsStructCard && canCatch && dm.GetNormalItem() != null)
+        {
+            cardItem = dm.PopNormalItem();
+            if (cardItem == null)
+            {
+                cardItem = PopItem();
+            }
+        }
+        else
+        {
+            cardItem = PopItem();
+        }
+        return cardItem;
     }
 }
