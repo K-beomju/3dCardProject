@@ -31,8 +31,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
         NewFieldManager.Instance.CheckCardDragSpawnRange(field);
 
-        Field prevField = node.PrevNode.Data;
-        Field nextField = node.NextNode.Data;
 
         bool canCatch = NewFieldManager.Instance.IsClockDir ? node.NextNode.Data.avatarCard != null : node.PrevNode.Data.avatarCard != null;
 
@@ -94,6 +92,9 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         if (card == null) return null;
         Field setField = null;
+
+        Field prevField = node.PrevNode.Data;
+        Field nextField = node.NextNode.Data;
 
         bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
         bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
