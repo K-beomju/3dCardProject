@@ -56,6 +56,7 @@ public class DeckManager : MonoBehaviour
         {
             if (item.uid == uid )
             {
+                itemBuffer.Remove(item);
                 return item;
             }
         }
