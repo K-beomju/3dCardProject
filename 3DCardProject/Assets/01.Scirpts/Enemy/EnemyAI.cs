@@ -39,11 +39,32 @@ public class EnemyAI : Singleton<EnemyAI>
         {
             0b1000000100000001001000011111111, () => {
                 CardManager.Instance.MountCardSupport(0,MountState.Prev);
-        } },  
-        
-        
+        } },
 
-         
+            {
+            0b10100000000000000000100101110010, () => {
+                CardManager.Instance.MountCardSupport(102);
+        } },
+
+
+             {
+            0b101001101000100000000011101000, () => {
+                CardManager.Instance.MountCardSupport(102);
+        } },
+
+              {
+            0b100000000000100111111111, () => {
+                CardManager.Instance.MountCardSupport(103, MountState.Prev);
+        } },
+
+
+             
+
+
+
+
+
+
 
     };
 
