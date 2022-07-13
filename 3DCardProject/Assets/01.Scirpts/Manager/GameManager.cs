@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using TMPro;
 
 public enum GameState
 {
@@ -22,6 +23,8 @@ public class GameManager : Singleton<GameManager>
     private Button exitBtn;
     [SerializeField]
     private GameObject resultPanel;
+    [SerializeField] private GameObject turnPanel;
+    public TMP_Text resultText;
 
     public GameState State { get; set; }
 
@@ -38,24 +41,32 @@ public class GameManager : Singleton<GameManager>
     {
         State = GameState.RUNNING;
         resultPanel.SetActive(false);
+        turnPanel.SetActive(true);
+     
         exitBtn.onClick.AddListener(()=> {
             SceneManager.LoadScene("Chapter_1");
         });
+
 
         fadeGroup.DOFade(0, 2);
     }
     public void CallOnWinGame()
     {
+        resultText.text = "½Â¸®";
         TurnManager.Instance.CanChangeTurn = false;
         resultPanel.SetActive(true);
-        print("GAMEWIN");
         ReflectBox.Instance.ReflectBoxActive(false);
         State = GameState.END;
-        resultPanel.SetActive(true);
+        turnPanel.SetActive(false);
     }
     public void CallOnLoseGame()
     {
+        resultText.text = "ÆÐ¹è";
         TurnManager.Instance.CanChangeTurn = false;
-        print("GAMELOSE");
+        resultPanel.SetActive(true);
+        ReflectBox.Instance.ReflectBoxActive(false);
+        State = GameState.END;
+        turnPanel.SetActive(false);
+
     }
 }
