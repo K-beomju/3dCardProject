@@ -135,6 +135,7 @@ public class Field : MonoBehaviour
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
         mySequence.Join(card.transform.DORotateQuaternion(transform.rotation, .1f));
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() => {
+            TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
                 card.LinkedModel.Move(card.transform.position,act);

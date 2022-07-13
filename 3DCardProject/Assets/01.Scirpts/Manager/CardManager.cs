@@ -107,6 +107,14 @@ public class CardManager : Singleton<CardManager>
     {
         //SelectMovingCardAroundField(false, card);
         Debug.Log("Card Die : " + card.item.name);
+        ReflectBox.Instance.RemoveCardUI(card);
+        if (card.LinkedModel != null)
+        {
+            // ¸ðµ¨ Á¦°Å
+        Debug.Log("Model Die : " + card.item.name);
+            Destroy(card.LinkedModel.ModelObject.gameObject);
+        }
+
         PRS prs;
         ReflectBox.Instance.RemoveCardUI(card);
         if (card.isPlayerCard)
@@ -118,6 +126,7 @@ public class CardManager : Singleton<CardManager>
             //EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
+       
         if (card.curField != null)
         {
             if (card.item.IsAvatar)

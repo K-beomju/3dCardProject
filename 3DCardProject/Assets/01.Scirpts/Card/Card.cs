@@ -160,6 +160,7 @@ public class Card : MonoBehaviour
                     }
                     Debug.Log("ATACK");
                     isAttack = false;
+                    TurnManager.Instance.CanChangeTurn = true;
                     OnAttack();
                 });
             });
@@ -199,8 +200,11 @@ public class Card : MonoBehaviour
     public void OnDie()
     {
         Debug.Log("ONDIE: " + item.name);
+        if (LinkedModel != null)
+            Destroy(LinkedModel.ModelObject.gameObject);
+
         CardAction(item.OnDie);
-        Destroy(LinkedModel.ModelObject.gameObject);
+       
     }
     public void OnSpawn()
     {

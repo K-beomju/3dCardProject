@@ -19,7 +19,7 @@ public class TrapAction : CardAction
                 else
                 {
 
-                    Card desCard = CardManager.Instance.CreateCard(EnemyManager.Instance.dm.PopItem(), false);
+                    Card desCard = CardManager.Instance.CreateCard(EnemyManager.Instance.PopItem(), false);
                     CardManager.Instance.CardDie(desCard);
                 }
                     CardManager.Instance.CardDie(card);

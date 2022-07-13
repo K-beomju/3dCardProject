@@ -50,7 +50,6 @@ public class TurnManager : Singleton<TurnManager>
     public static void ChangeTurn(TurnType _type)
     {
         if (!Instance.CanChangeTurn) return;
-
         if (Instance.type != _type)
         {
             Instance.type = _type;

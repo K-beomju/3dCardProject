@@ -22,6 +22,7 @@ public class CardActionActiveCanChangeTurn : CardAction
             result = cardNode.PrevNode == curNode;
         }
 
+        Debug.Log(result);
         TurnManager.Instance.CanChangeTurn = result;
     }
 }

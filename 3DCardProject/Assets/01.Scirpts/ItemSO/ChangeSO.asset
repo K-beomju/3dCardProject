@@ -16,7 +16,7 @@ MonoBehaviour:
     cost: 1
     uid: 102
     name: "\uCCB4\uC778\uC9C0"
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 59a8da57bfc935b4b9872a348641b434, type: 3}
     IsAvatar: 0
     CanStandOn: 0
     IsReflectCard: 0
