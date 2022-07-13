@@ -17,6 +17,7 @@ public class TotemMove : MonoBehaviour
     public int stageValue;
     [SerializeField] private int steps;
     private bool isMove = false;
+    private bool isLock = false;
 
     private Animator anim;
 
@@ -65,7 +66,7 @@ public class TotemMove : MonoBehaviour
         else
             dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.8f, 0));
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
             if (!isRoll)
             {
@@ -93,6 +94,7 @@ public class TotemMove : MonoBehaviour
 
     private IEnumerator MoveMentCo()
     {
+        isLock = true;
         yield return new WaitForSeconds(0.5f);
         if (isMove) yield break;
 
@@ -124,6 +126,7 @@ public class TotemMove : MonoBehaviour
             FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
+        isLock = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
         dice.SetActive(false);
     }

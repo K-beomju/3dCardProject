@@ -14,11 +14,19 @@ public class StageManager : Singleton<StageManager>
     protected override void Awake()
     {
         base.Awake();
+
         DontDestroyOnLoad(this);
         if (debug_targetStage != -1)
         {
             curStageIndex = debug_targetStage;
         }
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void FirstLoad()
+    {
+        PlayerPrefs.DeleteKey("StageValue");
+
     }
 
     public List<Item> GetCurrentStageData()
