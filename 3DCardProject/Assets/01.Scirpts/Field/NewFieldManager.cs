@@ -14,8 +14,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     public Card enemyCard;
 
     public bool IsClockDir { get; private set; } = true; // 시계방향인가?
-    [SerializeField]
-    private RectTransform dirImage = null;
+  
 
     private bool canCheckRange = false;
 
@@ -79,7 +78,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     public void ChangeDir()
     {
         IsClockDir = !IsClockDir;
-        dirImage.localScale = new Vector3(1, IsClockDir ? 1 : -1, 1);
+        GameManager.Instance.ChangeDirection();
     }
     public void Spawn(Field field, Card card, Action act = null)
     {

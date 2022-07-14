@@ -30,6 +30,8 @@ public class GameManager : Singleton<GameManager>
 
     public CanvasGroup fadeGroup;
 
+    [SerializeField] private RectTransform timeDirImage;
+
     protected override void Awake()
     {
         base.Awake();
@@ -67,6 +69,17 @@ public class GameManager : Singleton<GameManager>
         ReflectBox.Instance.ReflectBoxActive(false);
         State = GameState.END;
         turnPanel.SetActive(false);
+
+    }
+
+
+    public void ChangeDirection()
+    {
+        if (NewFieldManager.Instance.IsClockDir)
+           timeDirImage.transform.DORotate(new Vector3(90, 40, 0), 1);
+        else
+            timeDirImage.transform.DORotate(new Vector3(-90, -40, 0), 1);
+
 
     }
 }

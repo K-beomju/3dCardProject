@@ -13,19 +13,11 @@ public class Hack : MonoBehaviour
     }
     [SerializeField] private HackState state;
 
-    //Field부분 업데이트 색깔 변경이슈
-    //private Color32 playerColor = new Color32(0, 197, 255, 255);
-    //private Color32 enemyColor = new Color32(255, 0, 0, 255);
-    //private Color32 noneColor = new Color32(255, 255, 255, 255);
+    [SerializeField] private Material noneMat;
+    [SerializeField] private Material playerMat;
+    [SerializeField] private Material enemyMat;
 
-
-    //private SpriteRenderer sr;
-    //private void Awake() => sr = GetComponent<SpriteRenderer>();
-    //private void Start()
-    //{
-    //    if (sr != null)
-    //        sr.color = noneColor;
-    //}
+    [SerializeField] private GameObject hackObject;
 
 
     public void ChangeHack(Card card)
@@ -34,11 +26,14 @@ public class Hack : MonoBehaviour
         {
             //sr.color = playerColor;
             state = HackState.Player;
+            hackObject.GetComponent<Renderer>().material = playerMat;
         }
         else
         {
             //sr.color = enemyColor;
             state = HackState.Enemy;
+            hackObject.GetComponent<Renderer>().material = enemyMat;
+
         }
     }
 
