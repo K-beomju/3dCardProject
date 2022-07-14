@@ -1290,6 +1290,7 @@ MonoBehaviour:
   isPlayerCard: 1
   curField: {fileID: 0}
   isAttack: 0
+  canInteract: 1
 --- !u!114 &8368915300404675848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,8 +1327,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 8.8, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6, y: 8.8, z: 3.7053308}
+  m_Center: {x: 0, y: 0.00000063265225, z: -1.7526665}
 --- !u!1 &8766395415126554790
 GameObject:
   m_ObjectHideFlags: 0

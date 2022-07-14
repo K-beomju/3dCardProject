@@ -343,10 +343,11 @@ public class CardManager : Singleton<CardManager>
         }
 
         // ReflectBox
-        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) && ReflectBox.isReflect && ReflectBox.Instance.reflectCard!= null)
+        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) )
         {
             Field field = hitData.transform.GetComponent<Field>();
-            if (field != null && field.isEnterRange)
+            Card card = hitData.transform.GetComponent<Card>();
+            if (field != null && field.isEnterRange && ReflectBox.isReflect && ReflectBox.Instance.reflectCard != null)
             {
                 if (InputManager.Instance.MouseUp)
                 {
@@ -359,6 +360,15 @@ public class CardManager : Singleton<CardManager>
                     hitField = field;
                     field.HitColor(true);
             }
+            if(card != null&& card.curField != null)
+            {
+                Vector2 mousePos = Input.mousePosition;
+                CardInfoUI.Instance.infoUIObj.transform.position = mousePos;
+
+                CardInfoUI.Instance.ItemData = card.item;
+
+            }
+
         }
 
     }

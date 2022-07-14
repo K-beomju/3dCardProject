@@ -57,12 +57,16 @@ public class Card : MonoBehaviour
     void OnMouseOver()
     {
         if (canInteract)
+        {
             CardManager.Instance.CardMouseOver(this);
+          
+        }
     }
 
     void OnMouseExit()
     {
         CardManager.Instance.CardMouseExit(this);
+        CardInfoUI.Instance.ActiveUI(false);
     }
 
     void OnMouseDown()
