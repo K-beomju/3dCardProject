@@ -20,7 +20,7 @@ public class EnemyAI : Singleton<EnemyAI>
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // 아바타 어퍼 노말 플레이어 구별
     {
         //유니티 event 
-        { 
+        {
             0b100000100000001001000011111111, () => {
                 CardManager.Instance.MountCardSupport(107 , MountState.Prev);
 
@@ -35,7 +35,7 @@ public class EnemyAI : Singleton<EnemyAI>
             0b100010010000000011111111, () => {
                 CardManager.Instance.MountCardSupport(102);
 
-        } }, 
+        } },
         {
             0b1000000100000001001000011111111, () => {
                 CardManager.Instance.MountCardSupport(0,MountState.Prev);
@@ -62,7 +62,11 @@ public class EnemyAI : Singleton<EnemyAI>
                 CardManager.Instance.MountCardSupport(102);
         } },
 
-              
+                        {
+            0b10001001000000000000000001101111, () => {
+                CardManager.Instance.MountCardSupport(102);
+        } },
+
 
 
 
