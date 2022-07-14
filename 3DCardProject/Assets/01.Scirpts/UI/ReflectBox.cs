@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using MEC;
-
+using DG.Tweening;
 public class ReflectBox : Singleton<ReflectBox>
 {
     [SerializeField]
@@ -183,6 +183,7 @@ public class ReflectBox : Singleton<ReflectBox>
             activeBTN.transform.parent.gameObject.SetActive(inBool);
             confirmBTN.transform.parent.gameObject.SetActive(inBool);
             cancelBTN.transform.parent.gameObject.SetActive(inBool);
+            GetComponent<CanvasGroup>().DOFade(inBool ? 1 : 0,0.1f);
         }
         );
     }
