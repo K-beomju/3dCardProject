@@ -121,6 +121,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     public void Move(Field field, Card card, Action act = null)
     {
         Debug.Log(field);
+        act = new Action(() => { TurnManager.Instance.CanChangeTurn = true; } + act);
         TurnManager.Instance.CanChangeTurn = false;
         if (field != null)
         {
