@@ -126,9 +126,11 @@ public class TotemMove : MonoBehaviour
             FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
-        isLock = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
         dice.SetActive(false);
+        yield return new WaitForSeconds(2f);
+
+        isLock = false;
     }
 
     private IEnumerator RollingDice()

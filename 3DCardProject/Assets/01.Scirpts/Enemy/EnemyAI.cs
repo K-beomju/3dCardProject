@@ -17,20 +17,19 @@ public class EnemyAI : Singleton<EnemyAI>
 
     private MountState mountState;
     private Action action;
-    private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // ¾Æ¹ÙÅ¸ ¾îÆÛ ³ë¸» ÇÃ·¹ÀÌ¾î ±¸º°
+    private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // ï¿½Æ¹ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ ï¿½ë¸» ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        //À¯´ÏÆ¼ event 
         {
             0b100000100000001001000011111111, () => {
                 CardManager.Instance.MountCardSupport(107 , MountState.Prev);
 
-        } }, // ÀÏ¹ÝÄ«µå 
+        } },  
 
         {
             0b101000000000101001000011111111, () => {
                 CardManager.Instance.MountCardSupport(100);
 
-        } }, // ÀÏ¹ÝÄ«µå -> ¸¶¹ý Ä«µå  
+        } }, 
             {
             0b100010010000000011111111, () => {
                 CardManager.Instance.MountCardSupport(102);
@@ -150,32 +149,32 @@ public class EnemyAI : Singleton<EnemyAI>
     {
         InitState();
 
-        if (_actions.ContainsKey(currentState)) // ¹Ì¸® ¼³Á¤ÇØµÐ Çàµ¿
+        if (_actions.ContainsKey(currentState)) // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½àµ¿
         {
             Debug.Log("DO PRESET");
             _actions[currentState]?.Invoke();
         }
-        else // ±âº» Çàµ¿
+        else // ï¿½âº» ï¿½àµ¿
         {
-            print("°æ¿ìÀÇ ¼ö°¡ ¾øÀ½");
+            print("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             print(Convert.ToString(currentState, 2));
             //Debug.Log("DO DEFAULT");
             EnemyManager.Instance.EnemyAction();
         }
     }
-    //// ¾Õ¿¡ ¼³Ä¡ (Ä«µå)
+    //// ï¿½Õ¿ï¿½ ï¿½ï¿½Ä¡ (Ä«ï¿½ï¿½)
     //public void MountingPrev(Card card)
     //{
     //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
     //    Mounting(card, fieldNode.PrevNode.Data);
     //}
-    //// µÚ¿¡ ¼³Ä¡ (Ä«µå)
+    //// ï¿½Ú¿ï¿½ ï¿½ï¿½Ä¡ (Ä«ï¿½ï¿½)
     //public void MountingNext(Card card)
     //{
     //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
     //    Mounting(card, fieldNode.NextNode.Data);
     //}
-    //// ÇÙ¿¡ ¼³Ä¡ (Ä«µå)
+    //// ï¿½Ù¿ï¿½ ï¿½ï¿½Ä¡ (Ä«ï¿½ï¿½)
     //public void MountingOnHack(Card card)
     //{
     //    Mounting(card,CardManager.Instance.hackField);
@@ -187,13 +186,13 @@ public class EnemyAI : Singleton<EnemyAI>
 
         switch (mount)
         {
-            case MountState.Prev:  //µÚ¿¡ ¼³Ä¡ (Ä«µå)
+            case MountState.Prev:  //ï¿½Ú¿ï¿½ ï¿½ï¿½Ä¡ (Ä«ï¿½ï¿½)
                 Mounting(card, fieldNode.PrevNode.Data);
                 break;
-            case MountState.Next:  //¾Õ¿¡ ¼³Ä¡(Ä«µå)
+            case MountState.Next:  //ï¿½Õ¿ï¿½ ï¿½ï¿½Ä¡(Ä«ï¿½ï¿½)
                 Mounting(card, fieldNode.NextNode.Data);
                 break;
-            case MountState.Hack: //ÇÙ¿¡ ¼³Ä¡(Ä«µå)
+            case MountState.Hack: //ï¿½Ù¿ï¿½ ï¿½ï¿½Ä¡(Ä«ï¿½ï¿½)
                 Mounting(card, CardManager.Instance.hackField);
                 break;
         }
@@ -201,7 +200,7 @@ public class EnemyAI : Singleton<EnemyAI>
 
 
 
-    // ¼³Ä¡ (À§Ä¡ , Ä«µå)
+    // ï¿½ï¿½Ä¡ (ï¿½ï¿½Ä¡ , Ä«ï¿½ï¿½)
     public void Mounting(Card card, Field setField)
     {
         if (GameManager.Instance.State == GameState.END) return;
