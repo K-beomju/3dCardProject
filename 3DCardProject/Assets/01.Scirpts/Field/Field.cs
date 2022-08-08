@@ -12,17 +12,16 @@ public class Field : MonoBehaviour
     [field: SerializeField]
     public Card avatarCard { get; private set; }
 
-    private SpriteRenderer sr;
     private Color32 aColor;
     private Color32 cColor;
     private Color32 sColor;
     public bool isHit = false;
-    public bool isSelected = false;
     public bool isEnterRange = false;
     public bool isHackField = false;
 
     public bool isCommon = false;
-    
+
+    private Outline outline;
 
     [SerializeField]
     [EnumFlags]
@@ -55,41 +54,40 @@ public class Field : MonoBehaviour
     }
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
         aColor = new Color32(100, 100, 255, 255);
         cColor = new Color32(255, 100, 100, 255);
         sColor = new Color32(255, 255, 255, 255);
     }
     private void Start()
     {
+        outline = GetComponent<Outline>();
+        outline.enabled = false;
+
         isHackField = GetComponent<Hack>() != null;
         if (isHackField)
         {
             CardManager.Instance.hackField = this;
         }
     }
-    public void HitColor(bool _isHit)
+    public void HitColor(bool _isHit,bool _isAble = true)
     {
-        isHit = true;
-        sr.color = _isHit ? aColor : sColor;
+        isHit = _isHit;
+        outline.enabled = _isHit;
+        if(_isHit)
+        {
+            outline.OutlineColor = _isAble ? aColor : cColor;
+        }
+        Debug.Log($"_isHit : {_isHit} , _isAble : {_isAble} ");
     }
-
-    public void FieldSelect(bool inBool)
-    {
-        isSelected = inBool;
-        sr.color = inBool ? aColor : sColor;
-    }
-
     private void Update()
     {
-        if (isHit && isEnterRange)
+        if (isHit)
         {
-            if (CardManager.Instance.hitField != this || CardManager.Instance.selectCard == null)
+            if (CardManager.Instance.hitField != this)
             {
                 //Debug.Log("Ray ³ª°¨");
                 isHit = false;
-                if (!isSelected)
-                    HitColor(isHit);
+                HitColor(false);
             }
         }
     }
@@ -123,17 +121,19 @@ public class Field : MonoBehaviour
 
             }
         }
-        card.transform.DOScaleZ(transform.localScale.z * .7f, 0.15f);
-        card.transform.DOScaleX(transform.localScale.x * .7f, 0.15f);
-        card.transform.DOScaleY(transform.localScale.y * .7f, 0.15f);
+        /*card.transform.DOScaleZ(transform.localScale.z * .5f, 0.15f);
+        card.transform.DOScaleX(transform.localScale.x * .5f, 0.15f);
+        card.transform.DOScaleY(transform.localScale.y * .5f, 0.15f);
+*/
+        card.transform.DOScale(.8f, 0.15f);
 
         Sequence mySequence = DOTween.Sequence();
 
         Vector3 pos = transform.position;
-        pos += new Vector3(0, 1f, 0);
+        pos += new Vector3(0, 1.6f, 0);
 
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
-        mySequence.Join(card.transform.DORotateQuaternion(transform.rotation, .1f));
+        mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90,0,0)), .1f));
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() => {
             TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)

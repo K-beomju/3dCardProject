@@ -31,8 +31,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
         for (int i = 0; i < fields.GetNodeCount(); i++)
         {
             var node = fields.GetNodeByIndex(i);
-            Quaternion q = Quaternion.Euler(new Vector3(90, 0, 0));
-            node.Data.transform.rotation = q;
         }
         TurnManager.Instance.CanChangeTurn = false;
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);

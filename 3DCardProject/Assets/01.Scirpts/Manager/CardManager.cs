@@ -318,36 +318,26 @@ public class CardManager : Singleton<CardManager>
             if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
             {
                 Field field = hitData.transform.GetComponent<Field>();
-                if (field != null && field.isEnterRange)
+                if (field != null )
                 {
-                    if (selectCard.item.IsStructCard)
-                    {
-                        if (!field.isCommon)
-                        {
-                            hitField = field;
-                            field.HitColor(true);
-                        }
-                    }
-                    else
-                    {
-                        if (field.isCommon)
-                        {
-                            hitField = field;
-                            field.HitColor(true);
-                        }
-                    }
-
+                    hitField = field;
+                    field.HitColor(true, field.isEnterRange && ((selectCard.item.IsStructCard && !field.isCommon) || (!selectCard.item.IsStructCard && field.isCommon)));
+                }
+                else
+                {
+                    hitField = null;
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
         }
 
         // ReflectBox
-        if (Physics.Raycast(ray, out hitData, Mathf.Infinity) )
+        
+        if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity) )
         {
             Field field = hitData.transform.GetComponent<Field>();
             Card card = hitData.transform.GetComponent<Card>();
-            if (field != null && field.isEnterRange && ReflectBox.isReflect && ReflectBox.Instance.reflectCard != null)
+            if (field != null && field.isEnterRange && ReflectBox.Instance.reflectCard != null)
             {
                 if (InputManager.Instance.MouseUp)
                 {
@@ -359,6 +349,10 @@ public class CardManager : Singleton<CardManager>
                 }
                     hitField = field;
                     field.HitColor(true);
+            }
+            else
+            {
+                hitField = null;
             }
             if(card != null&& card.curField != null)
             {
@@ -537,32 +531,6 @@ public class CardManager : Singleton<CardManager>
             selectCard.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
       
-    }
-    public void SelectMovingCardAroundField(bool Inbool, Card card = null)
-    {
-        /*if (card == null)
-            card = movingCard;*/
-
-        Vector2Int gridPos = FieldManager.Instance.GetGridPos(card.curField);
-
-        Vector2Int downLeftPos = gridPos - new Vector2Int(1, 1);
-        Vector2Int upRightPos = gridPos + new Vector2Int(1, 1);
-
-        for (int x = downLeftPos.x; x < upRightPos.x + 1; x++)
-        {
-            for (int y = downLeftPos.y; y < upRightPos.y + 1; y++)
-            {
-                Vector2Int getPos = new Vector2Int(x, y);
-                if (getPos != gridPos)
-                {
-                    Field field = FieldManager.Instance.GetField(getPos);
-                    if (field != null)
-                    {
-                        field.FieldSelect(Inbool);
-                    }
-                }
-            }
-        }
     }
 
     public virtual void CardMouseUp()
