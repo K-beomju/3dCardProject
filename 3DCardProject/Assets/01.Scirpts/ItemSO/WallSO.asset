@@ -16,16 +16,16 @@ MonoBehaviour:
     cost: 1
     uid: 107
     name: "\uBCBD"
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 937944dc1e9e19743bb959a34270624e, type: 3}
     IsAvatar: 0
     CanStandOn: 0
     IsReflectCard: 0
     IsUpperCard: 0
     IsStructCard: 1
     tribe: 2
-    description: "[\uC124\uCE58\uCE74\uB4DC]\n\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C
-      \uC774\uB3D9\uD560 \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774
-      \uCE74\uB4DC\uAC00 \uC0AC\uB77C\uC9C4\uB2E4."
+    description: "\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C \uC774\uB3D9\uD560
+      \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774 \uCE74\uB4DC\uAC00
+      \uC0AC\uB77C\uC9C4\uB2E4."
     count: 1
     OnSpawn:
     - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}

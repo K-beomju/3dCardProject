@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
-  m_Name: Avoid
+  m_Name: AvoidSO
   m_EditorClassIdentifier: 
   item:
     cost: 1
     uid: 101
     name: "\uBB34\uD6A8"
-    sprite: {fileID: 21300000, guid: 6728c8d5e57a9e644a6125abc28b4a51, type: 3}
+    sprite: {fileID: 21300000, guid: 010fd3839c0018e459222adf0a3229c5, type: 3}
     IsAvatar: 0
     CanStandOn: 0
     IsReflectCard: 1
