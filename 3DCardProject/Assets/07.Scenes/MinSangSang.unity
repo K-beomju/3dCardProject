@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 11943971}
   - component: {fileID: 11943970}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: DecoImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8784,7 +8784,7 @@ GameObject:
   - component: {fileID: 1230140091}
   - component: {fileID: 1230140090}
   m_Layer: 5
-  m_Name: Image
+  m_Name: DecoImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12468,7 +12468,7 @@ GameObject:
   - component: {fileID: 1788646019}
   - component: {fileID: 1788646018}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: DecoImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
