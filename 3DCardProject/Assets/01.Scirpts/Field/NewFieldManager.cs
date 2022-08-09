@@ -17,7 +17,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
   
 
     private bool canCheckRange = false;
-
+    public bool isFrontJumping = false;
 
     protected override void Awake()
     {

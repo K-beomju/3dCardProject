@@ -69,11 +69,11 @@ public class Field : MonoBehaviour
             CardManager.Instance.hackField = this;
         }
     }
-    public void HitColor(bool _isHit,bool _isAble = true)
+    public void HitColor(bool _isHit, bool _isAble = true)
     {
         isHit = _isHit;
         outline.enabled = _isHit;
-        if(_isHit)
+        if (_isHit)
         {
             outline.OutlineColor = _isAble ? aColor : cColor;
         }
@@ -92,9 +92,10 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void SetUp(Card card,Action act = null)
+    public void SetUp(Card card, Action act = null)
     {
-        //if ((enableTribe & card.item.tribe) == CardTribeType.NULL) return;
+
+
         if (card.item.IsAvatar)
         {
             Debug.Log("SetAvatarCard");
@@ -109,7 +110,7 @@ public class Field : MonoBehaviour
             upperCard.curField = this;
             upperCard.isOnField = true;
 
-        } 
+        }
         else
         {
             Debug.Log("SetCard");
@@ -121,10 +122,7 @@ public class Field : MonoBehaviour
 
             }
         }
-        /*card.transform.DOScaleZ(transform.localScale.z * .5f, 0.15f);
-        card.transform.DOScaleX(transform.localScale.x * .5f, 0.15f);
-        card.transform.DOScaleY(transform.localScale.y * .5f, 0.15f);
-*/
+
         card.transform.DOScale(.8f, 0.15f);
 
         Sequence mySequence = DOTween.Sequence();
@@ -132,18 +130,44 @@ public class Field : MonoBehaviour
         Vector3 pos = transform.position;
         pos += new Vector3(0, 1.6f, 0);
 
+
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
-        mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90,0,0)), .1f));
-        mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() => {
+        mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90, 0, 0)), .1f));
+        mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() =>
+        {
             TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
-                card.LinkedModel.Move(card.transform.position,act);
+                if (!NewFieldManager.Instance.isFrontJumping)
+                    card.LinkedModel.Move(card.transform.position, act);
+                else
+                {
+                    card.LinkedModel.JumpMove(card.transform.position, act);
+                }
+
+
                 Debug.Log("¿Ãµø : " + card.item.name);
             }
             else
             {
                 act?.Invoke();
+
+                if (NewFieldManager.Instance.IsClockDir)
+                {
+                    if (NewFieldManager.Instance.GetPlayerNodeByData().NextNode.Data.upperCard.item.uid == 103)
+                    {
+                        NewFieldManager.Instance.isFrontJumping = true;
+                    }
+                }
+                else
+                {
+                    if (NewFieldManager.Instance.GetPlayerNodeByData().PrevNode.Data.upperCard.item.uid == 103)
+                    {
+                        NewFieldManager.Instance.isFrontJumping = true;
+                    }
+                }
+
+
             }
         });
     }
@@ -155,7 +179,7 @@ public class Field : MonoBehaviour
     public void RemoveUpperCard()
     {
         upperCard.curField = null;
-        upperCard= null;
+        upperCard = null;
     }
     public void RemoveAvatarCard()
     {

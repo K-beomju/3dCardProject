@@ -40,4 +40,12 @@ public class CardModelBrain : MonoBehaviour
             act?.Invoke();
         });
     }
+
+    public void JumpMove(Vector3 pos, Action act = null)
+    {
+        modelObject.transform.DOJump(pos,3, 0 ,.5f, false).OnComplete(() => {
+            act?.Invoke();
+            NewFieldManager.Instance.isFrontJumping = false;
+        });
+    }
 }
