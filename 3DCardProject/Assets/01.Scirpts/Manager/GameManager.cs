@@ -22,6 +22,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private Button exitBtn;
     [SerializeField]
+    private Button reStartBtn;
+    [SerializeField]
     private GameObject resultPanel;
     [SerializeField] private GameObject turnPanel;
     public TMP_Text resultText;
@@ -48,9 +50,12 @@ public class GameManager : Singleton<GameManager>
         exitBtn.onClick.AddListener(()=> {
             SceneManager.LoadScene("Chapter_1");
         });
+        reStartBtn.onClick.AddListener(() =>{
+            SceneManager.LoadScene("MinSangSang");
+        });
 
 
-        fadeGroup.DOFade(0, 2);
+            fadeGroup.DOFade(0, 2);
     }
     public void CallOnWinGame()
     {
