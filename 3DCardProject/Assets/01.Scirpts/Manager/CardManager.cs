@@ -282,7 +282,12 @@ public class CardManager : Singleton<CardManager>
             }
             else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                if (field != null)
+                if(card != null && selectCard.item.IsUpperCard && card.curField != null )
+                {
+                    hitField = card.curField;
+                    card.curField.HitColor(true, true);
+                }
+                else if (field != null)
                 {
                     hitField = field;
                     field.HitColor(true, field.isEnterRange && ((selectCard.item.IsStructCard && !field.isCommon) || (!selectCard.item.IsStructCard && field.isCommon)));
