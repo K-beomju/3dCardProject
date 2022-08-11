@@ -22,6 +22,7 @@ MonoBehaviour:
     IsReflectCard: 0
     IsUpperCard: 0
     IsStructCard: 0
+    EffectPrefab: {fileID: 134878, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
     tribe: 2
     description: "\uCE74\uB4DC \uC0AC\uC6A9 \uD6C4 \uC774\uB3D9\uD558\uC9C0 \uC54A\uB294\uB2E4."
     count: 1

@@ -227,6 +227,8 @@ public class Card : MonoBehaviour
             }
 
             CardAction(item.OnSpawn);
+            // 풀매니저로 수정 해야함
+            Instantiate(item.EffectPrefab).transform.position = transform.position + new Vector3(0,1,0);
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
         });
     }

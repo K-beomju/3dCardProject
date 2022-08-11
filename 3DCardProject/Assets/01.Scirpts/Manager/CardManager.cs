@@ -217,30 +217,16 @@ public class CardManager : Singleton<CardManager>
         }
 
         ray = mainCam.ScreenPointToRay(Input.mousePosition);
-
-        if (InputManager.Instance.MouseUp)
+        if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
         {
-            if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
+            Field field = hitData.transform.GetComponent<Field>();
+
+            if (InputManager.Instance.MouseUp)
             {
-                Field field = hitData.transform.GetComponent<Field>();
                 Card card = hitData.transform.GetComponent<Card>();
 
                 if (selectCard != null)
                 {
-                    /*if (card != null && card.item != PlayerManager.Instance.playerItem && card.isPlayerCard && card.curField != null )
-                    {
-                        field = card.curField;
-
-                        CardDie(card);
-
-                        FieldManager.Instance.CheckingSpawn(field, selectCard);
-                        PlayerManager.Instance.playerCards.Add(selectCard);
-                        RemoveCard(false);
-                        TurnManager.PlayerCardMove();
-                        //MyCardMove(true);
-
-                    }
-                    else */
                     if (field != null && ((field.curCard == null && !selectCard.item.IsUpperCard) || (field.upperCard == null && selectCard.item.IsUpperCard)) && field.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
@@ -261,11 +247,8 @@ public class CardManager : Singleton<CardManager>
                                 RemoveCard(false);
                             }
                         }
-                        //NewFieldManager.Instance.Spawn(field, selectCard);
-                        //PlayerManager.Instance.playerCards.Add(selectCard);
-                        //RemoveCard(false);
                     }
-                    else if(card != null && card.curField != null &&((card.curField.curCard == null && !selectCard.item.IsUpperCard) || (card.curField.upperCard == null && selectCard.item.IsUpperCard)) && card.curField.isEnterRange)
+                    else if (card != null && card.curField != null && ((card.curField.curCard == null && !selectCard.item.IsUpperCard) || (card.curField.upperCard == null && selectCard.item.IsUpperCard)) && card.curField.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
                         {
@@ -295,30 +278,11 @@ public class CardManager : Singleton<CardManager>
                     arrowObject.ActiveArrow(false);
                     isCardDrag = false;
                 }
-                /*else if (movingCard != null)
-                {
-                    if (field != null && field.curCard == null && field.isSelected)
-                    {
-                        SelectMovingCardAroundField(false);
-                        FieldManager.Instance.MoveToField(field, movingCard);
-                    }
-                    if (card != null && card.curField != null && card.curField.isSelected && !card.isPlayerCard)
-                    {
-                        SelectMovingCardAroundField(false);
-                        FieldManager.Instance.MoveToField(card.curField, movingCard);
-                    }
-
-                }*/
+                hitField = null;
             }
-
-        }
-
-        if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
-        {
-            if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
+            else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                Field field = hitData.transform.GetComponent<Field>();
-                if (field != null )
+                if (field != null)
                 {
                     hitField = field;
                     field.HitColor(true, field.isEnterRange && ((selectCard.item.IsStructCard && !field.isCommon) || (!selectCard.item.IsStructCard && field.isCommon)));
@@ -329,26 +293,30 @@ public class CardManager : Singleton<CardManager>
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
-        }
 
+        }
         // ReflectBox
-        
+
         if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity) )
         {
             Field field = hitData.transform.GetComponent<Field>();
             Card card = hitData.transform.GetComponent<Card>();
-            if (field != null && field.isEnterRange && ReflectBox.Instance.reflectCard != null)
+            if (field != null )
             {
-                if (InputManager.Instance.MouseUp)
+                if (field.isEnterRange && ReflectBox.Instance.reflectCard != null)
                 {
-                    //OnChangeLastUsedCard -= 
-                    NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
-                    PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
-                    ReflectBox.Instance.reflectCard = null;
-                    ReflectBox.isReflect = false;
-                }
+                    if (InputManager.Instance.MouseUp)
+                    {
+                        //OnChangeLastUsedCard -= 
+                        NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
+                        PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
+                        ReflectBox.Instance.reflectCard = null;
+                        ReflectBox.isReflect = false;
+                    }
                     hitField = field;
                     field.HitColor(true);
+                }
+               
             }
             else
             {

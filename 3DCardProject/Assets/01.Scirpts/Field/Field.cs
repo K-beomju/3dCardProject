@@ -77,7 +77,7 @@ public class Field : MonoBehaviour
         {
             outline.OutlineColor = _isAble ? aColor : cColor;
         }
-        Debug.Log($"_isHit : {_isHit} , _isAble : {_isAble} ");
+        //Debug.Log($"_isHit : {_isHit} , _isAble : {_isAble} ");
     }
     private void Update()
     {

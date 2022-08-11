@@ -80,11 +80,16 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeDirection()
     {
-        if (NewFieldManager.Instance.IsClockDir)
-           timeDirImage.transform.DORotate(new Vector3(90, 40, 0), 1);
-        else
-            timeDirImage.transform.DORotate(new Vector3(-90, -40, 0), 1);
+        Sequence seq = DOTween.Sequence();
+        
 
+        int dir = 1;
+        if (!NewFieldManager.Instance.IsClockDir)
+            dir = -1;
 
+        Vector3 scale = timeDirImage.transform.localScale;
+
+        seq.Append(timeDirImage.transform.DORotate(new Vector3(0, 1000 * dir, 0), 1).SetRelative(true));
+        seq.Insert(.3f, timeDirImage.transform.DOScale(new Vector3(scale.x * -1,scale.y,scale.z),0));
     }
 }
