@@ -1274,6 +1274,7 @@ MonoBehaviour:
     IsReflectCard: 0
     IsUpperCard: 0
     IsStructCard: 0
+    EffectPrefab: {fileID: 0}
     tribe: 0
     description: 
     count: 0
