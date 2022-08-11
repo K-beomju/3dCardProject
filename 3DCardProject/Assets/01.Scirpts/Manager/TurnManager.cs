@@ -43,7 +43,6 @@ public class TurnManager : Singleton<TurnManager>
             ChangeTurn(TurnType.Player);
         }
 
-        ChangeTurnPanel();
     }
 
     // 턴 바꿈 
@@ -54,17 +53,19 @@ public class TurnManager : Singleton<TurnManager>
         {
             Instance.type = _type;
 
-            if (Instance.type != TurnType.Player)
-            {
-                EnemyAI.Instance.JudgementCard();
-                //EnemyManager.Instance.EnemyAction();
-            }
-            else
-            {
-                CardManager.Instance.AddCard();
-            }
-            
-            Instance.ChangeTurnPanel();
+           
+            Instance.ChangeTurnPanel(()=> {
+                if (Instance.type != TurnType.Player)
+                {
+                    EnemyAI.Instance.JudgementCard();
+                    //EnemyManager.Instance.EnemyAction();
+                }
+                else
+                {
+                    CardManager.Instance.AddCard();
+                }
+
+            });
 
         }
         /*if (_type == TurnType.Player)
@@ -96,19 +97,22 @@ public class TurnManager : Singleton<TurnManager>
         Instance.type = type;
     }
 
-    public void ChangeTurnPanel()
+    public void ChangeTurnPanel(Action act)
     {
+        Sequence seq = DOTween.Sequence();
+
         if (Instance.type == TurnType.Player)
         {
             changeText.text = "내 턴";
-            changePanel.DOFade(1, .5f).OnComplete(() => changePanel.DOFade(0, .5f));
         }
         else
         {
             changeText.text = "적 턴";
-            changePanel.DOFade(1, .5f).OnComplete(() => changePanel.DOFade(0, .5f));
-
         }
+        seq.Append(changePanel.DOFade(1, .3f));
+        seq.AppendInterval(1.2f);
+        seq.Append(changePanel.DOFade(0, .3f));
+        seq.OnComplete(()=>act?.Invoke());
     }
 
 }
