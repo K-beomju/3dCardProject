@@ -220,10 +220,10 @@ public class CardManager : Singleton<CardManager>
         if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
         {
             Field field = hitData.transform.GetComponent<Field>();
+            Card card = hitData.transform.GetComponent<Card>();
 
             if (InputManager.Instance.MouseUp)
             {
-                Card card = hitData.transform.GetComponent<Card>();
 
                 if (selectCard != null)
                 {
@@ -294,6 +294,15 @@ public class CardManager : Singleton<CardManager>
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
 
+            if (card != null && card.curField != null)
+            {
+                Vector2 mousePos = Input.mousePosition;
+                CardInfoUI.Instance.infoUIObj.transform.position = mousePos;
+
+                CardInfoUI.Instance.ItemData = card.item;
+
+            }
+
         }
         // ReflectBox
 
@@ -322,14 +331,7 @@ public class CardManager : Singleton<CardManager>
             {
                 hitField = null;
             }
-            if(card != null&& card.curField != null)
-            {
-                Vector2 mousePos = Input.mousePosition;
-                CardInfoUI.Instance.infoUIObj.transform.position = mousePos;
-
-                CardInfoUI.Instance.ItemData = card.item;
-
-            }
+         
 
         }
 

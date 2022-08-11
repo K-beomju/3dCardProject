@@ -22,6 +22,7 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text descriptionTMP;
     [SerializeField] private GameObject modelPrefab;
 
+    [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
 
     public Item item;

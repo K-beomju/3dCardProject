@@ -123,7 +123,7 @@ public class ReflectBox : Singleton<ReflectBox>
                     int idx = 0;
                     foreach (CardActionCondition item in a.item.OnSpawn)
                     {
-                        if (item.action is CardMoveAction)
+                        if (item.action is CardActionMove)
                         {
                             //CardMoveAction cma = item.action as CardMoveAction;
                             item.action = null;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardMoveAction : CardAction
+public class CardActionMove : CardAction
 {
     public override void TakeAction(Card card)
     {

@@ -29,14 +29,19 @@ public class CardModelBrain : MonoBehaviour
             Debug.Log("¸ðµ¨ »ý¼º");
             modelObject = Instantiate(value, modelPosTrm.position, Utils.QI); ;
             anim = modelObject.GetComponent<Animator>();
-           
+            modelObject.transform.DORotate(new Vector3(0,-180,0), .2f);
+
         }
     }
     public void Move(Vector3 pos,Action act = null)
     {
         //DOTween.Kill(modelObject.transform);
+        Vector3 des = new Vector3(pos.x, modelObject.transform.position.y, pos.z);
+        Vector3 dir = (pos - modelObject.transform.position).normalized;
 
-        modelObject.transform.DOMove(pos, .5f).OnComplete(()=> {
+        modelObject.transform.DORotate(Quaternion.LookRotation(dir).eulerAngles,.1f);
+        modelObject.transform.DOMove(pos, .5f).OnComplete(() => {
+            modelObject.transform.DORotate(new Vector3(0,-180,0), 1);
             act?.Invoke();
         });
     }
