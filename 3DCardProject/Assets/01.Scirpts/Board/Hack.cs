@@ -30,6 +30,8 @@ public class Hack : MonoBehaviour
     }
     public void ChangeHack(Card card)
     {
+        hackTrm.DOScale(.078f, .15f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.Linear);
+
         if (card.isPlayerCard)
         {
             //sr.color = playerColor;
