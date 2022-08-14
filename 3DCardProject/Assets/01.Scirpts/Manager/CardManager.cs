@@ -67,6 +67,7 @@ public class CardManager : Singleton<CardManager>
         arrowObject.ActiveArrow(false);
         deckManager = GetComponent<DeckManager>();
         mainCam = Camera.main;
+        
     }
 
 
