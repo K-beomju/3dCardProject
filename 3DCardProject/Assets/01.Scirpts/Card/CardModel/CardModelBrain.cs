@@ -9,7 +9,7 @@ public class CardModelBrain : MonoBehaviour
     [SerializeField]
     private Transform modelPosTrm;
 
-    private Animator anim;
+    public Animator anim { get; set; }
 
     private GameObject modelObject;
     public GameObject ModelObject
@@ -38,10 +38,12 @@ public class CardModelBrain : MonoBehaviour
         //DOTween.Kill(modelObject.transform);
         Vector3 des = new Vector3(pos.x, modelObject.transform.position.y, pos.z);
         Vector3 dir = (pos - modelObject.transform.position).normalized;
-
+        anim?.SetBool("isMove", true);
+        
         modelObject.transform.DORotate(Quaternion.LookRotation(dir).eulerAngles,.1f);
-        modelObject.transform.DOMove(pos, .5f).OnComplete(() => {
+        modelObject.transform.DOMove(pos, .6f).OnComplete(() => {
             modelObject.transform.DORotate(new Vector3(0,-180,0), 1);
+            anim?.SetBool("isMove", false);
             act?.Invoke();
         });
     }
