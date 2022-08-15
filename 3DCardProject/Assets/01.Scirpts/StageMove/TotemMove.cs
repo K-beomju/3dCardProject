@@ -11,29 +11,12 @@ using UnityEngine.SceneManagement;
 public class TotemMove : MonoBehaviour
 {
     [SerializeField] private BoardManager board;
-
     [SerializeField] private float speed;
-    public int routePosition;
-    public int stageValue;
     [SerializeField] private int steps;
-    private bool isMove = false;
-    private bool isLock = false;
-
-    private Animator anim;
-
-    #region Dice
-    [SerializeField] private GameObject dice;
-    [SerializeField] Camera cam;
-
-    private Text diceText;
-    private bool isRoll = false;
-
-    private WaitForSeconds rollDelay = new WaitForSeconds(0.05f);
-    private IEnumerator rollCo;
-    #endregion
-
     [SerializeField] private CanvasGroup fadeGroup;
 
+    private bool isMove = false;
+    private bool isLock = false;
     public enum FadeType
     {
         FadeIn,
@@ -41,13 +24,28 @@ public class TotemMove : MonoBehaviour
     }
     private FadeType fadeType;
 
+    public int routePosition;
+    public int stageValue;
+    private Animator anim;
+
+    #region Dice
+    public Text diceText;
+
+    public float rotSpeed;
+    [SerializeField] private GameObject diceObj;
+    [SerializeField] private ParticleSystem diceParticle;
+    private bool isRoll = false;
+    private WaitForSeconds rollDelay = new WaitForSeconds(0.05f);
+    private IEnumerator rollCo;
+    [SerializeField] Camera cam;
+
+    #endregion
+
 
     private void Awake()
     {
         anim = this.GetComponent<Animator>();
-        diceText = dice.GetComponent<Text>();
         rollCo = RollingDice();
-        dice.SetActive(false);
     }
 
     private void Start()
@@ -57,43 +55,108 @@ public class TotemMove : MonoBehaviour
         transform.position = board.childNodeList[stageValue].transform.position;
     }
 
-
+    private float TimeLeft = 1.0f;
+    private float nextTime = 0.0f;
+    private bool bChRot = false;
     private void Update()
     {
+        if (isRoll)
+        {
+            if (Time.time > nextTime)
+            {
+                nextTime = Time.time + TimeLeft;
+                bChRot = !bChRot;
+            }
 
-        if (isMove)
-            dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
+            if (bChRot)
+            {
+                diceObj.transform.Rotate(new Vector3(45, 45, 45) * rotSpeed * Time.deltaTime);
+            }
+            else
+            {
+                diceObj.transform.Rotate(new Vector3(-45, 45, -45) * rotSpeed * Time.deltaTime);
+
+            }
+
+        }
+
+        if (!isMove)
+            diceText.transform.position = new Vector3(cam.WorldToScreenPoint(transform.position).x, diceText.transform.position.y, cam.WorldToScreenPoint(transform.position).z);
         else
-            dice.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.8f, 0));
+            diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.8f, 0));
+
 
         if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
             if (!isRoll)
             {
-                dice.SetActive(true);
+                diceObj.transform.position = transform.position + new Vector3(0, 2.14f, 0);
+                diceObj.SetActive(true);
+
                 StartCoroutine(rollCo);
                 isRoll = true;
+
             }
             else
             {
-                StopCoroutine(rollCo);
-                isRoll = false;
-
-
-                if (!isMove)
+                float posY = transform.position.y;
+                transform.DOMoveY(-0.1f, 0.4f).OnComplete(() =>
                 {
-                    if (routePosition + steps < board.childNodeList.Count)
+                    isRoll = false;
+
+                    switch (steps)
                     {
-                        StartCoroutine(MoveMentCo());
-                        print("Move");
+                        case 1:
+                            diceObj.transform.localEulerAngles = new Vector3(0, 90, 0);
+                            break;
+                        case 2:
+                            diceObj.transform.localEulerAngles = new Vector3(90, 90, 0);
+                            break;
+                        case 3:
+                            diceObj.transform.localEulerAngles = new Vector3(90, 180, 0);
+                            break;
+                        case 4:
+                            diceObj.transform.localEulerAngles = Vector3.zero;
+                            break;
+                        case 5:
+                            diceObj.transform.localEulerAngles = new Vector3(0, -180, -90);
+                            break;
+                        case 6:
+                            diceObj.transform.localEulerAngles = new Vector3(0, -90, 0);
+                            break;
+                        default:
+                            print("Dice NULL");
+                            break;
                     }
-                }
+                    diceObj.transform.DOMoveY(1.8f, 0.3f).OnComplete(() => diceObj.transform.DOMoveY(1.47f, 0.3f).OnComplete(() =>
+                    {
+                        if (!isMove)
+                        {
+                            if (routePosition + steps < board.childNodeList.Count)
+                            {
+                                StartCoroutine(MoveMentCo());
+                                print("Move");
+                            }
+                        }
+                    }));
+                    transform.DOMoveY(posY, 0.4f);
+
+                });
+                StopCoroutine(rollCo);
+
             }
         }
     }
 
     private IEnumerator MoveMentCo()
     {
+        yield return new WaitForSeconds(0.5f);
+
+        diceParticle.Play();
+        diceParticle.transform.position = diceObj.transform.position;
+        diceObj.SetActive(false);
+        diceText.text = steps.ToString();
+        diceText.gameObject.SetActive(true);
         isLock = true;
         yield return new WaitForSeconds(0.5f);
         if (isMove) yield break;
@@ -115,6 +178,7 @@ public class TotemMove : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             steps--;
             diceText.text = steps.ToString();
+
             routePosition++;
             board.ChangeCam();
 
@@ -122,12 +186,12 @@ public class TotemMove : MonoBehaviour
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
 
-        if(board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-            FadeInOut(FadeType.FadeOut, BattleScene);
+        //if(board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+        //    FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
-        dice.SetActive(false);
+        diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
 
         isLock = false;
@@ -138,7 +202,7 @@ public class TotemMove : MonoBehaviour
         while (true)
         {
             steps = UnityEngine.Random.Range(1, 7);
-            diceText.text = steps.ToString();
+
             yield return rollDelay;
         }
     }
@@ -183,7 +247,7 @@ public class TotemMove : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Item"))
+        if (other.CompareTag("Item"))
         {
             other.gameObject.SetActive(false);
         }
@@ -191,7 +255,7 @@ public class TotemMove : MonoBehaviour
 
 
 
-    
-  
+
+
 
 }
