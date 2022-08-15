@@ -32,7 +32,7 @@ public class TurnManager : Singleton<TurnManager>
 
     public void ChangeTurn()
     {
-        if (!CanChangeTurn) return;
+        if (!CanChangeTurn || GameManager.Instance.State == GameState.END) return;
 
         if (type == TurnType.Player)
         {
