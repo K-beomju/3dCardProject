@@ -19,9 +19,13 @@ public class Global : MonoBehaviour
 
     #region Managers
 
+    UIManager _ui = new UIManager();
+    ResourceManager _resource = new ResourceManager();
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
 
+    public static UIManager UI { get { return Instance._ui; } }
+    public static ResourceManager Resource { get { return Instance._resource; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
 
