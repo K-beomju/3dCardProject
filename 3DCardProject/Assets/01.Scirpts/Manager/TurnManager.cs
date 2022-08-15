@@ -16,7 +16,7 @@ public enum TurnType
 
 public class TurnManager : Singleton<TurnManager>
 {
-    [SerializeField] private TurnType type;
+    public TurnType type;
     private Camera mainCam;
     private CameraMove cameraMove;
     [SerializeField] private CanvasGroup changePanel;
