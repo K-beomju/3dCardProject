@@ -12,24 +12,32 @@ public enum MountState
     Hack
 }
 
+public enum EnemyType
+{
+    EASY,
+    MEDIUM,
+    HARD
+}
+
 public class EnemyAI : Singleton<EnemyAI>
 {
-
+    public EnemyType enemyType;
     private MountState mountState;
     private Action action;
+
     private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // �ƹ�Ÿ ���� �븻 �÷��̾� ����
     {
         {
             0b100000100000001001000011111111, () => {
                 CardManager.Instance.MountCardSupport(107 , MountState.Prev);
 
-        } },  
+        } },
 
         {
             0b101000000000101001000011111111, () => {
                 CardManager.Instance.MountCardSupport(100);
 
-        } }, 
+        } },
             {
             0b100010010000000011111111, () => {
                 CardManager.Instance.MountCardSupport(102);
@@ -149,18 +157,24 @@ public class EnemyAI : Singleton<EnemyAI>
     {
         InitState();
 
-        if (_actions.ContainsKey(currentState)) // �̸� �����ص� �ൿ
+        if (enemyType == EnemyType.EASY)
         {
-            Debug.Log("DO PRESET");
-            _actions[currentState]?.Invoke();
-        }
-        else // �⺻ �ൿ
-        {
-            print("����� ���� ����");
-            print(Convert.ToString(currentState, 2));
-            //Debug.Log("DO DEFAULT");
             EnemyManager.Instance.EnemyAction();
         }
+        if (enemyType == EnemyType.MEDIUM)
+        {
+
+            if (_actions.ContainsKey(currentState)) // "DO PRESET"
+            {
+                _actions[currentState]?.Invoke();
+            }
+            else                                    // "DO DEFAULT"
+            {
+                print(Convert.ToString(currentState, 2));
+                EnemyManager.Instance.EnemyAction();
+            }
+        }
+
     }
     //// �տ� ��ġ (ī��)
     //public void MountingPrev(Card card)

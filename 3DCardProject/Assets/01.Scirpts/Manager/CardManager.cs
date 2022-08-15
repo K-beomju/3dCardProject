@@ -63,7 +63,7 @@ public class CardManager : Singleton<CardManager>
 
     private void Start()
     {
-        StartCoroutine(SpawnCardCo(()=> { TurnManager.ChangeTurn(TurnType.Player); }));
+        StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
         arrowObject.ActiveArrow(false);
         deckManager = GetComponent<DeckManager>();
         mainCam = Camera.main;
@@ -111,7 +111,7 @@ public class CardManager : Singleton<CardManager>
         if (card.LinkedModel != null)
         {
             // ¸ðµ¨ Á¦°Å
-        Debug.Log("Model Die : " + card.item.name);
+            Debug.Log("Model Die : " + card.item.name);
             Destroy(card.LinkedModel.ModelObject.gameObject);
         }
 
@@ -126,7 +126,7 @@ public class CardManager : Singleton<CardManager>
             //EnemyFieldManager.Instance.enemyCards.Remove(card);
             prs = new PRS(CardManager.Instance.enemy_cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
         }
-       
+
         if (card.curField != null)
         {
             if (card.item.IsAvatar)
@@ -172,7 +172,8 @@ public class CardManager : Singleton<CardManager>
             Sequence sequence = DOTween.Sequence();
             sequence.Append(delCard.transform.DOMove(hackField.transform.position + new Vector3(0, 5f, 0), .15f)).AppendInterval(.3f);
             sequence.Append(delCard.transform.DOScale(delCard.transform.localScale * 2f, .3f)).AppendInterval(.3f);
-            sequence.Append(transform.DOMove(transform.position,.2f)).OnComplete(() => {
+            sequence.Append(transform.DOMove(transform.position, .2f)).OnComplete(() =>
+            {
                 myCards.Remove(delCard);
                 ReflectBox.Instance.RemoveCardUI(delCard);
 
@@ -282,7 +283,7 @@ public class CardManager : Singleton<CardManager>
             }
             else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                if(card != null && selectCard.item.IsUpperCard && card.curField != null )
+                if (card != null && selectCard.item.IsUpperCard && card.curField != null)
                 {
                     hitField = card.curField;
                     card.curField.HitColor(true, true);
@@ -311,11 +312,11 @@ public class CardManager : Singleton<CardManager>
         }
         // ReflectBox
 
-        if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity) )
+        if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity))
         {
             Field field = hitData.transform.GetComponent<Field>();
             Card card = hitData.transform.GetComponent<Card>();
-            if (field != null )
+            if (field != null)
             {
                 if (field.isEnterRange && ReflectBox.Instance.reflectCard != null)
                 {
@@ -330,13 +331,13 @@ public class CardManager : Singleton<CardManager>
                     hitField = field;
                     field.HitColor(true);
                 }
-               
+
             }
             else
             {
                 hitField = null;
             }
-         
+
 
         }
 
@@ -361,7 +362,7 @@ public class CardManager : Singleton<CardManager>
             CardAlignment();
         }
 
-        if(myCards.Count < 1)
+        if (myCards.Count < 1)
         {
             PlayerDeckManager pdm = deckManager as PlayerDeckManager;
             pdm.SetUpPlayerDeckManager();
@@ -465,7 +466,7 @@ public class CardManager : Singleton<CardManager>
         return results;
     }
 
-   
+
     #endregion
 
     #region MyCard
@@ -500,12 +501,12 @@ public class CardManager : Singleton<CardManager>
             float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
             arrowObject.transform.position = new Vector3(x, 470, 0);
 
-            selectCard.transform.DOScale(new Vector3(0.3f,0.3f, 0.5f), 0.05f);
+            selectCard.transform.DOScale(new Vector3(0.3f, 0.3f, 0.5f), 0.05f);
 
-            Vector3 enlarPos = new Vector3(selectCard.transform.position.x, selectCard.transform.position.y , selectCard.transform.position.z - 1);
+            Vector3 enlarPos = new Vector3(selectCard.transform.position.x, selectCard.transform.position.y, selectCard.transform.position.z - 1);
             selectCard.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
-      
+
     }
 
     public virtual void CardMouseUp()
@@ -555,7 +556,7 @@ public class CardManager : Singleton<CardManager>
 
     #endregion
 
-    public void MountCardSupport(uint num , MountState state = MountState.NULL, bool canCatch = false)
+    public void MountCardSupport(uint num, MountState state = MountState.NULL, bool canCatch = false)
     {
         Item cardItem = null;
         if (num == 0)
@@ -574,7 +575,7 @@ public class CardManager : Singleton<CardManager>
             cardItem = edm.PopItem();
         }
         Card card = CreateCard(cardItem, false);
-        if(state == MountState.NULL)
+        if (state == MountState.NULL)
         {
             switch (num)
             {
@@ -598,7 +599,7 @@ public class CardManager : Singleton<CardManager>
 
             }
         }
-      
+
         EnemyAI.Instance.MountingCard(card, state);
     }
     public virtual void UseCard()
@@ -643,7 +644,7 @@ public class CardManager : Singleton<CardManager>
         */
     }
 
-    
+
 
     //public bool MyCardIsFull()
     //{

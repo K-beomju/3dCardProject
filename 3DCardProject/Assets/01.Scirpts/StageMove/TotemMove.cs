@@ -186,8 +186,8 @@ public class TotemMove : MonoBehaviour
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
 
-        //if(board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-        //    FadeInOut(FadeType.FadeOut, BattleScene);
+        if (board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+            FadeInOut(FadeType.FadeOut, BattleScene);
 
         isMove = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
