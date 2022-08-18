@@ -18,7 +18,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     private bool canCheckRange = false;
     public bool isFrontJumping = false;
-    public bool startSpawnDistinction = true;
 
     protected override void Awake()
     {
@@ -44,7 +43,6 @@ public class NewFieldManager : Singleton<NewFieldManager>
             canCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;
         });
-        startSpawnDistinction = true;
         PlayerManager.Instance.playerCards.Add(playerCard);
 
 

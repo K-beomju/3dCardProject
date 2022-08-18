@@ -163,6 +163,12 @@ public class CardManager : Singleton<CardManager>
     }
     public void RandCardDelete()
     {
+        StartCoroutine(RandCardDeleteCo());
+    }
+
+    public IEnumerator RandCardDeleteCo()
+    {
+
         int rand = UnityEngine.Random.Range(0, 1);
         if (rand == 0)
         {
@@ -170,27 +176,25 @@ public class CardManager : Singleton<CardManager>
             Card delCard = myCards[index];
             delCard.canInteract = false;
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(delCard.transform.DOMove(hackField.transform.position + new Vector3(0, 5f, 0), .15f)).AppendInterval(.3f);
+            sequence.Append(delCard.transform.DORotate(new Vector3(delCard.transform.localEulerAngles.x, delCard.transform.localEulerAngles.y, 0), 0.2f));
+            sequence.Append(delCard.transform.DOMove(hackField.transform.position + new Vector3(0, 4f, 0), .15f).OnComplete(() => delCard.DeleteTrapCard())).AppendInterval(.3f);
             sequence.Append(delCard.transform.DOScale(delCard.transform.localScale * 2f, .3f)).AppendInterval(.3f);
-            sequence.Append(transform.DOMove(transform.position, .2f)).OnComplete(() =>
-            {
-                myCards.Remove(delCard);
-                ReflectBox.Instance.RemoveCardUI(delCard);
+            yield return new WaitForSeconds(2f);
+            myCards.Remove(delCard);
+            ReflectBox.Instance.RemoveCardUI(delCard);
 
-                SetOriginOrder();
-                CardAlignment();
+            SetOriginOrder();
+            CardAlignment();
 
-                CardDie(delCard);
+            CardDie(delCard);
 
-                print("µ£ ¹ßµ¿");
-            });
-            ;
         }
         else
             print("µ£ ¹ßµ¿ ½ÇÆÐ");
 
-
     }
+
+
 
 
 

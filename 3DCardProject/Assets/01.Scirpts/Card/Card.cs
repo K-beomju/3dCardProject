@@ -233,10 +233,9 @@ public class Card : MonoBehaviour
                     LinkedModel.ModelObject = model;
                     avtar = LinkedModel.ModelObject;
                     avtarAnim = avtar.GetComponent<Animator>();
-                    if(NewFieldManager.Instance.startSpawnDistinction)
+                    if(!isPlayerCard)
                     {
                     avtar.transform.Rotate(new Vector3(0, -180, 0));
-                        NewFieldManager.Instance.startSpawnDistinction = false;
                     }
                 }
 
@@ -285,5 +284,15 @@ public class Card : MonoBehaviour
         cardBorder.enabled = false;
         nameTMP.GetComponent<MeshRenderer>().enabled = false;
         descriptionTMP.GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    public void DeleteTrapCard()
+    {
+        card.DOFade(0, 1);
+        cardImage.DOFade(0, 1);
+        cardBorder.DOFade(0, 1);
+        nameTMP.DOFade(0, 1);
+        descriptionTMP.DOFade(0, 1);
+
     }
 }
