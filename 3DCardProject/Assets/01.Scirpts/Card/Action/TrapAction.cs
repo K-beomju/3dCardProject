@@ -12,6 +12,7 @@ public class TrapAction : CardAction
         {
             if (avatar != null)
             {
+
                 if (avatar.isPlayerCard)
                 {
                     CardManager.Instance.RandCardDelete();

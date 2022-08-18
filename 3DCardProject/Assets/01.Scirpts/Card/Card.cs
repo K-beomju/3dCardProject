@@ -26,6 +26,8 @@ public class Card : MonoBehaviour
     [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
 
+    public GameObject goblin;
+
     public Item item;
     public PRS originPRS;
     private bool isFront;
@@ -143,10 +145,10 @@ public class Card : MonoBehaviour
             Vector3 firstPos = transform.position;
             Vector3 fieldPos = field.transform.position;
             fieldPos.y += 1f;
-            transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
+            goblin.transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
 
-
-                transform.DOMove(firstPos, .3f).OnComplete(() => {
+                Debug.LogWarning("asd");
+                goblin.transform.DOMove(firstPos, .3f).OnComplete(() => {
                     act?.Invoke();
                     GetComponent<Order>().SetOriginOrder(originOrder);
                     if (field.curCard != null)
@@ -226,7 +228,10 @@ public class Card : MonoBehaviour
                 LinkedModel = Instantiate(modelPrefab, transform.position - new Vector3(0, item.spawnModelYPos,0), Utils.QI).GetComponent<CardModelBrain>();
                 var model = Resources.Load<GameObject>(item.uid.ToString());
                 if (model != null)
+                {
                     LinkedModel.ModelObject = model;
+                    goblin = LinkedModel.ModelObject;
+                }
 
                 DetactiveCardView();
             }
