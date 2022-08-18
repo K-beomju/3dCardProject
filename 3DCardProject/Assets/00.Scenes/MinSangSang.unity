@@ -2037,6 +2037,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1917927977727540104, guid: 7129de4e7d7e4a74b9cc9bc3d1cd91df, type: 3}
   m_PrefabInstance: {fileID: 271016498}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &277985961 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5798836223124419619, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+  m_PrefabInstance: {fileID: 4778437131000178683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &289775849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4778437131127519021, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
@@ -4003,7 +4008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039f1c75e6dfc664ca00700db11b1301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 1
 --- !u!4 &484031662
 Transform:
   m_ObjectHideFlags: 0
@@ -10606,6 +10611,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539918302}
   m_CullTransparentMesh: 1
+--- !u!198 &1542349789 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1883897632621500089, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+  m_PrefabInstance: {fileID: 4778437131000178683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1566259341
 GameObject:
   m_ObjectHideFlags: 0
@@ -13509,6 +13519,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033907061}
     m_Modifications:
+    - target: {fileID: 3396529325187347220, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: enemyPt
+      value: 
+      objectReference: {fileID: 277985961}
+    - target: {fileID: 3396529325187347220, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: playerPt
+      value: 
+      objectReference: {fileID: 1542349789}
     - target: {fileID: 4778437131127519021, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -13556,6 +13574,14 @@ PrefabInstance:
     - target: {fileID: 4778437131127519022, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: m_Name
       value: NewFieldManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798836223124419619, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798836223124419619, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.103087686
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}

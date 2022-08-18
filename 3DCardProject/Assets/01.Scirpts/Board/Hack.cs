@@ -21,6 +21,10 @@ public class Hack : MonoBehaviour
     private Renderer rend;
     [SerializeField] private Light hackLight;
     [SerializeField] private Transform hackTrm;
+
+    [SerializeField] private ParticleSystem playerPt;
+    [SerializeField] private ParticleSystem enemyPt;
+
     private void Start()
     {
         rend = hackColorObject.GetComponent<Renderer>();
@@ -34,6 +38,7 @@ public class Hack : MonoBehaviour
 
         if (card.isPlayerCard)
         {
+            playerPt.Play();
             //sr.color = playerColor;
             state = HackState.Player;
             noneMat.DOColor(playerMat.color, .4f).OnUpdate(()=> { hackLight.color = noneMat.color; rend.material.SetColor("Color_AD284DAE", noneMat.color); } ).SetEase(Ease.InQuad);
@@ -41,6 +46,7 @@ public class Hack : MonoBehaviour
         }
         else
         {
+            enemyPt.Play();
             //sr.color = enemyColor;
             state = HackState.Enemy;
             noneMat.DOColor(enemyMat.color, .4f).OnUpdate(()=> { hackLight.color = noneMat.color; rend.material.SetColor("Color_AD284DAE", noneMat.color); } ).SetEase(Ease.InQuad);
