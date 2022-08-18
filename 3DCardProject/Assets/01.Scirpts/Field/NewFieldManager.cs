@@ -18,6 +18,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     private bool canCheckRange = false;
     public bool isFrontJumping = false;
+    public bool startSpawnDistinction = true;
 
     protected override void Awake()
     {
@@ -33,14 +34,15 @@ public class NewFieldManager : Singleton<NewFieldManager>
             var node = fields.GetNodeByIndex(i);
         }
         TurnManager.Instance.CanChangeTurn = false;
-        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
         enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem.ShallowCopy(), false);
+        playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
+        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, () => {
             playerCard.OnSpawn();
             canCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;
         });
-        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
+        startSpawnDistinction = true;
         PlayerManager.Instance.playerCards.Add(playerCard);
 
 

@@ -23,6 +23,7 @@ public class Field : MonoBehaviour
 
     private Outline outline;
 
+
     [SerializeField]
     [EnumFlags]
     private FieldType fieldType;

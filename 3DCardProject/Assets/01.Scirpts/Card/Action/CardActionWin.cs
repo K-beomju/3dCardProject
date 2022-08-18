@@ -6,6 +6,7 @@ public class CardActionWin : CardAction
 {
     public override void TakeAction(Card card)
     {
+        GameManager.Instance.State = GameState.END;
         GameManager.Instance.OnWinGame?.Invoke();
     }
 }

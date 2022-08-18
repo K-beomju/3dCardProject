@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject turnPanel;
     public TMP_Text resultText;
 
-    public GameState State { get; set; }
+    public GameState State;
 
     public CanvasGroup fadeGroup;
 
@@ -62,17 +62,15 @@ public class GameManager : Singleton<GameManager>
     public void CallOnWinGame()
     {
         StartCoroutine(CallOnWinGameCo());
-        Debug.LogWarning("ASdasdsadasdasdasd");
     }
 
     public IEnumerator CallOnWinGameCo()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         resultText.text = "½Â¸®";
         TurnManager.Instance.CanChangeTurn = false;
         resultPanel.SetActive(true);
         ReflectBox.Instance.ReflectBoxActive(false);
-        State = GameState.END;
         turnPanel.SetActive(false);
     }
 
@@ -89,7 +87,6 @@ public class GameManager : Singleton<GameManager>
         TurnManager.Instance.CanChangeTurn = false;
         resultPanel.SetActive(true);
         ReflectBox.Instance.ReflectBoxActive(false);
-        State = GameState.END;
         turnPanel.SetActive(false);
     }
 

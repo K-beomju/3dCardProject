@@ -26,7 +26,8 @@ public class Card : MonoBehaviour
     [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
 
-    public GameObject goblin;
+    public GameObject avtar;
+    private Animator avtarAnim;
 
     public Item item;
     public PRS originPRS;
@@ -145,9 +146,9 @@ public class Card : MonoBehaviour
             Vector3 firstPos = transform.position;
             Vector3 fieldPos = field.transform.position;
             fieldPos.y += 1f;
-            goblin.transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
+            avtar.transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
 
-                goblin.transform.DOMove(firstPos, .3f).OnComplete(() => {
+                avtar.transform.DOMove(firstPos, .3f).OnComplete(() => {
                     act?.Invoke();
                     GetComponent<Order>().SetOriginOrder(originOrder);
                     if (field.curCard != null)
@@ -164,6 +165,7 @@ public class Card : MonoBehaviour
                     {
                         Debug.Log("아바타 카드 공격");
                         field.avatarCard.OnDamage();
+                        avtarAnim.SetTrigger("Attack");
                     }
                     Debug.Log("ATACK");
                     isAttack = false;
@@ -229,7 +231,13 @@ public class Card : MonoBehaviour
                 if (model != null)
                 {
                     LinkedModel.ModelObject = model;
-                    goblin = LinkedModel.ModelObject;
+                    avtar = LinkedModel.ModelObject;
+                    avtarAnim = avtar.GetComponent<Animator>();
+                    if(NewFieldManager.Instance.startSpawnDistinction)
+                    {
+                    avtar.transform.Rotate(new Vector3(0, -180, 0));
+                        NewFieldManager.Instance.startSpawnDistinction = false;
+                    }
                 }
 
                 DetactiveCardView();

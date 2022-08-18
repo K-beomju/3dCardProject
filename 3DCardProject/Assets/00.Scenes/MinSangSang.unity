@@ -13467,17 +13467,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 1033907061}
     m_Modifications:
     - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
-      propertyPath: enemyItem.spawnModelYPos
-      value: 1
+      propertyPath: enemyItem.IsUpperCard
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
-      propertyPath: enemyItem.OnDie.Array.data[0].action
-      value: 
-      objectReference: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
-    - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
-      propertyPath: enemyItem.OnDamage.Array.data[0].action
-      value: 
-      objectReference: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
     - target: {fileID: 2915804562928438926, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -13535,6 +13527,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033907061}
     m_Modifications:
+    - target: {fileID: 2620259454227326366, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: avatarRot
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3396529325187347220, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: enemyPt
       value: 
