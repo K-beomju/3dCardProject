@@ -6,10 +6,8 @@ public class CardActionMove : CardAction
 {
     public override void TakeAction(Card card)
     {
-        print("AAAAA");
         if (card.isPlayerCard)
         {
-            print("BBBB");
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField,()=>
             {
                 TurnManager.ChangeTurn(TurnType.Enemy);
@@ -17,7 +15,6 @@ public class CardActionMove : CardAction
         }
         else
         {
-            print("CCCC");
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
             {
                 TurnManager.ChangeTurn(TurnType.Player);

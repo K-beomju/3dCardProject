@@ -11,6 +11,7 @@ public class Card : MonoBehaviour
     [SerializeField] private SpriteRenderer cardImage;
 
     [SerializeField] private SpriteRenderer crystal;
+    [SerializeField] private SpriteRenderer cardBorder;
 
     [SerializeField] private Sprite crystal_blue;
     [SerializeField] private Sprite crystal_red;
@@ -220,11 +221,11 @@ public class Card : MonoBehaviour
             {
                 Debug.Log("모델 생성 시작 : " + item.name);
 
-                LinkedModel = Instantiate(modelPrefab, transform.position, Utils.QI).GetComponent<CardModelBrain>();
+                LinkedModel = Instantiate(modelPrefab, transform.position - new Vector3(0, item.spawnModelYPos,0), Utils.QI).GetComponent<CardModelBrain>();
                 var model = Resources.Load<GameObject>(item.uid.ToString());
                 if (model != null)
                     LinkedModel.ModelObject = model;
-
+                DetactiveCardView();
             }
 
             CardAction(item.OnSpawn);
@@ -260,5 +261,14 @@ public class Card : MonoBehaviour
     public Card ShallowCopy()
     {
         return (Card)this.MemberwiseClone();
+    }
+
+    public void DetactiveCardView()
+    {
+        card.enabled = false;
+        cardImage.enabled = false;
+        cardBorder.enabled = false;
+        nameTMP.GetComponent<MeshRenderer>().enabled = false;
+        descriptionTMP.GetComponent<MeshRenderer>().enabled = false;
     }
 }

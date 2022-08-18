@@ -1256,6 +1256,7 @@ MonoBehaviour:
   card: {fileID: 8368915300404675849}
   cardImage: {fileID: 2214721164142281130}
   crystal: {fileID: 5409099860390450278}
+  cardBorder: {fileID: 3012308058567979685}
   crystal_blue: {fileID: 21300000, guid: 64e5fe6671ed0f348a1d814165780543, type: 3}
   crystal_red: {fileID: 21300000, guid: c32359623a29f1f46ad3429254749708, type: 3}
   costTMP: {fileID: 6492639017354120125}
@@ -1264,6 +1265,7 @@ MonoBehaviour:
   nameTMP: {fileID: 2111170551438980986}
   descriptionTMP: {fileID: 4311797463403797117}
   modelPrefab: {fileID: 3571458261053660855, guid: 2acbbbcd03fb1fd458fac49e0ab24acd, type: 3}
+  <LinkedModel>k__BackingField: {fileID: 0}
   item:
     cost: 0
     uid: 0

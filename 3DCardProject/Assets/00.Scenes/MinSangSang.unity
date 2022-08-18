@@ -12315,6 +12315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8047270137270981634, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
+      propertyPath: playerItem.spawnModelYPos
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8047270137270981635, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -13462,6 +13466,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033907061}
     m_Modifications:
+    - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
+      propertyPath: enemyItem.spawnModelYPos
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2915804562928438926, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: m_RootOrder
       value: 7
