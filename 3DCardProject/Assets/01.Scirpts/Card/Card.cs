@@ -147,7 +147,6 @@ public class Card : MonoBehaviour
             fieldPos.y += 1f;
             goblin.transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
 
-                Debug.LogWarning("asd");
                 goblin.transform.DOMove(firstPos, .3f).OnComplete(() => {
                     act?.Invoke();
                     GetComponent<Order>().SetOriginOrder(originOrder);

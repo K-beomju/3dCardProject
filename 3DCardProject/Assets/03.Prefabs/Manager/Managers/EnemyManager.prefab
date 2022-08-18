@@ -54,6 +54,9 @@ MonoBehaviour:
     IsReflectCard: 0
     IsUpperCard: 0
     IsStructCard: 0
+    EffectPrefab: {fileID: 0}
+    HitEffectPrefab: {fileID: 0}
+    spawnModelYPos: 1
     tribe: 2
     description: "\uC801\uC785\uB2C8\uB2E4"
     count: 1

@@ -62,6 +62,7 @@ public class GameManager : Singleton<GameManager>
     public void CallOnWinGame()
     {
         StartCoroutine(CallOnWinGameCo());
+        Debug.LogWarning("ASdasdsadasdasdasd");
     }
 
     public IEnumerator CallOnWinGameCo()
