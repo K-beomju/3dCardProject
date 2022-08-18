@@ -23,6 +23,7 @@ MonoBehaviour:
     IsUpperCard: 0
     IsStructCard: 1
     EffectPrefab: {fileID: 134878, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
+    HitEffectPrefab: {fileID: 180702, guid: a7c694f0877ea874fa57e033221095c3, type: 3}
     spawnModelYPos: 1
     tribe: 1
     description: "\uBC1F\uC744 \uACBD\uC6B0 50% \uD655\uB960\uB85C \uCE74\uB4DC\uB97C

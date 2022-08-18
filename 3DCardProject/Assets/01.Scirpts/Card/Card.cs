@@ -195,6 +195,8 @@ public class Card : MonoBehaviour
     public void OnAttack()
     {
         Debug.Log("ONATTACK : " + item.name);
+        if(item.HitEffectPrefab != null)
+        Instantiate(item.HitEffectPrefab).transform.position = transform.position + new Vector3(0, 1, 0);
 
         CardAction(item.OnAttack);
     }
@@ -225,6 +227,7 @@ public class Card : MonoBehaviour
                 var model = Resources.Load<GameObject>(item.uid.ToString());
                 if (model != null)
                     LinkedModel.ModelObject = model;
+
                 DetactiveCardView();
             }
 
