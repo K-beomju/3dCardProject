@@ -35,7 +35,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
         }
         TurnManager.Instance.CanChangeTurn = false;
         enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem.ShallowCopy(), false);
+        enemyCard.DetactiveCardView();
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
+        playerCard.DetactiveCardView();
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, () => {
             playerCard.OnSpawn();

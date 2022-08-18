@@ -72,7 +72,7 @@ public class CardManager : Singleton<CardManager>
 
     private IEnumerator SpawnCardCo(Action act = null)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(.5f);
 
         for (int i = 0; i < 5; i++)
         {
