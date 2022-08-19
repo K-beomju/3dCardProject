@@ -82,12 +82,19 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public void CallOnReflect()
     {
-        if(CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
+        StartCoroutine(CallOnReflectCo());
+    }
+
+    public IEnumerator CallOnReflectCo()
+    {
+        if (CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
         {
             Vector3 pos = CardManager.Instance.hackField.transform.position;
-            pos += new Vector3(0,5f,0);
+            pos += new Vector3(0, 5f, 0);
             waitingCard.transform.DOScale(waitingCard.transform.localScale * 2f, .2f);
-             waitingCard.transform.DOMove(pos, .4f);
+            waitingCard.transform.DOMove(pos, .4f);
+            waitingCard.transform.DORotate(new Vector3(40, 0, 0), .3f);
+            yield return new WaitForSeconds(1f);
             // ¿Ã¸®±â
             ReflectBoxActive(true);
         }
