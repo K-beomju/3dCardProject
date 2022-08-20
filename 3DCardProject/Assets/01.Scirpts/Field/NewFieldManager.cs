@@ -150,7 +150,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                             card.curField.RemoveCurCard();
                         }
                     }
-                    field.SetUp(card, () => { field.upperCard.OnAttack(); act?.Invoke(); });
+                    field.SetUp(card, act ,() => { field.upperCard.OnAttack(); });
                 }
                 else
                 {

@@ -93,7 +93,7 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void SetUp(Card card, Action act = null)
+    public void SetUp(Card card, Action act = null,Action subAct = null)
     {
 
 
@@ -139,11 +139,19 @@ public class Field : MonoBehaviour
             TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
+
+                Vector3 cardPos = card.transform.position;
+
                 if (!NewFieldManager.Instance.isFrontJumping)
-                    card.LinkedModel.Move(card.transform.position, act);
+                {
+                    card.LinkedModel.Move(cardPos, act,subAct);
+                }
                 else
                 {
-                    card.LinkedModel.JumpMove(card.transform.position, act);
+                    var node = NewFieldManager.Instance.GetNodeByData(this);
+                    Vector3 dir = node.NextNode.Data.transform.position - node.Data.transform.position;
+                    dir.y = 0;
+                    card.LinkedModel.JumpMove(cardPos,dir.normalized, act,subAct);
                 }
 
 

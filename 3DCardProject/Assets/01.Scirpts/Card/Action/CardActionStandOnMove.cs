@@ -23,7 +23,7 @@ public class CardActionStandOnMove : CardAction
         if (!TurnManager.Instance.CanChangeTurn) return;
         Debug.Log(TurnManager.Instance.CanChangeTurn);
 
-        TurnManager.ChangeTurn(card.isPlayerCard ? TurnType.Enemy : TurnType.Player);
+        TurnManager.ChangeTurn(TurnManager.Instance.type == TurnType.Player ? TurnType.Enemy : TurnType.Player);
 
     }
 }

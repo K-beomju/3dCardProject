@@ -32,7 +32,7 @@ public class CardModelBrain : MonoBehaviour
 
         }
     }
-    public void Move(Vector3 pos, Action act = null)
+    public void Move(Vector3 pos, Action act = null,Action subAct = null)
     {
         //DOTween.Kill(modelObject.transform);
         Vector3 des = new Vector3(pos.x, modelObject.transform.position.y, pos.z);
@@ -62,22 +62,32 @@ public class CardModelBrain : MonoBehaviour
 
             anim?.SetBool("isMove", false);
             act?.Invoke();
+            subAct?.Invoke();
         });
     }
 
 
 
 
-    public void JumpMove(Vector3 pos, Action act = null)
+    public void JumpMove(Vector3 pos,Vector3 dir, Action act = null,Action subAct = null)
     {
+        anim?.SetBool("isMove", true);
+        Vector3 modelDir = (pos - modelObject.transform.position).normalized;
         if (TurnManager.Instance.type == TurnType.Player)
         {
-            modelObject.transform.DOJump(pos, 3, 0, .5f, false).OnComplete(() =>
+            Sequence seq = DOTween.Sequence();
+            seq.Append(modelObject.transform.DOMove(pos - dir * 3, .6f));
+            seq.Join(modelObject.transform.DORotate(Quaternion.LookRotation(modelDir).eulerAngles, .1f));
+            seq.Append(modelObject.transform.DOJump(pos + dir * 3, 3, 0, .5f, false));
+            seq.Join(modelObject.transform.DORotate(Quaternion.LookRotation(dir).eulerAngles, .1f));
+            seq.OnComplete(() =>
             {
-                act?.Invoke();
+                //야매로 턴 넘기기 시간 조절
+                subAct?.Invoke();
+
+                anim?.SetBool("isMove", false);
                 NewFieldManager.Instance.isFrontJumping = false;
             });
-
         }
         else
         {
