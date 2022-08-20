@@ -12,6 +12,8 @@ public class PoolManager
     public void CreatePool<T>(GameObject prefab, Transform parent, int count = 5) where T : MonoBehaviour
     {
         Type t = typeof(T);
+        if (poolDic.ContainsKey(t.ToString()))
+            return;
 
         ObjectPooling<T> pool = new ObjectPooling<T>(prefab, parent, count);
         

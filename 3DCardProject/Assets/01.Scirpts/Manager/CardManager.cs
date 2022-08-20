@@ -59,6 +59,7 @@ public class CardManager : Singleton<CardManager>
     protected override void Awake()
     {
         base.Awake();
+        Global.Pool.Clear();
         Global.Pool.CreatePool<Card>(cardPrefab, transform, 15);
         Global.Pool.CreatePool<Effect_Spawn>(cardSpawnEffect, transform, 15);
     }
