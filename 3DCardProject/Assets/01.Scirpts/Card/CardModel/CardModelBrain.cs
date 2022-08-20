@@ -86,7 +86,7 @@ public class CardModelBrain : MonoBehaviour
                 subAct?.Invoke();
 
                 anim?.SetBool("isMove", false);
-                NewFieldManager.Instance.isFrontJumping = false;
+                //NewFieldManager.Instance.isFrontJumping = false;
             });
         }
         else

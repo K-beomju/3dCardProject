@@ -125,16 +125,16 @@ public class Field : MonoBehaviour
             TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
+                var node = NewFieldManager.Instance.GetNodeByData(this);
 
                 Vector3 cardPos = card.transform.position;
 
-                if (!NewFieldManager.Instance.isFrontJumping)
+                if (node.Data.upperCard.item.uid != 103/*!NewFieldManager.Instance.isFrontJumping*/)
                 {
                     card.LinkedModel.Move(cardPos, act,subAct);
                 }
                 else
                 {
-                    var node = NewFieldManager.Instance.GetNodeByData(this);
                     Vector3 dir = node.NextNode.Data.transform.position - node.Data.transform.position;
                     dir.y = 0;
                     card.LinkedModel.JumpMove(cardPos,dir.normalized, act,subAct);
