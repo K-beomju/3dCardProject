@@ -9,6 +9,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public enum TurnType
 {
+    Standby,
     Player,
     Change,
     Enemy
@@ -28,13 +29,14 @@ public class TurnManager : Singleton<TurnManager>
     {
         mainCam = Camera.main;
         cameraMove = mainCam.GetComponent<CameraMove>();
+        type = TurnType.Standby;
     }
 
-    public void ChangeTurn()
+    public static void ChangeTurn()
     {
-        if (!CanChangeTurn || GameManager.Instance.State == GameState.END) return;
+        if (!Instance.CanChangeTurn || GameManager.Instance.State == GameState.END) return;
 
-        if (type == TurnType.Player)
+        if (Instance.type == TurnType.Player)
         {
             ChangeTurn(TurnType.Enemy);
         }
@@ -51,18 +53,24 @@ public class TurnManager : Singleton<TurnManager>
         if (!Instance.CanChangeTurn) return;
         if (Instance.type != _type)
         {
-            Instance.type = _type;
+            TurnType temp = Instance.type;
+            Instance.type = TurnType.Change;
 
-            Instance.ChangeTurnPanel(() =>
+            Instance.ChangeTurnPanel(_type,() =>
             {
-                if (Instance.type != TurnType.Player)
+                Instance.type = _type;
+                if(temp != TurnType.Standby)
                 {
-                    EnemyAI.Instance.JudgementCard();
+                    if (Instance.type != TurnType.Player)
+                    {
+                        EnemyAI.Instance.JudgementCard();
+                    }
+                    else
+                    {
+                        CardManager.Instance.AddCard();
+                    }
                 }
-                else
-                {
-                    CardManager.Instance.AddCard();
-                }
+                    
 
             });
 
@@ -85,24 +93,26 @@ public class TurnManager : Singleton<TurnManager>
         Instance.type = type;
     }
 
-    public void ChangeTurnPanel(Action act)
+    public void ChangeTurnPanel(TurnType type,Action act)
     {
-        StartCoroutine(ChangeTurnPanelCo(act));
+        StartCoroutine(ChangeTurnPanelCo(type, act));
     }
 
-    public IEnumerator ChangeTurnPanelCo(Action act)
+    public IEnumerator ChangeTurnPanelCo(TurnType type,Action act)
     {
         yield return new WaitForSeconds(1f);
         if (GameManager.Instance.State == GameState.END) yield break;
 
         Sequence seq = DOTween.Sequence();
 
-        if (Instance.type == TurnType.Player)
+        if (type == TurnType.Player)
         {
+            changePanel.gameObject.GetComponent<Image>().color  = new Color32(98, 119, 255,174);
             changeText.text = "내 턴";
         }
         else
         {
+            changePanel.gameObject.GetComponent<Image>().color = new Color32(255, 97, 97, 174);
             changeText.text = "적 턴";
         }
         seq.Append(changePanel.DOFade(1, .3f));

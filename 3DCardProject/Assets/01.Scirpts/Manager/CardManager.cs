@@ -75,6 +75,8 @@ public class CardManager : Singleton<CardManager>
 
     private IEnumerator SpawnCardCo(Action act = null)
     {
+        yield return new WaitForSeconds(1.5f);
+        act?.Invoke();
         yield return new WaitForSeconds(.5f);
 
         for (int i = 0; i < 5; i++)
@@ -82,7 +84,6 @@ public class CardManager : Singleton<CardManager>
             AddCard();
             yield return new WaitForSeconds(0.2f);
         }
-        act?.Invoke();
     }
 
     private IEnumerator DeleteCardCo()

@@ -166,7 +166,7 @@ public class ReflectBox : Singleton<ReflectBox>
             yield return Timing.WaitForSeconds(0.7f);
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
             {
-                TurnManager.Instance.ChangeTurn();
+                TurnManager.ChangeTurn();
             });
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
