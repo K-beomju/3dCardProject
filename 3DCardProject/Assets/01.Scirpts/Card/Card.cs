@@ -128,13 +128,11 @@ public class Card : MonoBehaviour
     }
     public void Emphasize(Action act)
     {
-
-        transform.DOScaleZ(transform.localScale.z + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
-        transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo);
-        transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
-        {
-            transform.DOMove(transform.position, .15f).OnComplete(()=> { act?.Invoke(); });
-        });
+        Debug.Log("1111");
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo));
+        seq.Join(transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo));
+        seq.AppendCallback(() => { Debug.Log("2222"); act?.Invoke(); });
     }
    
     public void Attack(Field field,Action act = null)
@@ -242,12 +240,33 @@ public class Card : MonoBehaviour
 
                 DetactiveCardView();
             }
-
-            CardAction(item.OnSpawn);
-            // 풀매니저로 수정 해야함
-            Global.Pool.GetItem<Effect_Spawn>().transform.position = transform.position + new Vector3(0, 1, 0);
+            //종류별로 넣어주시면 됩니다
+            Effect effect= null;
+            switch (item.cardType)
+            {
+                case CardType.Jump:
+                case CardType.Wall:
+                case CardType.Trap:
+                    effect = Global.Pool.GetItem<Effect_Spawn>();
+                    break;
+                case CardType.Attack:
+                    break;
+                case CardType.Avoid:
+                    break;
+                case CardType.Change:
+                    break;
+                case CardType.Stop:
+                    break;
+                default:
+                    break;
+            }
+            if(effect != null)
+            {
+                effect.transform.position = transform.position + new Vector3(0, 1, 0);
+            }
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
             GetComponent<Order>().SetEnable(false);
+            CardAction(item.OnSpawn);
         });
     }
 

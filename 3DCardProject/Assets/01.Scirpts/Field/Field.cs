@@ -39,20 +39,6 @@ public class Field : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    [EnumFlags]
-    private CardTribeType enableTribe;
-    public CardTribeType EnableTribe
-    {
-        get
-        {
-            return enableTribe;
-        }
-        set
-        {
-            enableTribe = value;
-        }
-    }
     private void Awake()
     {
         aColor = new Color32(100, 100, 255, 255);

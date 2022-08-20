@@ -60,6 +60,7 @@ public class CardManager : Singleton<CardManager>
     {
         base.Awake();
         Global.Pool.Clear();
+        // 여기에 종류별로 추가
         Global.Pool.CreatePool<Card>(cardPrefab, transform, 15);
         Global.Pool.CreatePool<Effect_Spawn>(cardSpawnEffect, transform, 15);
     }

@@ -123,7 +123,7 @@ public class FieldManager : Singleton<FieldManager>
             }
             else
             {
-                if((field.EnableTribe & card.item.tribe) != CardTribeType.NULL)
+            /*    if((field.EnableTribe & card.item.tribe) != CardTribeType.NULL)
                 {
                     if (card.curField != null)
                     {
@@ -132,7 +132,7 @@ public class FieldManager : Singleton<FieldManager>
                     field.SetUp(card);
                    
                 }
-
+*/
             }
         }
     }

@@ -19,7 +19,7 @@ public class Item
     public GameObject HitEffectPrefab;
     public float spawnModelYPos;
 
-    public CardTribeType tribe; // 종족
+    public CardType cardType; // 종류
 
     [TextArea]
     public string description;  // 카드 설명
@@ -54,12 +54,15 @@ public class Item
 }
 
 
-public enum CardTribeType
+public enum CardType
 {
-    NULL =  0b0000, // 없음
-    FLY =   0b0001, // 비행
-    WALK =  0b0010, // 지상
-    WATER = 0b0100, // 수상
+    Attack, // 공격
+    Avoid,  // 무효
+    Change, // 방향전환
+    Jump,   // 뜀틀
+    Stop,   // 스탑
+    Trap,   // 덫
+    Wall    // 벽
 }
 
 
