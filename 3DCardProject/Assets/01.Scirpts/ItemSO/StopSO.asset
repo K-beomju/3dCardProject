@@ -25,7 +25,7 @@ MonoBehaviour:
     EffectPrefab: {fileID: 7619009876518450769, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
     HitEffectPrefab: {fileID: 0}
     spawnModelYPos: 0
-    tribe: 2
+    cardType: 4
     description: "\uCE74\uB4DC \uC0AC\uC6A9 \uD6C4 \uC774\uB3D9\uD558\uC9C0 \uC54A\uB294\uB2E4."
     count: 1
     OnSpawn:
