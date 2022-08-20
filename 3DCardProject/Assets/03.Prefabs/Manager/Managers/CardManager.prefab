@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8368915300404675851, guid: 0b330f0091ff83c49a635a8aa2aedf66, type: 3}
+  cardSpawnEffect: {fileID: 7619009876518450769, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
   cardSpawnPoint: {fileID: 2106903845914208835}
   cardDeletePoint: {fileID: 2106903846515789523}
   enemy_cardDeletePoint: {fileID: 2106903846243605473}
@@ -277,9 +278,9 @@ MonoBehaviour:
   cardLeft: {fileID: 7930556140139622771}
   cardRight: {fileID: 6446744794479565135}
   selectCard: {fileID: 0}
-  movingCard: {fileID: 0}
   hitField: {fileID: 0}
   arrowObject: {fileID: 3645049901240885197}
+  hackField: {fileID: 0}
 --- !u!114 &2106903846842785243
 MonoBehaviour:
   m_ObjectHideFlags: 0

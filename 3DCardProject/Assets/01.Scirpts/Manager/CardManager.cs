@@ -8,6 +8,7 @@ using UnityEngine;
 public class CardManager : Singleton<CardManager>
 {
     [SerializeField] public GameObject cardPrefab;
+    [SerializeField] public GameObject cardSpawnEffect;
 
     [SerializeField] public Transform cardSpawnPoint;
     [SerializeField] public Transform cardDeletePoint;
@@ -58,7 +59,8 @@ public class CardManager : Singleton<CardManager>
     protected override void Awake()
     {
         base.Awake();
-
+        Global.Pool.CreatePool<Card>(cardPrefab, transform, 15);
+        Global.Pool.CreatePool<Effect_Spawn>(cardSpawnEffect, transform, 15);
     }
 
     private void Start()
@@ -147,7 +149,8 @@ public class CardManager : Singleton<CardManager>
 
         card.MoveTransform(prs, true, 0.3f);
 
-        Destroy(card.gameObject, 1);
+        //Destroy(card.gameObject, 1);
+        card.gameObject.SetActive(false);
     }
     private void RemoveCard(bool killTween = false)
     {
@@ -287,11 +290,12 @@ public class CardManager : Singleton<CardManager>
             }
             else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                if (card != null && selectCard.item.IsUpperCard && card.curField != null)
-                {
-                    hitField = card.curField;
+                 if (card != null  && card.curField != null)
+                 {
+                     hitField = card.curField;
                     card.curField.HitColor(true, true);
-                }
+                    card.curField.HitColor(true, selectCard.item.IsUpperCard && !card.item.IsUpperCard);
+                 }
                 else if (field != null)
                 {
                     hitField = field;
@@ -377,8 +381,9 @@ public class CardManager : Singleton<CardManager>
 
     public Card CreateCard(Item item, bool isPlayerCard)
     {
-        var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
-        var card = cardObj.GetComponent<Card>();
+        var card = Global.Pool.GetItem<Card>();
+        card.transform.position = cardSpawnPoint.position;
+
         card.Setup(item, true, isPlayerCard);
         card.GetComponent<Order>().SetOriginOrder(1);
         return card;

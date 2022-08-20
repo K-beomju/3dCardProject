@@ -48,4 +48,22 @@ public class Order : MonoBehaviour
             renderer.sortingOrder = mulOrder + 2;
         }
     }
+
+    public void SetEnable(bool isActive)
+    {
+        foreach (var renderer in backRenderers)
+        {
+            renderer.enabled = isActive;
+        }
+
+        foreach (var renderer in middleRenderers)
+        {
+            renderer.enabled = isActive;
+        }
+
+        foreach (var renderer in highRenderers)
+        {
+            renderer.enabled = isActive;
+        }
+    }
 }

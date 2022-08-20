@@ -99,7 +99,8 @@ public class Card : MonoBehaviour
 
     public void SetDeleteObject()
     {
-        Destroy(gameObject, 1);
+        gameObject.SetActive(false);
+        //Destroy(gameObject, 1);
     }
     public void RefreshInform()
     {
@@ -244,8 +245,9 @@ public class Card : MonoBehaviour
 
             CardAction(item.OnSpawn);
             // 풀매니저로 수정 해야함
-            Instantiate(item.EffectPrefab).transform.position = transform.position + new Vector3(0,1,0);
+            Global.Pool.GetItem<Effect_Spawn>().transform.position = transform.position + new Vector3(0, 1, 0);
             CardManager.Instance.LastUsedCardItem = item.ShallowCopy();
+            GetComponent<Order>().SetEnable(false);
         });
     }
 
