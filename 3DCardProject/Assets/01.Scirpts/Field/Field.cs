@@ -117,7 +117,6 @@ public class Field : MonoBehaviour
         Vector3 pos = transform.position;
         pos += new Vector3(0, 1.6f, 0);
 
-        Debug.LogWarning("ASDasd");
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
         mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90, 0, 0)), .1f));
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() =>

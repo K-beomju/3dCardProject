@@ -43,6 +43,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
+        if(EnemyAI.Instance.enemyType != null)
         EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
         State = GameState.RUNNING;
         resultPanel.SetActive(false);
