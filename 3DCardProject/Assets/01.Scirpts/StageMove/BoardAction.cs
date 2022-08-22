@@ -20,7 +20,6 @@ public abstract class BoardAction : MonoBehaviour
     public StageType type = StageType.Battle;
     public EnemyType enemyType;
     public bool isClear = false;
-    public ItemArraySO stageData;
 
    
     public virtual void ClearAction()

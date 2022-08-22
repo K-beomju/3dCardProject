@@ -43,7 +43,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        if(EnemyAI.Instance.enemyType != null)
+        if(StageManager.Instance != null)
         EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
         State = GameState.RUNNING;
         resultPanel.SetActive(false);
@@ -87,7 +87,9 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator CallOnLoseGameCo()
     {
         yield return new WaitForSeconds(1f);
-
+        PlayerManager.Instance.DeadParticle();
+        PlayerManager.Instance.PlayerDie();
+        yield return new WaitForSeconds(3f);
         resultText.text = "ÆÐ¹è";
         TurnManager.Instance.CanChangeTurn = false;
         resultPanel.SetActive(true);

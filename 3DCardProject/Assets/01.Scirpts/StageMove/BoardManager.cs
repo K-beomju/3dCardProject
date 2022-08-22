@@ -60,7 +60,7 @@ public class BoardManager : MonoBehaviour
 
 
 
-                board.stageData = StageManager.Instance.stageArray[i];
+                //board.stageData = StageManager.Instance.stageArray[i];
                 boardArrayList[i].list.Add(board);
 
             }

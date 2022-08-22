@@ -9,6 +9,9 @@ public class PlayerManager : Singleton<PlayerManager>
     public int PlayerHP;
 
     public List<Card> playerCards = new List<Card>();
+    public Card playerAvatarCard;
+    public ParticleSystem deadPt;
+
 
     public static void TurnReset()
     {
@@ -18,5 +21,15 @@ public class PlayerManager : Singleton<PlayerManager>
     public static void RemoveCard(Card card)
     {
         Instance.playerCards.Remove(card);
+    }
+
+    public void PlayerDie()
+    {
+        playerAvatarCard.avtarAnim.SetTrigger("Dead");
+    }
+
+    public void DeadParticle()
+    {
+        Instantiate(deadPt, playerAvatarCard.transform.position, Utils.QI);
     }
 }

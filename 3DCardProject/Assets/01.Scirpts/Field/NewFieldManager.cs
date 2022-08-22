@@ -45,6 +45,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         });
         PlayerManager.Instance.playerCards.Add(playerCard);
         EnemyManager.Instance.enemyAvatarCard = enemyCard;
+        PlayerManager.Instance.playerAvatarCard = playerCard;
 
     }
 

@@ -601,10 +601,6 @@ public class CardManager : Singleton<CardManager>
                 case 103:// ¶ÜÆ²
                 case 106:// µ£
                 case 107:// º®
-                    if (UnityEngine.Random.Range(0, 1) == 0)
-                        state = MountState.Next;
-                    else
-                        state = MountState.Prev;
                     break;
                 default:
                     break;
