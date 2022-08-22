@@ -197,6 +197,11 @@ public class TotemMove : MonoBehaviour
         isLock = false;
     }
 
+    public EnemyType ReturnBtDifficult()
+    {
+        return board.boardList[routePosition].enemyType;
+    }
+
     private IEnumerator RollingDice()
     {
         while (true)
@@ -243,6 +248,7 @@ public class TotemMove : MonoBehaviour
     private void BattleScene()
     {
         SceneManager.LoadScene("MinSangSang");
+        StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 
     public void OnTriggerEnter(Collider other)

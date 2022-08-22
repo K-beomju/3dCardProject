@@ -13,12 +13,14 @@ public enum StageType
 }
 
 
+
+
 public abstract class BoardAction : MonoBehaviour
 {
     public StageType type = StageType.Battle;
+    public EnemyType enemyType;
     public bool isClear = false;
     public ItemArraySO stageData;
-    public Item avatar;
 
    
     public virtual void ClearAction()
@@ -33,7 +35,10 @@ public abstract class BoardAction : MonoBehaviour
     // 설계가 완료되면 구현 
     public void PlayMethod()
     {
+        if(type == StageType.Battle)
+        {
 
+        }
     }
 
  

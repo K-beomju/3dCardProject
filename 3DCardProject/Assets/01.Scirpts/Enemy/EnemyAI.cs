@@ -15,8 +15,7 @@ public enum MountState
 public enum EnemyType
 {
     EASY,
-    MEDIUM,
-    HARD
+    MEDIUM
 }
 
 public class EnemyAI : Singleton<EnemyAI>

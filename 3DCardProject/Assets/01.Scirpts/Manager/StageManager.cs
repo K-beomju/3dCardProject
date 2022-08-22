@@ -11,6 +11,8 @@ public class StageManager : Singleton<StageManager>
     [field: SerializeField]
     public List<ItemArraySO> stageArray { get; private set; }
 
+    public EnemyType enemyType;
+
     protected override void Awake()
     {
         base.Awake();
