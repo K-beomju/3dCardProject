@@ -66,6 +66,9 @@ public class GameManager : Singleton<GameManager>
 
     public IEnumerator CallOnWinGameCo()
     {
+        yield return new WaitForSeconds(1f);
+        EnemyManager.Instance.DeadParticle();
+        EnemyManager.Instance.EnemyDie();
         yield return new WaitForSeconds(3f);
         resultText.text = "½Â¸®";
         TurnManager.Instance.CanChangeTurn = false;

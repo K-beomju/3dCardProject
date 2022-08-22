@@ -27,7 +27,7 @@ public class Card : MonoBehaviour
     public CardModelBrain LinkedModel { get; private set; }
 
     public GameObject avtar;
-    private Animator avtarAnim;
+    public Animator avtarAnim;
 
     public Item item;
     public PRS originPRS;
@@ -234,7 +234,7 @@ public class Card : MonoBehaviour
                     avtarAnim = avtar.GetComponent<Animator>();
                     if(!isPlayerCard)
                     {
-                    avtar.transform.Rotate(new Vector3(0, -180, 0));
+                        avtar.transform.Rotate(new Vector3(0, -180, 0));
                     }
                 }
 
@@ -316,4 +316,5 @@ public class Card : MonoBehaviour
         descriptionTMP.DOFade(0, 1);
 
     }
+
 }

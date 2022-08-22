@@ -117,7 +117,7 @@ public class Field : MonoBehaviour
         Vector3 pos = transform.position;
         pos += new Vector3(0, 1.6f, 0);
 
-
+        Debug.LogWarning("ASDasd");
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
         mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90, 0, 0)), .1f));
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() =>
@@ -129,16 +129,16 @@ public class Field : MonoBehaviour
 
                 Vector3 cardPos = card.transform.position;
 
-                if (node.Data.upperCard.item.uid != 103/*!NewFieldManager.Instance.isFrontJumping*/)
-                {
+                //if (node.Data.upperCard.item.uid != 103/*!NewFieldManager.Instance.isFrontJumping*/)
+                //{
                     card.LinkedModel.Move(cardPos, act,subAct);
-                }
-                else
-                {
-                    Vector3 dir = node.NextNode.Data.transform.position - node.Data.transform.position;
-                    dir.y = 0;
-                    card.LinkedModel.JumpMove(cardPos,dir.normalized, act,subAct);
-                }
+                //}
+                //else
+                //{
+                //    Vector3 dir = node.NextNode.Data.transform.position - node.Data.transform.position;
+                //    dir.y = 0;
+                //    card.LinkedModel.JumpMove(cardPos,dir.normalized, act,subAct);
+                //}
 
 
                 Debug.Log("¿Ãµø : " + card.item.name);

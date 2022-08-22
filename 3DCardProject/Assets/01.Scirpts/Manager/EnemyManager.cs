@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     public Item enemyItem;
+    public Card enemyAvatarCard;
+    public ParticleSystem deadPt;
+
 
     public DeckManager dm { get; private set; }
     private void Start()
@@ -148,5 +151,15 @@ public class EnemyManager : Singleton<EnemyManager>
             cardItem = PopItem();
         }
         return cardItem;
+    }
+
+    public void EnemyDie()
+    {
+        enemyAvatarCard.avtarAnim.SetTrigger("Dead");
+    }
+
+    public void DeadParticle()
+    {
+        Instantiate(deadPt, enemyAvatarCard.transform.position, Utils.QI);
     }
 }
