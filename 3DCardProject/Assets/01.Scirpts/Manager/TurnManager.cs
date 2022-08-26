@@ -92,7 +92,7 @@ public class TurnManager : Singleton<TurnManager>
     {
         mainCam = Camera.main;
         cameraMove = mainCam.GetComponent<CameraMove>();
-        nameTagObj = Instantiate(Resources.Load<GameObject>("NameTag"),GameObject.Find("WorldCanvas").transform);
+        nameTagObj = Instantiate(Resources.Load<GameObject>("NameTag"),GameObject.Find("WorldCardCanvas").transform);
         UnitNameText = nameTagObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         Type = TurnType.Standby;
     }
