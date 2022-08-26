@@ -684,6 +684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5659770483620921868}
   - component: {fileID: 5659770483623613304}
+  - component: {fileID: 30143325591119002}
   m_Layer: 0
   m_Name: deb_Goblin01
   m_TagString: Untagged
@@ -788,6 +789,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.24124949, y: 0.056836054, z: 0.00000023841858}
     m_Extent: {x: 0.6015088, y: 0.23667337, z: 0.6851419}
   m_DirtyAABB: 0
+--- !u!114 &30143325591119002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5659770483620503084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5659770483620503086
 GameObject:
   m_ObjectHideFlags: 0

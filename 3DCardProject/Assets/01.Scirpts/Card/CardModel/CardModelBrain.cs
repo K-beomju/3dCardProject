@@ -44,7 +44,7 @@ public class CardModelBrain : MonoBehaviour
         {
 
             //modelObject.transform.DORotate(new Vector3(0,-180,0), 1);
-            if (TurnManager.Instance.type == TurnType.Player)
+            if (TurnManager.Instance.Type == TurnType.Player)
             {
                 if(NewFieldManager.Instance.IsClockDir)
                 modelObject.transform.DOLookAt(NewFieldManager.Instance.GetPlayerNodeByData().NextNode.Data.transform.position, .5f);
@@ -73,7 +73,7 @@ public class CardModelBrain : MonoBehaviour
     {
         anim?.SetBool("isMove", true);
         Vector3 modelDir = (pos - modelObject.transform.position).normalized;
-        if (TurnManager.Instance.type == TurnType.Player)
+        if (TurnManager.Instance.Type == TurnType.Player)
         {
             Sequence seq = DOTween.Sequence();
             seq.Append(modelObject.transform.DOMove(pos - dir * 3, .6f));

@@ -5,7 +5,6 @@ using DG.Tweening;
 using TMPro;
 using System;
 using UnityEngine.UI;
-
 [System.Serializable]
 public enum TurnType
 {
@@ -17,11 +16,75 @@ public enum TurnType
 
 public class TurnManager : Singleton<TurnManager>
 {
-    public TurnType type;
+    private TurnType type;
+    public TurnType Type
+    {
+        get
+        {
+            return type;
+        }
+        set
+        {
+            if(type != value)
+            {
+                type = value;
+                if(type == TurnType.Player || type == TurnType.Enemy)
+                {
+                    Card playerCard = NewFieldManager.Instance.playerCard;
+                    Card enemyCard = NewFieldManager.Instance.enemyCard;
+                    CanvasGroup gc = nameTagObj.GetComponent<CanvasGroup>();
+                    Sequence seq = DOTween.Sequence();
+                    Outline outline = null;
+
+                    seq.Append(gc.DOFade(0, .1f).OnUpdate(()=> {
+                        if (type == TurnType.Player)
+                        {
+                            enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
+                        }
+                        else if (type == TurnType.Enemy)
+                        {
+                            playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
+                        }
+                    }));
+                    seq.AppendCallback(() => {
+                        if (type == TurnType.Player)
+                        {
+                            mainCard = playerCard;
+                            UnitNameText.text = "Player";
+                            UnitNameText.color = Utils.PlayerColor;
+                            outline = playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
+                            outline.OutlineColor = Utils.PlayerColor;
+                        }
+                        else if (type == TurnType.Enemy)
+                        {
+                            mainCard = enemyCard;
+                            UnitNameText.text = "Enemy";
+                            UnitNameText.color = Utils.EnemyColor;
+                            outline = enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
+                            outline.OutlineColor = Utils.EnemyColor;
+                        }
+                    });
+                    seq.Append(gc.DOFade(1, .1f).OnUpdate(()=> {
+                        if(outline != null)
+                        {
+                            outline.OutlineWidth = gc.alpha * 5f;
+                        }
+                    }));
+                }
+             
+            }
+         
+           
+        }
+    }
+
     private Camera mainCam;
     private CameraMove cameraMove;
     [SerializeField] private CanvasGroup changePanel;
+    private GameObject nameTagObj;
     [SerializeField] private Text changeText;
+    private TextMeshProUGUI UnitNameText;
+    private Card mainCard;
 
     public bool CanChangeTurn { get; set; } = true;
 
@@ -29,14 +92,22 @@ public class TurnManager : Singleton<TurnManager>
     {
         mainCam = Camera.main;
         cameraMove = mainCam.GetComponent<CameraMove>();
-        type = TurnType.Standby;
+        nameTagObj = Instantiate(Resources.Load<GameObject>("NameTag"),GameObject.Find("WorldCanvas").transform);
+        UnitNameText = nameTagObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        Type = TurnType.Standby;
     }
-
+    private void Update()
+    {
+        if(mainCard != null)
+        {
+            nameTagObj.transform.position = mainCard.LinkedModel.ModelObject.transform.position;
+        }
+    }
     public static void ChangeTurn()
     {
         if (!Instance.CanChangeTurn || GameManager.Instance.State == GameState.END) return;
 
-        if (Instance.type == TurnType.Player)
+        if (Instance.Type == TurnType.Player)
         {
             ChangeTurn(TurnType.Enemy);
         }
@@ -51,17 +122,17 @@ public class TurnManager : Singleton<TurnManager>
     public static void ChangeTurn(TurnType _type)
     {
         if (!Instance.CanChangeTurn) return;
-        if (Instance.type != _type)
+        if (Instance.Type != _type)
         {
-            TurnType temp = Instance.type;
-            Instance.type = TurnType.Change;
+            TurnType temp = Instance.Type;
+            Instance.Type = TurnType.Change;
 
             Instance.ChangeTurnPanel(_type,() =>
             {
-                Instance.type = _type;
+                Instance.Type = _type;
                 if(temp != TurnType.Standby)
                 {
-                    if (Instance.type != TurnType.Player)
+                    if (Instance.Type != TurnType.Player)
                     {
                         EnemyAI.Instance.JudgementCard();
                     }
@@ -85,12 +156,12 @@ public class TurnManager : Singleton<TurnManager>
 
     public static TurnType CurReturnType()
     {
-        return Instance.type;
+        return Instance.Type;
     }
 
     public static void CurChangeType(TurnType type)
     {
-        Instance.type = type;
+        Instance.Type = type;
     }
 
     public void ChangeTurnPanel(TurnType type,Action act)
@@ -107,12 +178,12 @@ public class TurnManager : Singleton<TurnManager>
 
         if (type == TurnType.Player)
         {
-            changePanel.gameObject.GetComponent<Image>().color  = new Color32(98, 119, 255,174);
+            changePanel.gameObject.GetComponent<Image>().color = Utils.PlayerColor;
             changeText.text = "내 턴";
         }
         else
         {
-            changePanel.gameObject.GetComponent<Image>().color = new Color32(255, 97, 97, 174);
+            changePanel.gameObject.GetComponent<Image>().color = Utils.EnemyColor;
             changeText.text = "적 턴";
         }
         seq.Append(changePanel.DOFade(1, .3f));

@@ -12,9 +12,6 @@ public class Field : MonoBehaviour
     [field: SerializeField]
     public Card avatarCard { get; private set; }
 
-    private Color32 aColor;
-    private Color32 cColor;
-    private Color32 sColor;
     public bool isHit = false;
     public bool isEnterRange = false;
     public bool isHackField = false;
@@ -39,12 +36,6 @@ public class Field : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        aColor = new Color32(100, 100, 255, 255);
-        cColor = new Color32(255, 100, 100, 255);
-        sColor = new Color32(255, 255, 255, 255);
-    }
     private void Start()
     {
         outline = GetComponent<Outline>();
@@ -62,7 +53,7 @@ public class Field : MonoBehaviour
         outline.enabled = _isHit;
         if (_isHit)
         {
-            outline.OutlineColor = _isAble ? aColor : cColor;
+            outline.OutlineColor = _isAble ? Utils.PlayerColor : Utils.EnemyColor;
         }
         //Debug.Log($"_isHit : {_isHit} , _isAble : {_isAble} ");
     }

@@ -35,4 +35,7 @@ public class Utils
             return pos;
         }
     }
+    public static Color32 PlayerColor = new Color32(100, 100, 255, 255);
+    public static Color32 EnemyColor = new Color32(255, 100, 100, 255);
+    public static Color32 sColor = new Color32(255, 255, 255, 255);
 }

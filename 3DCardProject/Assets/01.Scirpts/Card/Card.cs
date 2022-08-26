@@ -300,6 +300,7 @@ public class Card : MonoBehaviour
 
     public void DetactiveCardView()
     {
+        GetComponentInChildren<SpriteMask>().enabled = false;
         card.enabled = false;
         cardImage.enabled = false;
         cardBorder.enabled = false;
