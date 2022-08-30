@@ -1975,7 +1975,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832071613
 GameObject:
@@ -3754,6 +3754,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 19899408, guid: be4058b04abc8fe4ca81c721c18ecb4f, type: 3}
     - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
+      propertyPath: enemyItem.uid
+      value: 1001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: enemyItem.IsUpperCard
       value: 0
       objectReference: {fileID: 0}
@@ -3897,7 +3901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7534844753099737385, guid: e590193585bda86428dfa05d72f428d2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7534844753099737385, guid: e590193585bda86428dfa05d72f428d2, type: 3}
       propertyPath: m_LocalPosition.x
