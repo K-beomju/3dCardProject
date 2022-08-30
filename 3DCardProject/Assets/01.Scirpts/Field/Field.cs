@@ -118,17 +118,24 @@ public class Field : MonoBehaviour
                 var node = NewFieldManager.Instance.GetNodeByData(this);
 
                 Vector3 cardPos = card.transform.position;
+                bool isJump = false;
+                if (node.Data.upperCard != null)
+                {
+                    print("AAAA");
+                    isJump = node.Data.upperCard.item.uid == 103;
+                }
+                if (isJump == true /*!NewFieldManager.Instance.isFrontJumping*/)
+                {
 
-                //if (node.Data.upperCard.item.uid != 103/*!NewFieldManager.Instance.isFrontJumping*/)
-                //{
+                    Vector3 dir = NewFieldManager.Instance.IsClockDir ? node.NextNode.Data.transform.position  : node.PrevNode.Data.transform.position - node.Data.transform.position;
+                    print(dir);
+                    dir.y = 0;
+                    card.LinkedModel.JumpMove(cardPos, dir.normalized, act, subAct);
+                }
+                else
+                {
                     card.LinkedModel.Move(cardPos, act,subAct);
-                //}
-                //else
-                //{
-                //    Vector3 dir = node.NextNode.Data.transform.position - node.Data.transform.position;
-                //    dir.y = 0;
-                //    card.LinkedModel.JumpMove(cardPos,dir.normalized, act,subAct);
-                //}
+                }
 
 
                 Debug.Log("¿Ãµø : " + card.item.name);
