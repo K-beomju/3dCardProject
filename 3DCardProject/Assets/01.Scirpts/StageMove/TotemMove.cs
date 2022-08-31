@@ -35,8 +35,6 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private GameObject diceObj;
     [SerializeField] private ParticleSystem diceParticle;
     private bool isRoll = false;
-    private WaitForSeconds rollDelay = new WaitForSeconds(0.05f);
-    private IEnumerator rollCo;
     [SerializeField] Camera cam;
 
     #endregion
@@ -45,7 +43,6 @@ public class TotemMove : MonoBehaviour
     private void Awake()
     {
         anim = this.GetComponent<Animator>();
-        rollCo = RollingDice();
     }
 
     private void Start()
@@ -60,89 +57,25 @@ public class TotemMove : MonoBehaviour
     private bool bChRot = false;
     private void Update()
     {
-        if (isRoll)
-        {
-            if (Time.time > nextTime)
-            {
-                nextTime = Time.time + TimeLeft;
-                bChRot = !bChRot;
-            }
-
-            if (bChRot)
-            {
-                diceObj.transform.Rotate(new Vector3(45, 45, 45) * rotSpeed * Time.deltaTime);
-            }
-            else
-            {
-                diceObj.transform.Rotate(new Vector3(-45, 45, -45) * rotSpeed * Time.deltaTime);
-
-            }
-
-        }
-
-        if (!isMove)
-            diceText.transform.position = new Vector3(cam.WorldToScreenPoint(transform.position).x, diceText.transform.position.y, cam.WorldToScreenPoint(transform.position).z);
-        else
-            diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.8f, 0));
-
-
+   
         if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
             if (!isRoll)
             {
-                diceObj.transform.position = transform.position + new Vector3(0, 2.14f, 0);
-                diceObj.SetActive(true);
-
-                StartCoroutine(rollCo);
+                anim.SetTrigger("Attack");
                 isRoll = true;
-
             }
             else
             {
-                float posY = transform.position.y;
-                transform.DOMoveY(-0.1f, 0.4f).OnComplete(() =>
+
+                if (!isMove)
                 {
-                    isRoll = false;
-
-                    switch (steps)
+                    if (routePosition + steps < board.childNodeList.Count)
                     {
-                        case 1:
-                            diceObj.transform.localEulerAngles = new Vector3(0, 90, 0);
-                            break;
-                        case 2:
-                            diceObj.transform.localEulerAngles = new Vector3(90, 90, 0);
-                            break;
-                        case 3:
-                            diceObj.transform.localEulerAngles = new Vector3(90, 180, 0);
-                            break;
-                        case 4:
-                            diceObj.transform.localEulerAngles = Vector3.zero;
-                            break;
-                        case 5:
-                            diceObj.transform.localEulerAngles = new Vector3(0, -180, -90);
-                            break;
-                        case 6:
-                            diceObj.transform.localEulerAngles = new Vector3(0, -90, 0);
-                            break;
-                        default:
-                            print("Dice NULL");
-                            break;
+                        StartCoroutine(MoveMentCo());
+                        print("Move");
                     }
-                    diceObj.transform.DOMoveY(1.8f, 0.3f).OnComplete(() => diceObj.transform.DOMoveY(1.47f, 0.3f).OnComplete(() =>
-                    {
-                        if (!isMove)
-                        {
-                            if (routePosition + steps < board.childNodeList.Count)
-                            {
-                                StartCoroutine(MoveMentCo());
-                                print("Move");
-                            }
-                        }
-                    }));
-                    transform.DOMoveY(posY, 0.4f);
-
-                });
-                StopCoroutine(rollCo);
+                }
 
             }
         }
@@ -150,13 +83,7 @@ public class TotemMove : MonoBehaviour
 
     private IEnumerator MoveMentCo()
     {
-        yield return new WaitForSeconds(0.5f);
-
-        diceParticle.Play();
-        diceParticle.transform.position = diceObj.transform.position;
-        diceObj.SetActive(false);
-        diceText.text = steps.ToString();
-        diceText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);     
         isLock = true;
         yield return new WaitForSeconds(0.5f);
         if (isMove) yield break;
@@ -201,17 +128,6 @@ public class TotemMove : MonoBehaviour
     {
         return board.boardList[routePosition].enemyType;
     }
-
-    private IEnumerator RollingDice()
-    {
-        while (true)
-        {
-            steps = UnityEngine.Random.Range(1, 7);
-
-            yield return rollDelay;
-        }
-    }
-
 
     private bool MoveNextNode(Vector3 goal)
     {
@@ -259,7 +175,16 @@ public class TotemMove : MonoBehaviour
         }
     }
 
-
+    public void BoomDice()
+    {
+        diceObj.SetActive(false);
+        diceParticle.transform.position = diceObj.transform.position;
+        diceParticle.Play();
+        steps = UnityEngine.Random.Range(1, 7);
+        diceText.gameObject.SetActive(true);
+        diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
+        diceText.text = steps.ToString();
+    }
 
 
 
