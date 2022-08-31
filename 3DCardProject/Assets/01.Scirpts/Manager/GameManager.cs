@@ -34,12 +34,15 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private RectTransform timeDirImage;
 
+    public Data gameData;
+
     protected override void Awake()
     {
         base.Awake();
         State = GameState.PREPARE;
         OnWinGame += CallOnWinGame;
         OnLoseGame += CallOnLoseGame;
+        gameData = new Data();
     }
     private void Start()
     {
