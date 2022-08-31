@@ -3416,6 +3416,10 @@ PrefabInstance:
       value: PlayerManager
       objectReference: {fileID: 0}
     - target: {fileID: 8047270137270981634, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
+      propertyPath: deadPt
+      value: 
+      objectReference: {fileID: 19899408, guid: be4058b04abc8fe4ca81c721c18ecb4f, type: 3}
+    - target: {fileID: 8047270137270981634, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
       propertyPath: playerItem.spawnModelYPos
       value: 1
       objectReference: {fileID: 0}
@@ -3752,7 +3756,7 @@ PrefabInstance:
     - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: deadPt
       value: 
-      objectReference: {fileID: 19899408, guid: be4058b04abc8fe4ca81c721c18ecb4f, type: 3}
+      objectReference: {fileID: 19853646, guid: 737959db973360b43bdeb1a4874f1af8, type: 3}
     - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: enemyItem.uid
       value: 1001

@@ -127,7 +127,8 @@ public class Field : MonoBehaviour
                 if (isJump == true /*!NewFieldManager.Instance.isFrontJumping*/)
                 {
 
-                    Vector3 dir = NewFieldManager.Instance.IsClockDir ? node.NextNode.Data.transform.position  : node.PrevNode.Data.transform.position - node.Data.transform.position;
+                    Vector3 dir = NewFieldManager.Instance.IsClockDir ? node.NextNode.Data.transform.position - node.Data.transform.position : (node.PrevNode.Data.transform.position - node.Data.transform.position);
+
                     print(dir);
                     dir.y = 0;
                     card.LinkedModel.JumpMove(cardPos, dir.normalized, act, subAct);

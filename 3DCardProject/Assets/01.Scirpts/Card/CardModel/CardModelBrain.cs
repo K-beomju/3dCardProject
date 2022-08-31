@@ -72,23 +72,12 @@ public class CardModelBrain : MonoBehaviour
     public void JumpMove(Vector3 pos,Vector3 dir, Action act = null,Action subAct = null)
     {
         anim?.SetBool("isMove", true);
-        Vector3 modelDir = (pos - modelObject.transform.position).normalized;
-        print(pos);
-        print(modelDir);
-        print(dir);
-        /*  if (TurnManager.Instance.Type == TurnType.Player)
-          {
-
-          }
-          else
-          {
-              Move(pos, act);
-          }*/
+        Vector3 modelDir = ((pos - dir * 3)- modelObject.transform.position).normalized;
         Sequence seq = DOTween.Sequence();
         seq.Append(modelObject.transform.DOMove(pos - dir * 3, .6f));
         seq.Join(modelObject.transform.DORotate(Quaternion.LookRotation(modelDir).eulerAngles, .1f));
-        seq.Append(modelObject.transform.DOJump(pos + dir * 3, 3, 0, .5f, false));
-        seq.Join(modelObject.transform.DORotate(Quaternion.LookRotation(dir).eulerAngles, .1f));
+        seq.Append(modelObject.transform.DORotate(Quaternion.LookRotation(dir).eulerAngles, .1f));
+        seq.Append(modelObject.transform.DOJump(pos + dir * 3 , 3, 0, .5f, false));
         seq.OnComplete(() =>
         {
             //야매로 턴 넘기기 시간 조절
