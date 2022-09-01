@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerDeckManager : DeckManager
 {
-    private void Start()
+    /*private void Start()
     {
         SetUpPlayerDeckManager();
-    }
+    }*/
 
     public void SetUpPlayerDeckManager()
     {

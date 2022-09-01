@@ -139,7 +139,7 @@ public class Field : MonoBehaviour
                 }
 
 
-                Debug.Log("이동 : " + card.item.name);
+                Debug.Log("이동 : " + card.item.itemName);
             }
             else
             {

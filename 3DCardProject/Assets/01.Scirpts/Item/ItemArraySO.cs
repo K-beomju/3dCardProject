@@ -8,7 +8,7 @@ public class Item
     public int cost;            // 카드 가격 
 
     public uint uid;            // 고유 번호
-    public string name;         // 카드 이름
+    public string itemName;         // 카드 이름
     public Sprite sprite;       // 카드 이미지
     public bool IsAvatar;       // 아바타 카드 인가
     public bool CanStandOn;     // 위에 서있을 수 있는가
@@ -17,7 +17,8 @@ public class Item
     public bool IsStructCard;   // 건물, 설치 가능 카드인가
     public GameObject EffectPrefab;
     public GameObject HitEffectPrefab;
-    public float spawnModelYPos;
+    public float SpawnModelYPos;
+    public int Price;         // 카드 가격
 
     public CardType cardType; // 종류
 

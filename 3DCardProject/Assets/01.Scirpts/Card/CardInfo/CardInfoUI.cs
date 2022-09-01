@@ -17,7 +17,7 @@ public class CardInfoUI : Singleton<CardInfoUI>
         set
         { 
             itemData = value;
-            NameText.text = itemData.name.ToString();
+            NameText.text = itemData.itemName.ToString();
             ExplainText.text = itemData.description.ToString();
             ActiveUI(true);
         }
@@ -26,5 +26,14 @@ public class CardInfoUI : Singleton<CardInfoUI>
     public void ActiveUI(bool isActive)
     {
         infoUIObj.SetActive(isActive);
+    }
+    private void Update()
+    {
+        if(infoUIObj.activeSelf)
+        {
+            Vector2 mousePos = Input.mousePosition;
+            infoUIObj.transform.position = mousePos;
+        }
+
     }
 }

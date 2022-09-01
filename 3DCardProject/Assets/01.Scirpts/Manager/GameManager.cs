@@ -6,6 +6,7 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
+using System.Threading;
 
 public enum GameState
 {
@@ -20,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     public Action OnLoseGame;
 
     [SerializeField]
-    private Button exitBtn;
+    private Button[] exitBtn;
     [SerializeField]
     private Button reStartBtn;
     [SerializeField]
@@ -34,35 +35,44 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private RectTransform timeDirImage;
 
-    public Data gameData;
-
     protected override void Awake()
     {
         base.Awake();
         State = GameState.PREPARE;
         OnWinGame += CallOnWinGame;
         OnLoseGame += CallOnLoseGame;
-        gameData = new Data();
     }
     private void Start()
     {
         if(StageManager.Instance != null)
         EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
         State = GameState.RUNNING;
-        resultPanel.SetActive(false);
-        turnPanel.SetActive(true);
 
-        exitBtn.onClick.AddListener(() =>
+        if (resultPanel != null)
+            resultPanel?.SetActive(false);
+
+        if (turnPanel != null)
+            turnPanel?.SetActive(true);
+        
+        if (exitBtn != null)
         {
-            SceneManager.LoadScene("Chapter_1");
-        });
-        reStartBtn.onClick.AddListener(() =>
-        {
-            SceneManager.LoadScene("MinSangSang");
-        });
+            for (int i = 0; i < exitBtn.Length; i++)
+            {
+                exitBtn[i]?.onClick.AddListener(() =>
+                {
+                    SceneManager.LoadScene("Chapter_1");
+                });
+            }
+        }
+
+        if (reStartBtn != null)
+            reStartBtn?.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene("MinSangSang");
+            });
 
 
-        fadeGroup.DOFade(0, 2);
+        fadeGroup?.DOFade(0, 2);
     }
     public void CallOnWinGame()
     {

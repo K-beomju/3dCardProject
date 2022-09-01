@@ -56,20 +56,74 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
+    [SerializeField]
+    private bool isShop = false;
+
+
+
+    [SerializeField]
+    private Item disposableItem = new Item();
+    public Item DisposableItem
+    {
+        get
+        {
+            return disposableItem;
+        }
+        set
+        {
+            disposableItem = value;
+            int item = 0b0000_0000;
+            switch (disposableItem.uid)
+            {
+
+                case 100:
+                    item = 0b1000_0000;
+                    break;
+                case 101:
+                    item = 0b0100_0000;
+                    break;
+                case 102:
+                    item = 0b0010_0000;
+                    break;
+                case 103:
+                    item = 0b0001_0000;
+                    break;
+                case 104:
+                    item = 0b0000_1000;
+                    break;
+                case 105:
+                    item = 0b0000_0100;
+                    break;
+                case 106:
+                    item = 0b0000_0010;
+                    break;
+                case 107:
+                    item = 0b0000_0001;
+                    break;
+            }
+            SaveManager.Instance.gameData.DisposableItem = item;
+        }
+    }
+
+
     protected override void Awake()
     {
         base.Awake();
         Global.Pool.Clear();
         // 여기에 종류별로 추가
+
         Global.Pool.CreatePool<Card>(cardPrefab, transform, 15);
         Global.Pool.CreatePool<Effect_Spawn>(cardSpawnEffect, transform, 15);
     }
 
     private void Start()
     {
-        StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+        if(!isShop)
+        {
+            StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+            deckManager = GetComponent<DeckManager>();
+        }
         arrowObject.ActiveArrow(false);
-        deckManager = GetComponent<DeckManager>();
         mainCam = Camera.main;
     }
 
@@ -111,12 +165,12 @@ public class CardManager : Singleton<CardManager>
     public void CardDie(Card card)
     {
         //SelectMovingCardAroundField(false, card);
-        Debug.Log("Card Die : " + card.item.name);
+        Debug.Log("Card Die : " + card.item.itemName);
         ReflectBox.Instance.RemoveCardUI(card);
         if (card.LinkedModel != null)
         {
             // 모델 제거
-            Debug.Log("Model Die : " + card.item.name);
+            Debug.Log("Model Die : " + card.item.itemName);
             Destroy(card.LinkedModel.ModelObject.gameObject);
         }
 
@@ -206,7 +260,7 @@ public class CardManager : Singleton<CardManager>
 
     private void Update()
     {
-        if (GameManager.Instance.State == GameState.END)
+        if (GameManager.Instance?.State == GameState.END)
         {
             return;
         }
@@ -228,16 +282,19 @@ public class CardManager : Singleton<CardManager>
         }
 
         ray = mainCam.ScreenPointToRay(Input.mousePosition);
+       
         if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
         {
             Field field = hitData.transform.GetComponent<Field>();
             Card card = hitData.transform.GetComponent<Card>();
-
+            PurchasePlank pp = hitData.transform.GetComponent<PurchasePlank>();
             if (InputManager.Instance.MouseUp)
             {
 
                 if (selectCard != null)
                 {
+                    Debug.Log("AAAAAAAA");
+
                     if (field != null && ((field.curCard == null && !selectCard.item.IsUpperCard) || (field.upperCard == null && selectCard.item.IsUpperCard)) && field.isEnterRange)
                     {
                         if (selectCard.item.IsStructCard)
@@ -280,6 +337,15 @@ public class CardManager : Singleton<CardManager>
                             }
                         }
                     }
+                    else if(pp != null)
+                    {
+                        Debug.Log($"구입 시도 : {selectCard.item.itemName} ");
+                        if(ShopManager.Instance.Purchase(selectCard.item))
+                        {
+                            DisposableItem = selectCard.item.ShallowCopy();
+                            selectCard.SetDeleteObject();
+                        }
+                    }
                     else
                     {
                         EnlargeCard(false, selectCard);
@@ -311,16 +377,18 @@ public class CardManager : Singleton<CardManager>
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
 
-            if (card != null && card.curField != null)
-            {
-                Vector2 mousePos = Input.mousePosition;
-                CardInfoUI.Instance.infoUIObj.transform.position = mousePos;
-
-                CardInfoUI.Instance.ItemData = card.item;
-
-            }
-
         }
+
+        if (InputManager.Instance.MouseUp)
+        {
+            if (selectCard != null)
+            {
+                selectCard = null;
+                arrowObject.ActiveArrow(false);
+                isCardDrag = false;
+            }
+        }
+
         // ReflectBox
 
         if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity))
@@ -507,18 +575,24 @@ public class CardManager : Singleton<CardManager>
 
         if (card.curField == null)
         {
-            isCardDrag = true;
-            selectCard = card;
-            arrowObject.ActiveArrow(true);
-            float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
-            arrowObject.transform.position = new Vector3(x, 470, 0);
-
+            ArrowMove(card);
             selectCard.transform.DOScale(new Vector3(0.3f, 0.3f, 0.5f), 0.05f);
 
             Vector3 enlarPos = new Vector3(selectCard.transform.position.x, selectCard.transform.position.y, selectCard.transform.position.z - 1);
             selectCard.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
         }
 
+    }
+    public virtual void ArrowMove(Card card,bool isYfixed = true)
+    {
+        isCardDrag = true;
+        selectCard = card;
+
+        arrowObject.ActiveArrow(true);
+
+        float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
+        float y = mainCam.WorldToScreenPoint(selectCard.transform.position).y;
+        arrowObject.transform.position = new Vector3(x, isYfixed ? 470 : y + 300 , 0);
     }
 
     public virtual void CardMouseUp()
@@ -555,6 +629,8 @@ public class CardManager : Singleton<CardManager>
 
     private void EnlargeCard(bool isEnlarge, Card card)
     {
+        if (isShop) return;
+
         if (isEnlarge)
         {
             Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + 1.5f, card.originPRS.pos.z + 1.5f);

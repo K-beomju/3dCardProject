@@ -16,7 +16,7 @@ public class PoolManager
             return;
 
         ObjectPooling<T> pool = new ObjectPooling<T>(prefab, parent, count);
-        
+
         poolDic.Add(t.ToString(), pool);
     }
 

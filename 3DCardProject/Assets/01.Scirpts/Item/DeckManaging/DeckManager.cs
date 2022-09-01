@@ -77,7 +77,21 @@ public class DeckManager : MonoBehaviour
         // Shuffle
         SuffleItemBuffer();
     }
+    protected virtual void SetupItemBuffer(List<ItemSO> items)
+    {
+        itemBuffer = new List<Item>();
 
+        // ADD
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            Item item = items[i].item;
+            AddCardToItemBuffer(item, item.count);
+        }
+
+        // Shuffle
+        SuffleItemBuffer();
+    }
 
     protected virtual void AddCardToItemBuffer(Item item,float count)
     {

@@ -130,7 +130,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         if (!card.item.IsStructCard)
         {
-            Debug.Log("Struct : " + card.item.name);
+            Debug.Log("Struct : " + card.item.itemName);
             setField = CardManager.Instance.hackField;
         }
         return setField;

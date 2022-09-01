@@ -24,7 +24,7 @@ public class UICard : MonoBehaviour
         this.item = item;
         this.linkedCard = card.ShallowCopy();
         cardImage.sprite = this.item.sprite;
-        nameTMP.text = this.item.name;
+        nameTMP.text = this.item.itemName;
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
         selectButton.onClick.RemoveAllListeners();

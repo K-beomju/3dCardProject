@@ -15,7 +15,7 @@ MonoBehaviour:
   item:
     cost: 1
     uid: 107
-    name: "\uBCBD"
+    itemName: "\uBCBD"
     sprite: {fileID: 21300000, guid: 937944dc1e9e19743bb959a34270624e, type: 3}
     IsAvatar: 0
     CanStandOn: 0
@@ -24,7 +24,8 @@ MonoBehaviour:
     IsStructCard: 1
     EffectPrefab: {fileID: 7619009876518450769, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
     HitEffectPrefab: {fileID: 0}
-    spawnModelYPos: 1
+    SpawnModelYPos: 0
+    Price: 987
     cardType: 6
     description: "\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C \uC774\uB3D9\uD560
       \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774 \uCE74\uB4DC\uAC00

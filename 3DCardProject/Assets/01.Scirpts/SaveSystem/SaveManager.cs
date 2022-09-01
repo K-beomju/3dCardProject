@@ -30,11 +30,12 @@ public class GenericClass<T>
 public class SaveManager : Singleton<SaveManager>
 {
 
-    const string saveFileName = "Magical.sav";
+    const string saveFileName = "NotMagic.sav";
 
     public List<ISerializeble> ObjToSaveList = new List<ISerializeble>();
 
     public DeckData saveDeckData = new DeckData();
+
     public PlayerGameData gameData = new PlayerGameData();
     Rijndael myRijndael;
 
@@ -46,6 +47,7 @@ public class SaveManager : Singleton<SaveManager>
 
         myRijndael = Rijndael.Create();
         ObjToSaveList.Add(saveDeckData);
+        ObjToSaveList.Add(gameData);
     }
     private void Start()
     {
@@ -179,8 +181,37 @@ public class SaveManager : Singleton<SaveManager>
             if(gameData.isFirst) // 처음 시작했거나 리셋 했을경우 
             {
                 saveDeckData.CurDeck = new Deck();
-                
             }
+
+            uint uid = 0;
+            switch (gameData.DisposableItem)
+            {
+                case 0b1000_0000:
+                    uid = 100;
+                    break;
+                case 0b0100_0000:
+                    uid = 101;
+                    break;
+                case 0b0010_0000:
+                    uid = 102;
+                    break;
+                case 0b0001_0000:
+                    uid = 103;
+                    break;
+                case 0b0000_1000:
+                    uid = 104;
+                    break;
+                case 0b0000_0100:
+                    uid = 105;
+                    break;
+                case 0b0000_0010:
+                    uid = 106;
+                    break;
+                case 0b0000_0001:
+                    uid = 107;
+                    break;
+            }
+            CardManager.Instance.DisposableItem = saveDeckData.FindItem(uid);
             OnEndOfLoadGame?.Invoke();
         }
         else

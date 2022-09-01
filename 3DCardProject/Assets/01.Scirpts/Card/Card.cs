@@ -39,6 +39,9 @@ public class Card : MonoBehaviour
     public Field curField;
     public bool isAttack = false;
     public bool canInteract = true;
+
+    public bool isDisposable = false;
+
     public void Setup(Item item, bool isFront, bool isPlayerCard)
     {
         this.isPlayerCard = isPlayerCard;
@@ -61,21 +64,38 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (canInteract)
+        if (curField != null||isDisposable)
         {
+            CardInfoUI.Instance.ItemData = item;
+        }
+
+        if (canInteract && !isDisposable)
+        {
+            Debug.Log("ABABA");
             CardManager.Instance.CardMouseOver(this);
           
         }
+
     }
 
     void OnMouseExit()
     {
-        CardManager.Instance.CardMouseExit(this);
+        if(!isDisposable)
+        {
+            CardManager.Instance.CardMouseExit(this);
+        }
         CardInfoUI.Instance.ActiveUI(false);
     }
 
     void OnMouseDown()
     {
+        if (isDisposable)
+        {
+            CardManager.Instance.ArrowMove(this,false);
+
+            return;
+        }
+        
         if (TurnManager.CurReturnType() != TurnType.Player) return;
 
         CardManager.Instance.CardMouseDown(this);
@@ -106,7 +126,7 @@ public class Card : MonoBehaviour
     {
         cardImage.sprite = this.item.sprite;
         crystal.sprite = isPlayerCard ? crystal_blue : crystal_red;
-        nameTMP.text = this.item.name;
+        nameTMP.text = this.item.itemName;
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
     }
@@ -128,11 +148,10 @@ public class Card : MonoBehaviour
     }
     public void Emphasize(Action act)
     {
-        Debug.Log("1111");
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScaleY(transform.localScale.y + .5f, 0.15f).SetLoops(2, LoopType.Yoyo));
         seq.Join(transform.DOScaleX(transform.localScale.x + .5f, 0.15f).SetLoops(2, LoopType.Yoyo));
-        seq.AppendCallback(() => { Debug.Log("2222"); act?.Invoke(); });
+        seq.AppendCallback(() => {  act?.Invoke(); });
     }
    
     public void Attack(Field field,Action act = null)
@@ -190,13 +209,13 @@ public class Card : MonoBehaviour
 
     public void OnCreateCard()
     {
-        Debug.Log("OnCreate : " + item.name);
+        Debug.Log("OnCreate : " + item.itemName);
 
         CardAction(item.OnCreate);
     }
     public void OnAttack()
     {
-        Debug.Log("ONATTACK : " + item.name);
+        Debug.Log("ONATTACK : " + item.itemName);
         if(item.HitEffectPrefab != null)
         Instantiate(item.HitEffectPrefab).transform.position = transform.position + new Vector3(0, 1, 0);
 
@@ -204,12 +223,12 @@ public class Card : MonoBehaviour
     }
     public void OnDamage()
     {
-        Debug.Log("ONDAMAGE: " + item.name);
+        Debug.Log("ONDAMAGE: " + item.itemName);
         CardAction(item.OnDamage);
     }
     public void OnDie()
     {
-        Debug.Log("ONDIE: " + item.name);
+        Debug.Log("ONDIE: " + item.itemName);
         if (LinkedModel != null)
             Destroy(LinkedModel.ModelObject.gameObject);
 
@@ -218,14 +237,14 @@ public class Card : MonoBehaviour
     }
     public void OnSpawn()
     {
-        Debug.Log("ONSPAWN : " + item.name);
+        Debug.Log("ONSPAWN : " + item.itemName);
         Emphasize(() =>
         {
             if(item.IsStructCard || item.IsAvatar)
             {
-                Debug.Log("모델 생성 시작 : " + item.name);
+                Debug.Log("모델 생성 시작 : " + item.itemName);
 
-                LinkedModel = Instantiate(modelPrefab, transform.position - new Vector3(0, item.spawnModelYPos,0), Utils.QI).GetComponent<CardModelBrain>();
+                LinkedModel = Instantiate(modelPrefab, transform.position - new Vector3(0, item.SpawnModelYPos,0), Utils.QI).GetComponent<CardModelBrain>();
                 var model = Resources.Load<GameObject>(item.uid.ToString());
                 if (model != null)
                 {

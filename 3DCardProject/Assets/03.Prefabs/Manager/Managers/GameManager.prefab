@@ -587,13 +587,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d90beed69ee5542a47b40e6ee19a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitBtn: {fileID: 8580137822240760108}
+  exitBtn:
+  - {fileID: 8580137822240760108}
   reStartBtn: {fileID: 0}
   resultPanel: {fileID: 3857873090700483714}
   turnPanel: {fileID: 0}
   resultText: {fileID: 0}
+  State: 0
   fadeGroup: {fileID: 0}
   timeDirImage: {fileID: 0}
+  gameData:
+    stageValue: 0
+    hp: 0
+    money: 0
 --- !u!1 &3857873090700483714
 GameObject:
   m_ObjectHideFlags: 0

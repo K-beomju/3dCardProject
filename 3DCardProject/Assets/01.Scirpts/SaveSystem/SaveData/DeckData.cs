@@ -64,6 +64,19 @@ public class DeckData : ISerializeble
             deckData = value;
         }
     }
+    public Item FindItem(uint uid)
+    {
+        if (deckData.DeckData.Count < 1) return null;
+
+        foreach (var item in deckData.DeckData)
+        {
+            if (item.uid == uid)
+            {
+                return item.ShallowCopy();
+            }
+        }
+        return null;
+    }
     [field:SerializeField]
     public ItemArraySO defaultDeck { get; set; }
 
@@ -86,7 +99,7 @@ public class DeckData : ISerializeble
 
     public string GetJsonKey()
     {
-        return "GameData";
+        return "DeckData";
     }
 
     public JObject Serialize()
