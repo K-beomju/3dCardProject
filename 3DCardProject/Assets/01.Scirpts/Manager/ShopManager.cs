@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class ShopManager : Singleton<ShopManager>
 {
     private DeckManager deckManager;
@@ -24,6 +26,9 @@ public class ShopManager : Singleton<ShopManager>
 
     public int cardCount = 3;
 
+    [SerializeField]
+    private Button exitButton;
+
     private void Start()
     {
         deckManager = GetComponent<DeckManager>();
@@ -31,6 +36,10 @@ public class ShopManager : Singleton<ShopManager>
 
         SaveManager.Instance.gameData.OnMoneyChange += RefreshMoneyInfo;
         RefreshMoneyInfo();
+        exitButton.onClick.AddListener(()=> {
+            // 스테이지로 돌아가기
+            Global.LoadScene.LoadScene("Chapter_1");
+        });
     }
     public IEnumerator StartProcess()
     {

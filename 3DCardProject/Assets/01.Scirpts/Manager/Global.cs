@@ -23,11 +23,13 @@ public class Global : MonoBehaviour
     ResourceManager _resource = new ResourceManager();
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
+    LoadingSceneManager _loadScene = new LoadingSceneManager();
 
     public static UIManager UI { get { return Instance._ui; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static LoadingSceneManager LoadScene { get { return Instance._loadScene; } }
 
     #endregion
 
@@ -68,6 +70,7 @@ public class Global : MonoBehaviour
             }
 
             s_instance._pool.Init(poolObjectBox);
+            s_instance._loadScene.Init();
         }
     }
 

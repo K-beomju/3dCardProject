@@ -7,6 +7,7 @@ public abstract class Singleton<T> : Singleton where T : Singleton<T>
     private static T _instance;
     public static T Instance { get { return _instance; } }
 
+    public bool isDontDestroyOnLoad = true;
 
     protected virtual void Awake()
     {
@@ -17,7 +18,8 @@ public abstract class Singleton<T> : Singleton where T : Singleton<T>
         else
         {
             _instance = (T)this;
-            DontDestroyOnLoad((T)this);
+            if (isDontDestroyOnLoad)
+                DontDestroyOnLoad((T)this);
         }
     }
 
