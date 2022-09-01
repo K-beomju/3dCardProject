@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 
 
@@ -14,9 +15,14 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private int steps;
     [SerializeField] private CanvasGroup fadeGroup;
+    [SerializeField] private GameObject diceObj;
+    [SerializeField] private ParticleSystem diceParticle;
+    [SerializeField] private ParticleSystem battleModelParticle;
+    [SerializeField] private GameObject itemMark;
 
     private bool isMove = false;
     private bool isLock = false;
+    private bool isStart = false;
     public enum FadeType
     {
         FadeIn,
@@ -29,13 +35,15 @@ public class TotemMove : MonoBehaviour
     private Animator anim;
 
     #region Dice
-    public Text diceText;
+    public GameObject battleFieldModel;
 
+    public Text diceText;
     public float rotSpeed;
-    [SerializeField] private GameObject diceObj;
-    [SerializeField] private ParticleSystem diceParticle;
-    private bool isRoll = false;
+
+
+
     [SerializeField] Camera cam;
+    public Ease ease;
 
     #endregion
 
@@ -50,6 +58,9 @@ public class TotemMove : MonoBehaviour
         stageValue = PlayerPrefs.GetInt("StageValue");
         routePosition = stageValue;
         transform.position = board.childNodeList[stageValue].transform.position;
+        diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
+        battleFieldModel.SetActive(false);
+        itemMark.SetActive(false);
     }
 
     private float TimeLeft = 1.0f;
@@ -57,39 +68,35 @@ public class TotemMove : MonoBehaviour
     private bool bChRot = false;
     private void Update()
     {
-   
+        diceObj.transform.Rotate(new Vector3(30, 0, 30) * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
-            if (!isRoll)
+            if(!isStart)
             {
-                anim.SetTrigger("Attack");
-                isRoll = true;
+                diceObj.SetActive(true);
+                diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
+                isStart = true;
             }
             else
             {
 
-                if (!isMove)
-                {
-                    if (routePosition + steps < board.childNodeList.Count)
-                    {
-                        StartCoroutine(MoveMentCo());
-                        print("Move");
-                    }
-                }
-
+                anim.SetTrigger("Attack");
+                isLock = true;
             }
         }
+
+        if (isMove)
+            diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
+
     }
 
     private IEnumerator MoveMentCo()
     {
-        yield return new WaitForSeconds(0.5f);     
-        isLock = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (isMove) yield break;
-
         isMove = true;
         yield return new WaitForSeconds(1f);
+
 
         while (steps > 0)
         {
@@ -102,27 +109,57 @@ public class TotemMove : MonoBehaviour
 
             // 보드 클리어 검사 
             board.ClearBoard(routePosition);
-            yield return new WaitForSeconds(0.1f);
             steps--;
             diceText.text = steps.ToString();
 
             routePosition++;
-            board.ChangeCam();
 
         }
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
+        diceText.gameObject.SetActive(false);
 
         if (board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-            FadeInOut(FadeType.FadeOut, BattleScene);
+        {
+            Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
+
+            battleFieldModel.SetActive(true);
+
+            Vector3 battlePos = (board.childNodeList[routePosition].transform.position + board.childNodeList[routePosition + 1].transform.position) / 2;
+            battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
+            battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
+            battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
+            {
+                battleModelParticle.transform.position = battleFieldModel.transform.position;
+                battleModelParticle.Play();
+                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .3f).
+                OnComplete(() =>
+                {
+                    itemMark.SetActive(true);
+                    itemMark.transform.DOMoveY(.3f, .2f).SetLoops(2, LoopType.Yoyo);
+                }).SetDelay(1);
+            });
+
+
+            yield return new WaitForSeconds(3f);
+
+            BattleScene();
+        }
 
         isMove = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
-
+        isStart = false;
         isLock = false;
     }
+
+    float GetAngle(Vector2 start, Vector2 end)
+    {
+        Vector2 v2 = end - start;
+        return Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
+    }
+
 
     public EnemyType ReturnBtDifficult()
     {
@@ -163,27 +200,31 @@ public class TotemMove : MonoBehaviour
 
     private void BattleScene()
     {
-        SceneManager.LoadScene("MinSangSang");
+        Global.LoadScene.LoadScene("MinSangSang");
         StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Item"))
-        {
-            other.gameObject.SetActive(false);
-        }
-    }
+
 
     public void BoomDice()
     {
         diceObj.SetActive(false);
+        diceParticle.gameObject.SetActive(true);
         diceParticle.transform.position = diceObj.transform.position;
         diceParticle.Play();
         steps = UnityEngine.Random.Range(1, 7);
         diceText.gameObject.SetActive(true);
         diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
         diceText.text = steps.ToString();
+
+        if (!isMove)
+        {
+            if (routePosition + steps < board.childNodeList.Count)
+            {
+                StartCoroutine(MoveMentCo());
+                print("Move");
+            }
+        }
     }
 
 
