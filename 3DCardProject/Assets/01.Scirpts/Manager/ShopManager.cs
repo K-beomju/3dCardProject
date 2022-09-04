@@ -38,7 +38,7 @@ public class ShopManager : Singleton<ShopManager>
         RefreshMoneyInfo();
         exitButton.onClick.AddListener(()=> {
             // 스테이지로 돌아가기
-            Global.LoadScene.LoadScene("Chapter_1");
+            Global.LoadScene.LoadScene("Stage");
         });
     }
     public IEnumerator StartProcess()

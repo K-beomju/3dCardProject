@@ -144,6 +144,11 @@ public class TotemMove : MonoBehaviour
             yield return new WaitForSeconds(5f);
             //BattleScene();
         }
+        if (board.boardList[routePosition - 1].type == StageType.Shop)
+        {
+            yield return new WaitForSeconds(3f);
+            ShopScene();
+        }
 
         isMove = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
@@ -194,6 +199,11 @@ public class TotemMove : MonoBehaviour
     {
         Global.LoadScene.LoadScene("Battle");
         StageManager.Instance.enemyType = ReturnBtDifficult();
+    }
+
+    private void ShopScene()
+    {
+        Global.LoadScene.LoadScene("Shop");
     }
 
 
