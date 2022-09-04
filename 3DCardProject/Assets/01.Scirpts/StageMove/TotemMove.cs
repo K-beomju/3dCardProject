@@ -69,6 +69,7 @@ public class TotemMove : MonoBehaviour
             if (!isStart)
             {
                 diceObj.SetActive(true);
+                diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f,2);
                 diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
                 isStart = true;
             }
@@ -91,7 +92,6 @@ public class TotemMove : MonoBehaviour
         if (isMove) yield break;
         isMove = true;
         yield return new WaitForSeconds(1f);
-
 
         while (steps > 0)
         {
@@ -116,16 +116,20 @@ public class TotemMove : MonoBehaviour
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
         diceText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
 
-        if (board.boardList[routePosition].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+
+        if (board.boardList[routePosition - 1].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         {
+
             Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
 
             battleFieldModel.SetActive(true);
 
-            Vector3 battlePos = (board.childNodeList[routePosition].transform.position + board.childNodeList[routePosition + 1].transform.position) / 2;
+            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
             battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
             battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
+
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
                 battleModelParticle.transform.position = battleFieldModel.transform.position;
@@ -139,9 +143,9 @@ public class TotemMove : MonoBehaviour
             });
 
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
 
-            BattleScene();
+            //BattleScene();
         }
 
         isMove = false;
@@ -151,13 +155,6 @@ public class TotemMove : MonoBehaviour
         isStart = false;
         isLock = false;
     }
-
-    float GetAngle(Vector2 start, Vector2 end)
-    {
-        Vector2 v2 = end - start;
-        return Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
-    }
-
 
     public EnemyType ReturnBtDifficult()
     {
@@ -210,7 +207,7 @@ public class TotemMove : MonoBehaviour
         diceParticle.gameObject.SetActive(true);
         diceParticle.transform.position = diceObj.transform.position;
         diceParticle.Play();
-        steps = UnityEngine.Random.Range(1, 7);
+        steps = 1;//UnityEngine.Random.Range(1, 7);
         diceText.gameObject.SetActive(true);
         diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
         diceText.text = steps.ToString();
