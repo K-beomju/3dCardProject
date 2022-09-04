@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/00.Scenes/Chapter_1.unity
+    path: Assets/00.Scenes/Stage.unity
     guid: 4db069dad382fcd43bb2fb66cce237ce
   - enabled: 1
-    path: Assets/00.Scenes/MinSangSang.unity
+    path: Assets/00.Scenes/Battle.unity
     guid: f07d054791406244bbfa08983be0396c
   m_configObjects: {}

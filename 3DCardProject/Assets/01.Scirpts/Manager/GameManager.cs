@@ -23,8 +23,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private Button[] exitBtn;
     [SerializeField]
-    private Button reStartBtn;
-    [SerializeField]
     private GameObject resultPanel;
     [SerializeField] private GameObject turnPanel;
     public TMP_Text resultText;
@@ -64,13 +62,6 @@ public class GameManager : Singleton<GameManager>
                 });
             }
         }
-
-        if (reStartBtn != null)
-            reStartBtn?.onClick.AddListener(() =>
-            {
-                SceneManager.LoadScene("Battle");
-            });
-
 
         fadeGroup?.DOFade(0, 2);
     }
