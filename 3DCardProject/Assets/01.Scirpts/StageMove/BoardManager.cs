@@ -8,6 +8,10 @@ using DG.Tweening;
 
 public class BoardManager : MonoBehaviour
 {
+    [SerializeField] private GameObject battleField;
+    [SerializeField] private GameObject shopField;
+    [SerializeField] private TotemMove totem;
+
     public List<Board> boardList = new List<Board>();
     public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>();
     public List<Transform> childNodeList = new List<Transform>();
@@ -15,13 +19,7 @@ public class BoardManager : MonoBehaviour
     private Transform[] childObjs;
     private bool isChange = false;
 
-    [SerializeField] private GameObject battleField;
-    [SerializeField] private GameObject shopField;
-    [SerializeField] private TotemMove totem;
 
-
-
-    //public List<GameObject> stoneList = new List<GameObject>();
 
     private void Start()
     {
@@ -29,44 +27,32 @@ public class BoardManager : MonoBehaviour
 
         for (int i = 0; i < childNodeList.Count; i++)
         {
+            if(i % 2 == 0)
             boardList.Add(childNodeList[i].GetComponent<Board>());
         }
-        for (int i = 0; i < childNodeList.Count / 9; i++)
+        for (int i = 0; i < boardList.Count / 9; i++)
         {
             boardArrayList.Add(new GenericClass<Board>());
             boardArrayList[i].list = new List<Board>();
             int rand = UnityEngine.Random.Range(0, 10);
-
             for (int k = 0; k < 9; k++)
             {
                 Board board = boardList[i * 9 + k];
-
                 if (i != 0 || k != 0)
                 {
-                   
-
                     if (k == rand)
                     {
                         board.type = StageType.Shop;
-                        GameObject shopFd = Instantiate(shopField, board.transform.position , Utils.QI);
-                        //stoneList.Add(shopFd);
+                        GameObject shopFd = Instantiate(shopField, board.transform.position, Utils.QI);
                     }
                     else
                     {
-                        GameObject battleFd = Instantiate(battleField, board.transform.position - new Vector3(0,0.1f,0) , Utils.QI);
-                        //stoneList.Add(battleFd);
-
+                        GameObject battleFd = Instantiate(battleField, board.transform.position - new Vector3(0, 0.1f, 0), Utils.QI);
                     }
                 }
-
-
                 boardArrayList[i].list.Add(board);
-
             }
         }
-
-
-
 
     }
 
@@ -103,9 +89,7 @@ public class BoardManager : MonoBehaviour
     }
     #endregion
 
-    private bool isClear = false;
-    int num = 0;
-    public int[] camChangeValues;
+
 
    
     public void ClearBoard(int routePos)

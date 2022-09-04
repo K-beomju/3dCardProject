@@ -19,32 +19,27 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private ParticleSystem diceParticle;
     [SerializeField] private ParticleSystem battleModelParticle;
     [SerializeField] private GameObject itemMark;
+    [SerializeField] private Camera cam;
 
-    private bool isMove = false;
-    private bool isLock = false;
-    private bool isStart = false;
     public enum FadeType
     {
         FadeIn,
         FadeOut
     }
-    private FadeType fadeType;
-
     public int routePosition;
     public int stageValue;
+
+    private bool isMove = false;
+    private bool isLock = false;
+    private bool isStart = false;
     private Animator anim;
+    private FadeType fadeType;
 
     #region Dice
     public GameObject battleFieldModel;
-
     public Text diceText;
     public float rotSpeed;
-
-
-
-    [SerializeField] Camera cam;
     public Ease ease;
-
     #endregion
 
 
@@ -71,7 +66,7 @@ public class TotemMove : MonoBehaviour
         diceObj.transform.Rotate(new Vector3(30, 0, 30) * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
-            if(!isStart)
+            if (!isStart)
             {
                 diceObj.SetActive(true);
                 diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
@@ -109,8 +104,11 @@ public class TotemMove : MonoBehaviour
 
             // 보드 클리어 검사 
             board.ClearBoard(routePosition);
-            steps--;
-            diceText.text = steps.ToString();
+            if (board.childNodeList[routePosition].GetSiblingIndex() % 2 == 1)
+            {
+                steps--;
+                diceText.text = steps.ToString();
+            }
 
             routePosition++;
 
