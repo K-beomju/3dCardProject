@@ -32,7 +32,7 @@ public class LoadingSceneManager
         cg.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(LoadAsynSceneCoroutine());
         isIntroLoading = false;
 
-        cg.alpha = 1;
+        cg.DOFade(1, 1f).SetUpdate(true);
         cg.interactable = true;
         cg.blocksRaycasts = true;
     }
@@ -50,7 +50,7 @@ public class LoadingSceneManager
 
             if (time > delayTime)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
                 operation.allowSceneActivation = true;
             }
 
