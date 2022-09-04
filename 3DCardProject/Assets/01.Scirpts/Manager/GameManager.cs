@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager>
             {
                 exitBtn[i]?.onClick.AddListener(() =>
                 {
-                    SceneManager.LoadScene("Chapter_1");
+                    SceneManager.LoadScene("Stage");
                 });
             }
         }
@@ -68,7 +68,7 @@ public class GameManager : Singleton<GameManager>
         if (reStartBtn != null)
             reStartBtn?.onClick.AddListener(() =>
             {
-                SceneManager.LoadScene("MinSangSang");
+                SceneManager.LoadScene("Battle");
             });
 
 

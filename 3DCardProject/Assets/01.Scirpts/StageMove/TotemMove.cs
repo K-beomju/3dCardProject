@@ -70,7 +70,6 @@ public class TotemMove : MonoBehaviour
             {
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f,2);
-                diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
                 isStart = true;
             }
             else
@@ -142,9 +141,7 @@ public class TotemMove : MonoBehaviour
                 }).SetDelay(1);
             });
 
-
             yield return new WaitForSeconds(5f);
-
             //BattleScene();
         }
 
@@ -195,7 +192,7 @@ public class TotemMove : MonoBehaviour
 
     private void BattleScene()
     {
-        Global.LoadScene.LoadScene("MinSangSang");
+        Global.LoadScene.LoadScene("Battle");
         StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 
