@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class StageManager : Singleton<StageManager>
 
     public EnemyType enemyType;
     public SceneState SceneState = SceneState.STAGE;
+
+    public Action OnLoadBattleScene;
+    public Action OnLoadShopScene;
+    public Action OnLoadStageScene;
+
     protected override void Awake()
     {
         base.Awake();

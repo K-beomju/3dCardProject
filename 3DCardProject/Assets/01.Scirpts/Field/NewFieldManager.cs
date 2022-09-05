@@ -26,6 +26,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     private void Start()
     {
+        if (StageManager.Instance.SceneState != SceneState.BATTLE) return;
+
         fields = new MyLinkedList<Field>(fieldList);
 
         for (int i = 0; i < fields.GetNodeCount(); i++)

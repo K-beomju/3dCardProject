@@ -57,6 +57,10 @@ PrefabInstance:
       propertyPath: playerPt
       value: 
       objectReference: {fileID: 2819713488731362972}
+    - target: {fileID: 4778437131127519020, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4778437131127519021, guid: f6cc0f2442770ee4a9b8182803e741b8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -146,6 +150,10 @@ PrefabInstance:
       value: 1001
       objectReference: {fileID: 0}
     - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915804562928438921, guid: e725feb87c1193c448e77cd7953ba82c, type: 3}
       propertyPath: enemyItem.IsUpperCard
       value: 0
       objectReference: {fileID: 0}
@@ -222,6 +230,10 @@ PrefabInstance:
     - target: {fileID: 8229442517418305290, guid: 951d63b0577268d428ffdb661cd0cc18, type: 3}
       propertyPath: changePanel
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8229442517418305290, guid: 951d63b0577268d428ffdb661cd0cc18, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8229442517418305291, guid: 951d63b0577268d428ffdb661cd0cc18, type: 3}
       propertyPath: m_RootOrder
@@ -325,6 +337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3313611864972114347, guid: cf9dc9951a475c042b5eb6349203fb26, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3313611864972114349, guid: cf9dc9951a475c042b5eb6349203fb26, type: 3}
       propertyPath: m_Name
       value: SaveManager
@@ -394,6 +410,10 @@ PrefabInstance:
     - target: {fileID: 3215865188429971676, guid: 9e36f5a21f22ff146a62bc6b0d4d1070, type: 3}
       propertyPath: timeDirImage
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215865188429971676, guid: 9e36f5a21f22ff146a62bc6b0d4d1070, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3215865188429971677, guid: 9e36f5a21f22ff146a62bc6b0d4d1070, type: 3}
       propertyPath: m_RootOrder
@@ -556,6 +576,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4193101246645208034, guid: d0e8ee2d67338c242b42ec0daf759810, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0e8ee2d67338c242b42ec0daf759810, type: 3}
 --- !u!4 &5000641066122021967 stripped
@@ -577,6 +601,10 @@ PrefabInstance:
     - target: {fileID: 2106903846842785238, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
       propertyPath: m_Name
       value: CardManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106903846842785240, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2106903846842785241, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
       propertyPath: m_RootOrder
@@ -660,6 +688,10 @@ PrefabInstance:
       propertyPath: deadPt
       value: 
       objectReference: {fileID: 19899408, guid: be4058b04abc8fe4ca81c721c18ecb4f, type: 3}
+    - target: {fileID: 8047270137270981634, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8047270137270981634, guid: f182ac1feb1a3eb40970fd6d331d3d3a, type: 3}
       propertyPath: playerItem.spawnModelYPos
       value: 1

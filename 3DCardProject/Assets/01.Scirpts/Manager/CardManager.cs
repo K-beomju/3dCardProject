@@ -73,9 +73,10 @@ public class CardManager : Singleton<CardManager>
     {
         Debug.Log("AA");
         arrowObject.ActiveArrow(false);
-        if(StageManager.Instance.SceneState != SceneState.STAGE)
+        if (StageManager.Instance.SceneState != SceneState.STAGE)
         {
-            if(StageManager.Instance.SceneState == SceneState.BATTLE)
+            mainCam = Camera.main;
+            if (StageManager.Instance.SceneState == SceneState.BATTLE)
             {
                 StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
                 deckManager = GetComponent<DeckManager>();
@@ -83,11 +84,9 @@ public class CardManager : Singleton<CardManager>
             }
 
 
-            mainCam = Camera.main;
         }
     }
-
-
+    
     private IEnumerator SpawnCardCo(Action act = null)
     {
         yield return new WaitForSeconds(1.5f);

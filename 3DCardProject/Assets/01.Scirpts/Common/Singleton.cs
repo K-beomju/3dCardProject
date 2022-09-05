@@ -20,7 +20,6 @@ public abstract class Singleton<T> : Singleton where T : Singleton<T>
             _instance = (T)this;
             if (isDontDestroyOnLoad)
             {
-                Debug.Log("DotDestOnLoad");
                 DontDestroyOnLoad((T)this);
 
             }

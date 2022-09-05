@@ -53,12 +53,12 @@ public class LoadingSceneManager
             if (time > delayTime)
             {
                 yield return new WaitForSeconds(2f);
+                OnLoadScene?.Invoke();
                 operation.allowSceneActivation = true;
             }
 
             yield return null;
         }
-        OnLoadScene?.Invoke();
         cg.DOFade(0, 1f).OnComplete(() => cg.gameObject.SetActive(false)).SetUpdate(true);
         cg.interactable = false;
         cg.blocksRaycasts = false;
