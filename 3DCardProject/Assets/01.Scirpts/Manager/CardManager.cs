@@ -89,15 +89,14 @@ public class CardManager : Singleton<CardManager>
     
     private IEnumerator SpawnCardCo(Action act = null)
     {
-        yield return new WaitForSeconds(1.5f);
-        act?.Invoke();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(2f);
 
         for (int i = 0; i < 5; i++)
         {
-            AddCard();
+            AddCardForStart();
             yield return new WaitForSeconds(0.2f);
         }
+        act?.Invoke();
     }
 
     private IEnumerator DeleteCardCo()
@@ -388,6 +387,23 @@ public class CardManager : Singleton<CardManager>
 
     #region CardSystem
 
+    public void AddCardForStart()
+    {
+        Item popItem = deckManager.PopItem();
+        if (popItem != null)
+        {
+            Card card = CreateCard(popItem, true);
+            myCards.Add(card);
+            card.OnCreateCard();
+
+            if (popItem.IsReflectCard)
+                ReflectBox.Instance.AddCardUI(popItem, card);
+            SetOriginOrder();
+
+            CardAlignment();
+        }
+
+    }
     public void AddCard()
     {
         Item popItem = deckManager.PopItem();
