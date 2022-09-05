@@ -154,7 +154,12 @@ public class TotemMove : MonoBehaviour
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
             necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
             necro.transform.Rotate(10, 0, 0);
-            //ShopScene();
+
+            yield return new WaitForSeconds(2f);
+            necro.MegaPt();
+            yield return new WaitForSeconds(1f);
+
+            ShopScene();
         }
 
         isMove = false;
