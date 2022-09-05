@@ -61,15 +61,73 @@ public class PlayerGameData : ISerializeble
     }
     [SerializeField]
     private int disposableItem = 0b0000_0000;
-    public int DisposableItem
+    public Item DisposableItem
     {
         get
         {
-            return disposableItem;
+            uint uid = 0;
+            switch (disposableItem)
+            {
+                case 0b1000_0000:
+                    uid = 100;
+                    break;
+                case 0b0100_0000:
+                    uid = 101;
+                    break;
+                case 0b0010_0000:
+                    uid = 102;
+                    break;
+                case 0b0001_0000:
+                    uid = 103;
+                    break;
+                case 0b0000_1000:
+                    uid = 104;
+                    break;
+                case 0b0000_0100:
+                    uid = 105;
+                    break;
+                case 0b0000_0010:
+                    uid = 106;
+                    break;
+                case 0b0000_0001:
+                    uid = 107;
+                    break;
+            }
+
+            return SaveManager.Instance.saveDeckData.FindItem(uid); ;
         }
         set
         {
-            disposableItem = value;
+            int item = 0b0000_0000;
+            switch (value.uid)
+            {
+
+                case 100:
+                    item = 0b1000_0000;
+                    break;
+                case 101:
+                    item = 0b0100_0000;
+                    break;
+                case 102:
+                    item = 0b0010_0000;
+                    break;
+                case 103:
+                    item = 0b0001_0000;
+                    break;
+                case 104:
+                    item = 0b0000_1000;
+                    break;
+                case 105:
+                    item = 0b0000_0100;
+                    break;
+                case 106:
+                    item = 0b0000_0010;
+                    break;
+                case 107:
+                    item = 0b0000_0001;
+                    break;
+            }
+            disposableItem = item;
             OnDisposableItemChange?.Invoke();
 
         }

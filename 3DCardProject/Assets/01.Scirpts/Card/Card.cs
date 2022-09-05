@@ -64,6 +64,7 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
+        if (StageManager.Instance.SceneState == SceneState.STAGE) return;
         if (curField != null||isDisposable)
         {
             CardInfoUI.Instance.ItemData = item;
@@ -80,6 +81,7 @@ public class Card : MonoBehaviour
 
     void OnMouseExit()
     {
+        if (StageManager.Instance.SceneState == SceneState.STAGE) return;
         if(!isDisposable)
         {
             CardManager.Instance.CardMouseExit(this);
@@ -89,6 +91,7 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (StageManager.Instance.SceneState == SceneState.STAGE) return;
         if (isDisposable)
         {
             CardManager.Instance.ArrowMove(this,false);
@@ -114,6 +117,7 @@ public class Card : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (StageManager.Instance.SceneState == SceneState.STAGE) return;
         CardManager.Instance.CardMouseUp();
     }
 

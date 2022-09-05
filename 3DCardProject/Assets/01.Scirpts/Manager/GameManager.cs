@@ -42,28 +42,31 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        if(StageManager.Instance != null)
-        EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
-        State = GameState.RUNNING;
-
-        if (resultPanel != null)
-            resultPanel?.SetActive(false);
-
-        if (turnPanel != null)
-            turnPanel?.SetActive(true);
-        
-        if (exitBtn != null)
+        if (StageManager.Instance != null&& StageManager.Instance.SceneState == SceneState.BATTLE)
         {
-            for (int i = 0; i < exitBtn.Length; i++)
-            {
-                exitBtn[i]?.onClick.AddListener(() =>
-                {
-                    SceneManager.LoadScene("Stage");
-                });
-            }
-        }
+            EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
+            State = GameState.RUNNING;
 
-        fadeGroup?.DOFade(0, 2);
+            if (resultPanel != null)
+                resultPanel?.SetActive(false);
+
+            if (turnPanel != null)
+                turnPanel?.SetActive(true);
+
+            if (exitBtn != null)
+            {
+                for (int i = 0; i < exitBtn.Length; i++)
+                {
+                    exitBtn[i]?.onClick.AddListener(() =>
+                    {
+                        SceneManager.LoadScene("Stage");
+                    });
+                }
+            }
+
+            fadeGroup?.DOFade(0, 2);
+        }
+            
     }
     public void CallOnWinGame()
     {

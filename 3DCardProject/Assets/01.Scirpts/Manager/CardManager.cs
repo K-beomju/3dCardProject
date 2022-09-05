@@ -56,53 +56,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-    public bool IsShop { get; set; } = false;
 
-
-
-    [SerializeField]
-    private Item disposableItem = new Item();
-    public Item DisposableItem
-    {
-        get
-        {
-            return disposableItem;
-        }
-        set
-        {
-            disposableItem = value;
-            int item = 0b0000_0000;
-            switch (disposableItem.uid)
-            {
-
-                case 100:
-                    item = 0b1000_0000;
-                    break;
-                case 101:
-                    item = 0b0100_0000;
-                    break;
-                case 102:
-                    item = 0b0010_0000;
-                    break;
-                case 103:
-                    item = 0b0001_0000;
-                    break;
-                case 104:
-                    item = 0b0000_1000;
-                    break;
-                case 105:
-                    item = 0b0000_0100;
-                    break;
-                case 106:
-                    item = 0b0000_0010;
-                    break;
-                case 107:
-                    item = 0b0000_0001;
-                    break;
-            }
-            SaveManager.Instance.gameData.DisposableItem = item;
-        }
-    }
 
 
     protected override void Awake()
@@ -117,13 +71,20 @@ public class CardManager : Singleton<CardManager>
 
     private void Start()
     {
-        if(!IsShop)
-        {
-            StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
-            deckManager = GetComponent<DeckManager>();
-        }
+        Debug.Log("AA");
         arrowObject.ActiveArrow(false);
-        mainCam = Camera.main;
+        if(StageManager.Instance.SceneState != SceneState.STAGE)
+        {
+            if(StageManager.Instance.SceneState == SceneState.BATTLE)
+            {
+                StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+                deckManager = GetComponent<DeckManager>();
+
+            }
+
+
+            mainCam = Camera.main;
+        }
     }
 
 
@@ -259,6 +220,10 @@ public class CardManager : Singleton<CardManager>
 
     private void Update()
     {
+        if (StageManager.Instance.SceneState == SceneState.STAGE)
+        {
+            return;
+        }
         if (GameManager.Instance?.State == GameState.END)
         {
             return;
@@ -341,7 +306,7 @@ public class CardManager : Singleton<CardManager>
                         Debug.Log($"구입 시도 : {selectCard.item.itemName} ");
                         if(ShopManager.Instance.Purchase(selectCard.item))
                         {
-                            DisposableItem = selectCard.item.ShallowCopy();
+                            SaveManager.Instance.gameData.DisposableItem = selectCard.item.ShallowCopy();
                             selectCard.SetDeleteObject();
                         }
                     }
@@ -628,7 +593,7 @@ public class CardManager : Singleton<CardManager>
 
     private void EnlargeCard(bool isEnlarge, Card card)
     {
-        if (IsShop) return;
+        if (StageManager.Instance.SceneState != SceneState.BATTLE) return;
 
         if (isEnlarge)
         {

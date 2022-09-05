@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SceneState
+{
+    STAGE,
+    BATTLE,
+    SHOP
+}
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stages")]
@@ -12,7 +18,7 @@ public class StageManager : Singleton<StageManager>
     public List<ItemArraySO> stageArray { get; private set; }
 
     public EnemyType enemyType;
-
+    public SceneState SceneState = SceneState.STAGE;
     protected override void Awake()
     {
         base.Awake();

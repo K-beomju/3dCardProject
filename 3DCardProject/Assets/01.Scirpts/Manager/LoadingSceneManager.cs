@@ -14,7 +14,7 @@ public class LoadingSceneManager
 
     private CanvasGroup cg;
     private bool isIntroLoading = false;
-
+    private System.Action OnLoadScene;
     public void Init()
     {
         GameObject canvas = Resources.Load<GameObject>("UI/LoadingCanvas");
@@ -24,8 +24,10 @@ public class LoadingSceneManager
         Object.DontDestroyOnLoad(canvas);
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName,System.Action act = null)
     {
+        OnLoadScene = act;
+
         nextScene = sceneName;
 
         cg.gameObject.SetActive(true);
@@ -56,7 +58,7 @@ public class LoadingSceneManager
 
             yield return null;
         }
-
+        OnLoadScene?.Invoke();
         cg.DOFade(0, 1f).OnComplete(() => cg.gameObject.SetActive(false)).SetUpdate(true);
         cg.interactable = false;
         cg.blocksRaycasts = false;
