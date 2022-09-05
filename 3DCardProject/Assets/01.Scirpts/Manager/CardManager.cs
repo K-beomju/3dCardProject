@@ -56,8 +56,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-    [SerializeField]
-    private bool isShop = false;
+    public bool IsShop { get; set; } = false;
 
 
 
@@ -118,7 +117,7 @@ public class CardManager : Singleton<CardManager>
 
     private void Start()
     {
-        if(!isShop)
+        if(!IsShop)
         {
             StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
             deckManager = GetComponent<DeckManager>();
@@ -629,7 +628,7 @@ public class CardManager : Singleton<CardManager>
 
     private void EnlargeCard(bool isEnlarge, Card card)
     {
-        if (isShop) return;
+        if (IsShop) return;
 
         if (isEnlarge)
         {

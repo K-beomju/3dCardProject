@@ -142,7 +142,7 @@ public class TotemMove : MonoBehaviour
             });
 
             yield return new WaitForSeconds(5f);
-            //BattleScene();
+            BattleScene();
         }
         if (board.boardList[routePosition - 1].type == StageType.Shop)
         {
