@@ -1607,7 +1607,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400094}
-  - component: {fileID: 11100000}
+  - component: {fileID: 1930039233}
+  - component: {fileID: 1930039234}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Untagged
@@ -1624,39 +1625,41 @@ Transform:
   m_GameObject: {fileID: 100094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 400092}
   - {fileID: 400090}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &11100000
-Animation:
+--- !u!95 &1930039233
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100094}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400002, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400004, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400006, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400008, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400010, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400012, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400014, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400016, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400018, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400020, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400022, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400024, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  - {fileID: 7400026, guid: 013ee0a8b56bacd44b928eab033163af, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b26ed3c7b97dfd40a336c5d3c5e817e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1930039234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23da1f0f4714aa4cb2705fee50e1c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
