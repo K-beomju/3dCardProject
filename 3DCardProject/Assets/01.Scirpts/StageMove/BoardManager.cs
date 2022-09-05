@@ -47,6 +47,8 @@ public class BoardManager : MonoBehaviour
                     }
                     else
                     {
+                        board.type = StageType.Shop;
+
                         GameObject battleFd = Instantiate(battleField, board.transform.position - new Vector3(0, 0.1f, 0), Utils.QI);
                     }
                 }

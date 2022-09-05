@@ -21,6 +21,7 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private GameObject itemMark;
     [SerializeField] private Camera cam;
 
+    public Necromancer necro;
     public enum FadeType
     {
         FadeIn,
@@ -69,7 +70,7 @@ public class TotemMove : MonoBehaviour
             if (!isStart)
             {
                 diceObj.SetActive(true);
-                diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f,2);
+                diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
                 isStart = true;
             }
             else
@@ -146,8 +147,14 @@ public class TotemMove : MonoBehaviour
         }
         if (board.boardList[routePosition - 1].type == StageType.Shop)
         {
-            yield return new WaitForSeconds(3f);
-            ShopScene();
+            //yield return new WaitForSeconds(1f);
+            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+            Debug.Log("상점 필드");
+            necro.gameObject.SetActive(true);
+            necro.transform.position = battlePos + new Vector3(0, .3f, 0);
+            necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
+            necro.transform.Rotate(10, 0, 0);
+            //ShopScene();
         }
 
         isMove = false;
@@ -212,23 +219,28 @@ public class TotemMove : MonoBehaviour
 
     public void BoomDice()
     {
-        diceObj.SetActive(false);
-        diceParticle.gameObject.SetActive(true);
-        diceParticle.transform.position = diceObj.transform.position;
-        diceParticle.Play();
-        steps = 1;//UnityEngine.Random.Range(1, 7);
-        diceText.gameObject.SetActive(true);
-        diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
-        diceText.text = steps.ToString();
-
-        if (!isMove)
+        if (SceneManager.GetActiveScene().name == "Stage")
         {
-            if (routePosition + steps < board.childNodeList.Count)
+            diceObj.SetActive(false);
+            diceParticle.gameObject.SetActive(true);
+            diceParticle.transform.position = diceObj.transform.position;
+            diceParticle.Play();
+            steps = 1;//UnityEngine.Random.Range(1, 7);
+            diceText.gameObject.SetActive(true);
+            diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
+            diceText.text = steps.ToString();
+
+            if (!isMove)
             {
-                StartCoroutine(MoveMentCo());
-                print("Move");
+                if (routePosition + steps < board.childNodeList.Count)
+                {
+                    StartCoroutine(MoveMentCo());
+                    print("Move");
+                }
             }
+
         }
+
     }
 
 
