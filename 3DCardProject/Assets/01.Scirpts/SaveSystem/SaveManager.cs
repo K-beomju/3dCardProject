@@ -183,35 +183,7 @@ public class SaveManager : Singleton<SaveManager>
                 saveDeckData.CurDeck = new Deck();
             }
 
-            uint uid = 0;
-            switch (gameData.DisposableItem)
-            {
-                case 0b1000_0000:
-                    uid = 100;
-                    break;
-                case 0b0100_0000:
-                    uid = 101;
-                    break;
-                case 0b0010_0000:
-                    uid = 102;
-                    break;
-                case 0b0001_0000:
-                    uid = 103;
-                    break;
-                case 0b0000_1000:
-                    uid = 104;
-                    break;
-                case 0b0000_0100:
-                    uid = 105;
-                    break;
-                case 0b0000_0010:
-                    uid = 106;
-                    break;
-                case 0b0000_0001:
-                    uid = 107;
-                    break;
-            }
-            CardManager.Instance.DisposableItem = saveDeckData.FindItem(uid);
+            
             OnEndOfLoadGame?.Invoke();
         }
         else
