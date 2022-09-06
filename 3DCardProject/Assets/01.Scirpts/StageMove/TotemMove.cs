@@ -18,23 +18,21 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private GameObject diceObj;
     [SerializeField] private ParticleSystem diceParticle;
     [SerializeField] private ParticleSystem battleModelParticle;
+    [SerializeField] private ParticleSystem healParticle;
+    [SerializeField] private ParticleSystem healFieldParticle;
     [SerializeField] private GameObject itemMark;
     [SerializeField] private Camera cam;
 
     public Necromancer necro;
-    public enum FadeType
-    {
-        FadeIn,
-        FadeOut
-    }
+
     public int routePosition;
     public int stageValue;
+    public int routeMinus;
 
     private bool isMove = false;
     private bool isLock = false;
     private bool isStart = false;
     private Animator anim;
-    private FadeType fadeType;
 
     #region Dice
     public GameObject battleFieldModel;
@@ -92,6 +90,8 @@ public class TotemMove : MonoBehaviour
         if (isMove) yield break;
         isMove = true;
         yield return new WaitForSeconds(1f);
+        diceParticle.gameObject.SetActive(false);
+        healParticle.gameObject.SetActive(false);
 
         while (steps > 0)
         {
@@ -109,8 +109,8 @@ public class TotemMove : MonoBehaviour
                 steps--;
                 diceText.text = steps.ToString();
             }
-
             routePosition++;
+
 
         }
         anim.SetBool("isMove", false);
@@ -118,8 +118,9 @@ public class TotemMove : MonoBehaviour
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
+        var type = board.boardList[routePosition - routeMinus].type;
 
-        if (board.boardList[routePosition - 1].type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+        if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         {
 
             Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
@@ -132,6 +133,7 @@ public class TotemMove : MonoBehaviour
 
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
+                battleModelParticle.gameObject.SetActive(true);
                 battleModelParticle.transform.position = battleFieldModel.transform.position;
                 battleModelParticle.Play();
                 this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .3f).
@@ -145,11 +147,9 @@ public class TotemMove : MonoBehaviour
             yield return new WaitForSeconds(5f);
             BattleScene();
         }
-        if (board.boardList[routePosition - 1].type == StageType.Shop)
+        if (type == StageType.Shop)
         {
-            //yield return new WaitForSeconds(1f);
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-            Debug.Log("상점 필드");
             necro.gameObject.SetActive(true);
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
             necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
@@ -161,11 +161,20 @@ public class TotemMove : MonoBehaviour
 
             ShopScene();
         }
+        if (type == StageType.Rest)
+        {
+            healFieldParticle.gameObject.SetActive(true);
+            healFieldParticle.transform.position = transform.position;
+            healFieldParticle.Play();
+            yield return new WaitForSeconds(2f);
+            FadeInOut(1, 1, () => RestAction());
+        }
 
         isMove = false;
         PlayerPrefs.SetInt("StageValue", routePosition);
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
+        routeMinus = 0;
         isStart = false;
         isLock = false;
     }
@@ -182,45 +191,23 @@ public class TotemMove : MonoBehaviour
     }
 
 
-    private void FadeInOut(FadeType fade, Action action = null)
+    private void FadeInOut(int time, int delayTime, Action action = null)
     {
-        switch (fade)
-        {
-            case FadeType.FadeIn:
-                {
-                    fadeGroup.DOFade(1, 0);
-                    fadeGroup.DOFade(0, 1).OnComplete(() =>
-                    {
-                        action();
-                    });
-                }
-                break;
-            case FadeType.FadeOut:
-                {
-                    fadeGroup.DOFade(0, 1);
-                    fadeGroup.DOFade(1, 1).OnComplete(() =>
-                    {
-                        action();
-                    });
-                }
-                break;
-        }
+        fadeGroup.DOFade(1, time).OnComplete(() => fadeGroup.DOFade(0,time).OnComplete(() => action()).SetDelay(delayTime));
     }
 
     private void BattleScene()
     {
-        Global.LoadScene.LoadScene("Battle",()=> { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
-        
+        Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
+
         StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 
     private void ShopScene()
     {
-        Global.LoadScene.LoadScene("Shop",()=> { StageManager.Instance.OnLoadShopScene?.Invoke(); StageManager.Instance.SceneState = SceneState.SHOP; });
-       
+        Global.LoadScene.LoadScene("Shop", () => { StageManager.Instance.OnLoadShopScene?.Invoke(); StageManager.Instance.SceneState = SceneState.SHOP; });
+
     }
-
-
 
     public void BoomDice()
     {
@@ -230,7 +217,8 @@ public class TotemMove : MonoBehaviour
             diceParticle.gameObject.SetActive(true);
             diceParticle.transform.position = diceObj.transform.position;
             diceParticle.Play();
-            steps = 1;//UnityEngine.Random.Range(1, 7);
+            steps = UnityEngine.Random.Range(1, 7);
+            routeMinus = steps;
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
             diceText.text = steps.ToString();
@@ -248,6 +236,13 @@ public class TotemMove : MonoBehaviour
 
     }
 
+    public void RestAction()
+    {
+        healParticle.gameObject.SetActive(true);
+        healParticle.transform.position = transform.position + new Vector3(0,0.5f,0);
+        healParticle.Play();
+        healFieldParticle.gameObject.SetActive(false);
+    }
 
 
 
