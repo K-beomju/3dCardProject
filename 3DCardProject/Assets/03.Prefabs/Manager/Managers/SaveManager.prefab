@@ -43,8 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f363564e3e11944cbb5c9f1b4d2fcbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDontDestroyOnLoad: 1
   saveDeckData:
-    deckListData: []
     deckData:
       deck: []
     <defaultDeck>k__BackingField: {fileID: 11400000, guid: 3202f0975cff4cd48b2c682d707dd8ce, type: 2}
+  gameData:
+    isFirst: 0
+    stageValue: 0
+    hp: 100
+    money: 0
+    disposableItem: 0

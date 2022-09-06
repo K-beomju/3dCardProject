@@ -42,6 +42,7 @@ public class Card : MonoBehaviour
 
     public bool isDisposable = false;
 
+    public Action OnSpawnAct;
     public void Setup(Item item, bool isFront, bool isPlayerCard)
     {
         this.isPlayerCard = isPlayerCard;
@@ -244,6 +245,7 @@ public class Card : MonoBehaviour
         Debug.Log("ONSPAWN : " + item.itemName);
         Emphasize(() =>
         {
+            OnSpawnAct?.Invoke();
             if(item.IsStructCard || item.IsAvatar)
             {
                 Debug.Log("모델 생성 시작 : " + item.itemName);

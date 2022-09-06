@@ -99,34 +99,38 @@ public class PlayerGameData : ISerializeble
         set
         {
             int item = 0b0000_0000;
-            switch (value.uid)
+            if(value != null)
             {
+                switch (value.uid)
+                {
 
-                case 100:
-                    item = 0b1000_0000;
-                    break;
-                case 101:
-                    item = 0b0100_0000;
-                    break;
-                case 102:
-                    item = 0b0010_0000;
-                    break;
-                case 103:
-                    item = 0b0001_0000;
-                    break;
-                case 104:
-                    item = 0b0000_1000;
-                    break;
-                case 105:
-                    item = 0b0000_0100;
-                    break;
-                case 106:
-                    item = 0b0000_0010;
-                    break;
-                case 107:
-                    item = 0b0000_0001;
-                    break;
+                    case 100:
+                        item = 0b1000_0000;
+                        break;
+                    case 101:
+                        item = 0b0100_0000;
+                        break;
+                    case 102:
+                        item = 0b0010_0000;
+                        break;
+                    case 103:
+                        item = 0b0001_0000;
+                        break;
+                    case 104:
+                        item = 0b0000_1000;
+                        break;
+                    case 105:
+                        item = 0b0000_0100;
+                        break;
+                    case 106:
+                        item = 0b0000_0010;
+                        break;
+                    case 107:
+                        item = 0b0000_0001;
+                        break;
+                }
             }
+          
             disposableItem = item;
             OnDisposableItemChange?.Invoke();
 

@@ -51,6 +51,7 @@ public class SaveManager : Singleton<SaveManager>
     }
     private void Start()
     {
+        LoadGameData();
         //InvokeRepeating("AutoSave", 0, 30);
         //암호화 복호화 테슽으
         /*string msg = "HelloWorld";
@@ -193,12 +194,12 @@ public class SaveManager : Singleton<SaveManager>
             LoadGameData();
         }
     }
-    /*private void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         SaveGameData();
     }
 
-    private void OnApplicationPause(bool pause)
+/*    private void OnApplicationPause(bool pause)
     {
         SaveGameData();
     }*/
