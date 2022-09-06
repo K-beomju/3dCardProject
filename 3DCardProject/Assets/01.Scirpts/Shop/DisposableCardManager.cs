@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DisposableCardManager : MonoBehaviour
 {
-    private void OnEnable()
+    private void Start()
     {
+        Debug.Log("DisposableCardManager");
         StartCoroutine(SpawnDisposableCard());
     }
     private IEnumerator SpawnDisposableCard()
@@ -13,8 +14,11 @@ public class DisposableCardManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (SaveManager.Instance.gameData.DisposableItem == null) yield break;
         Card disposableCard = Global.Pool.GetItem<Card>();
-        disposableCard.item = SaveManager.Instance.gameData.DisposableItem;
+        disposableCard.Setup(SaveManager.Instance.gameData.DisposableItem,true,true);
         disposableCard.isDisposable = true;
+        disposableCard.OnSpawnAct += () => {
+            SaveManager.Instance.gameData.DisposableItem = null;
+        };
         foreach (CardActionCondition item in disposableCard.item.OnSpawn)
         {
             if (item.action is CardActionMove)
