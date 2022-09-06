@@ -9,7 +9,7 @@ public enum StageType
 {
     Battle,
     Shop,
-    Upgrade
+    Rest
 }
 
 

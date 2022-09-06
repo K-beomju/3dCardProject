@@ -10,6 +10,8 @@ public class BoardManager : MonoBehaviour
 {
     [SerializeField] private GameObject battleField;
     [SerializeField] private GameObject shopField;
+    [SerializeField] private GameObject restField;
+
     [SerializeField] private TotemMove totem;
 
     public List<Board> boardList = new List<Board>();
@@ -34,21 +36,33 @@ public class BoardManager : MonoBehaviour
         {
             boardArrayList.Add(new GenericClass<Board>());
             boardArrayList[i].list = new List<Board>();
-            int rand = UnityEngine.Random.Range(0, 10);
+            int shopRand = default;
+            int restRand = default;
+            while(shopRand == restRand)
+            {
+                shopRand = UnityEngine.Random.Range(0, 10);
+                restRand = UnityEngine.Random.Range(0, 10);
+            }
+            print(shopRand + " " + restRand);
+
             for (int k = 0; k < 9; k++)
             {
                 Board board = boardList[i * 9 + k];
                 if (i != 0 || k != 0)
                 {
-                    if (k == rand)
+                    if (k == shopRand)
                     {
                         board.type = StageType.Shop;
                         GameObject shopFd = Instantiate(shopField, board.transform.position, Utils.QI);
                     }
+                    else if(k == restRand)
+                    {
+                        board.type = StageType.Rest;
+                        GameObject shopFd = Instantiate(restField, board.transform.position, Utils.QI);
+                    }
                     else
                     {
-                        board.type = StageType.Shop;
-
+                        board.type = StageType.Battle;
                         GameObject battleFd = Instantiate(battleField, board.transform.position - new Vector3(0, 0.1f, 0), Utils.QI);
                     }
                 }
