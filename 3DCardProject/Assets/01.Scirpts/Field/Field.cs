@@ -106,11 +106,11 @@ public class Field : MonoBehaviour
         Sequence mySequence = DOTween.Sequence();
 
         Vector3 pos = transform.position;
-        pos += new Vector3(0, 1.6f, 0);
-
+        bool isTitle = StageManager.Instance.SceneState == SceneState.Title;
+        pos += new Vector3(0, isTitle ? 0 : 1.6f, isTitle ? -2f:0);
         mySequence.Append(card.transform.DOMove(pos, .3f)).AppendInterval(.3f);
-        mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(90, 0, 0)), .1f));
-        mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, .45f, 0), .2f)).OnComplete(() =>
+        mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(isTitle ? 0 : 90, 0, 0)), .1f));
+        mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, isTitle ? 0 :.45f, isTitle ? -.8f:0), .2f)).OnComplete(() =>
         {
             TurnManager.Instance.CanChangeTurn = true;
             if (card.LinkedModel != null && card.item.IsAvatar)

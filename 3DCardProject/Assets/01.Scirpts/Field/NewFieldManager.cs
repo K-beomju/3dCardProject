@@ -45,7 +45,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             canCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;
         });
-        PlayerManager.Instance.playerCards.Add(playerCard);
+        //PlayerManager.Instance.playerCards.Add(playerCard);
         EnemyManager.Instance.enemyAvatarCard = enemyCard;
         PlayerManager.Instance.playerAvatarCard = playerCard;
 

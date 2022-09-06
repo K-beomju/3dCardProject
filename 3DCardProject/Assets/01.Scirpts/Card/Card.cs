@@ -73,7 +73,7 @@ public class Card : MonoBehaviour
 
         if (canInteract && !isDisposable)
         {
-            Debug.Log("ABABA");
+            //Debug.Log("ABABA");
             CardManager.Instance.CardMouseOver(this);
           
         }
@@ -93,14 +93,14 @@ public class Card : MonoBehaviour
     void OnMouseDown()
     {
         if (StageManager.Instance.SceneState == SceneState.STAGE) return;
-        if (isDisposable)
+        if (isDisposable || StageManager.Instance.SceneState == SceneState.Title)
         {
             CardManager.Instance.ArrowMove(this,false);
 
             return;
         }
         
-        if (TurnManager.CurReturnType() != TurnType.Player) return;
+        if (TurnManager.Instance != null && TurnManager.CurReturnType() != TurnType.Player) return;
 
         CardManager.Instance.CardMouseDown(this);
 

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public enum SceneState
 {
+    Title,
     STAGE,
     BATTLE,
     SHOP
@@ -19,7 +20,7 @@ public class StageManager : Singleton<StageManager>
     public List<ItemArraySO> stageArray { get; private set; }
 
     public EnemyType enemyType;
-    public SceneState SceneState = SceneState.STAGE;
+    public SceneState SceneState = SceneState.Title;
 
     public Action OnLoadBattleScene;
     public Action OnLoadShopScene;

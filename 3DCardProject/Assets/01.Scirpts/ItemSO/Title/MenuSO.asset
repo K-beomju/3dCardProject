@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
+  m_Name: MenuSO
+  m_EditorClassIdentifier: 
+  item:
+    cost: 0
+    uid: 2
+    itemName: "\uBA54\uB274"
+    sprite: {fileID: 0}
+    IsAvatar: 0
+    CanStandOn: 0
+    IsReflectCard: 0
+    IsUpperCard: 0
+    IsStructCard: 0
+    EffectPrefab: {fileID: 0}
+    HitEffectPrefab: {fileID: 0}
+    SpawnModelYPos: 0
+    Price: 0
+    cardType: 0
+    description: "\uBA54"
+    count: 0
+    OnSpawn:
+    - action: {fileID: 3072118609454833957, guid: 31c8732b021ff3a4a891605f40621ee1, type: 3}
+      condition: []
+    OnDie: []
+    OnAttack: []
+    OnDamage: []
+    OnCreate: []

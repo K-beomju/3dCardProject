@@ -170,7 +170,7 @@ public class CardManager : Singleton<CardManager>
     private void RemoveCard(bool killTween = false)
     {
         var a = selectCard;
-        ReflectBox.Instance.RemoveCardUI(a);
+        ReflectBox.Instance?.RemoveCardUI(a);
         myCards.Remove(a);
         if (killTween)
             a.transform.DOKill();
@@ -264,7 +264,7 @@ public class CardManager : Singleton<CardManager>
                             if (!field.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(field, selectCard);
-                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
                         }
@@ -273,7 +273,7 @@ public class CardManager : Singleton<CardManager>
                             if (field.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(field, selectCard);
-                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
                         }
@@ -285,7 +285,7 @@ public class CardManager : Singleton<CardManager>
                             if (!card.curField.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(card.curField, selectCard);
-                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
                         }
@@ -294,7 +294,7 @@ public class CardManager : Singleton<CardManager>
                             if (card.curField.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(card.curField, selectCard);
-                                PlayerManager.Instance.playerCards.Add(selectCard);
+                                //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
                         }
@@ -365,7 +365,7 @@ public class CardManager : Singleton<CardManager>
                     {
                         //OnChangeLastUsedCard -= 
                         NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
-                        PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
+                        //PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
                         ReflectBox.Instance.reflectCard = null;
                         ReflectBox.isReflect = false;
                     }
