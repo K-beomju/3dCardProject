@@ -102,6 +102,9 @@ public class GameManager : Singleton<GameManager>
         resultPanel.SetActive(true);
         ReflectBox.Instance.ReflectBoxActive(false);
         turnPanel.SetActive(false);
+        
+        // ÇÇ±ðÀÓ
+        //SaveManager.Instance.gameData.Hp--;
     }
 
 
