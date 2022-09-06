@@ -63,7 +63,7 @@ public class BoardManager : MonoBehaviour
                     else
                     {
                         board.type = StageType.Battle;
-                        GameObject battleFd = Instantiate(battleField, board.transform.position - new Vector3(0, 0.1f, 0), Utils.QI);
+                        GameObject battleFd = Instantiate(battleField, board.transform.position, Utils.QI);
                     }
                 }
                 boardArrayList[i].list.Add(board);

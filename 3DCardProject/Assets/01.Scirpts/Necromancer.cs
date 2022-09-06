@@ -25,10 +25,10 @@ public class Necromancer : MonoBehaviour
         pt2.transform.position = transform.position + new Vector3(0, 0.3f, 0);
     }
 
-    public void MegaPt()
+    public void MegaPt(Transform pos)
     {
         pt3.gameObject.SetActive(true);
         pt3.Play();
-        pt3.transform.position = transform.position + new Vector3(-1, 0.3f, -1);
+        pt3.transform.position = pos.position;
     }
 }

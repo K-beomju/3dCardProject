@@ -134,7 +134,7 @@ public class TotemMove : MonoBehaviour
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
                 battleModelParticle.gameObject.SetActive(true);
-                battleModelParticle.transform.position = battleFieldModel.transform.position;
+                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0,0.2f,0);
                 battleModelParticle.Play();
                 this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .3f).
                 OnComplete(() =>
@@ -154,9 +154,10 @@ public class TotemMove : MonoBehaviour
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
             necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
             necro.transform.Rotate(10, 0, 0);
+            this.transform.DOLookAt(new Vector3(necro.transform.position.x, transform.position.y, necro.transform.position.z), .3f);
 
             yield return new WaitForSeconds(2f);
-            necro.MegaPt();
+            necro.MegaPt(this.transform);
             yield return new WaitForSeconds(1f);
 
             ShopScene();
