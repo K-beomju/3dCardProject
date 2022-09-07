@@ -335,12 +335,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
   fieldList:
-  - {fileID: 3277021393663335135}
-  - {fileID: 6136017124112835835}
-  - {fileID: 1888251287729065351}
-  - {fileID: 6503706812434464299}
-  - {fileID: 3912138308007607468}
   - {fileID: 2121874239358975473}
+  - {fileID: 3912138308007607468}
+  - {fileID: 6503706812434464299}
+  - {fileID: 1888251287729065351}
+  - {fileID: 6136017124112835835}
+  - {fileID: 3277021393663335135}
   playerCard: {fileID: 0}
   enemyCard: {fileID: 0}
   isFrontJumping: 0

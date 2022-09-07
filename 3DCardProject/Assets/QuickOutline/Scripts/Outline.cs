@@ -107,15 +107,9 @@ public class Outline : MonoBehaviour {
             // Append outline shaders
             var materials = renderer.sharedMaterials.ToList();
 
-            List<Material> matTemp = new List<Material>();
 
-            matTemp.Add(outlineMaskMaterial);
-            matTemp.Add(outlineFillMaterial);
-            foreach (Material material in materials)
-            {
-                matTemp.Add(material);
-            }
-            materials = new List<Material>(matTemp);
+            materials.Add(outlineMaskMaterial);
+            materials.Add(outlineFillMaterial);
             renderer.materials = materials.ToArray();
         }
 
