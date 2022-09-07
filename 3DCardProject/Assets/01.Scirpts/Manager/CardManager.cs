@@ -325,27 +325,23 @@ public class CardManager : Singleton<CardManager>
                  {
                     if(card.curField != null)
                     {
-                        print("AAA");
                         hitField = card.curField;
                         card.curField.HitColor(true, true);
                         card.curField.HitColor(true, selectCard.item.IsUpperCard && !card.item.IsUpperCard);
                     }
                     else
                     {
-                    print("DDDD");
                         hitField = null;
                     }
 
                 }
                 else if (field != null)
                 {
-                    print("BBBB");
                     hitField = field;
                     field.HitColor(true, field.isEnterRange && ((selectCard.item.IsStructCard && !field.isCommon) || (!selectCard.item.IsStructCard && field.isCommon)));
                 }
                 else
                 {
-                    print("CCCC");
                     hitField = null;
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
@@ -354,7 +350,6 @@ public class CardManager : Singleton<CardManager>
         }
         else
         {
-            print("EEEEE");
             hitField = null;
 
         }
@@ -363,9 +358,10 @@ public class CardManager : Singleton<CardManager>
         {
             if (selectCard != null)
             {
-                selectCard = null;
                 arrowObject.ActiveArrow(false);
                 isCardDrag = false;
+                EnlargeCard(false, selectCard);
+                selectCard = null;
             }
             hitField = null;
         }
@@ -555,8 +551,8 @@ public class CardManager : Singleton<CardManager>
         if (isCardDrag || card.isOnField) return;
 
         // if (!isCardDrag)
-
         EnlargeCard(true, card);
+
     }
 
     public virtual void CardMouseExit(Card card)
@@ -624,20 +620,42 @@ public class CardManager : Singleton<CardManager>
                curMagicField = Array.Find(hits, x => x.collider.gameObject.layer == magicFieldLayer).transform.GetComponent<MagicField>();
    */
     }
-
     private void EnlargeCard(bool isEnlarge, Card card)
     {
-        if (StageManager.Instance.SceneState != SceneState.BATTLE) return;
-
-        if (isEnlarge)
+        switch (StageManager.Instance.SceneState)
         {
-            Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + 1.5f, card.originPRS.pos.z + 1.5f);
-            card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
-        }
-        else
-            card.MoveTransform(card.originPRS, false);
+            case SceneState.Title:
+                if (isEnlarge)
+                {
+                    Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + .5f, card.originPRS.pos.z);
+                    card.MoveTransform(new PRS(enlarPos, card.originPRS.rot, card.originPRS.scale), false);
+                }
+                else
+                {
+                    card.MoveTransform(card.originPRS, false);
+                }
+                break;
+            case SceneState.STAGE:
+                break;
+            case SceneState.BATTLE:
+                if (isEnlarge)
+                {
+                    Vector3 enlarPos = new Vector3(card.originPRS.pos.x, card.originPRS.pos.y + 1.5f, card.originPRS.pos.z + 1.5f);
+                    card.MoveTransform(new PRS(enlarPos, Quaternion.Euler(75, 0, 0), cardPrefab.transform.localScale), false);
+                }
+                else
+                {
+                    card.MoveTransform(card.originPRS, false);
+                }
 
-        card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+                card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+                break;
+            case SceneState.SHOP:
+                break;
+            default:
+                break;
+        }
+     
     }
 
     #endregion

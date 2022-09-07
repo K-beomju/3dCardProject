@@ -22,6 +22,7 @@ public class TitleManager : MonoBehaviour
             card.Setup(cards[i].item, true, true);
             card.transform.position = cardPosTrm[i].position;
             card.transform.rotation = cardPosTrm[i].rotation;
+            card.originPRS = new PRS(card.transform);
         }
     }
 }

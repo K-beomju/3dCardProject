@@ -9,6 +9,14 @@ public class PRS
     public Vector3 pos;
     public Quaternion rot;
     public Vector3 scale;
+    private Transform transform;
+
+    public PRS(Transform transform)
+    {
+        this.pos = transform.position;
+        this.rot = transform.rotation;
+        this.scale = transform.localScale;
+    }
 
     public PRS(Vector3 pos, Quaternion rot, Vector3 scale)
     {
