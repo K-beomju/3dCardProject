@@ -321,23 +321,41 @@ public class CardManager : Singleton<CardManager>
             }
             else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                 if (card != null  && card.curField != null)
+                 if (card != null )
                  {
-                     hitField = card.curField;
-                    card.curField.HitColor(true, true);
-                    card.curField.HitColor(true, selectCard.item.IsUpperCard && !card.item.IsUpperCard);
-                 }
+                    if(card.curField != null)
+                    {
+                        print("AAA");
+                        hitField = card.curField;
+                        card.curField.HitColor(true, true);
+                        card.curField.HitColor(true, selectCard.item.IsUpperCard && !card.item.IsUpperCard);
+                    }
+                    else
+                    {
+                    print("DDDD");
+                        hitField = null;
+                    }
+
+                }
                 else if (field != null)
                 {
+                    print("BBBB");
                     hitField = field;
                     field.HitColor(true, field.isEnterRange && ((selectCard.item.IsStructCard && !field.isCommon) || (!selectCard.item.IsStructCard && field.isCommon)));
                 }
                 else
                 {
+                    print("CCCC");
                     hitField = null;
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
+
+        }
+        else
+        {
+            print("EEEEE");
+            hitField = null;
 
         }
 
@@ -349,6 +367,7 @@ public class CardManager : Singleton<CardManager>
                 arrowObject.ActiveArrow(false);
                 isCardDrag = false;
             }
+            hitField = null;
         }
 
         // ReflectBox

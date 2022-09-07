@@ -112,7 +112,10 @@ public class Field : MonoBehaviour
         mySequence.Join(card.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(isTitle ? 0 : 90, 0, 0)), .1f));
         mySequence.Append(card.transform.DOMove(pos -= new Vector3(0, isTitle ? 0 :.45f, isTitle ? -.8f:0), .2f)).OnComplete(() =>
         {
-            TurnManager.Instance.CanChangeTurn = true;
+                print("BBB");
+            if (TurnManager.Instance != null)
+                TurnManager.Instance.CanChangeTurn = true;
+            print("CCCC");
             if (card.LinkedModel != null && card.item.IsAvatar)
             {
                 var node = NewFieldManager.Instance.GetNodeByData(this);
@@ -143,22 +146,23 @@ public class Field : MonoBehaviour
             }
             else
             {
+                print("DDD");
                 act?.Invoke();
 
-                if (NewFieldManager.Instance.IsClockDir)
-                {
-                    if (NewFieldManager.Instance.GetPlayerNodeByData().NextNode.Data.upperCard.item.uid == 103)
-                    {
-                        NewFieldManager.Instance.isFrontJumping = true;
-                    }
-                }
-                else
-                {
-                    if (NewFieldManager.Instance.GetPlayerNodeByData().PrevNode.Data.upperCard.item.uid == 103)
-                    {
-                        NewFieldManager.Instance.isFrontJumping = true;
-                    }
-                }
+                /*  if (NewFieldManager.Instance.IsClockDir)
+                  {
+                      if (NewFieldManager.Instance.GetPlayerNodeByData().NextNode.Data.upperCard.item.uid == 103)
+                      {
+                          NewFieldManager.Instance.isFrontJumping = true;
+                      }
+                  }
+                  else
+                  {
+                      if (NewFieldManager.Instance.GetPlayerNodeByData().PrevNode.Data.upperCard.item.uid == 103)
+                      {
+                          NewFieldManager.Instance.isFrontJumping = true;
+                      }
+                  }*/
 
 
             }
