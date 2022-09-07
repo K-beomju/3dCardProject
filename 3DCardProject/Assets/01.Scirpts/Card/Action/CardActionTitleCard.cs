@@ -10,6 +10,8 @@ public class CardActionTitleCard : CardAction
         {
             case 0:
                 // ªı ∞‘¿”
+                SecurityPlayerPrefs.SetBool("IsFirst",false);
+                SaveManager.Instance.SaveGameData();
                 Global.LoadScene.LoadScene("Stage");
                 break;
             case 1:

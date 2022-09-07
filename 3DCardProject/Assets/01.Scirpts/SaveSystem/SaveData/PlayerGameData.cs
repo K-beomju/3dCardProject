@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class PlayerGameData : ISerializeble
 {
-    public bool isFirst;
+    public bool isFirst = true;
 
 
     public Action OnStageChange;
