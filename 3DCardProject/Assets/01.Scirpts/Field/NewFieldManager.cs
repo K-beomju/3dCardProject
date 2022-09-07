@@ -39,8 +39,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
         enemyCard.DetactiveCardView();
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
         playerCard.DetactiveCardView();
-        fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
-        fields.GetNodeByIndex(5).Data.SetUp(playerCard, () => {
+        fields.GetNodeByIndex(3).Data.SetUp(enemyCard, enemyCard.OnSpawn);
+        fields.GetNodeByIndex(0).Data.SetUp(playerCard, () => {
             playerCard.OnSpawn();
             canCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;

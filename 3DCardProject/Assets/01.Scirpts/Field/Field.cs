@@ -39,7 +39,8 @@ public class Field : MonoBehaviour
     private void Start()
     {
         outline = GetComponent<Outline>();
-        outline.enabled = false;
+        outline.enabled = true;
+        outline.OutlineWidth = 0;
 
         isHackField = GetComponent<Hack>() != null;
         if (isHackField)
