@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 7220287647352419792}
   - component: {fileID: 7220287647352419806}
   - component: {fileID: 7220287647352419793}
+  - component: {fileID: 6664958302412917526}
   m_Layer: 5
   m_Name: SubsPanel
   m_TagString: Untagged
@@ -311,6 +312,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &6664958302412917526
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220287647352419795}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7220287647764342393
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,5 +369,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  panelRTrm: {fileID: 0}
-  explainText: {fileID: 0}
+  panelRTrm: {fileID: 7220287647352419792}
+  explainText: {fileID: 7220287646168323751}
+  subsPanel: {fileID: 6664958302412917526}

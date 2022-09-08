@@ -61,7 +61,10 @@ public class ShopManager : Singleton<ShopManager>
     private IEnumerator ShopTutorialProcess()
     {
         TutorialManager.Instance.Explain("상점입니다.", 0);
+        TutorialManager.Instance.Fade(true);
         yield return new WaitForSeconds(1);
+        TutorialManager.Instance.Fade(false);
+        StartCoroutine(StartProcess());
     }
 
     public IEnumerator StartProcess()
