@@ -102,8 +102,6 @@ public class TotemMove : MonoBehaviour
             while (MoveNextNode(nextPos))
                 yield return null;
 
-            // 보드 클리어 검사 
-            board.ClearBoard(routePosition);
             if (board.childNodeList[routePosition].GetSiblingIndex() % 2 == 1)
             {
                 steps--;
@@ -212,13 +210,13 @@ public class TotemMove : MonoBehaviour
 
     public void BoomDice()
     {
-        if (SceneManager.GetActiveScene().name == "Stage")
+        if (SceneManager.GetActiveScene().name == "Stage" || SceneManager.GetActiveScene().name == "Tutorials")
         {
             diceObj.SetActive(false);
             diceParticle.gameObject.SetActive(true);
             diceParticle.transform.position = diceObj.transform.position;
             diceParticle.Play();
-            steps = UnityEngine.Random.Range(1, 7);
+            steps = 2; //UnityEngine.Random.Range(1, 7);
             routeMinus = steps;
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
