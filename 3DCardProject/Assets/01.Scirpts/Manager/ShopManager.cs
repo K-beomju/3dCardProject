@@ -29,20 +29,41 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField]
     private Button exitButton;
 
+    [SerializeField]
+    private bool isTutorial;
+    [SerializeField]
+    private bool isTutorialDone;
+
     private void Start()
     {
         deckManager = GetComponent<DeckManager>();
-        StartCoroutine(StartProcess());
+        if (!isTutorial)
+        {
+            StartCoroutine(StartProcess());
+        }
+        else
+        {
+            StartCoroutine(ShopTutorialProcess());
+        }
 
+        SaveManager.Instance.gameData.OnMoneyChange -= RefreshMoneyInfo;
         SaveManager.Instance.gameData.OnMoneyChange += RefreshMoneyInfo;
         RefreshMoneyInfo();
         exitButton.onClick.AddListener(()=> {
             // 스테이지로 돌아가기
-            Global.LoadScene.LoadScene("Stage",()=> { StageManager.Instance.OnLoadStageScene?.Invoke(); StageManager.Instance.SceneState = SceneState.STAGE; });
+            if (!isTutorial || (isTutorial && isTutorialDone))
+                Global.LoadScene.LoadScene("Stage", () => { StageManager.Instance.OnLoadStageScene?.Invoke(); StageManager.Instance.SceneState = SceneState.STAGE; });
            
 
         });
     }
+
+    private IEnumerator ShopTutorialProcess()
+    {
+        TutorialManager.Instance.Explain("상점입니다.", 0);
+        yield return new WaitForSeconds(1);
+    }
+
     public IEnumerator StartProcess()
     {
        
