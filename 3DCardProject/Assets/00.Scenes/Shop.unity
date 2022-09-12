@@ -2328,7 +2328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7513330409586914718, guid: 3a05831ad09f8104fa1619147d1650e1, type: 3}
       propertyPath: SceneState
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7513330409586914718, guid: 3a05831ad09f8104fa1619147d1650e1, type: 3}
       propertyPath: isDontDestroyOnLoad
@@ -13095,6 +13095,10 @@ PrefabInstance:
     - target: {fileID: 7062366283136996256, guid: c81d8767aa45f5c4ca0ea4a92f74e991, type: 3}
       propertyPath: m_Name
       value: ShopManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062366283136996262, guid: c81d8767aa45f5c4ca0ea4a92f74e991, type: 3}
+      propertyPath: isTutorial
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7062366283136996263, guid: c81d8767aa45f5c4ca0ea4a92f74e991, type: 3}
       propertyPath: m_RootOrder

@@ -199,6 +199,9 @@ public class SaveManager : Singleton<SaveManager>
     }
     private void OnApplicationQuit()
     {
+        if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+            gameData = new PlayerGameData();
+
         SaveGameData();
     }
 

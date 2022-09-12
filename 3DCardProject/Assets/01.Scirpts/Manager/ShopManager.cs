@@ -30,10 +30,16 @@ public class ShopManager : Singleton<ShopManager>
     private Button exitButton;
 
     [SerializeField]
+    private bool isPurchaseAble = true;
+    [SerializeField]
+    private List<Card> shopCardList = new List<Card>();
+    // 튜토리얼
+    [SerializeField]
     private bool isTutorial;
     [SerializeField]
-    private bool isTutorialDone;
-
+    private bool isTutorialDone =false;
+    [SerializeField]
+    private bool isPurchase = false;
     private void Start()
     {
         deckManager = GetComponent<DeckManager>();
@@ -57,16 +63,46 @@ public class ShopManager : Singleton<ShopManager>
 
         });
     }
-
+   
     private IEnumerator ShopTutorialProcess()
     {
-        TutorialManager.Instance.Explain("상점입니다.", 0);
+        TutorialManager.Instance.isTutorial = true;
+        isTutorialDone = false;
+        isPurchaseAble = false;
+       
+        yield return TutorialManager.Instance.ExplainCol("이곳은 상점입니다.", 0);
+        yield return StartProcess();
+        yield return TutorialManager.Instance.ExplainCol("일회성 아이템을 구입할 수 있습니다.", 250);
+        yield return TutorialManager.Instance.ExplainCol("가운데 카드를 아래의 블록에 끌어놓아 구입합시다.", 250);
+        isPurchaseAble = true;
         TutorialManager.Instance.Fade(true);
-        yield return new WaitForSeconds(1);
-        TutorialManager.Instance.Fade(false);
-        StartCoroutine(StartProcess());
-    }
+        foreach (var card in shopCardList)
+        {
+            card.isPlayerCard = false;
+        }
+        shopCardList[1].isPlayerCard = true;
+        SaveManager.Instance.gameData.Money += shopCardList[1].item.Price;
 
+        yield return WaitBeforePurchase();
+
+        SaveManager.Instance.gameData.Money = 0;
+        TutorialManager.Instance.isTutorial = false;
+
+        yield return TutorialManager.Instance.ExplainCol("잘하셨습니다.", 0);
+        yield return TutorialManager.Instance.ExplainCol("구매한 아이템은 \"전투\"에서 사용하실수 있습니다.", 0);
+        yield return TutorialManager.Instance.ExplainCol("\"Exit\"를(을) 눌러 돌아갑시다.", 0);
+
+        isTutorialDone = true;
+    }
+    private IEnumerator WaitBeforePurchase()
+    {
+        while (!isPurchase)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        
+        yield break;
+    }
     public IEnumerator StartProcess()
     {
        
@@ -77,6 +113,8 @@ public class ShopManager : Singleton<ShopManager>
             yield return new WaitForSeconds(.5f);
             AddCard();
         }
+        yield return new WaitForSeconds(.9f);
+        yield break;
     }
     public void RefreshMoneyInfo()
     {
@@ -96,7 +134,7 @@ public class ShopManager : Singleton<ShopManager>
                     cardList[i] = card;
                     card.transform.position = cardSpawnTrm.position;
                     dummyTextList[i].text = "";
-                    
+                    shopCardList.Add(card);
 
                     Sequence seq = DOTween.Sequence();
                     seq.Append(card.transform.DOScale(.8f, 0.15f));
@@ -129,9 +167,10 @@ public class ShopManager : Singleton<ShopManager>
 
     public bool Purchase(Item inItem)
     {
-        if(SaveManager.Instance.gameData.Money >= inItem.Price)
+        if(SaveManager.Instance.gameData.Money >= inItem.Price && isPurchaseAble)
         {
             Debug.Log($"구입 성공 : {inItem.itemName} ");
+            isPurchase = true;
             for (int i = 0; i < cardList.Count; i++)
             {
                 if(cardList[i].item == inItem)

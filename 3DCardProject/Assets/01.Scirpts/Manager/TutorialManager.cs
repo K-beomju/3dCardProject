@@ -12,6 +12,9 @@ public class TutorialManager : Singleton<TutorialManager>
     private TextMeshProUGUI explainText;
     [SerializeField]
     private CanvasGroup subsPanel;
+
+    public bool isTutorial = false;
+
     private void Start()
     {
         subsPanel.alpha = 0;
@@ -25,5 +28,13 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         explainText.text = msg;
         panelRTrm.anchoredPosition = new Vector2(0, PosY) ;
+    }
+    public IEnumerator ExplainCol(string msg, int posY)
+    {
+        yield return new WaitForSeconds(1);
+        Explain(msg, posY);
+        Fade(true);
+        yield return new WaitForSeconds(1.5f);
+        Fade(false);
     }
 }

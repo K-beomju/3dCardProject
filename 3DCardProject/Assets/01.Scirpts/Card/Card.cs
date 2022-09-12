@@ -92,7 +92,7 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (StageManager.Instance.SceneState == SceneState.STAGE) return;
+        if (StageManager.Instance.SceneState == SceneState.STAGE || !isPlayerCard) return;
         if (isDisposable || StageManager.Instance.SceneState == SceneState.Title)
         {
             CardManager.Instance.ArrowMove(this,false);
