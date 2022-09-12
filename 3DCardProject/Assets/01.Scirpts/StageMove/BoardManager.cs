@@ -107,9 +107,4 @@ public class BoardManager : MonoBehaviour
 
 
 
-   
-    public void ClearBoard(int routePos)
-    {
-        boardList[routePos + 1].ClearAction();
-    }
 }
