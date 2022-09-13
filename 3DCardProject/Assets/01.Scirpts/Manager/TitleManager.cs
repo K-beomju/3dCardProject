@@ -36,5 +36,6 @@ public class TitleManager : MonoBehaviour
     public void ResetIsFirstData()
     {
         SecurityPlayerPrefs.DeleteKey("IsFirst");
+        SecurityPlayerPrefs.DeleteKey("TutorialValue");
     }
 }
