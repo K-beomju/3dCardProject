@@ -40,6 +40,10 @@ public class PlayerGameData : ISerializeble
         set
         {
             hp = value;
+            if(hp <= 0)
+            {
+
+            }
             OnHpChange?.Invoke();
         }
     }

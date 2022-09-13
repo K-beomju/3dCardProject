@@ -746,6 +746,16 @@ public class CardManager : Singleton<CardManager>
     {
         int index = myCards.FindIndex(x => x.item.uid == uid);
         myCards[index].SelectOutlineCard();
+        foreach (var item in myCards)
+        {
+            if (item.item.uid == uid)
+            {
+                item.isPlayerCard = true;
+                continue;
+            }
+
+            item.isPlayerCard = false;
+        }
     }
 
 }
