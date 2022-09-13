@@ -3841,6 +3841,10 @@ PrefabInstance:
       propertyPath: tutorialPanel
       value: 
       objectReference: {fileID: 393640239}
+    - target: {fileID: 6049521263506324626, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
+      propertyPath: tutorialResultBtn
+      value: 
+      objectReference: {fileID: 9175305581439887330}
     - target: {fileID: 7090920031094804260, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
       propertyPath: hackField
       value: 
@@ -3960,3 +3964,14 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2819713488731362972, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
   m_PrefabInstance: {fileID: 9175305581439887326}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9175305581439887330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2648709041340532307, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
+  m_PrefabInstance: {fileID: 9175305581439887326}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

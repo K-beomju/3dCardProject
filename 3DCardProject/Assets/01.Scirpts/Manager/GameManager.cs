@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private GameObject tutorialPanel;
     [SerializeField] private GameObject turnPanel;
+    [SerializeField] private Button tutorialResultBtn;
     public TMP_Text resultText;
 
     public GameState State;
@@ -66,6 +67,15 @@ public class GameManager : Singleton<GameManager>
                 }
             }
 
+            if(tutorialResultBtn != null)
+            {
+                tutorialResultBtn.onClick.AddListener(() =>
+                {
+                    SceneManager.LoadScene("Stage");
+
+                });
+            }
+
             fadeGroup?.DOFade(0, 2);
         }
             
@@ -84,7 +94,10 @@ public class GameManager : Singleton<GameManager>
         resultText.text = "½Â¸®";
         TurnManager.Instance.CanChangeTurn = false;
         if (TutorialManager.Instance.isTutorial)
+        {
             tutorialPanel.SetActive(true);
+            TutorialManager.Instance.isTutorial = false;
+        }
         else
             resultPanel.SetActive(true);
         ReflectBox.Instance.ReflectBoxActive(false);
