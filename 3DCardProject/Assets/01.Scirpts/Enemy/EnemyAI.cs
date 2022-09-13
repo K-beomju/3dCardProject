@@ -14,6 +14,7 @@ public enum MountState
 
 public enum EnemyType
 {
+    TUTORIAL,
     EASY,
     MEDIUM
 }
@@ -24,7 +25,7 @@ public class EnemyAI : Singleton<EnemyAI>
     private MountState mountState;
     private Action action;
 
-    private Dictionary<long, Action> _actions = new Dictionary<long, Action>() // // �ƹ�Ÿ ���� �븻 �÷��̾� ����
+    private Dictionary<long, Action> mediumActions = new Dictionary<long, Action>() // // �ƹ�Ÿ ���� �븻 �÷��̾� ����
     {
         {
             0b100000100000001001000011111111, () => {
@@ -127,12 +128,28 @@ public class EnemyAI : Singleton<EnemyAI>
                 CardManager.Instance.MountCardSupport(102);
         } },
 
-            
 
 
 
 
 
+
+
+    };
+
+    private Dictionary<long, Action> tutorialActions = new Dictionary<long, Action>()
+    {
+                  {
+            0b100000001001000011110111, () => {
+                CardManager.Instance.MountCardSupport(107, MountState.Prev);
+        } },
+
+                   {
+            0b1000000000100000100111110110, () => {
+                CardManager.Instance.MountCardSupport(105);
+        } },
+
+                  
 
     };
 
@@ -207,43 +224,45 @@ public class EnemyAI : Singleton<EnemyAI>
     {
         InitState();
 
-        if (enemyType == EnemyType.EASY)
+        if (TutorialManager.Instance.isTutorial)
         {
-            EnemyManager.Instance.EnemyAction();
-        }
-        if (enemyType == EnemyType.MEDIUM)
-        {
+            enemyType = EnemyType.TUTORIAL;
 
-            if (_actions.ContainsKey(currentState)) // "DO PRESET"
+            if (tutorialActions.ContainsKey(currentState)) // "DO PRESET"
             {
-                _actions[currentState]?.Invoke();
+                tutorialActions[currentState]?.Invoke();
+            }
+            else
+            {
+                EnemyManager.Instance.EnemyAction();
+                print(Convert.ToString(currentState, 2));
 
             }
-            else                                    // "DO DEFAULT"
+        }
+        else
+        {
+
+            if (enemyType == EnemyType.EASY)
             {
-                print(Convert.ToString(currentState, 2));
                 EnemyManager.Instance.EnemyAction();
+            }
+            if (enemyType == EnemyType.MEDIUM)
+            {
+
+                if (mediumActions.ContainsKey(currentState)) // "DO PRESET"
+                {
+                    mediumActions[currentState]?.Invoke();
+                }
+                else                                    // "DO DEFAULT"
+                {
+                    print(Convert.ToString(currentState, 2));
+                    EnemyManager.Instance.EnemyAction();
+                }
             }
         }
 
     }
-    //// �տ� ��ġ (ī��)
-    //public void MountingPrev(Card card)
-    //{
-    //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
-    //    Mounting(card, fieldNode.PrevNode.Data);
-    //}
-    //// �ڿ� ��ġ (ī��)
-    //public void MountingNext(Card card)
-    //{
-    //    var fieldNode = NewFieldManager.Instance.fields.GetNodeByData(NewFieldManager.Instance.enemyCard.curField);
-    //    Mounting(card, fieldNode.NextNode.Data);
-    //}
-    //// �ٿ� ��ġ (ī��)
-    //public void MountingOnHack(Card card)
-    //{
-    //    Mounting(card,CardManager.Instance.hackField);
-    //}
+
 
     public void MountingCard(Card card, MountState mount)
     {
@@ -251,21 +270,19 @@ public class EnemyAI : Singleton<EnemyAI>
 
         switch (mount)
         {
-            case MountState.Prev:  //�ڿ� ��ġ (ī��)
+            case MountState.Prev:
                 Mounting(card, fieldNode.PrevNode.Data);
                 break;
-            case MountState.Next:  //�տ� ��ġ(ī��)
+            case MountState.Next:
                 Mounting(card, fieldNode.NextNode.Data);
                 break;
-            case MountState.Hack: //�ٿ� ��ġ(ī��)
+            case MountState.Hack:
                 Mounting(card, CardManager.Instance.hackField);
                 break;
         }
     }
 
 
-
-    // ��ġ (��ġ , ī��)
     public void Mounting(Card card, Field setField)
     {
         if (GameManager.Instance.State == GameState.END) return;

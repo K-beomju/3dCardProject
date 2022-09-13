@@ -271,7 +271,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = UnityEngine.Random.Range(1, 7);
+                steps = 1;//UnityEngine.Random.Range(1, 7);
             }
             routeMinus = steps;
             diceText.gameObject.SetActive(true);

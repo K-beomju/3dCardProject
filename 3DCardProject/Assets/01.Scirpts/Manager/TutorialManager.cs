@@ -29,12 +29,12 @@ public class TutorialManager : Singleton<TutorialManager>
         explainText.text = msg;
         panelRTrm.anchoredPosition = new Vector2(0, PosY) ;
     }
-    public IEnumerator ExplainCol(string msg, int posY)
+    public IEnumerator ExplainCol(string msg, int posY, float delay = 1.5f)
     {
         yield return new WaitForSeconds(1);
         Explain(msg, posY);
         Fade(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(delay);
         Fade(false);
     }
 }

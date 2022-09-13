@@ -24,6 +24,8 @@ public class GameManager : Singleton<GameManager>
     private Button[] exitBtn;
     [SerializeField]
     private GameObject resultPanel;
+    [SerializeField]
+    private GameObject tutorialPanel;
     [SerializeField] private GameObject turnPanel;
     public TMP_Text resultText;
 
@@ -81,7 +83,10 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(3f);
         resultText.text = "½Â¸®";
         TurnManager.Instance.CanChangeTurn = false;
-        resultPanel.SetActive(true);
+        if (TutorialManager.Instance.isTutorial)
+            tutorialPanel.SetActive(true);
+        else
+            resultPanel.SetActive(true);
         ReflectBox.Instance.ReflectBoxActive(false);
         turnPanel.SetActive(false);
     }

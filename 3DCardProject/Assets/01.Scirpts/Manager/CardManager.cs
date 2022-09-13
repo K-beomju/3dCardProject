@@ -78,7 +78,11 @@ public class CardManager : Singleton<CardManager>
             mainCam = Camera.main;
             if (StageManager.Instance.SceneState == SceneState.BATTLE)
             {
+                if(TutorialManager.Instance.isTutorial)
+                    StartCoroutine(TutorialSpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+                else
                 StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+
                 deckManager = GetComponent<DeckManager>();
 
             }
@@ -86,7 +90,7 @@ public class CardManager : Singleton<CardManager>
 
         }
     }
-    
+
     private IEnumerator SpawnCardCo(Action act = null)
     {
         yield return new WaitForSeconds(2f);
@@ -96,6 +100,26 @@ public class CardManager : Singleton<CardManager>
             AddCardForStart();
             yield return new WaitForSeconds(0.2f);
         }
+        act?.Invoke();
+    }
+
+    private IEnumerator TutorialSpawnCardCo(Action act = null)
+    {
+        yield return new WaitForSeconds(2f);
+
+
+        TutorialAddCardForStart(103);
+        yield return new WaitForSeconds(0.2f);
+        TutorialAddCardForStart(107);
+        yield return new WaitForSeconds(0.2f);
+        TutorialAddCardForStart(100);
+        yield return new WaitForSeconds(0.2f);
+        TutorialAddCardForStart(102);
+        yield return new WaitForSeconds(0.2f);
+        TutorialAddCardForStart(105);
+
+
+
         act?.Invoke();
     }
 
@@ -244,7 +268,7 @@ public class CardManager : Singleton<CardManager>
         }
 
         ray = mainCam.ScreenPointToRay(Input.mousePosition);
-       
+
         if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
         {
             Field field = hitData.transform.GetComponent<Field>();
@@ -299,10 +323,10 @@ public class CardManager : Singleton<CardManager>
                             }
                         }
                     }
-                    else if(pp != null)
+                    else if (pp != null)
                     {
                         Debug.Log($"구입 시도 : {selectCard.item.itemName} ");
-                        if(ShopManager.Instance.Purchase(selectCard.item))
+                        if (ShopManager.Instance.Purchase(selectCard.item))
                         {
                             SaveManager.Instance.gameData.DisposableItem = selectCard.item.ShallowCopy();
                             selectCard.SetDeleteObject();
@@ -321,9 +345,9 @@ public class CardManager : Singleton<CardManager>
             }
             else if (InputManager.Instance.MouseBtn && selectCard != null && selectCard.curField == null)
             {
-                 if (card != null )
-                 {
-                    if(card.curField != null)
+                if (card != null)
+                {
+                    if (card.curField != null)
                     {
                         hitField = card.curField;
                         card.curField.HitColor(true, true);
@@ -417,8 +441,25 @@ public class CardManager : Singleton<CardManager>
 
             CardAlignment();
         }
-
     }
+
+    public void TutorialAddCardForStart(uint uid)
+    {
+        Item popItem = deckManager.PopItem(uid);
+        if (popItem != null)
+        {
+            Card card = CreateCard(popItem, true);
+            myCards.Add(card);
+            card.OnCreateCard();
+
+            if (popItem.IsReflectCard)
+                ReflectBox.Instance.AddCardUI(popItem, card);
+            SetOriginOrder();
+
+            CardAlignment();
+        }
+    }
+
     public void AddCard()
     {
         Item popItem = deckManager.PopItem();
@@ -577,7 +618,7 @@ public class CardManager : Singleton<CardManager>
         }
 
     }
-    public virtual void ArrowMove(Card card,bool isYfixed = true)
+    public virtual void ArrowMove(Card card, bool isYfixed = true)
     {
         isCardDrag = true;
         selectCard = card;
@@ -586,15 +627,12 @@ public class CardManager : Singleton<CardManager>
 
         float x = mainCam.WorldToScreenPoint(selectCard.transform.position).x;
         float y = mainCam.WorldToScreenPoint(selectCard.transform.position).y;
-        arrowObject.transform.position = new Vector3(x, isYfixed ? 470 : y + 300 , 0);
+        arrowObject.transform.position = new Vector3(x, isYfixed ? 470 : y + 300, 0);
     }
 
     public virtual void CardMouseUp()
     {
         isCardDrag = false;
-
-        UseCard();
-
     }
 
     void CardDrag()
@@ -655,7 +693,7 @@ public class CardManager : Singleton<CardManager>
             default:
                 break;
         }
-     
+
     }
 
     #endregion
@@ -702,75 +740,12 @@ public class CardManager : Singleton<CardManager>
 
         EnemyAI.Instance.MountingCard(card, state);
     }
-    public virtual void UseCard()
+
+
+    public void TutorialCardOutLine(uint uid)
     {
-
-        /*
-                if (selectCard != null)
-                {
-                    if (onMonsterField && !selectCard.item.isMagic && curMonsterField.curCard == null && curMonsterField.isPlayerField)
-                    {
-                        RemoveCard();
-                        curMonsterField.SetUp(selectCard);
-                    }
-                    else if (onMagicField && selectCard.item.isMagic && curMagicField.curCard == null && curMagicField.isPlayerField)
-                    {
-                        RemoveCard();
-                        curMagicField.SetUp(selectCard);
-                    }
-                    else if (!onCardArea)
-                    {
-
-                        if (!myCards.Contains(selectCard))
-                        {
-                            myCards.Add(selectCard);
-                        }
-                        SetOriginOrder();
-                        CardAlignment();
-                    }
-                    else if (onCardArea)
-                    {
-                        if (!myCards.Contains(selectCard))
-                        {
-                            myCards.Add(selectCard);
-                            SetOriginOrder();
-                            CardAlignment();
-                        }
-
-                    }
-
-                    selectCard = null;
-                }
-        */
+        int index = myCards.FindIndex(x => x.item.uid == uid);
+        myCards[index].SelectOutlineCard();
     }
 
-
-
-    //public bool MyCardIsFull()
-    //{
-    //    if (myCards.Count >= 8)
-    //    {
-    //        return isFullMyCard;
-    //    }
-    //    return !isFullMyCard;
-    //}
-
-    //public void MyCardMove(bool isSpawn)
-    //{
-    //    if (isSpawn)
-    //    {
-    //        for (int i = 0; i < myCards.Count; i++)
-    //        {
-    //            myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < myCards.Count; i++)
-    //        {
-    //            myCards[i].transform.DOMoveZ(-7.5f, 0.3f);
-    //        }
-    //    }
-    //}
 }

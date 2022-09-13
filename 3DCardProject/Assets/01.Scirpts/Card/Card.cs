@@ -22,6 +22,7 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text nameTMP;
     [SerializeField] private TMP_Text descriptionTMP;
     [SerializeField] private GameObject modelPrefab;
+    [SerializeField] private GameObject outline;
 
     [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
@@ -341,6 +342,11 @@ public class Card : MonoBehaviour
         nameTMP.DOFade(0, 1);
         descriptionTMP.DOFade(0, 1);
 
+    }
+
+    public void SelectOutlineCard()
+    {
+        outline.SetActive(true);
     }
 
 }

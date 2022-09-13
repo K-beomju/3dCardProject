@@ -25,10 +25,10 @@ public class TurnManager : Singleton<TurnManager>
         }
         set
         {
-            if(type != value)
+            if (type != value)
             {
                 type = value;
-                if(type == TurnType.Player || type == TurnType.Enemy)
+                if (type == TurnType.Player || type == TurnType.Enemy)
                 {
                     Card playerCard = NewFieldManager.Instance.playerCard;
                     Card enemyCard = NewFieldManager.Instance.enemyCard;
@@ -36,7 +36,8 @@ public class TurnManager : Singleton<TurnManager>
                     Sequence seq = DOTween.Sequence();
                     Outline outline = null;
 
-                    seq.Append(gc.DOFade(0, .1f).OnUpdate(()=> {
+                    seq.Append(gc.DOFade(0, .1f).OnUpdate(() =>
+                    {
                         if (type == TurnType.Player)
                         {
                             enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
@@ -46,7 +47,8 @@ public class TurnManager : Singleton<TurnManager>
                             playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
                         }
                     }));
-                    seq.AppendCallback(() => {
+                    seq.AppendCallback(() =>
+                    {
                         if (type == TurnType.Player)
                         {
                             mainCard = playerCard;
@@ -64,17 +66,18 @@ public class TurnManager : Singleton<TurnManager>
                             outline.OutlineColor = Utils.EnemyColor;
                         }
                     });
-                    seq.Append(gc.DOFade(1, .1f).OnUpdate(()=> {
-                        if(outline != null)
+                    seq.Append(gc.DOFade(1, .1f).OnUpdate(() =>
+                    {
+                        if (outline != null)
                         {
                             outline.OutlineWidth = gc.alpha * 5f;
                         }
                     }));
                 }
-             
+
             }
-         
-           
+
+
         }
     }
 
@@ -90,7 +93,7 @@ public class TurnManager : Singleton<TurnManager>
 
     private void Start()
     {
-        if(StageManager.Instance.SceneState == SceneState.BATTLE)
+        if (StageManager.Instance.SceneState == SceneState.BATTLE)
         {
             mainCam = Camera.main;
             cameraMove = mainCam.GetComponent<CameraMove>();
@@ -98,11 +101,11 @@ public class TurnManager : Singleton<TurnManager>
             UnitNameText = nameTagObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             Type = TurnType.Standby;
         }
-      
+
     }
     private void Update()
     {
-        if(mainCard != null)
+        if (mainCard != null)
         {
             nameTagObj.transform.position = mainCard.LinkedModel.ModelObject.transform.position;
         }
@@ -128,29 +131,58 @@ public class TurnManager : Singleton<TurnManager>
         if (!Instance.CanChangeTurn) return;
         if (Instance.Type != _type)
         {
-            TurnType temp = Instance.Type;
-            Instance.Type = TurnType.Change;
-
-            Instance.ChangeTurnPanel(_type,() =>
+            if (BattleTutorial.isEnemyTurn)
             {
-                Instance.Type = _type;
-                if(temp != TurnType.Standby)
+                Instance.StartCoroutine(Instance.TutorialChangeCo(_type));
+            }
+            else
+            {
+                TurnType temp = Instance.Type;
+                Instance.Type = TurnType.Change;
+
+                Instance.ChangeTurnPanel(_type, () =>
                 {
-                    if (Instance.Type != TurnType.Player)
+                    Instance.Type = _type;
+                    if (temp != TurnType.Standby)
                     {
-                        EnemyAI.Instance.JudgementCard();
+                        if (Instance.Type != TurnType.Player)
+                        {
+                            EnemyAI.Instance.JudgementCard();
+                        }
+                        else
+                        {
+                            CardManager.Instance.AddCard();
+                        }
                     }
-                    else
-                    {
-                        CardManager.Instance.AddCard();
-                    }
-                }
-                    
-
-            });
-
+                });
+            }
         }
+    }
 
+    public IEnumerator TutorialChangeCo(TurnType _type)
+    {
+        yield return new WaitWhile(() => !BattleTutorial.isTurnChange);
+        TurnType temp = Instance.Type;
+        Instance.Type = TurnType.Change;
+
+        Instance.ChangeTurnPanel(_type, () =>
+        {
+            Instance.Type = _type;
+            if (temp != TurnType.Standby)
+            {
+                if (Instance.Type != TurnType.Player)
+                {
+                    EnemyAI.Instance.JudgementCard();
+                }
+                else
+                {
+                    if (BattleTutorial.isTurnChange)
+                        BattleTutorial.isChangeCard = true;
+
+                    CardManager.Instance.AddCard();
+                }
+            }
+        });
     }
 
     public static void PlayerCardMove()
@@ -168,12 +200,12 @@ public class TurnManager : Singleton<TurnManager>
         Instance.Type = type;
     }
 
-    public void ChangeTurnPanel(TurnType type,Action act)
+    public void ChangeTurnPanel(TurnType type, Action act)
     {
         StartCoroutine(ChangeTurnPanelCo(type, act));
     }
 
-    public IEnumerator ChangeTurnPanelCo(TurnType type,Action act)
+    public IEnumerator ChangeTurnPanelCo(TurnType type, Action act)
     {
         yield return new WaitForSeconds(1f);
         if (GameManager.Instance.State == GameState.END) yield break;

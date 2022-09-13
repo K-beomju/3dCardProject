@@ -78,6 +78,34 @@ public class NewFieldManager : Singleton<NewFieldManager>
         }
     }
 
+    public void TutorialAvatarMove(Field field, Action act = null)
+    {
+        StartCoroutine(TutorialAvatarMoveCo(field, act));
+    }
+
+    public IEnumerator TutorialAvatarMoveCo(Field field, Action act = null)
+    {
+        yield return new WaitWhile(() => !BattleTutorial.isEnemyTurn);
+        var node = fields.GetNodeByData(field);
+        Card card = node.Data.avatarCard;
+        if (card != null && card.item.IsAvatar)
+        {
+            Debug.Log("avatarMoveTry");
+            //CheckCardDragSpawnRange();
+
+            if (IsClockDir)
+            {
+                Debug.Log(node.NextNode.Data);
+                Move(node.NextNode.Data, card, act);
+            }
+            else
+            {
+                Debug.Log(node.PrevNode.Data);
+                Move(node.PrevNode.Data, card, act);
+            }
+        }
+    }
+
     public void ChangeDir()
     {
         IsClockDir = !IsClockDir;

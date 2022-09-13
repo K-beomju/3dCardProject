@@ -6,20 +6,45 @@ public class CardActionMove : CardAction
 {
     public override void TakeAction(Card card)
     {
-        if (card.isPlayerCard)
+        if (TutorialManager.Instance.isTutorial)
         {
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField,()=>
+            if (card.isPlayerCard)
             {
-                TurnManager.ChangeTurn(TurnType.Enemy);
-            });
+                NewFieldManager.Instance.TutorialAvatarMove(NewFieldManager.Instance.playerCard.curField, () =>
+                {
+                    TurnManager.ChangeTurn(TurnType.Enemy);
+                });
+            }
+            else
+            {
+                NewFieldManager.Instance.TutorialAvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
+                {
+                    TurnManager.ChangeTurn(TurnType.Player);
+                });
+            }
         }
         else
         {
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
+            if (card.isPlayerCard)
             {
-                TurnManager.ChangeTurn(TurnType.Player);
-            });
+                NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField, () =>
+                {
+                    TurnManager.ChangeTurn(TurnType.Enemy);
+                });
+            }
+            else
+            {
+                NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
+                {
+                    TurnManager.ChangeTurn(TurnType.Player);
+                });
+            }
+
         }
+
+
     }
+
+
 
 }
