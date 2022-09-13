@@ -12,7 +12,15 @@ public class CardActionTitleCard : CardAction
                 // 새 게임
                 SecurityPlayerPrefs.SetBool("IsFirst",false);
                 SaveManager.Instance.SaveGameData();
-                Global.LoadScene.LoadScene("Stage");
+                if (SecurityPlayerPrefs.GetInt("TutorialValue", 0) != 0)
+                {
+                    Global.LoadScene.LoadScene("Stage");
+                }
+                else
+                {
+                    Global.LoadScene.LoadScene("Tutorials");
+                }
+                //SecurityPlayerPrefs.DeleteKey("TutorialValue");
                 break;
             case 1:
                 // 이어하기

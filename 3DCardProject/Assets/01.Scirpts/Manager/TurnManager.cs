@@ -182,12 +182,12 @@ public class TurnManager : Singleton<TurnManager>
 
         if (type == TurnType.Player)
         {
-            changePanel.gameObject.GetComponent<Image>().color = Utils.PlayerColor;
+            changePanel.gameObject.GetComponent<Image>().color = new Color32(Utils.PlayerColor.r, Utils.PlayerColor.g, Utils.PlayerColor.b, 100);
             changeText.text = "내 턴";
         }
         else
         {
-            changePanel.gameObject.GetComponent<Image>().color = Utils.EnemyColor;
+            changePanel.gameObject.GetComponent<Image>().color = new Color32(Utils.EnemyColor.r, Utils.EnemyColor.g, Utils.EnemyColor.b, 100);
             changeText.text = "적 턴";
         }
         seq.Append(changePanel.DOFade(1, .3f));

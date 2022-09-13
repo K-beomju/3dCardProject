@@ -49,17 +49,29 @@ public class TotemMove : MonoBehaviour
 
     private void Start()
     {
-        stageValue = PlayerPrefs.GetInt("StageValue");
+        isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
+        isLock = isTutorial;
+        stageValue = isTutorial ? 0 : PlayerPrefs.GetInt("StageValue");
         routePosition = stageValue;
         transform.position = board.childNodeList[stageValue].transform.position;
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
+        if(isTutorial)
+        {
+            tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue",0);
+            StartCoroutine(TutorialCol());
+        }
     }
 
     private float TimeLeft = 1.0f;
     private float nextTime = 0.0f;
     private bool bChRot = false;
+    
+    [SerializeField]
+    private bool isTutorial;
+    private int tutorialValue = 0;
+
     private void Update()
     {
         diceObj.transform.Rotate(new Vector3(30, 0, 30) * Time.deltaTime);
@@ -78,10 +90,47 @@ public class TotemMove : MonoBehaviour
                 isLock = true;
             }
         }
-
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopAllCoroutines();
+            Global.LoadScene.LoadScene("Stage");
+        }
         if (isMove)
             diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
 
+    }
+    [ContextMenu("ResetStageValue")]
+    public void ResetStageValue()
+    {
+        SecurityPlayerPrefs.DeleteKey("TutorialValue");
+    }
+    private IEnumerator TutorialCol()
+    {
+        switch (tutorialValue)
+        {
+            case 0:
+                yield return TutorialManager.Instance.ExplainCol("스테이지에 관한 튜토리얼 입니다.", 0);
+                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
+                isLock = false;
+                yield return Utils.WaitForInputKey(KeyCode.Space);
+                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
+                break;
+            case 1:
+            case 2:
+                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
+                yield return Utils.WaitForInputKey(KeyCode.Space);
+                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
+                break;
+            case 3:
+                yield return TutorialManager.Instance.ExplainCol("잘 하셨습니다.", 250);
+                yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
+                Global.LoadScene.LoadScene("Stage");
+                yield break;
+            default:
+                break;
+        }
+        tutorialValue++;
+        SecurityPlayerPrefs.SetInt("TutorialValue", tutorialValue);
     }
 
     private IEnumerator MoveMentCo()
@@ -216,7 +265,14 @@ public class TotemMove : MonoBehaviour
             diceParticle.gameObject.SetActive(true);
             diceParticle.transform.position = diceObj.transform.position;
             diceParticle.Play();
-            steps = 2; //UnityEngine.Random.Range(1, 7);
+            if (isTutorial)
+            {
+                steps = 1;
+            }
+            else
+            {
+                steps = UnityEngine.Random.Range(1, 7);
+            }
             routeMinus = steps;
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);

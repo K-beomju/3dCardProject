@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,4 +47,13 @@ public class Utils
     public static Color32 PlayerColor = new Color32(100, 100, 255, 255);
     public static Color32 EnemyColor = new Color32(255, 100, 100, 255);
     public static Color32 sColor = new Color32(255, 255, 255, 255);
+
+    public static IEnumerator WaitForInputKey(KeyCode keyCode)
+    {
+        while (!Input.GetKey(keyCode))
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        yield break;
+    }
 }
