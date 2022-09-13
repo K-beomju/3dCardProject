@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
             {
                 tutorialResultBtn.onClick.AddListener(() =>
                 {
-                    SceneManager.LoadScene("Stage");
+                    SceneManager.LoadScene("Tutorials");
 
                 });
             }

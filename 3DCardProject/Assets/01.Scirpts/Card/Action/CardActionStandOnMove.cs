@@ -10,6 +10,10 @@ public class CardActionStandOnMove : CardAction
         this.card = card.curField.avatarCard;
         var node = NewFieldManager.Instance.GetNodeByData(card.curField);
 
+        if(TutorialManager.Instance.isTutorial)
+            TutorialManager.Instance.Fade(false);
+
+
         TurnManager.Instance.CanChangeTurn = false;
         NewFieldManager.Instance.AvatarMove(card.curField,()=> {
             Debug.Log("CT");

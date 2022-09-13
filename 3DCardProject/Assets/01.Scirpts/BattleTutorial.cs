@@ -40,11 +40,11 @@ public class BattleTutorial : MonoBehaviour
         TutorialManager.Instance.Fade(false);
         yield return new WaitForSeconds(2f);
         yield return TutorialManager.Instance.ExplainCol("공격 카드는 핵을 내 것으로 바꿀 수 있습니다", 0, 2);
-        yield return TutorialManager.Instance.ExplainCol("카드 소환은 1턴에 1번만 실행할 수 있습니다", 0, 2);
+        yield return TutorialManager.Instance.ExplainCol("카드 소환은 한 턴에 힌 번만 실행할 수 있습니다", 0, 2);
         yield return new WaitForSeconds(1f);
         isEnemyTurn = true;
         yield return new WaitForSeconds(1f);
-        yield return TutorialManager.Instance.ExplainCol("카드를 소환한 토템은 한칸 씩 움직일 수 있습니다", 0, 2);
+        yield return TutorialManager.Instance.ExplainCol("카드를 소환한 토템은 한 칸씩 움직일 수 있습니다", 0, 2);
         yield return new WaitForSeconds(2f);
         isTurnChange = true;
         yield return new WaitWhile(() => !isChangeCard);
@@ -52,10 +52,15 @@ public class BattleTutorial : MonoBehaviour
         yield return TutorialManager.Instance.ExplainCol("벽 카드는 상대방의 진로를 방해할 수 있습니다", 0, 2);
         yield return TutorialManager.Instance.ExplainCol("체인지 카드를 발동해봅시다", 0, 2);
         yield return new WaitForSeconds(1f);
+        TutorialManager.Instance.Fade(true);
+        TutorialManager.Instance.Explain("체인지 카드를 발동해봅시다", 450);
 
         CardManager.Instance.TutorialCardOutLine(102);
         isTurnChange = false;
         yield return new WaitWhile(() => !isChangeDir);
+        TutorialManager.Instance.Fade(false);
+        yield return new WaitForSeconds(1f);
+
         yield return TutorialManager.Instance.ExplainCol("체인지 카드는 이동 방향을 반대로 바꿀 수 있습니다", 0, 2);
         isTurnChange = true;
 
@@ -63,14 +68,13 @@ public class BattleTutorial : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         yield return TutorialManager.Instance.ExplainCol("스탑 카드는 움직이지 않고 턴을 넘길 수 있습니다", 0, 2);
-        yield return TutorialManager.Instance.ExplainCol("적을 한번에 잡기 위해선 뜀틀 카드를 써야합니다", 0, 2);
+        yield return TutorialManager.Instance.ExplainCol("적을 한 번에 잡기 위해선 뜀틀 카드를 써야 합니다", 0, 2);
         yield return TutorialManager.Instance.ExplainCol("뜀틀 카드는 한 칸 더 이동할 수 있습니다", 0, 2);
+        yield return new WaitForSeconds(1f);
+
+        TutorialManager.Instance.Fade(true);
+        TutorialManager.Instance.Explain("뜀틀 카드를 발동해봅시다", 450);
         CardManager.Instance.TutorialCardOutLine(103);
-
-
-
-
-        Debug.LogWarning("성공");
 
         yield return null;
     }
