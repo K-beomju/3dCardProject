@@ -6,8 +6,8 @@ public class CardActionChangeDir : CardAction
 {
     public override void TakeAction(Card card)
     {
-        if (BattleTutorial.isChangeCard)
-            BattleTutorial.isChangeDir = true;
+        if (BattleTutorial.Instance != null && BattleTutorial.Instance.isChangeCard)
+            BattleTutorial.Instance.isChangeDir = true;
 
         NewFieldManager.Instance.ChangeDir();
     }

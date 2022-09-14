@@ -16,7 +16,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     public bool IsClockDir { get; private set; } = true; // 시계방향인가?
   
 
-    private bool canCheckRange = false;
+    public bool CanCheckRange = false;
     public bool isFrontJumping = false;
 
     protected override void Awake()
@@ -42,7 +42,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         fields.GetNodeByIndex(2).Data.SetUp(enemyCard, enemyCard.OnSpawn);
         fields.GetNodeByIndex(5).Data.SetUp(playerCard, () => {
             playerCard.OnSpawn();
-            canCheckRange = true;
+            CanCheckRange = true;
             TurnManager.Instance.CanChangeTurn = true;
         });
         //PlayerManager.Instance.playerCards.Add(playerCard);
@@ -53,8 +53,11 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     private void Update()
     { // 수정 예정 
-        if (canCheckRange)
+        if (CanCheckRange)
+        {
             CheckCardDragSpawnRange();
+            CanCheckRange = false;
+        }
     }
     public void AvatarMove(Field field, Action act = null)
     {
@@ -85,7 +88,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     public IEnumerator TutorialAvatarMoveCo(Field field, Action act = null)
     {
-        yield return new WaitWhile(() => !BattleTutorial.isEnemyTurn);
+        yield return new WaitWhile(() => !BattleTutorial.Instance.isEnemyTurn);
         var node = fields.GetNodeByData(field);
         Card card = node.Data.avatarCard;
         if (card != null && card.item.IsAvatar)
@@ -249,10 +252,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     }
     public void CheckCardDragSpawnRange()
     {
-        for (int i = 0; i < fieldList.Count; i++)
-        {
-            fieldList[i].isEnterRange = false;
-        }
+        DisableSpawnRange();
 
         var node = fields.GetNodeByData(playerCard.curField);
         Field prevField = node.PrevNode.Data;
@@ -260,6 +260,13 @@ public class NewFieldManager : Singleton<NewFieldManager>
         prevField.isEnterRange = true;
         nextField.isEnterRange = true;
 
+    }
+    public void DisableSpawnRange()
+    {
+        for (int i = 0; i < fieldList.Count; i++)
+        {
+            fieldList[i].isEnterRange = false;
+        }
     }
     public void CheckCardDragSpawnRange(Field field)
     {

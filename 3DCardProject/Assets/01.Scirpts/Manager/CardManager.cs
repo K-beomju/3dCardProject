@@ -78,10 +78,12 @@ public class CardManager : Singleton<CardManager>
             mainCam = Camera.main;
             if (StageManager.Instance.SceneState == SceneState.BATTLE)
             {
-                if(TutorialManager.Instance.isTutorial)
+                if (TutorialManager.Instance.isTutorial)
+                {
                     StartCoroutine(TutorialSpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+                }
                 else
-                StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+                    StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
 
                 deckManager = GetComponent<DeckManager>();
 
@@ -105,8 +107,9 @@ public class CardManager : Singleton<CardManager>
 
     private IEnumerator TutorialSpawnCardCo(Action act = null)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(10.5f);
 
+       
 
         TutorialAddCardForStart(103);
         yield return new WaitForSeconds(0.2f);
@@ -119,6 +122,13 @@ public class CardManager : Singleton<CardManager>
         TutorialAddCardForStart(105);
 
 
+        Item temp = deckManager.itemBuffer[1];
+        if(deckManager.itemBuffer[1] != deckManager.FindItem(101))
+        {
+            deckManager.itemBuffer[1] = deckManager.FindItem(101);
+            deckManager.itemBuffer[0] = temp;
+
+        }
 
         act?.Invoke();
     }
@@ -288,6 +298,7 @@ public class CardManager : Singleton<CardManager>
                             if (!field.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(field, selectCard);
+                                NewFieldManager.Instance.DisableSpawnRange();
                                 //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
@@ -297,6 +308,7 @@ public class CardManager : Singleton<CardManager>
                             if (field.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(field, selectCard);
+                                NewFieldManager.Instance.DisableSpawnRange();
                                 //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
@@ -309,6 +321,7 @@ public class CardManager : Singleton<CardManager>
                             if (!card.curField.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(card.curField, selectCard);
+                                NewFieldManager.Instance.DisableSpawnRange();
                                 //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
@@ -318,6 +331,7 @@ public class CardManager : Singleton<CardManager>
                             if (card.curField.isCommon)
                             {
                                 NewFieldManager.Instance.Spawn(card.curField, selectCard);
+                                NewFieldManager.Instance.DisableSpawnRange();
                                 //PlayerManager.Instance.playerCards.Add(selectCard);
                                 RemoveCard(false);
                             }
@@ -443,6 +457,23 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
+    public void TutorialAddCard()
+    {
+
+        Item popItem = deckManager.PopItem();
+        if (popItem != null)
+        {
+            Card card = CreateCard(popItem, true);
+            myCards.Add(card);
+            card.OnCreateCard();
+            card.isPlayerCard = false;
+            if (popItem.IsReflectCard)
+                ReflectBox.Instance.AddCardUI(popItem, card);
+            SetOriginOrder();
+
+            CardAlignment();
+        }
+    }
     public void TutorialAddCardForStart(uint uid)
     {
         Item popItem = deckManager.PopItem(uid);
@@ -451,7 +482,7 @@ public class CardManager : Singleton<CardManager>
             Card card = CreateCard(popItem, true);
             myCards.Add(card);
             card.OnCreateCard();
-
+            card.isPlayerCard = false;
             if (popItem.IsReflectCard)
                 ReflectBox.Instance.AddCardUI(popItem, card);
             SetOriginOrder();
@@ -740,7 +771,6 @@ public class CardManager : Singleton<CardManager>
 
         EnemyAI.Instance.MountingCard(card, state);
     }
-
 
     public void TutorialCardOutLine(uint uid)
     {

@@ -143,6 +143,10 @@ public class EnemyAI : Singleton<EnemyAI>
             0b100000001001000011110111, () => {
                 CardManager.Instance.MountCardSupport(107, MountState.Prev);
         } },
+                  {
+            0b10011000000000100010000011110010, () => {
+                CardManager.Instance.MountCardSupport(100);
+        } },
 
                    {
             0b1000000000100000100111110110, () => {
@@ -216,7 +220,7 @@ public class EnemyAI : Singleton<EnemyAI>
                     break;
             }
         }
-        //print(Convert.ToString(currentState, 2));
+        print(Convert.ToString(currentState, 2));
     }
 
     [ContextMenu("JudgementCard")]

@@ -47,20 +47,28 @@ public class DeckManager : MonoBehaviour
         itemBuffer.RemoveAt(0);
         return item;
     }
-
-    public Item PopItem(uint uid)
+    public Item FindItem(uint uid)
     {
         if (itemBuffer.Count < 1) return null;
 
         foreach (var item in itemBuffer)
         {
-            if (item.uid == uid )
+            if (item.uid == uid)
             {
-                itemBuffer.Remove(item);
                 return item;
             }
         }
-        return null ;
+        return null;
+    }
+    public Item PopItem(uint uid)
+    {
+        if (itemBuffer.Count < 1) return null;
+        Item item = FindItem(uid);
+        itemBuffer.Remove(item);
+        if (item != null)
+            return item;
+        else
+            return null;
     }
     protected virtual void SetupItemBuffer(List<Item> items)
     {

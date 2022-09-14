@@ -87,6 +87,12 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public IEnumerator CallOnReflectCo()
     {
+        if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+        {
+            if (BattleTutorial.Instance != null)
+                BattleTutorial.Instance.isNullity = true;
+        }
+
         if (CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
         {
             Vector3 pos = CardManager.Instance.hackField.transform.position;
@@ -167,6 +173,11 @@ public class ReflectBox : Singleton<ReflectBox>
             NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.enemyCard.curField, () =>
             {
                 TurnManager.ChangeTurn();
+                if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+                {
+                    if (BattleTutorial.Instance != null)
+                        BattleTutorial.Instance.isDoneNullity = true;
+                }
             });
             //CardManager.Instance.CardAlignment();
             // 박스 내리기
@@ -179,6 +190,10 @@ public class ReflectBox : Singleton<ReflectBox>
     }
     public void CancelReflect()
     {
+        if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+        {
+            return;
+        }
         CardManager.Instance.WaitingActionUntilFinishOnReflect?.Invoke();
         ReflectBoxActive(false);
     }

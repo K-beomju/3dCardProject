@@ -6,9 +6,10 @@ public class CardAttackAction : CardAction
 {
     public override void TakeAction(Card card)
     {
-        if(TutorialManager.Instance.isTutorial)
+        if(TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
         {
-            BattleTutorial.isAttak = true;
+            if (BattleTutorial.Instance != null)
+                BattleTutorial.Instance.isAttak = true;
         }
 
         FindObjectOfType<Hack>().ChangeHack(card);

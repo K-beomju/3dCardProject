@@ -76,7 +76,7 @@ public class ShopManager : Singleton<ShopManager>
         isTutorialDone = false;
         isPurchaseAble = false;
        
-        yield return TutorialManager.Instance.ExplainCol("이곳은 상점입니다.", 0);
+        yield return TutorialManager.Instance.ExplainCol("\"상점\"튜토리얼입니다.", 0);
         yield return StartProcess();
         yield return TutorialManager.Instance.ExplainCol("일회성 아이템을 구입할 수 있습니다.", 250);
         yield return TutorialManager.Instance.ExplainCol("가운데 카드를 아래의 블록에 끌어놓아 구입합시다.", 250);
@@ -90,7 +90,7 @@ public class ShopManager : Singleton<ShopManager>
         shopCardList[1].isPlayerCard = true;
         SaveManager.Instance.gameData.Money += shopCardList[1].item.Price;
 
-        yield return WaitBeforePurchase();
+        yield return new WaitWhile(()=>!isPurchase);
 
         SaveManager.Instance.gameData.Money = 0;
 
@@ -99,15 +99,6 @@ public class ShopManager : Singleton<ShopManager>
         yield return TutorialManager.Instance.ExplainCol("\"Exit\"를(을) 눌러 돌아갑시다.", 0);
 
         isTutorialDone = true;
-    }
-    private IEnumerator WaitBeforePurchase()
-    {
-        while (!isPurchase)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        
-        yield break;
     }
     public IEnumerator StartProcess()
     {

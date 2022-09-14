@@ -131,7 +131,7 @@ public class TurnManager : Singleton<TurnManager>
         if (!Instance.CanChangeTurn) return;
         if (Instance.Type != _type)
         {
-            if (BattleTutorial.isEnemyTurn)
+            if (BattleTutorial.Instance != null && BattleTutorial.Instance.isEnemyTurn)
             {
                 Instance.StartCoroutine(Instance.TutorialChangeCo(_type));
             }
@@ -151,7 +151,14 @@ public class TurnManager : Singleton<TurnManager>
                         }
                         else
                         {
-                            CardManager.Instance.AddCard();
+                            if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+                            {
+                                CardManager.Instance.TutorialAddCard();
+                            }
+                            else
+                            {
+                                CardManager.Instance.AddCard();
+                            }
                         }
                     }
                 });
@@ -161,7 +168,7 @@ public class TurnManager : Singleton<TurnManager>
 
     public IEnumerator TutorialChangeCo(TurnType _type)
     {
-        yield return new WaitWhile(() => !BattleTutorial.isTurnChange);
+        yield return new WaitWhile(() => !BattleTutorial.Instance.isTurnChange);
         TurnType temp = Instance.Type;
         Instance.Type = TurnType.Change;
 
@@ -176,8 +183,10 @@ public class TurnManager : Singleton<TurnManager>
                 }
                 else
                 {
-                    if (BattleTutorial.isTurnChange)
-                        BattleTutorial.isChangeCard = true;
+                    if (BattleTutorial.Instance.isTurnChange)
+                        BattleTutorial.Instance.isChangeCard = true;
+
+                    NewFieldManager.Instance.CanCheckRange = true;
 
                     CardManager.Instance.AddCard();
                 }
