@@ -57,9 +57,15 @@ public class ShopManager : Singleton<ShopManager>
         RefreshMoneyInfo();
         exitButton.onClick.AddListener(()=> {
             // 스테이지로 돌아가기
-            if (!isTutorial || (isTutorial && isTutorialDone))
+            if (!isTutorial)
+            {
                 Global.LoadScene.LoadScene("Stage", () => { StageManager.Instance.OnLoadStageScene?.Invoke(); StageManager.Instance.SceneState = SceneState.STAGE; });
-           
+            }
+            else if(isTutorial && isTutorialDone)
+            {
+                Global.LoadScene.LoadScene("Tutorials");
+            }
+
 
         });
     }
@@ -80,13 +86,13 @@ public class ShopManager : Singleton<ShopManager>
         {
             card.isPlayerCard = false;
         }
+        shopCardList[1].SelectOutlineCard();
         shopCardList[1].isPlayerCard = true;
         SaveManager.Instance.gameData.Money += shopCardList[1].item.Price;
 
         yield return WaitBeforePurchase();
 
         SaveManager.Instance.gameData.Money = 0;
-        TutorialManager.Instance.isTutorial = false;
 
         yield return TutorialManager.Instance.ExplainCol("잘하셨습니다.", 0);
         yield return TutorialManager.Instance.ExplainCol("구매한 아이템은 \"전투\"에서 사용하실수 있습니다.", 0);

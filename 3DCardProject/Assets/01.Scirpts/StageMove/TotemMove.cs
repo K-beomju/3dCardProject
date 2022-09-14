@@ -117,15 +117,16 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
                 break;
             case 1:
-            case 2:
                 yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
                 isLock = false;
                 yield return Utils.WaitForInputKey(KeyCode.Space);
                 yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
                 break;
-            case 3:
+            case 2:
                 yield return TutorialManager.Instance.ExplainCol("잘 하셨습니다.", 250);
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
+                TutorialManager.Instance.isTutorial = false;
+                SaveManager.Instance.gameData.DisposableItem = null;
                 PlayerPrefs.SetInt("StageValue",0);
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
