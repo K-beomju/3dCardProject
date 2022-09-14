@@ -3376,8 +3376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922f383be33c7184cbbb6ddc54dcc825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  enemyType: 1
+  type: 1
+  enemyType: 0
   isClear: 0
 --- !u!1001 &655404471
 PrefabInstance:
@@ -12365,6 +12365,7 @@ MonoBehaviour:
   routePosition: 0
   stageValue: 0
   routeMinus: 0
+  isLock: 0
   battleFieldModel: {fileID: 362342852}
   diceText: {fileID: 747618251}
   rotSpeed: 10

@@ -96,7 +96,7 @@ public class GameManager : Singleton<GameManager>
         if (TutorialManager.Instance.isTutorial)
         {
             tutorialPanel.SetActive(true);
-            TutorialManager.Instance.isTutorial = false;
+            //TutorialManager.Instance.isTutorial = false;
         }
         else
             resultPanel.SetActive(true);

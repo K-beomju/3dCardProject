@@ -30,6 +30,7 @@ public class TotemMove : MonoBehaviour
     public int routeMinus;
 
     private bool isMove = false;
+    [SerializeField]
     private bool isLock = false;
     private bool isStart = false;
     private Animator anim;
@@ -51,7 +52,7 @@ public class TotemMove : MonoBehaviour
     {
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
-        stageValue = isTutorial ? 0 : PlayerPrefs.GetInt("StageValue");
+        stageValue = PlayerPrefs.GetInt("StageValue");
         routePosition = stageValue;
         transform.position = board.childNodeList[stageValue].transform.position;
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
@@ -118,12 +119,14 @@ public class TotemMove : MonoBehaviour
             case 1:
             case 2:
                 yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
+                isLock = false;
                 yield return Utils.WaitForInputKey(KeyCode.Space);
                 yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
                 break;
             case 3:
                 yield return TutorialManager.Instance.ExplainCol("잘 하셨습니다.", 250);
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
+                PlayerPrefs.SetInt("StageValue",0);
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:
@@ -229,7 +232,7 @@ public class TotemMove : MonoBehaviour
 
     public EnemyType ReturnBtDifficult()
     {
-        return board.boardList[routePosition].enemyType;
+        return board.boardList[routePosition/2].enemyType;
     }
 
     private bool MoveNextNode(Vector3 goal)
