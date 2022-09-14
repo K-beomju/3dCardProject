@@ -68,14 +68,17 @@ public class TotemMove : MonoBehaviour
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
         rotSpeed = 0;
-        spaceGroup.gameObject.SetActive(true);
-        spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+        if (spaceGroup != null)
+        {
+            spaceGroup.gameObject.SetActive(true);
+            spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+        }
 
         board.CheckRouteCam(false);
 
         if (isTutorial)
         {
-            tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue",0);
+            tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue", 0);
             StartCoroutine(TutorialCol());
         }
     }
@@ -83,7 +86,7 @@ public class TotemMove : MonoBehaviour
     private float TimeLeft = 1.0f;
     private float nextTime = 0.0f;
     private bool bChRot = false;
-    
+
     [SerializeField]
     private bool isTutorial;
     private int tutorialValue = 0;
@@ -107,7 +110,7 @@ public class TotemMove : MonoBehaviour
                 isLock = true;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             StopAllCoroutines();
             Global.LoadScene.LoadScene("Stage");
@@ -143,7 +146,7 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
                 TutorialManager.Instance.isTutorial = false;
                 SaveManager.Instance.gameData.DisposableItem = null;
-                PlayerPrefs.SetInt("StageValue",0);
+                PlayerPrefs.SetInt("StageValue", 0);
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:
@@ -189,7 +192,7 @@ public class TotemMove : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         var type = board.boardList[routeValue].type;
-       
+
 
         if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         {
@@ -205,7 +208,7 @@ public class TotemMove : MonoBehaviour
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
                 battleModelParticle.gameObject.SetActive(true);
-                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0,0.2f,0);
+                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
                 battleModelParticle.Play();
                 this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
                 OnComplete(() =>
@@ -254,7 +257,7 @@ public class TotemMove : MonoBehaviour
 
     public EnemyType ReturnBtDifficult()
     {
-        return board.boardList[routePosition/2].enemyType;
+        return board.boardList[routePosition / 2].enemyType;
     }
 
     private bool MoveNextNode(Vector3 goal)
@@ -266,7 +269,7 @@ public class TotemMove : MonoBehaviour
 
     private void FadeInOut(int time, int delayTime, Action action = null)
     {
-        fadeGroup.DOFade(1, time).OnComplete(() => fadeGroup.DOFade(0,time).OnComplete(() => action()).SetDelay(delayTime));
+        fadeGroup.DOFade(1, time).OnComplete(() => fadeGroup.DOFade(0, time).OnComplete(() => action()).SetDelay(delayTime));
     }
 
     private void BattleScene()
@@ -319,11 +322,14 @@ public class TotemMove : MonoBehaviour
     public void RestAction()
     {
         healParticle.gameObject.SetActive(true);
-        healParticle.transform.position = transform.position + new Vector3(0,0.5f,0);
+        healParticle.transform.position = transform.position + new Vector3(0, 0.5f, 0);
         healParticle.Play();
         healFieldParticle.gameObject.SetActive(false);
-        spaceGroup.gameObject.SetActive(true);
-        spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+        if (spaceGroup != null)
+        {
+            spaceGroup.gameObject.SetActive(true);
+            spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+        }
 
     }
 

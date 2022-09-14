@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a18cb652242bf643a2020c343320856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDontDestroyOnLoad: 1
   curStageIndex: 0
   debug_targetStage: 0
   <stageArray>k__BackingField:
@@ -55,3 +56,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ffcf788be560773498d0da6a59ab5dd3, type: 2}
   - {fileID: 11400000, guid: e2b3324c6b67e204cba4037ba53d85d0, type: 2}
   - {fileID: 11400000, guid: 4375f4f43ab9e9c499d1c191029c4db4, type: 2}
+  enemyType: 0
+  SceneState: 0
+  coinPt: {fileID: 0}

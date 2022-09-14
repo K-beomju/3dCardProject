@@ -109,6 +109,8 @@ public class BoardManager : MonoBehaviour
 
     public void CheckRouteCam(bool soft)
     {
+        if (totemCam == null) return;
+
         for (int i = 0; i < camChangeRouteValue.Length; i++)
         {
             if(totem.routePosition >= camChangeRouteValue[i])
