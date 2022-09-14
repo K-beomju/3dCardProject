@@ -11,7 +11,7 @@ public class Coin : MonoBehaviour
 
     private IEnumerator Detactive()
     {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.35f);
         StageManager.Instance.GetCoinEffect(this.transform);
         gameObject.SetActive(false);
     }    
