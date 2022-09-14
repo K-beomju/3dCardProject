@@ -105,7 +105,10 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                spaceGroup.DOFade(0, 1).OnComplete(() => spaceGroup.gameObject.SetActive(false));
+                if (spaceGroup != null)
+                {
+                    spaceGroup.DOFade(0, 1).OnComplete(() => spaceGroup.gameObject.SetActive(false));
+                }
                 anim.SetTrigger("Attack");
                 isLock = true;
             }
