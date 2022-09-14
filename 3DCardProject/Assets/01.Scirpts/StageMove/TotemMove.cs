@@ -43,6 +43,8 @@ public class TotemMove : MonoBehaviour
     public Ease ease;
     #endregion
 
+    [SerializeField] private CanvasGroup spaceGroup;
+
 
     private void Awake()
     {
@@ -66,9 +68,10 @@ public class TotemMove : MonoBehaviour
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
         rotSpeed = 0;
+        spaceGroup.gameObject.SetActive(true);
+        spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
 
         board.CheckRouteCam(false);
-
 
         if (isTutorial)
         {
@@ -99,7 +102,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-
+                spaceGroup.DOFade(0, 1).OnComplete(() => spaceGroup.gameObject.SetActive(false));
                 anim.SetTrigger("Attack");
                 isLock = true;
             }
@@ -319,6 +322,9 @@ public class TotemMove : MonoBehaviour
         healParticle.transform.position = transform.position + new Vector3(0,0.5f,0);
         healParticle.Play();
         healFieldParticle.gameObject.SetActive(false);
+        spaceGroup.gameObject.SetActive(true);
+        spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+
     }
 
 

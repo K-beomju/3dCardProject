@@ -117,11 +117,11 @@ public class BoardManager : MonoBehaviour
                 {
                     case 0:
                         totemRotateRouteVector = new Vector3(totemCam.transform.eulerAngles.x, -93, totemCam.transform.eulerAngles.z);
-                       
                         break;
                     default:
                         break;
                 }
+
                 if (soft)
                     totemCam.transform.DORotate(totemRotateRouteVector, 1);
                 else
