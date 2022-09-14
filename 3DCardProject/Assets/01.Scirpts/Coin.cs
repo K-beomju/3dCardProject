@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    public bool isEffect = false;
+    public float detaCount;
+
     void Start()
     {
         StartCoroutine(Detactive());
@@ -11,7 +14,8 @@ public class Coin : MonoBehaviour
 
     private IEnumerator Detactive()
     {
-        yield return new WaitForSeconds(.35f);
+        yield return new WaitForSeconds(detaCount);
+        if(isEffect)
         StageManager.Instance.GetCoinEffect(this.transform);
         gameObject.SetActive(false);
     }    

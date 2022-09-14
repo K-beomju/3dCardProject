@@ -41,10 +41,16 @@ public class PlayerDataInfo : MonoBehaviour
         goldText.text = SaveManager.Instance.gameData.Money.ToString();
     }
 
-    [ContextMenu("GetGold")]
-    public void GetGoldDirect()
+    [ContextMenu("GetGoldIncreaseDirect")]
+    public void GetGoldIncreaseDirect()
     {
         StartCoroutine(GetGoldIncreaseDirectCo(value));
+    }
+
+    [ContextMenu("GetGoldDecreaseDirect")]
+    public void GetGoldDecreaseDirect()
+    {
+        StartCoroutine(GetGoldDecreaseDirectCo(value));
     }
 
     private IEnumerator GetGoldIncreaseDirectCo(int value)
@@ -53,6 +59,8 @@ public class PlayerDataInfo : MonoBehaviour
         {
             yield return new WaitForSeconds(.15f);
             coin = Global.Pool.GetItem<Coin>();
+            coin.isEffect = true;
+            coin.detaCount = .35f;
             coin.transform.position = player.transform.position + new Vector3(0, 2.5f, 0);
             coin.transform.rotation = Quaternion.Euler(90, 0, 0);
             coin.transform.DOLocalRotate(new Vector3(90, 90, 0), 1);
@@ -70,7 +78,6 @@ public class PlayerDataInfo : MonoBehaviour
             .Join(coinImage.transform.DORotate(new Vector3(0, 0, 15), .3f))
             .Insert(0.3f, coinImage.transform.DORotate(new Vector3(0, 0, -15), .3f))
             .Insert(0.6f, coinImage.transform.DORotate(new Vector3(0, 0, 0), .3f));
-
         mySeq.Insert(0.1f, plusText.transform.DOMoveY(camVec.y + 150, .3f).SetEase(ease).SetLoops(2, LoopType.Yoyo))
             .Join(plusText.DOFade(1, 0.3f))
             .Join(plusText.transform.DORotate(new Vector3(0, 0, -7), .3f))
@@ -85,8 +92,22 @@ public class PlayerDataInfo : MonoBehaviour
             {
                 coinGroup.transform.DOMoveY(camVec.y + 10, .3f);
                 coinGroup.DOFade(0, 0.3f);
-            })); ;
-      
+            }));
+
         mySeq.Play();
+    }
+
+    private IEnumerator GetGoldDecreaseDirectCo(int value)
+    {
+        for (int i = 0; i < value; i++)
+        {
+            yield return new WaitForSeconds(0.18f);
+            coin = Global.Pool.GetItem<Coin>();
+            coin.isEffect = false;
+            coin.detaCount = 1f;
+            coin.transform.position = player.transform.position + new Vector3(0, 1, 0);
+            coin.transform.rotation = Quaternion.Euler(90, 0, mainCam.transform.eulerAngles.x + 50);
+            coin.transform.DOMoveY(3f, 1.5f).SetEase(Ease.Linear);
+        }
     }
 }
