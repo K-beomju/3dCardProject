@@ -352,6 +352,8 @@ public class Card : MonoBehaviour
         cardBorder.enabled = false;
         nameTMP.GetComponent<MeshRenderer>().enabled = false;
         descriptionTMP.GetComponent<MeshRenderer>().enabled = false;
+        typeTMP.GetComponent<MeshRenderer>().enabled = false;
+        
     }
 
     public void DeleteTrapCard()
