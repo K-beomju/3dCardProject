@@ -23,6 +23,7 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text descriptionTMP;
     [SerializeField] private GameObject modelPrefab;
     [SerializeField] private GameObject outline;
+    [SerializeField] private TMP_Text typeTMP;
 
     [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
@@ -61,6 +62,7 @@ public class Card : MonoBehaviour
             nameTMP.text = "";
             costTMP.text = "";
             descriptionTMP.text = "";
+            typeTMP.text = "";
         }
     }
 
@@ -135,6 +137,24 @@ public class Card : MonoBehaviour
         nameTMP.text = this.item.itemName;
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
+        string tmpTxt = "";
+        if(this.item.IsAvatar)
+        {
+            tmpTxt = "아바타";
+        }
+        else if(this.item.IsStructCard)
+        {
+            tmpTxt = "설치";
+        }
+        else if(this.item.IsReflectCard)
+        {
+            tmpTxt = "받아치기";
+        }
+        else
+        {
+            tmpTxt = "일반";
+        }
+        typeTMP.text = tmpTxt;
     }
     
     public void MoveTransform(PRS prs, bool useDotween, float dotWeenTime = 0)
