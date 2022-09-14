@@ -25,9 +25,10 @@ public class TotemMove : MonoBehaviour
 
     public Necromancer necro;
 
-    public int routePosition;
-    public int stageValue;
-    public int routeMinus;
+    public int routePosition;   // 이동거리 총합 (이벤트 + 이동 필드)
+    public int routeStep;       // 주사위 값 저장                     
+    public int routeValue;      // 이동거리 총합 - 주사위 값 - 스테이지 값 뺀 값  (이걸로 보드타입 판별)
+    public int stageValue;      // routeValue으로 저장 시작할 때 이걸로 위치 잡음             
 
     private bool isMove = false;
     [SerializeField]
@@ -53,8 +54,14 @@ public class TotemMove : MonoBehaviour
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
         stageValue = PlayerPrefs.GetInt("StageValue");
-        routePosition = stageValue;
-        transform.position = board.childNodeList[stageValue].transform.position;
+        routeValue = PlayerPrefs.GetInt("RouteValue");
+        routePosition = stageValue + routeValue;
+
+        Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
+        Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
+        StartCoroutine(LookAtCo(lookAtPos));
+
+        transform.position = board.boardList[stageValue].transform.position;
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
@@ -161,15 +168,17 @@ public class TotemMove : MonoBehaviour
                 diceText.text = steps.ToString();
             }
             routePosition++;
-
-
         }
+
+
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
+        routeValue = routePosition - routeStep - stageValue;
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        var type = board.boardList[routePosition - routeMinus].type;
+        var type = board.boardList[routeValue].type;
+       
 
         if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         {
@@ -223,10 +232,11 @@ public class TotemMove : MonoBehaviour
         }
 
         isMove = false;
-        PlayerPrefs.SetInt("StageValue", routePosition);
+        PlayerPrefs.SetInt("StageValue", routeValue);
+        PlayerPrefs.SetInt("RouteValue", routeValue);
+
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
-        routeMinus = 0;
         isStart = false;
         isLock = false;
     }
@@ -277,10 +287,10 @@ public class TotemMove : MonoBehaviour
             {
                 steps = UnityEngine.Random.Range(1, 7);
             }
-            routeMinus = steps;
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
             diceText.text = steps.ToString();
+            routeStep = steps;
 
             if (!isMove)
             {
@@ -303,6 +313,13 @@ public class TotemMove : MonoBehaviour
         healFieldParticle.gameObject.SetActive(false);
     }
 
+
+    private IEnumerator LookAtCo(Vector3 pos)
+    {
+        yield return null;
+        transform.LookAt(pos);
+
+    }
 
 
 }

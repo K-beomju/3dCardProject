@@ -23,5 +23,7 @@ public class DebugCommand : EditorWindow
     public static void StageValueReset()
     {
         PlayerPrefs.DeleteKey("StageValue");
+        PlayerPrefs.DeleteKey("RouteValue");
+
     }
 }

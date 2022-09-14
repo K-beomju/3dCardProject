@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922f383be33c7184cbbb6ddc54dcc825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   enemyType: 0
   isClear: 0
 --- !u!1001 &655404471
@@ -5247,7 +5247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922f383be33c7184cbbb6ddc54dcc825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   enemyType: 0
   isClear: 0
 --- !u!1001 &1029659607
@@ -12363,8 +12363,9 @@ MonoBehaviour:
   cam: {fileID: 100319112}
   necro: {fileID: 1100083572}
   routePosition: 0
+  routeStep: 0
+  routeValue: 0
   stageValue: 0
-  routeMinus: 0
   isLock: 0
   battleFieldModel: {fileID: 362342852}
   diceText: {fileID: 747618251}
