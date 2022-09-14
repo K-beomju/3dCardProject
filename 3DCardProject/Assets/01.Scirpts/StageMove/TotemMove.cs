@@ -65,7 +65,9 @@ public class TotemMove : MonoBehaviour
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
-        if(isTutorial)
+        rotSpeed = 0;
+
+        if (isTutorial)
         {
             tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue",0);
             StartCoroutine(TutorialCol());
@@ -82,7 +84,7 @@ public class TotemMove : MonoBehaviour
 
     private void Update()
     {
-        diceObj.transform.Rotate(new Vector3(30, 0, 30) * Time.deltaTime);
+        diceObj.transform.Rotate(new Vector3(30, 0, 30) * rotSpeed * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space) && !isLock)
         {
             if (!isStart)
@@ -90,6 +92,7 @@ public class TotemMove : MonoBehaviour
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
                 isStart = true;
+                DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
             }
             else
             {
@@ -173,6 +176,7 @@ public class TotemMove : MonoBehaviour
 
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
+        rotSpeed = 0;
         routeValue = routePosition - routeStep - stageValue;
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
