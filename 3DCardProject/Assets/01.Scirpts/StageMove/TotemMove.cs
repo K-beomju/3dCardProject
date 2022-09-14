@@ -67,6 +67,9 @@ public class TotemMove : MonoBehaviour
         itemMark.SetActive(false);
         rotSpeed = 0;
 
+        board.CheckRouteCam(false);
+
+
         if (isTutorial)
         {
             tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue",0);
@@ -171,6 +174,7 @@ public class TotemMove : MonoBehaviour
                 diceText.text = steps.ToString();
             }
             routePosition++;
+            board.CheckRouteCam(true);
         }
 
 
@@ -200,7 +204,7 @@ public class TotemMove : MonoBehaviour
                 battleModelParticle.gameObject.SetActive(true);
                 battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0,0.2f,0);
                 battleModelParticle.Play();
-                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .3f).
+                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
                 OnComplete(() =>
                 {
                     itemMark.SetActive(true);

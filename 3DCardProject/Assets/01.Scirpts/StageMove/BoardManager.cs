@@ -21,6 +21,9 @@ public class BoardManager : MonoBehaviour
     private Transform[] childObjs;
     private bool isChange = false;
 
+    [SerializeField] private GameObject totemCam;
+    private Vector3 totemRotateRouteVector;
+    public int[] camChangeRouteValue;
 
 
     private void Start()
@@ -103,6 +106,32 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
+
+    public void CheckRouteCam(bool soft)
+    {
+        for (int i = 0; i < camChangeRouteValue.Length; i++)
+        {
+            if(totem.routePosition >= camChangeRouteValue[i])
+            {
+                switch (i)
+                {
+                    case 0:
+                        totemRotateRouteVector = new Vector3(totemCam.transform.eulerAngles.x, -93, totemCam.transform.eulerAngles.z);
+                       
+                        break;
+                    default:
+                        break;
+                }
+                if (soft)
+                    totemCam.transform.DORotate(totemRotateRouteVector, 1);
+                else
+                    totemCam.transform.rotation = Quaternion.Euler(totemRotateRouteVector);
+
+            }
+        }
+    }
+
+   
     #endregion
 
 
