@@ -44,10 +44,10 @@ public class PlayerDataInfo : MonoBehaviour
     [ContextMenu("GetGold")]
     public void GetGoldDirect()
     {
-        StartCoroutine(GetGoldDirectCo(value));
+        StartCoroutine(GetGoldIncreaseDirectCo(value));
     }
 
-    private IEnumerator GetGoldDirectCo(int value)
+    private IEnumerator GetGoldIncreaseDirectCo(int value)
     {
         for (int i = 0; i < value; i++)
         {
