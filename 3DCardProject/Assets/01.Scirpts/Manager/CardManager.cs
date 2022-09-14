@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 
 public class CardManager : Singleton<CardManager>
 {
@@ -56,8 +56,46 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-
-
+    [SerializeField]
+    private UnityEngine.UI.Text dummyText;
+    private int cycleCount = 0;
+    public int CycleCount
+    {
+        get
+        {
+            return cycleCount;
+        }
+        set
+        {
+            cycleCount = value;
+            if(cycleCount > 1)
+            {
+                // Ç¥±â
+                Sequence seq = DOTween.Sequence();
+                dummyText.text = $"{cycleCount - 1} Cycle";
+                CanvasGroup canvasGroup = cycleBox.GetComponent<CanvasGroup>();
+                cycleTMP.transform.DOScale(1.7f, 0f);
+                cycleTMP.transform.DORotate(new Vector3(0,0,20), 0f);
+                seq.Append(cycleBox.transform.DOScale(1.2f,.2f).SetEase(Ease.Linear));
+                seq.Append(cycleBox.transform.DOScale(1f,.2f).SetEase(Ease.Linear));
+                seq.Join(canvasGroup.DOFade(1, .2f));
+                seq.Join(dummyText.DOText($"{cycleCount} Cycle",1).OnUpdate(()=> { cycleTMP.text = dummyText.text; }));
+                seq.Join(cycleTMP.transform.DOScale(1f, .2f).SetEase(Ease.Linear));
+                seq.Join(cycleTMP.transform.DORotate(Vector3.zero, .2f).SetEase(Ease.InSine));
+                seq.Append(cycleBox.transform.DOScale(1.2f,.2f).SetLoops(2,LoopType.Yoyo));
+                seq.Append(canvasGroup.DOFade(0,.2f));
+            }
+        }
+    }
+    [ContextMenu("Test")]
+    public void Test()
+    {
+        CycleCount+= 1;
+    }
+    [SerializeField]
+    private GameObject cycleBox;
+    [SerializeField]
+    private TMP_Text cycleTMP;
 
     protected override void Awake()
     {
@@ -96,7 +134,7 @@ public class CardManager : Singleton<CardManager>
     private IEnumerator SpawnCardCo(Action act = null)
     {
         yield return new WaitForSeconds(2f);
-
+        CycleCount++;
         for (int i = 0; i < 5; i++)
         {
             AddCardForStart();
