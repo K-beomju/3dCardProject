@@ -129,20 +129,27 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 }
                 else
                 {
+                    field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
+                }
+            }
+            else
+            {
+
+
+                if(EnemyAI.Instance != null && EnemyAI.Instance.isReflectOnHand)
+                {
+                    EnemyAI.Instance.WaitingCard = card;
+                    EnemyAI.Instance.CallOnReflect(() => field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); }));
+                }
+                else
+                {
                     if (card.item.IsReflectCard)
                     {
                         ReflectBox.Instance.isCardOnHand = false;
                     }
                     field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
                 }
-            }
-            else
-            {
-                if (card.item.IsReflectCard)
-                {
-                    ReflectBox.Instance.isCardOnHand = false;
-                }
-                field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
+
             }
         }
     }

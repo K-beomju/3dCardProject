@@ -129,6 +129,7 @@ public class ReflectBox : Singleton<ReflectBox>
     public void ReflectBoxActive(bool inBool,System.Action act = null)
     {
         canvasGroup.DOFade(inBool ? 1 : 0,.2f);
+        activeBTN.gameObject.SetActive(inBool);
         uiCard.transform.DOMoveY(inBool ? 540 : -270, 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isActive = inBool;
@@ -139,7 +140,7 @@ public class ReflectBox : Singleton<ReflectBox>
     public void ReflectBoxActive()
     {
         DOTween.Kill(this.gameObject);
-        canvasGroup.DOFade(isActive ? 1 : 0,.2f);
+        canvasGroup.DOFade(isActive ? 0 : 1,.2f);
         uiCard.gameObject.transform.DOMoveY(isActive ? 540 : -270, 0.2f).SetEase(Ease.OutQuad);
         isActive = !isActive;
     }

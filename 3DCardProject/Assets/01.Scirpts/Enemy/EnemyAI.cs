@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using DG.Tweening;
 
 public enum MountState
 {
@@ -25,6 +25,14 @@ public class EnemyAI : Singleton<EnemyAI>
     private MountState mountState;
     private Action action;
 
+    public bool isReflectOnHand
+    {
+        get
+        {
+            return EnemyManager.Instance.IsHaveItem(101);
+        }
+    }
+    public Card WaitingCard;
     private Dictionary<long, Action> mediumActions = new Dictionary<long, Action>() // // �ƹ�Ÿ ���� �븻 �÷��̾� ����
     {
         {
@@ -301,5 +309,84 @@ public class EnemyAI : Singleton<EnemyAI>
         {
             NewFieldManager.Instance.Spawn(setField, card);
         }
+    }
+    private Dictionary<long, Action> reflectAction = new Dictionary<long, Action>()
+    {
+        {  0b0000, () => {
+                CardManager.Instance.MountCardSupport(100);
+        } },
+    };
+public void CallOnReflect(Action act)
+    {
+        StartCoroutine(ReflectJudge(act));
+    }
+    private IEnumerator ReflectJudge(Action act)
+    {
+        Vector3 pos = CardManager.Instance.hackField.transform.position;
+        pos += new Vector3(0, 5f, 0);
+        WaitingCard.transform.DOScale(WaitingCard.transform.localScale * 2f, .2f);
+        WaitingCard.transform.DOMove(pos, .4f);
+        WaitingCard.transform.DORotate(new Vector3(40, 0, 0), .3f);
+        yield return new WaitForSeconds(3);
+        EnemyManager.Instance.PopItem(101);
+        if (WaitingCard != null)
+        {
+            CardManager.Instance.CardDie(WaitingCard);
+        }
+    }
+    public long GetCurrentStateForReflect()
+    {
+
+        long curState = 0b0_00_00_00_00_00_00_00000000;
+
+        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+        {
+            var field = NewFieldManager.Instance.fieldList[i];
+
+            if (field.avatarCard != null)
+            {
+                if (field.avatarCard.isPlayerCard)
+                {
+                    curState += 0b0_00_00_00_00_00_00_00000000;
+                }
+                curState += 0b0_00_00_00_00_00_00_00000000;
+            }
+            if (field.upperCard != null)
+                curState += 0b0_00_00_00_00_00_00_00000000;
+            else if (field.curCard != null)
+                curState += 0b0_00_00_00_00_00_00_00000000;
+
+            if (i != NewFieldManager.Instance.fieldList.Count - 1)
+                curState <<= 4;
+        }
+
+        switch (WaitingCard.item.uid)
+        {
+            case 100:
+                currentState += 0b0000_0000_0000_0000_0000_0000_1000_0000;
+                break;
+            case 101:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0100_0000;
+                break;
+            case 102:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0010_0000;
+                break;
+            case 103:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0001_0000;
+                break;
+            case 104:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0000_1000;
+                break;
+            case 105:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0100;
+                break;
+            case 106:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0010;
+                break;
+            case 107:
+                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0001;
+                break;
+        }
+        return curState;
     }
 }

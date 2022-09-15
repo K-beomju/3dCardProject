@@ -66,6 +66,10 @@ public class EnemyManager : Singleton<EnemyManager>
             }
         }
     }
+    public bool IsHaveItem(uint num)
+    {
+        return dm.FindItem(num) != null;
+    }
     public Item PopItem(uint num = 0)
     {
         Item cardItem;
