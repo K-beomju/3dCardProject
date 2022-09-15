@@ -121,7 +121,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             Debug.Log(card.name);
             if (!card.isPlayerCard)
             {
-                if (ReflectBox.Instance.CardUIList.Count > 0)
+                if (ReflectBox.Instance.isCardOnHand)
                 {
                     ReflectBox.Instance.WaitingCard = card;
                     CardManager.Instance.WaitingActionUntilFinishOnReflect = () => { field.SetUp(card, () => { card.OnSpawn(); }); };
@@ -131,7 +131,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
                 {
                     if (card.item.IsReflectCard)
                     {
-                        ReflectBox.Instance.RemoveCardUI(card);
+                        ReflectBox.Instance.isCardOnHand = false;
                     }
                     field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
                 }
@@ -140,7 +140,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             {
                 if (card.item.IsReflectCard)
                 {
-                    ReflectBox.Instance.RemoveCardUI(card);
+                    ReflectBox.Instance.isCardOnHand = false;
                 }
                 field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); });
             }

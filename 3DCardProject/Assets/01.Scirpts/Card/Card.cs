@@ -256,7 +256,7 @@ public class Card : MonoBehaviour
     {
         Debug.Log("ONDIE: " + item.itemName);
         if (LinkedModel != null)
-            Destroy(LinkedModel.ModelObject.gameObject);
+            LinkedModel.ModelObject.gameObject.SetActive(false);
 
         CardAction(item.OnDie);
        

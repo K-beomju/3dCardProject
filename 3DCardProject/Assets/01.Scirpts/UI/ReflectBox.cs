@@ -17,13 +17,12 @@ public class ReflectBox : Singleton<ReflectBox>
     [SerializeField]
     private GameObject cardUIPrefab = null;
 
-    [SerializeField]
-    private Transform cardUIparent;
-
-    public List<GameObject> CardUIList { get; private set; } = new List<GameObject>();
-
     private bool isActive = false;
-    public static bool isReflect = false;
+    //public static bool isReflect = false;
+
+    private CanvasGroup canvasGroup;
+
+    public bool isCardOnHand;
 
     private Card waitingCard = null;
 
@@ -38,46 +37,24 @@ public class ReflectBox : Singleton<ReflectBox>
             waitingCard = value;
         }
     }
-    public UICard selectedCard = null;
-    public Card reflectCard;
+    public UICard uiCard = null;
 
     private void Start()
     {
-        ReflectBoxActive(false);
+        canvasGroup = GetComponentInChildren<CanvasGroup>();
         activeBTN.onClick.AddListener(ReflectBoxActive);
         confirmBTN.onClick.AddListener(ConfirmReflect);
         cancelBTN.onClick.AddListener(CancelReflect);
         CardManager.Instance.OnReflect += CallOnReflect;
+        uiCard.gameObject.SetActive(false);
+        ReflectBoxActive(false, ()=>uiCard.gameObject.SetActive(true));
+
     }
 
-    public void AddCardUI(Item item,Card card)
+    public void SetUpCard(Card card)
     {
-        GameObject cardUIGO = Instantiate(cardUIPrefab, cardUIparent);
-        cardUIGO.GetComponent<UICard>().Setup(item,card);
-        CardUIList.Add(cardUIGO);
-    }
-
-    public void RemoveCardUI(Card card)
-    {
-        GameObject go = null;
-        foreach (var item in CardUIList)
-        {
-            if(item.GetComponent<UICard>().linkedCard.item.itemName == card.item.itemName)
-            {
-                go = item;
-                break;
-            }    
-        }
-        if( go != null)
-        {
-            RemoveCardUI(go);
-        }
-    }
-    public void RemoveCardUI(GameObject inGO)
-    {
-        
-        CardUIList.Remove(inGO);
-        Destroy(inGO);
+        isCardOnHand = true;
+        uiCard.Setup(card);
     }
 
     public void CallOnReflect()
@@ -93,7 +70,7 @@ public class ReflectBox : Singleton<ReflectBox>
                 BattleTutorial.Instance.isNullity = true;
         }
 
-        if (CardUIList.Count > 0 && GameManager.Instance.State == GameState.RUNNING)
+        if (GameManager.Instance.State == GameState.RUNNING)
         {
             Vector3 pos = CardManager.Instance.hackField.transform.position;
             pos += new Vector3(0, 5f, 0);
@@ -112,60 +89,18 @@ public class ReflectBox : Singleton<ReflectBox>
     }
     private IEnumerator<float> ConfirmReflectProcess()
     {
-        if (selectedCard != null)
+        if (isCardOnHand)
         {
 
-            var a = selectedCard.linkedCard;
-            if (a != null)
+            CardManager.Instance.myCards.Remove(uiCard.linkedCard);
+            //a?.GetComponent<Order>().SetOriginOrder(0);
+
+            CardManager.Instance.SetOriginOrder();
+            CardManager.Instance.CardAlignment();
+            CardManager.Instance.CardDie(uiCard.linkedCard);
+            if (WaitingCard != null)
             {
-                /* foreach (CardActionCondition item in a.item.OnCreate)
-                 {
-                     if (item.action is CardActionMirrorItemChange)
-                     {
-                         CardActionMirrorItemChange camic = item.action as CardActionMirrorItemChange;
-                         CardManager.Instance.OnChangeLastUsedCard -= (item) => {
-                             camic.ChangeCardItem(item);
-                         };
-                         break;
-                     }
-                 }*/
-                reflectCard = a;
-
-                if (!a.item.IsStructCard)
-                {
-                    int idx = 0;
-                    foreach (CardActionCondition item in a.item.OnSpawn)
-                    {
-                        if (item.action is CardActionMove)
-                        {
-                            //CardMoveAction cma = item.action as CardMoveAction;
-                            item.action = null;
-                            break;
-                        }
-                        ++idx;
-                    }
-                    a.OnSpawn();
-
-                    CardManager.Instance.myCards.Remove(a);
-                    //a?.GetComponent<Order>().SetOriginOrder(0);
-
-                    CardManager.Instance.SetOriginOrder();
-                    CardManager.Instance.CardAlignment();
-                    CardManager.Instance.CardDie(a);
-                }
-                else
-                {
-                    // 여기에 필드 선택해서 선택한 필드에 SetUP(card) 해줘야 함
-                    isReflect = true;
-                }
-
-                if (WaitingCard != null)
-                {
-                    CardManager.Instance.CardDie(WaitingCard);
-                }
-                RemoveCardUI(selectedCard.gameObject);
-
-
+                CardManager.Instance.CardDie(WaitingCard);
             }
 
             ReflectBoxActive(false);
@@ -179,13 +114,7 @@ public class ReflectBox : Singleton<ReflectBox>
                         BattleTutorial.Instance.isDoneNullity = true;
                 }
             });
-            //CardManager.Instance.CardAlignment();
-            // 박스 내리기
-        }
-        else
-        {
-            Debug.LogWarning("카드를 선택해야 합니다");
-            yield return 0;
+            isCardOnHand = false;
         }
     }
     public void CancelReflect()
@@ -197,22 +126,21 @@ public class ReflectBox : Singleton<ReflectBox>
         CardManager.Instance.WaitingActionUntilFinishOnReflect?.Invoke();
         ReflectBoxActive(false);
     }
-    public void ReflectBoxActive(bool inBool)
+    public void ReflectBoxActive(bool inBool,System.Action act = null)
     {
-        transform.DOMoveY(250 * (inBool ? 1 : -1), 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
+        canvasGroup.DOFade(inBool ? 1 : 0,.2f);
+        uiCard.transform.DOMoveY(inBool ? 540 : -270, 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isActive = inBool;
-            activeBTN.transform.parent.gameObject.SetActive(inBool);
-            confirmBTN.transform.parent.gameObject.SetActive(inBool);
-            cancelBTN.transform.parent.gameObject.SetActive(inBool);
-            GetComponent<CanvasGroup>().DOFade(inBool ? 1 : 0,0.1f);
+            act?.Invoke();
         }
         );
     }
     public void ReflectBoxActive()
     {
         DOTween.Kill(this.gameObject);
-        transform.DOMoveY(250 * (isActive ? -1 : 1), 0.2f).SetEase(Ease.OutQuad);
+        canvasGroup.DOFade(isActive ? 1 : 0,.2f);
+        uiCard.gameObject.transform.DOMoveY(isActive ? 540 : -270, 0.2f).SetEase(Ease.OutQuad);
         isActive = !isActive;
     }
 }

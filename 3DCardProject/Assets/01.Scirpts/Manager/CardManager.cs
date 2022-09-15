@@ -181,7 +181,7 @@ public class CardManager : Singleton<CardManager>
 
         for (int i = myCards.Count - 1; i >= 0; i--)
         {
-            ReflectBox.Instance.RemoveCardUI(myCards[i]);
+            ReflectBox.Instance.isCardOnHand = false;
             myCards[i].SetDeleteObject();
             myCards.Remove(myCards[i]);
         }
@@ -196,16 +196,14 @@ public class CardManager : Singleton<CardManager>
     {
         //SelectMovingCardAroundField(false, card);
         Debug.Log("Card Die : " + card.item.itemName);
-        ReflectBox.Instance.RemoveCardUI(card);
         if (card.LinkedModel != null)
         {
             // ¸ðµ¨ Á¦°Å
             Debug.Log("Model Die : " + card.item.itemName);
-            Destroy(card.LinkedModel.ModelObject.gameObject);
+            card.LinkedModel.ModelObject.gameObject.SetActive(false);
         }
 
         PRS prs;
-        ReflectBox.Instance.RemoveCardUI(card);
         if (card.isPlayerCard)
         {
             prs = new PRS(CardManager.Instance.cardDeletePoint.position, card.transform.rotation, card.transform.localScale);
@@ -242,7 +240,6 @@ public class CardManager : Singleton<CardManager>
     private void RemoveCard(bool killTween = false)
     {
         var a = selectCard;
-        ReflectBox.Instance?.RemoveCardUI(a);
         myCards.Remove(a);
         if (killTween)
             a.transform.DOKill();
@@ -271,7 +268,6 @@ public class CardManager : Singleton<CardManager>
             sequence.Append(delCard.transform.DOScale(delCard.transform.localScale * 2f, .3f)).AppendInterval(.3f);
             yield return new WaitForSeconds(2f);
             myCards.Remove(delCard);
-            ReflectBox.Instance.RemoveCardUI(delCard);
 
             SetOriginOrder();
             CardAlignment();
@@ -442,37 +438,7 @@ public class CardManager : Singleton<CardManager>
             hitField = null;
         }
 
-        // ReflectBox
-
-        if (ReflectBox.isReflect && Physics.Raycast(ray, out hitData, Mathf.Infinity))
-        {
-            Field field = hitData.transform.GetComponent<Field>();
-            Card card = hitData.transform.GetComponent<Card>();
-            if (field != null)
-            {
-                if (field.isEnterRange && ReflectBox.Instance.reflectCard != null)
-                {
-                    if (InputManager.Instance.MouseUp)
-                    {
-                        //OnChangeLastUsedCard -= 
-                        NewFieldManager.Instance.Spawn(field, ReflectBox.Instance.reflectCard);
-                        //PlayerManager.Instance.playerCards.Add(ReflectBox.Instance.reflectCard);
-                        ReflectBox.Instance.reflectCard = null;
-                        ReflectBox.isReflect = false;
-                    }
-                    hitField = field;
-                    field.HitColor(true);
-                }
-
-            }
-            else
-            {
-                hitField = null;
-            }
-
-
-        }
-
+     
     }
 
 
@@ -488,7 +454,7 @@ public class CardManager : Singleton<CardManager>
             card.OnCreateCard();
 
             if (popItem.IsReflectCard)
-                ReflectBox.Instance.AddCardUI(popItem, card);
+                ReflectBox.Instance.SetUpCard(card);
             SetOriginOrder();
 
             CardAlignment();
@@ -506,7 +472,7 @@ public class CardManager : Singleton<CardManager>
             card.OnCreateCard();
             card.isPlayerCard = false;
             if (popItem.IsReflectCard)
-                ReflectBox.Instance.AddCardUI(popItem, card);
+                ReflectBox.Instance.SetUpCard(card);
             SetOriginOrder();
 
             CardAlignment();
@@ -522,7 +488,7 @@ public class CardManager : Singleton<CardManager>
             card.OnCreateCard();
             card.isPlayerCard = false;
             if (popItem.IsReflectCard)
-                ReflectBox.Instance.AddCardUI(popItem, card);
+                ReflectBox.Instance.SetUpCard(card);
             SetOriginOrder();
 
             CardAlignment();
@@ -539,7 +505,7 @@ public class CardManager : Singleton<CardManager>
             card.OnCreateCard();
 
             if (popItem.IsReflectCard)
-                ReflectBox.Instance.AddCardUI(popItem, card);
+                ReflectBox.Instance.SetUpCard(card);
             SetOriginOrder();
 
             CardAlignment();

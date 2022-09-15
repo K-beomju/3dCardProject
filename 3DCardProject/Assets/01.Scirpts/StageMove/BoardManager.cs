@@ -66,6 +66,7 @@ public class BoardManager : MonoBehaviour
                     else
                     {
                         board.type = StageType.Battle;
+                        board.enemyType = EnemyType.MEDIUM;
                         GameObject battleFd = Instantiate(battleField, board.transform.position, Utils.QI);
                     }
                 }
