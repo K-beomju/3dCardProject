@@ -47,7 +47,7 @@ public class ReflectBox : Singleton<ReflectBox>
         cancelBTN.onClick.AddListener(CancelReflect);
         CardManager.Instance.OnReflect += CallOnReflect;
         uiCard.gameObject.SetActive(false);
-        ReflectBoxActive(false, ()=>uiCard.gameObject.SetActive(true));
+        ReflectBoxActive(false);
 
     }
 
@@ -129,7 +129,7 @@ public class ReflectBox : Singleton<ReflectBox>
     public void ReflectBoxActive(bool inBool,System.Action act = null)
     {
         canvasGroup.DOFade(inBool ? 1 : 0,.2f);
-        activeBTN.gameObject.SetActive(inBool);
+        uiCard.gameObject.SetActive(inBool);
         uiCard.transform.DOMoveY(inBool ? 540 : -270, 0.2f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             isActive = inBool;
@@ -140,8 +140,8 @@ public class ReflectBox : Singleton<ReflectBox>
     public void ReflectBoxActive()
     {
         DOTween.Kill(this.gameObject);
-        canvasGroup.DOFade(isActive ? 0 : 1,.2f);
-        uiCard.gameObject.transform.DOMoveY(isActive ? 540 : -270, 0.2f).SetEase(Ease.OutQuad);
+        canvasGroup.DOFade(isActive ? 0: 1,.2f);
+        uiCard.gameObject.transform.DOMoveY(isActive ? -270 : 540 , 0.2f).SetEase(Ease.OutQuad);
         isActive = !isActive;
     }
 }

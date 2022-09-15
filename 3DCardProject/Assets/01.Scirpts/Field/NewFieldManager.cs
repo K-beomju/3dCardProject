@@ -135,8 +135,8 @@ public class NewFieldManager : Singleton<NewFieldManager>
             else
             {
 
-
-                if(EnemyAI.Instance != null && EnemyAI.Instance.isReflectOnHand)
+             
+                if( EnemyAI.Instance != null && EnemyAI.Instance.isReflectOnHand && (TutorialManager.Instance == null || (TutorialManager.Instance != null && !TutorialManager.Instance.isTutorial)))
                 {
                     EnemyAI.Instance.WaitingCard = card;
                     EnemyAI.Instance.CallOnReflect(() => field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); }));

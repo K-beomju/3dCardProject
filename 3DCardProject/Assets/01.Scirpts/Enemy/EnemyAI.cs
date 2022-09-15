@@ -312,27 +312,40 @@ public class EnemyAI : Singleton<EnemyAI>
     }
     private Dictionary<long, Action> reflectAction = new Dictionary<long, Action>()
     {
-        {  0b0000, () => {
-                CardManager.Instance.MountCardSupport(100);
+        {  0b111111111111, () => {
+
         } },
     };
-public void CallOnReflect(Action act)
+    public void CallOnReflect(Action act)
     {
         StartCoroutine(ReflectJudge(act));
     }
     private IEnumerator ReflectJudge(Action act)
     {
-        Vector3 pos = CardManager.Instance.hackField.transform.position;
-        pos += new Vector3(0, 5f, 0);
-        WaitingCard.transform.DOScale(WaitingCard.transform.localScale * 2f, .2f);
-        WaitingCard.transform.DOMove(pos, .4f);
-        WaitingCard.transform.DORotate(new Vector3(40, 0, 0), .3f);
-        yield return new WaitForSeconds(3);
-        EnemyManager.Instance.PopItem(101);
-        if (WaitingCard != null)
+        long state = GetCurrentStateForReflect();
+
+        if (reflectAction.ContainsKey(state))
         {
-            CardManager.Instance.CardDie(WaitingCard);
+            Vector3 pos = CardManager.Instance.hackField.transform.position;
+            pos += new Vector3(0, 5f, 0);
+            WaitingCard.transform.DOScale(WaitingCard.transform.localScale * 2f, .2f);
+            WaitingCard.transform.DOMove(pos, .4f);
+            WaitingCard.transform.DORotate(new Vector3(40, 0, 0), .3f);
+            yield return new WaitForSeconds(3);
+
+            EnemyManager.Instance.PopItem(101);
+            reflectAction[state].Invoke();
+            if (WaitingCard != null)
+            {
+                CardManager.Instance.CardDie(WaitingCard);
+            }
         }
+        else
+        {
+            act?.Invoke();
+        }
+
+
     }
     public long GetCurrentStateForReflect()
     {
