@@ -16,9 +16,10 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField] private Button descBtn;
     [SerializeField] private Button descExitBtn;
 
-    [SerializeField] private CanvasGroup menuCanvasGroup;
+    [SerializeField] private CanvasGroup middleGroup;
     [SerializeField] private CanvasGroup gameDescGroup;
     [SerializeField] private CanvasGroup buttonGroup;
+
 
     private RectTransform resumeTrm;
     private RectTransform moveTitleTrm;
@@ -31,7 +32,7 @@ public class MenuManager : Singleton<MenuManager>
     protected override void Awake()
     {
         base.Awake();
-        resumeBtn.onClick.AddListener(() => menuPanel.SetActive(false));
+        resumeBtn.onClick.AddListener(() => menuPanel.SetActive(true));
         exitBtn.onClick.AddListener(() => ExitGame());
         moveTitleBtn.onClick.AddListener(() => MoveTitle());
         descBtn.onClick.AddListener(() => DescGameRule());
@@ -81,16 +82,17 @@ public class MenuManager : Singleton<MenuManager>
         Application.Quit();
     }
 
+
     public void MoveTitle()
     {
-        Global.LoadScene.LoadScene("Title");
+        Global.LoadScene.LoadScene("Title",() => menuPanel.SetActive(false));
     }
-
+        
     public void DescGameRule()
     {
-        menuCanvasGroup.DOFade(0, 1).OnComplete(() => gameDescGroup.DOFade(1,1));
+        middleGroup.DOFade(0, 1).OnComplete(() => gameDescGroup.DOFade(1,1));
         buttonGroup.DOFade(0, 1).OnComplete(() => buttonGroup.interactable = false);
-        menuCanvasGroup.blocksRaycasts = false;
+        middleGroup.blocksRaycasts = false;
         buttonGroup.blocksRaycasts = false;
         gameDescGroup.interactable = true;
         gameDescGroup.blocksRaycasts = true;
@@ -98,9 +100,9 @@ public class MenuManager : Singleton<MenuManager>
 
     public void DescDetactive()
     {
-        gameDescGroup.DOFade(0, 1).OnComplete(() => menuCanvasGroup.DOFade(1, 1));
+        gameDescGroup.DOFade(0, 1).OnComplete(() => middleGroup.DOFade(1, 1));
         buttonGroup.DOFade(1, 1).OnComplete(() => buttonGroup.interactable = true);
-        menuCanvasGroup.blocksRaycasts = true;
+        middleGroup.blocksRaycasts = true;
         buttonGroup.blocksRaycasts = true;
         gameDescGroup.interactable = false;
         gameDescGroup.blocksRaycasts = false;
@@ -117,7 +119,8 @@ public class MenuManager : Singleton<MenuManager>
         resumeTrm.anchoredPosition = new Vector2(-1860, 65);
         moveTitleTrm.anchoredPosition = new Vector2(-1610, 65);
         exitTrm.anchoredPosition = new Vector2(-1360, 65);
-        descTrm.anchoredPosition = new Vector2(-1110, 65); 
+        descTrm.anchoredPosition = new Vector2(-1110, 65);
+
     }
 
 }

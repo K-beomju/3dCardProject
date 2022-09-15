@@ -1395,7 +1395,7 @@ MonoBehaviour:
   exitBtn: {fileID: 2579018537315004858}
   descBtn: {fileID: 5363099028484149768}
   descExitBtn: {fileID: 4789439684289401580}
-  menuCanvasGroup: {fileID: 4789439684552352765}
+  middleGroup: {fileID: 4789439684552352765}
   gameDescGroup: {fileID: 4789439683194271354}
   buttonGroup: {fileID: 868874354173167207}
 --- !u!1 &7001548260118266451
