@@ -30,7 +30,6 @@ public class Global : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static LoadingSceneManager LoadScene { get { return Instance._loadScene; } }
-
     #endregion
 
     void Start()
