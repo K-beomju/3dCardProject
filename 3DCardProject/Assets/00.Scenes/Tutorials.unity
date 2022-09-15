@@ -223,6 +223,8 @@ MonoBehaviour:
   - {fileID: 1397944004}
   - {fileID: 1016454124}
   - {fileID: 1529658382}
+  totemCam: {fileID: 0}
+  camChangeRouteValue: 
 --- !u!1 &27352682
 GameObject:
   m_ObjectHideFlags: 0
@@ -12371,6 +12373,7 @@ MonoBehaviour:
   diceText: {fileID: 747618251}
   rotSpeed: 10
   ease: 1
+  spaceGroup: {fileID: 0}
   isTutorial: 0
 --- !u!1 &4754210349454148444
 GameObject:
