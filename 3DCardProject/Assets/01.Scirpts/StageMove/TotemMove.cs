@@ -113,11 +113,11 @@ public class TotemMove : MonoBehaviour
                 isLock = true;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            StopAllCoroutines();
-            Global.LoadScene.LoadScene("Stage");
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    StopAllCoroutines();
+        //    Global.LoadScene.LoadScene("Stage");
+        //}
         if (isMove)
             diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
 

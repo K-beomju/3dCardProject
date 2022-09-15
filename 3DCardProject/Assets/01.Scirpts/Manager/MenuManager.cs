@@ -32,7 +32,11 @@ public class MenuManager : Singleton<MenuManager>
     protected override void Awake()
     {
         base.Awake();
-        resumeBtn.onClick.AddListener(() => menuPanel.SetActive(true));
+        resumeBtn.onClick.AddListener(() => {
+            menuPanel.SetActive(false);
+            Time.timeScale = 1;
+
+        });
         exitBtn.onClick.AddListener(() => ExitGame());
         moveTitleBtn.onClick.AddListener(() => MoveTitle());
         descBtn.onClick.AddListener(() => DescGameRule());
@@ -59,15 +63,17 @@ public class MenuManager : Singleton<MenuManager>
             menuPanel.SetActive(isMenuActive);
             if (isMenuActive)
             {
+                Time.timeScale = 0;
                 Sequence mySeq = DOTween.Sequence();
                 mySeq.Append(descTrm.DOAnchorPosX(375, .4f).SetEase(Ease.Linear))
                 .Insert(0.1f,exitTrm.DOAnchorPosX(125, .4f).SetEase(Ease.Linear))
                 .Insert(0.2f, moveTitleTrm.DOAnchorPosX(-125, .4f).SetEase(Ease.Linear))
                 .Insert(0.3f, resumeTrm.DOAnchorPosX(-375, .4f).SetEase(Ease.Linear));
-                mySeq.Play();
+                mySeq.Play().SetUpdate(true);
             }
             else
             {
+                Time.timeScale = 1;
                 ResetButtonTransform();
             }
 
