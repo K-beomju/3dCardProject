@@ -64,6 +64,12 @@ public class DeckData : ISerializeble
             deckData = value;
         }
     }
+
+    internal Item FindItem(object curEnemyUid)
+    {
+        throw new NotImplementedException();
+    }
+
     public Item FindItem(uint uid)
     {
         if (deckData.DeckData.Count < 1) return null;

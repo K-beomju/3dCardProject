@@ -82,7 +82,6 @@ public class TotemMove : MonoBehaviour
 
         if (isTutorial)
         {
-            tutorialValue = SecurityPlayerPrefs.GetInt("TutorialValue", 0);
             StartCoroutine(TutorialCol());
         }
     }
@@ -153,14 +152,13 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
                 TutorialManager.Instance.isTutorial = false;
                 SaveManager.Instance.gameData.DisposableItem = null;
-                PlayerPrefs.SetInt("StageValue", 0);
+                SaveManager.Instance.gameData.isTutorialDone = true;
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:
                 break;
         }
         tutorialValue++;
-        SecurityPlayerPrefs.SetInt("TutorialValue", tutorialValue);
     }
 
     private IEnumerator MoveMentCo()
@@ -306,6 +304,10 @@ public class TotemMove : MonoBehaviour
         isLock = false;
     }
 
+    public uint GetEnemyUid()
+    {
+        return board.boardList[routePosition / 2].uid;
+    }
     public EnemyType ReturnBtDifficult()
     {
         return board.boardList[routePosition / 2].enemyType;
@@ -327,6 +329,7 @@ public class TotemMove : MonoBehaviour
     {
         Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
+        StageManager.Instance.EnemyUid = GetEnemyUid();
         StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 

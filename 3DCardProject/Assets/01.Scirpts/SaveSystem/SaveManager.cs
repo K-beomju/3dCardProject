@@ -48,13 +48,12 @@ public class SaveManager : Singleton<SaveManager>
         myRijndael = Rijndael.Create();
         ObjToSaveList.Add(saveDeckData);
         ObjToSaveList.Add(gameData);
-        gameData.isFirst = SecurityPlayerPrefs.GetBool("IsFirst", true);
 
     }
     private void Start()
     {
 
-        //LoadGameData();
+        LoadGameData();
         //InvokeRepeating("AutoSave", 0, 30);
         //암호화 복호화 테슽으
         /*string msg = "HelloWorld";

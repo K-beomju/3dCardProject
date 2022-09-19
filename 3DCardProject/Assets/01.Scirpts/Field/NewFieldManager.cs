@@ -35,7 +35,10 @@ public class NewFieldManager : Singleton<NewFieldManager>
             var node = fields.GetNodeByIndex(i);
         }
         TurnManager.Instance.CanChangeTurn = false;
-        enemyCard = CardManager.Instance.CreateCard(EnemyManager.Instance.enemyItem.ShallowCopy(), false);
+        //Item enemyItem = EnemyManager.Instance.enemyItem.ShallowCopy();
+        Item enemyItem = SaveManager.Instance.saveDeckData.FindItem(EnemyManager.Instance.CurEnemyUid);
+        
+        enemyCard = CardManager.Instance.CreateCard(enemyItem, false);
         enemyCard.DetactiveCardView();
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
         playerCard.DetactiveCardView();

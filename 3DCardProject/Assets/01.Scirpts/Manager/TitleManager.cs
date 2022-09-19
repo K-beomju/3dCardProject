@@ -19,7 +19,7 @@ public class TitleManager : MonoBehaviour
         for (int i = 0; i < cardPosTrm.Length; i++)
         {
             if (cards.Length == i) break;
-            if(2 == i ||( 1 == i && SaveManager.Instance.gameData.isFirst))
+            if( 1 == i && SaveManager.Instance.gameData.isFirst)
             {
                 continue;
             }
@@ -35,7 +35,7 @@ public class TitleManager : MonoBehaviour
     [ContextMenu("ResetIsFirstData")]
     public void ResetIsFirstData()
     {
-        SecurityPlayerPrefs.DeleteKey("IsFirst");
-        SecurityPlayerPrefs.DeleteKey("TutorialValue");
+        SaveManager.Instance.gameData.isFirst = true;
+        SaveManager.Instance.gameData.isTutorialDone = false;
     }
 }
