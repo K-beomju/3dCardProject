@@ -23,6 +23,7 @@ public abstract class BoardAction : MonoBehaviour
     public StageType type = StageType.Battle;
     public EnemyType enemyType;
     public bool isClear = false;
+    public uint uid;
 
    
     public virtual void ClearAction()

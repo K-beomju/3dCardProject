@@ -304,6 +304,10 @@ public class TotemMove : MonoBehaviour
         isLock = false;
     }
 
+    public uint GetEnemyUid()
+    {
+        return board.boardList[routePosition / 2].uid;
+    }
     public EnemyType ReturnBtDifficult()
     {
         return board.boardList[routePosition / 2].enemyType;
@@ -325,6 +329,7 @@ public class TotemMove : MonoBehaviour
     {
         Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
+        StageManager.Instance.EnemyUid = GetEnemyUid();
         StageManager.Instance.enemyType = ReturnBtDifficult();
     }
 
