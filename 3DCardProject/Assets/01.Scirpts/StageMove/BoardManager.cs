@@ -10,7 +10,10 @@ public class BoardManager : MonoBehaviour
 {
     [SerializeField] private GameObject battleField;
     [SerializeField] private GameObject shopField;
-    [SerializeField] private GameObject restField;
+    [SerializeField] private GameObject getHpField;
+    [SerializeField] private GameObject getGoldField;
+    [SerializeField] private GameObject lossGoldField;
+    [SerializeField] private GameObject lossHpField;
 
     [SerializeField] private TotemMove totem;
 
@@ -48,16 +51,16 @@ public class BoardManager : MonoBehaviour
                     Instantiate(shopField, board.transform.position, Utils.QI);
                     break;
                 case StageType.GetHP:
-                    Instantiate(restField, board.transform.position, Utils.QI);
+                    Instantiate(getHpField, board.transform.position, Utils.QI);
                     break;
                 case StageType.GetGold:
-                    Instantiate(restField, board.transform.position, Utils.QI);
+                    Instantiate(getGoldField, board.transform.position, Utils.QI);
                     break;
                 case StageType.LossGold:
-                    Instantiate(restField, board.transform.position, Utils.QI);
+                    Instantiate(lossGoldField, board.transform.position, Utils.QI);
                     break;
                 case StageType.LossHp:
-                    Instantiate(restField, board.transform.position, Utils.QI);
+                    Instantiate(lossHpField, board.transform.position, Utils.QI);
                     break;
                 default:
                     break;

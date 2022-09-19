@@ -223,7 +223,7 @@ public class TotemMove : MonoBehaviour
                 OnComplete(() =>
                 {
                     itemMark.SetActive(true);
-                    itemMark.transform.DOMoveY(.3f, .2f).SetLoops(2, LoopType.Yoyo);
+                    itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
                 }).SetDelay(1);
             });
 
