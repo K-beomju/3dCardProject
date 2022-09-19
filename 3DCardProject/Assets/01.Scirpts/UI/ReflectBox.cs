@@ -85,13 +85,18 @@ public class ReflectBox : Singleton<ReflectBox>
 
     public void ConfirmReflect()
     {
+        if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial && BattleTutorial.Instance != null && !BattleTutorial.Instance.isReflectAble)
+        {
+            return;
+        }
+
         Timing.RunCoroutine(ConfirmReflectProcess());
     }
     private IEnumerator<float> ConfirmReflectProcess()
     {
         if (isCardOnHand)
         {
-
+            
             CardManager.Instance.myCards.Remove(uiCard.linkedCard);
             //a?.GetComponent<Order>().SetOriginOrder(0);
 

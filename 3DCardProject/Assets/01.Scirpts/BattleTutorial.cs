@@ -11,7 +11,8 @@ public class BattleTutorial : Singleton<BattleTutorial>
     public bool isChangeDir = false;     // 체인지 카드를 발동해야할 때 
     public bool isStop = false;          // 적이 스탑 카드를 낼떄 
     public bool isTrap = false;          // 트랩카드를 발동해야할때
-    public bool isNullity = false;       // 무효카드를 사용할수있을때
+    public bool isNullity = false;       // 무효카드를 사용할수있을때1
+    public bool isReflectAble = false;       // 무효카드를 사용할수있을때2
     public bool isDoneNullity = false;   // 무효카드를 사용했을때
 
     private void Start()
@@ -105,13 +106,13 @@ public class BattleTutorial : Singleton<BattleTutorial>
         yield return new WaitForSeconds(1f);
 
         yield return TutorialManager.Instance.ExplainCol("토템이 덫 카드를 밟는다면 손패의 카드중 하나를 버립니다.", 0, 1, 2);
-        isTurnChange = true;
+        isTurnChange = false;
 
         yield return new WaitWhile(() => !isNullity);
         yield return TutorialManager.Instance.ExplainCol("적이 공격카드를 사용했습니다.", 0);
         yield return TutorialManager.Instance.ExplainCol("무효카드는 손패에 있을때 상대방의 발동을 제지할 수 있습니다.", 0, 1, 2);
         yield return TutorialManager.Instance.ExplainCol("무효카드를 사용해봅시다.", 0, 1, 2);
-
+        isReflectAble = true;
         yield return new WaitWhile(() => !isDoneNullity);
 
         yield return new WaitWhile(() => !isChangeCard);
