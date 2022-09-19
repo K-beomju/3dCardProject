@@ -15,7 +15,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private TotemMove totem;
 
     public List<Board> boardList = new List<Board>();
-    public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>();
+    //public List<GenericClass<Board>> boardArrayList = new List<GenericClass<Board>>();
     public List<Transform> childNodeList = new List<Transform>();
 
     private Transform[] childObjs;
@@ -32,47 +32,76 @@ public class BoardManager : MonoBehaviour
 
         for (int i = 0; i < childNodeList.Count; i++)
         {
-            if(i % 2 == 0)
-            boardList.Add(childNodeList[i].GetComponent<Board>());
+            if (i % 2 == 0)
+                boardList.Add(childNodeList[i].GetComponent<Board>());
         }
-        for (int i = 0; i < boardList.Count / 9; i++)
-        {
-            boardArrayList.Add(new GenericClass<Board>());
-            boardArrayList[i].list = new List<Board>();
-            int shopRand = default;
-            int restRand = default;
-            while(shopRand == restRand)
-            {
-                shopRand = UnityEngine.Random.Range(0, 10);
-                restRand = UnityEngine.Random.Range(0, 10);
-            }
-            print(shopRand + " " + restRand);
 
-            for (int k = 0; k < 9; k++)
+        for (int i = 0; i < boardList.Count; i++)
+        {
+            Board board = boardList[i];
+            switch (boardList[i].type)
             {
-                Board board = boardList[i * 9 + k];
-                if (i != 0 || k != 0)
-                {
-                    if (k == shopRand)
-                    {
-                        board.type = StageType.Shop;
-                        GameObject shopFd = Instantiate(shopField, board.transform.position, Utils.QI);
-                    }
-                    else if(k == restRand)
-                    {
-                        board.type = StageType.Rest;
-                        GameObject shopFd = Instantiate(restField, board.transform.position, Utils.QI);
-                    }
-                    else
-                    {
-                        board.type = StageType.Battle;
-                        board.enemyType = EnemyType.MEDIUM;
-                        GameObject battleFd = Instantiate(battleField, board.transform.position, Utils.QI);
-                    }
-                }
-                boardArrayList[i].list.Add(board);
+                case StageType.Battle:
+                    Instantiate(battleField, board.transform.position, Utils.QI);
+                    break;
+                case StageType.Shop:
+                    Instantiate(shopField, board.transform.position, Utils.QI);
+                    break;
+                case StageType.GetHP:
+                    Instantiate(restField, board.transform.position, Utils.QI);
+                    break;
+                case StageType.GetGold:
+                    Instantiate(restField, board.transform.position, Utils.QI);
+                    break;
+                case StageType.LossGold:
+                    Instantiate(restField, board.transform.position, Utils.QI);
+                    break;
+                case StageType.LossHp:
+                    Instantiate(restField, board.transform.position, Utils.QI);
+                    break;
+                default:
+                    break;
             }
         }
+
+        //for (int i = 0; i < boardList.Count / 9; i++)
+        //{
+        //    boardArrayList.Add(new GenericClass<Board>());
+        //    boardArrayList[i].list = new List<Board>();
+        //    int shopRand = default;
+        //    int restRand = default;
+        //    while(shopRand == restRand)
+        //    {
+        //        shopRand = UnityEngine.Random.Range(0, 10);
+        //        restRand = UnityEngine.Random.Range(0, 10);
+        //    }
+        //    print(shopRand + " " + restRand);
+
+        //    for (int k = 0; k < 9; k++)
+        //    {
+        //        Board board = boardList[i * 9 + k];
+        //        if (i != 0 || k != 0)
+        //        {
+        //            if (k == shopRand)
+        //            {
+        //                board.type = StageType.Shop;
+        //                GameObject shopFd = Instantiate(shopField, board.transform.position, Utils.QI);
+        //            }
+        //            else if(k == restRand)
+        //            {
+        //                board.type = StageType.Rest;
+        //                GameObject shopFd = Instantiate(restField, board.transform.position, Utils.QI);
+        //            }
+        //            else
+        //            {
+        //                board.type = StageType.Battle;
+        //                board.enemyType = EnemyType.MEDIUM;
+        //                GameObject battleFd = Instantiate(battleField, board.transform.position, Utils.QI);
+        //            }
+        //        }
+        //        boardArrayList[i].list.Add(board);
+        //    }
+        //}
 
     }
 
@@ -114,7 +143,7 @@ public class BoardManager : MonoBehaviour
 
         for (int i = 0; i < camChangeRouteValue.Length; i++)
         {
-            if(totem.routePosition >= camChangeRouteValue[i])
+            if (totem.routePosition >= camChangeRouteValue[i])
             {
                 switch (i)
                 {
@@ -134,7 +163,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-   
+
     #endregion
 
 

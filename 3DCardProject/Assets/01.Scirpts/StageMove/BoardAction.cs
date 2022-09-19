@@ -9,7 +9,10 @@ public enum StageType
 {
     Battle,
     Shop,
-    Rest
+    GetHP,
+    GetGold,
+    LossHp,
+    LossGold
 }
 
 

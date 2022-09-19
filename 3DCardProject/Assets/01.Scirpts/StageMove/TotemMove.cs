@@ -12,6 +12,8 @@ using DG.Tweening;
 public class TotemMove : MonoBehaviour
 {
     [SerializeField] private BoardManager board;
+    [SerializeField] private PlayerDataInfo playerData;
+
     [SerializeField] private float speed;
     [SerializeField] private int steps;
     [SerializeField] private CanvasGroup fadeGroup;
@@ -19,9 +21,11 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private ParticleSystem diceParticle;
     [SerializeField] private ParticleSystem battleModelParticle;
     [SerializeField] private ParticleSystem healParticle;
-    [SerializeField] private ParticleSystem healFieldParticle;
     [SerializeField] private GameObject itemMark;
     [SerializeField] private Camera cam;
+    [SerializeField] private GameObject rock;
+    [SerializeField] private ParticleSystem rockParticle;
+    [SerializeField] private Material baseMat;
 
     public Necromancer necro;
 
@@ -196,6 +200,8 @@ public class TotemMove : MonoBehaviour
 
         var type = board.boardList[routeValue].type;
 
+        yield return new WaitForSeconds(1f);
+
 
         if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         {
@@ -210,6 +216,8 @@ public class TotemMove : MonoBehaviour
 
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
+                playerData.ShowTopPanel("배틀 시작!");
+
                 battleModelParticle.gameObject.SetActive(true);
                 battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
                 battleModelParticle.Play();
@@ -221,11 +229,13 @@ public class TotemMove : MonoBehaviour
                 }).SetDelay(1);
             });
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(4f);
             BattleScene();
         }
         if (type == StageType.Shop)
         {
+
+            playerData.ShowTopPanel("상점 이동!");
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
             necro.gameObject.SetActive(true);
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
@@ -239,13 +249,47 @@ public class TotemMove : MonoBehaviour
 
             ShopScene();
         }
-        if (type == StageType.Rest)
+        if (type == StageType.GetHP)
         {
-            healFieldParticle.gameObject.SetActive(true);
-            healFieldParticle.transform.position = transform.position;
-            healFieldParticle.Play();
-            yield return new WaitForSeconds(2f);
+            playerData.ShowTopPanel("체력 회복!");
+            yield return new WaitForSeconds(3f);
+
             FadeInOut(1, 1, () => RestAction());
+        }
+        if(type == StageType.GetGold)
+        {
+            playerData.ShowTopPanel("골드 획득!");
+            yield return new WaitForSeconds(3f);
+
+            playerData.GetGoldIncreaseDirect();
+        }
+        if(type == StageType.LossGold)
+        {
+            playerData.ShowTopPanel("골드 감소!");
+            yield return new WaitForSeconds(3f);
+
+            playerData.GetGoldDecreaseDirect();
+        }
+        if(type == StageType.LossHp)
+        {
+            playerData.ShowTopPanel("체력 감소!");
+            yield return new WaitForSeconds(3f);
+            rock.transform.position = transform.position + new Vector3(0, 4, 0);
+            rock.SetActive(true);
+
+            Sequence mySeq = DOTween.Sequence();
+            mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
+            mySeq.InsertCallback(0.3f, () =>
+            {
+                rockParticle.gameObject.SetActive(true);
+                rockParticle.transform.position = rock.transform.position;
+                rockParticle.Play();
+                rock.SetActive(false);
+            }).InsertCallback(.3f,() => anim.SetTrigger("Dead"))
+            .InsertCallback(.3f, () => baseMat.DOColor(Color.red,0).OnComplete(() => baseMat.DOColor(Color.white, 1)));
+      
+            mySeq.Play();
+
         }
 
         isMove = false;
@@ -327,7 +371,8 @@ public class TotemMove : MonoBehaviour
         healParticle.gameObject.SetActive(true);
         healParticle.transform.position = transform.position + new Vector3(0, 0.5f, 0);
         healParticle.Play();
-        healFieldParticle.gameObject.SetActive(false);
+        ++SaveManager.Instance.gameData.Hp;
+        playerData.DataInfoScreen();
         if (spaceGroup != null)
         {
             spaceGroup.gameObject.SetActive(true);
