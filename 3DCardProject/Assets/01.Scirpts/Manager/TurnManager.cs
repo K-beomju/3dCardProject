@@ -88,7 +88,7 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] private Text changeText;
     private TextMeshProUGUI UnitNameText;
     private Card mainCard;
-
+    public Action OnTurnChange2Enemy;
     public bool CanChangeTurn { get; set; } = true;
 
     private void Start()
@@ -147,6 +147,7 @@ public class TurnManager : Singleton<TurnManager>
                     {
                         if (Instance.Type != TurnType.Player)
                         {
+                            Instance.OnTurnChange2Enemy?.Invoke();
                             EnemyAI.Instance.JudgementCard();
                         }
                         else

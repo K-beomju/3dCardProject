@@ -274,12 +274,65 @@ public class EnemyAI : Singleton<EnemyAI>
                 }
                 else
                 {
+                    // 다음턴에 특정 위치에 있으면 HP--;
                     DoAction(bossPhaseTwoAction);
                 }
                 break;
             default:
                 break;
         }
+    }
+    public void BossAciton(int actNum)
+    {
+        switch (actNum)
+        {
+            case 0:
+                break;
+            case 1:
+                StartCoroutine(BossActionRedFloor());
+                break;
+            default:
+                break;
+        }
+    }
+    public IEnumerator BossActionRedFloor()
+    {
+        bool isOdd = UnityEngine.Random.Range(0, 1) == 0;
+        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+        {
+            if (isOdd ? i % 2 != 0 : i % 2 == 0)
+                continue;
+
+            yield return new WaitForSeconds(.6f);
+            NewFieldManager.Instance.fieldList[i].outline.enabled = true;
+            NewFieldManager.Instance.fieldList[i].outline.OutlineColor = Utils.EnemyColor;
+        }
+        
+        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+        {
+            if (isOdd ? i % 2 != 0 : i % 2 == 0)
+                continue;
+
+            yield return new WaitForSeconds(.6f);
+            NewFieldManager.Instance.fieldList[i].outline.enabled =false;
+        }
+
+        yield return new WaitForSeconds(.6f);
+        TurnManager.Instance.OnTurnChange2Enemy += () => {
+            for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+            {
+                if (isOdd ? i % 2 != 0 : i % 2 == 0)
+                    continue;
+                if(NewFieldManager.Instance.fieldList[i].avatarCard.item.uid == NewFieldManager.Instance.playerCard.item.uid)
+                {
+                    // 체력 감소
+                    SaveManager.Instance.gameData.Hp--;
+                }
+            }
+            TurnManager.Instance.OnTurnChange2Enemy = null;
+        };
+
+        TurnManager.ChangeTurn();
     }
     public void DoAction(Dictionary<long,Action> actionDict)
     {

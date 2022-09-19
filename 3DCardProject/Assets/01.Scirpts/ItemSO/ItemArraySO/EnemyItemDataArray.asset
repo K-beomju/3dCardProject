@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62fe600a31ccf2a43bcd8c528601dd0f, type: 3}
-  m_Name: StageArraySO_8
+  m_Name: EnemyItemDataArray
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: a4a99b1c00140d7488dfbe10d8aeb58b, type: 2}
-  avatar: {fileID: 11400000, guid: 8695b481b2a53a640b5cfd80acf938a1, type: 2}
+  - {fileID: 11400000, guid: 359381575f1b03d4580ed0ec9fe4c01d, type: 2}

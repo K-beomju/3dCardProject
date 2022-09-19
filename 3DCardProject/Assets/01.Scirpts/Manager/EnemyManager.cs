@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
-    public Item enemyItem;
+    //public Item enemyItem;
     public Card enemyAvatarCard;
     public ParticleSystem deadPt;
 

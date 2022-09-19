@@ -36,6 +36,7 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private RectTransform timeDirImage;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -142,4 +143,5 @@ public class GameManager : Singleton<GameManager>
         seq.Append(timeDirImage.transform.DORotate(new Vector3(0, 1000 * dir, 0), 1).SetRelative(true));
         seq.Insert(.3f, timeDirImage.transform.DOScale(new Vector3(scale.x * -1, scale.y, scale.z), 0));
     }
+
 }

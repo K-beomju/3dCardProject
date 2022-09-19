@@ -97,6 +97,8 @@ public class CardManager : Singleton<CardManager>
     [SerializeField]
     private TMP_Text cycleTMP;
 
+    [SerializeField] private ItemArraySO enemyDataArraySO;
+
     protected override void Awake()
     {
         base.Awake();
@@ -792,4 +794,17 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
+    public Item FindEnemyData(uint uid)
+    {
+        if (enemyDataArraySO.items.Count < 1) return null;
+
+        foreach (var itemSO in enemyDataArraySO.items)
+        {
+            if (itemSO.item.uid == uid)
+            {
+                return itemSO.item.ShallowCopy();
+            }
+        }
+        return null;
+    }
 }

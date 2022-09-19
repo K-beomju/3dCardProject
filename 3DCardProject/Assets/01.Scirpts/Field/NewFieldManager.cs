@@ -36,7 +36,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         }
         TurnManager.Instance.CanChangeTurn = false;
         //Item enemyItem = EnemyManager.Instance.enemyItem.ShallowCopy();
-        Item enemyItem = SaveManager.Instance.saveDeckData.FindItem(EnemyManager.Instance.CurEnemyUid);
+        Item enemyItem = CardManager.Instance.FindEnemyData(EnemyManager.Instance.CurEnemyUid);
         
         enemyCard = CardManager.Instance.CreateCard(enemyItem, false);
         enemyCard.DetactiveCardView();

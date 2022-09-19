@@ -8383,6 +8383,7 @@ MonoBehaviour:
   isEnterRange: 1
   isHackField: 0
   isCommon: 1
+  outline: {fileID: 0}
   fieldType: 0
 --- !u!1 &2648989449615992051
 GameObject:

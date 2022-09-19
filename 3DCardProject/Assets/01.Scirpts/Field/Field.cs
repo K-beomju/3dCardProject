@@ -18,7 +18,7 @@ public class Field : MonoBehaviour
 
     public bool isCommon = false;
 
-    private Outline outline;
+    public Outline outline;
 
 
     [SerializeField]

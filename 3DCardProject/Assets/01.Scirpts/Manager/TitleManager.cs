@@ -36,6 +36,6 @@ public class TitleManager : MonoBehaviour
     public void ResetIsFirstData()
     {
         SaveManager.Instance.gameData.isFirst = true;
-        SaveManager.Instance.gameData.isTutorialDone = false;
+        SaveManager.Instance.gameData.IsTutorialDone = false;
     }
 }

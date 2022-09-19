@@ -31,8 +31,7 @@ public class TotemMove : MonoBehaviour
 
     public int routePosition;   // 이동거리 총합 (이벤트 + 이동 필드)
     public int routeStep;       // 주사위 값 저장                     
-    public int routeValue;      // 이동거리 총합 - 주사위 값 - 스테이지 값 뺀 값  (이걸로 보드타입 판별)
-    public int stageValue;      // routeValue으로 저장 시작할 때 이걸로 위치 잡음             
+         
 
     private bool isMove = false;
     [SerializeField]
@@ -59,15 +58,13 @@ public class TotemMove : MonoBehaviour
     {
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
-        stageValue = PlayerPrefs.GetInt("StageValue");
-        routeValue = PlayerPrefs.GetInt("RouteValue");
-        routePosition = stageValue + routeValue;
+        routePosition = SaveManager.Instance.gameData.StageValue + SaveManager.Instance.gameData.RouteValue;
 
         Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
         Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
         StartCoroutine(LookAtCo(lookAtPos));
 
-        transform.position = board.boardList[stageValue].transform.position + new Vector3(0,0.1f,0);
+        transform.position = board.boardList[SaveManager.Instance.gameData.StageValue].transform.position + new Vector3(0,0.1f,0);
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
@@ -151,8 +148,7 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("잘 하셨습니다.", 250);
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
                 TutorialManager.Instance.isTutorial = false;
-                SaveManager.Instance.gameData.DisposableItem = null;
-                SaveManager.Instance.gameData.isTutorialDone = true;
+                SaveManager.Instance.gameData.IsTutorialDone = true;
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:
@@ -192,11 +188,11 @@ public class TotemMove : MonoBehaviour
         anim.SetBool("isMove", false);
         yield return new WaitForSeconds(0.5f);
         rotSpeed = 0;
-        routeValue = routePosition - routeStep - stageValue;
+        SaveManager.Instance.gameData.RouteValue = routePosition - routeStep - SaveManager.Instance.gameData.StageValue;
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        var type = board.boardList[routeValue].type;
+        var type = board.boardList[SaveManager.Instance.gameData.RouteValue].type;
 
         yield return new WaitForSeconds(1f);
 
@@ -295,8 +291,6 @@ public class TotemMove : MonoBehaviour
         }
 
         isMove = false;
-        PlayerPrefs.SetInt("StageValue", routeValue);
-        PlayerPrefs.SetInt("RouteValue", routeValue);
 
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);

@@ -22,8 +22,10 @@ public class DebugCommand : EditorWindow
     [MenuItem("StageCamClear", menuItem = "Debug/Stage/StageValueReset")]
     public static void StageValueReset()
     {
-        PlayerPrefs.DeleteKey("StageValue");
-        PlayerPrefs.DeleteKey("RouteValue");
-
+        if(SaveManager.Instance != null)
+        {
+            SaveManager.Instance.gameData.StageValue = 0;
+            SaveManager.Instance.gameData.RouteValue = 0;
+        }
     }
 }

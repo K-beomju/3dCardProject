@@ -69,7 +69,7 @@ public class DeckData : ISerializeble
     {
         throw new NotImplementedException();
     }
-
+   
     public Item FindItem(uint uid)
     {
         if (deckData.DeckData.Count < 1) return null;

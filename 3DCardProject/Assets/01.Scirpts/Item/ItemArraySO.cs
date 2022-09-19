@@ -71,6 +71,4 @@ public enum CardType
 public class ItemArraySO : ScriptableObject
 {
     public List<ItemSO> items;
-
-    public ItemSO avatar;
 }

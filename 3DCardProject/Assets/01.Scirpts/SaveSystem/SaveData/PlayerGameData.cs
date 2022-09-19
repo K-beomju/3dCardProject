@@ -8,15 +8,45 @@ using UnityEngine;
 public class PlayerGameData : ISerializeble
 {
     public bool isFirst = true;
-    public bool isTutorialDone = false;
+    private bool isTutorialDone = false;
+    public bool IsTutorialDone
+    {
+        get
+        {
+            return isTutorialDone;
+        }
+        set
+        {
+            if(value)
+            {
+                routeValue = 0;
+                stageValue = 0;
+                disposableItem = 0b0000_0000;
+                money = 0;
+            }
 
-
+            isTutorialDone = value;
+        }
+    }
     public Action OnStageChange;
     public Action OnHpChange;
     public Action OnMoneyChange;
     public Action OnDisposableItemChange;
     [SerializeField]
-    private int stageValue = 0;
+    private int routeValue = 0; // 이동거리 총합 - 주사위 값 - 스테이지 값 뺀 값  (이걸로 보드타입 판별)
+    public int RouteValue
+    {
+        get
+        {
+            return routeValue;
+        }
+        set
+        {
+            routeValue = value;
+        }
+    }
+    [SerializeField]
+    private int stageValue = 0;// routeValue으로 저장 시작할 때 이걸로 위치 잡음    
     public int StageValue
     {
         get
@@ -43,7 +73,7 @@ public class PlayerGameData : ISerializeble
             hp = value;
             if(hp <= 0)
             {
-
+                // 게임 오버 이벤트
             }
             OnHpChange?.Invoke();
         }

@@ -12,7 +12,7 @@ public class CardActionTitleCard : CardAction
                 // ªı ∞‘¿”
                 SaveManager.Instance.gameData.isFirst = false;
                 SaveManager.Instance.SaveGameData();
-                if (SaveManager.Instance.gameData.isTutorialDone)
+                if (SaveManager.Instance.gameData.IsTutorialDone)
                 {
                     Global.LoadScene.LoadScene("Stage");
                 }
