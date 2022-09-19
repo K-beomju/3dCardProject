@@ -10,6 +10,8 @@ public class EnemyManager : Singleton<EnemyManager>
 
 
     public DeckManager dm { get; private set; }
+    public uint CurEnemyUid;
+
     private void Start()
     {
         dm = GetComponent<DeckManager>();

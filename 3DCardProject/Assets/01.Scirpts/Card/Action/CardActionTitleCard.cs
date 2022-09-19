@@ -10,9 +10,9 @@ public class CardActionTitleCard : CardAction
         {
             case 0:
                 // 새 게임
-                SecurityPlayerPrefs.SetBool("IsFirst",false);
+                SaveManager.Instance.gameData.isFirst = false;
                 SaveManager.Instance.SaveGameData();
-                if (SecurityPlayerPrefs.GetInt("TutorialValue", 0) != 0)
+                if (SaveManager.Instance.gameData.isTutorialDone)
                 {
                     Global.LoadScene.LoadScene("Stage");
                 }
@@ -20,11 +20,9 @@ public class CardActionTitleCard : CardAction
                 {
                     Global.LoadScene.LoadScene("Tutorials");
                 }
-                //SecurityPlayerPrefs.DeleteKey("TutorialValue");
                 break;
             case 1:
                 // 이어하기
-                SaveManager.Instance.LoadGameData();
                 Global.LoadScene.LoadScene("Stage");
                 break;
             case 2:

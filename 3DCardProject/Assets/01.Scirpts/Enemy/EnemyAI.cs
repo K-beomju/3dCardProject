@@ -16,7 +16,8 @@ public enum EnemyType
 {
     TUTORIAL,
     EASY,
-    MEDIUM
+    MEDIUM,
+    BOSS
 }
 
 public class EnemyAI : Singleton<EnemyAI>
@@ -24,12 +25,12 @@ public class EnemyAI : Singleton<EnemyAI>
     public EnemyType enemyType;
     private MountState mountState;
     private Action action;
-
+    public bool isPhaseOne = true;
     public bool isReflectOnHand
     {
         get
         {
-            return EnemyManager.Instance.IsHaveItem(101);
+            return UnityEngine.Random.Range(0,2) == 0 &&  EnemyManager.Instance.IsHaveItem(101);
         }
     }
     public Card WaitingCard;
@@ -165,6 +166,26 @@ public class EnemyAI : Singleton<EnemyAI>
 
     };
 
+    private Dictionary<long, Action> bossPhaseTwoAction = new Dictionary<long, Action>()
+    {
+                  {
+            0b100000001001000011110111, () => {
+                CardManager.Instance.MountCardSupport(107, MountState.Prev);
+        } },
+                  {
+            0b10011000000000100010000011110010, () => {
+                CardManager.Instance.MountCardSupport(100);
+        } },
+
+                   {
+            0b1000000000100000100111110110, () => {
+                CardManager.Instance.MountCardSupport(105);
+        } },
+
+
+
+    };
+
 
     private long currentState = 0b0000_0000_0000_0000_0000_0000_0000_0000;
 
@@ -235,46 +256,44 @@ public class EnemyAI : Singleton<EnemyAI>
     public void JudgementCard()
     {
         InitState();
-
-        if (TutorialManager.Instance.isTutorial)
+        switch (enemyType)
         {
-            enemyType = EnemyType.TUTORIAL;
-
-            if (tutorialActions.ContainsKey(currentState)) // "DO PRESET"
-            {
-                tutorialActions[currentState]?.Invoke();
-            }
-            else
-            {
+            case EnemyType.TUTORIAL:
+                DoAction(tutorialActions);
+                break;
+            case EnemyType.EASY:
                 EnemyManager.Instance.EnemyAction();
-                print(Convert.ToString(currentState, 2));
-
-            }
-        }
-        else
-        {
-
-            if (enemyType == EnemyType.EASY)
-            {
-                EnemyManager.Instance.EnemyAction();
-            }
-            if (enemyType == EnemyType.MEDIUM)
-            {
-
-                if (mediumActions.ContainsKey(currentState)) // "DO PRESET"
+                break;
+            case EnemyType.MEDIUM:
+                DoAction(mediumActions);
+                break;
+            case EnemyType.BOSS:
+                if (isPhaseOne)
                 {
-                    mediumActions[currentState]?.Invoke();
+                    DoAction(mediumActions);
                 }
-                else                                    // "DO DEFAULT"
+                else
                 {
-                    print(Convert.ToString(currentState, 2));
-                    EnemyManager.Instance.EnemyAction();
+                    DoAction(bossPhaseTwoAction);
                 }
-            }
+                break;
+            default:
+                break;
         }
-
     }
+    public void DoAction(Dictionary<long,Action> actionDict)
+    {
 
+        if (actionDict.ContainsKey(currentState)) // "DO PRESET"
+        {
+            actionDict[currentState]?.Invoke();
+        }
+        else                                    // "DO DEFAULT"
+        {
+            print(Convert.ToString(currentState, 2));
+            EnemyManager.Instance.EnemyAction();
+        }
+    }
 
     public void MountingCard(Card card, MountState mount)
     {
@@ -401,5 +420,15 @@ public class EnemyAI : Singleton<EnemyAI>
                 break;
         }
         return curState;
+    }
+
+    public void Turn2Phase2()
+    {
+        StartCoroutine(Turn2Phase2Col());
+    }
+    private IEnumerator Turn2Phase2Col()
+    {
+        yield return new WaitForSeconds(1);
+        CardManager.Instance.CardDie(NewFieldManager.Instance.enemyCard);
     }
 }

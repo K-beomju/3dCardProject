@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerGameData : ISerializeble
 {
     public bool isFirst = true;
+    public bool isTutorialDone = false;
 
 
     public Action OnStageChange;
