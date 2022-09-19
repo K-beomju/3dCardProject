@@ -26,6 +26,11 @@ public class PlayerDataInfo : MonoBehaviour
     [SerializeField] private Text topText;
     private RectTransform topTextRtm;
 
+    [SerializeField] private Sprite goldSprite;
+    [SerializeField] private Sprite hpSprite;
+
+
+    public Ease topEase;
     public int value; // 여기에 얻은 골드를 넣고 실행 시키면 됌 
 
     private void Awake()
@@ -51,7 +56,12 @@ public class PlayerDataInfo : MonoBehaviour
     [ContextMenu("GetGoldIncreaseDirect")]
     public void GetGoldIncreaseDirect()
     {
-        StartCoroutine(GetGoldIncreaseDirectCo(value));
+        StartCoroutine(GetGoldIncreaseDirectCo(value, true));
+    }
+
+    public void GetHpDecreaseDirect(int value)
+    {
+        StartCoroutine(GetGoldIncreaseDirectCo(value, false));
     }
 
     [ContextMenu("GetGoldDecreaseDirect")]
@@ -60,8 +70,12 @@ public class PlayerDataInfo : MonoBehaviour
         StartCoroutine(GetGoldDecreaseDirectCo(value));
     }
 
-    private IEnumerator GetGoldIncreaseDirectCo(int value)
+    private IEnumerator GetGoldIncreaseDirectCo(int value = 0, bool isGold = true)
     {
+        coinImage.sprite = isGold ? goldSprite : hpSprite;
+        
+        if(isGold)
+        {
         for (int i = 0; i < value; i++)
         {
             yield return new WaitForSeconds(.15f);
@@ -72,13 +86,15 @@ public class PlayerDataInfo : MonoBehaviour
             coin.transform.rotation = Quaternion.Euler(90, 0, 0);
             coin.transform.DOLocalRotate(new Vector3(90, 90, 0), 1);
             coin.transform.DOMoveY(0.4f, .4f);
+        }
 
         }
+
         yield return new WaitForSeconds(1f);
-        plusText.text = "+";
+        plusText.text = value > 0 ? "+" : "-";
         var camVec = mainCam.WorldToScreenPoint(player.transform.position + new Vector3(0.5f, 0.8f, 0));
         coinGroup.transform.position = camVec;
-        coinText.text = value.ToString();
+        coinText.text = Mathf.Abs(value).ToString();
 
         Sequence mySeq = DOTween.Sequence();
         mySeq.Append(coinImage.transform.DOMoveY(camVec.y + 150, .3f).SetEase(ease).SetLoops(2, LoopType.Yoyo))
@@ -148,11 +164,12 @@ public class PlayerDataInfo : MonoBehaviour
 
         mySeq.Play();
     }
-    public Ease topEase;
+
+
+
     [ContextMenu("ShowTopPanel")]
     public void ShowTopPanel(string text)
     {
-        //topPanel.DOFade(1, 0.5f);
         topPanel.gameObject.SetActive(true);
 
         topPanel.alpha = 0;

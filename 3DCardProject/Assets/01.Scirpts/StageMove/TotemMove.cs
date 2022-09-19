@@ -67,7 +67,7 @@ public class TotemMove : MonoBehaviour
         Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
         StartCoroutine(LookAtCo(lookAtPos));
 
-        transform.position = board.boardList[stageValue].transform.position;
+        transform.position = board.boardList[stageValue].transform.position + new Vector3(0,0.1f,0);
         diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
@@ -279,15 +279,19 @@ public class TotemMove : MonoBehaviour
 
             Sequence mySeq = DOTween.Sequence();
             mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
-            mySeq.InsertCallback(0.3f, () =>
+            mySeq.InsertCallback(0.4f, () =>
             {
                 rockParticle.gameObject.SetActive(true);
                 rockParticle.transform.position = rock.transform.position;
                 rockParticle.Play();
                 rock.SetActive(false);
-            }).InsertCallback(.3f,() => anim.SetTrigger("Dead"))
-            .InsertCallback(.3f, () => baseMat.DOColor(Color.red,0).OnComplete(() => baseMat.DOColor(Color.white, 1)));
-      
+            }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
+            .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
+            .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
+            
+
+
+
             mySeq.Play();
 
         }
@@ -310,7 +314,7 @@ public class TotemMove : MonoBehaviour
     private bool MoveNextNode(Vector3 goal)
     {
         anim.SetBool("isMove", true);
-        return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
+        return goal + new Vector3(0,0.1f,0) != (transform.position = Vector3.MoveTowards(transform.position, goal + new Vector3(0, 0.1f, 0), speed * Time.deltaTime));
     }
 
 
@@ -346,7 +350,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = UnityEngine.Random.Range(1, 7);
+                steps = 1;//UnityEngine.Random.Range(1, 7);
             }
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
