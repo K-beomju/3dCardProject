@@ -347,7 +347,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 1;//UnityEngine.Random.Range(1, 7);
+                steps = UnityEngine.Random.Range(1, 7);
             }
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
