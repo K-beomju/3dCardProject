@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.08
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7a8675eb396637d43b4ba0a69cc715a5, type: 2}
   m_HaloStrength: 0.264
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -210,10 +210,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleField: {fileID: 1006888587878174885, guid: 922d4e0a9eb6c5a44a12396a999a2f42, type: 3}
   shopField: {fileID: 8327378714802398518, guid: d6cc108481a703a4da143a81ef9b410b, type: 3}
-  restField: {fileID: 3123815108678926579, guid: 5a90dcc7eb950924ebec2094cfc9c2fa, type: 3}
+  getHpField: {fileID: 0}
+  getGoldField: {fileID: 0}
+  lossGoldField: {fileID: 0}
+  lossHpField: {fileID: 0}
   totem: {fileID: 4754210349454148443}
   boardList: []
-  boardArrayList: []
   childNodeList:
   - {fileID: 1807239597}
   - {fileID: 854170044}
@@ -636,7 +638,7 @@ Camera:
   m_GameObject: {fileID: 100319110}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3381,6 +3383,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  uid: 0
 --- !u!1001 &655404471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4295,6 +4298,7 @@ MonoBehaviour:
   type: 0
   enemyType: 1
   isClear: 0
+  uid: 0
 --- !u!1001 &868451975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5252,6 +5256,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  uid: 0
 --- !u!1001 &1029659607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5837,6 +5842,7 @@ MonoBehaviour:
   type: 1
   enemyType: 0
   isClear: 0
+  uid: 0
 --- !u!114 &1100083572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1100083572, guid: 8b79114391319fb4bb56f64adb410eff, type: 3}
@@ -6281,6 +6287,7 @@ MonoBehaviour:
   type: 0
   enemyType: 1
   isClear: 0
+  uid: 0
 --- !u!1001 &1189009047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8013,6 +8020,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  uid: 0
 --- !u!1 &1401795115 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 400689392219587212, guid: 1b51c2ec73f490f409550cb18d866416, type: 3}
@@ -8328,6 +8336,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  uid: 0
 --- !u!1001 &1554093511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8869,11 +8878,6 @@ PrefabInstance:
 --- !u!4 &1591128587 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4370357373470142, guid: ca5dad4b41345f740b9a72fa69bd69ae, type: 3}
-  m_PrefabInstance: {fileID: 1591128586}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1591128588 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198953092693864666, guid: ca5dad4b41345f740b9a72fa69bd69ae, type: 3}
   m_PrefabInstance: {fileID: 1591128586}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1592138576
@@ -10343,6 +10347,7 @@ MonoBehaviour:
   type: 0
   enemyType: 1
   isClear: 0
+  uid: 0
 --- !u!1001 &1816401182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12353,6 +12358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 11993407}
+  playerData: {fileID: 0}
   speed: 3
   steps: 0
   fadeGroup: {fileID: 0}
@@ -12360,14 +12366,14 @@ MonoBehaviour:
   diceParticle: {fileID: 1568710199}
   battleModelParticle: {fileID: 1882808161}
   healParticle: {fileID: 437539371}
-  healFieldParticle: {fileID: 1591128588}
   itemMark: {fileID: 1755619653}
   cam: {fileID: 100319112}
+  rock: {fileID: 0}
+  rockParticle: {fileID: 0}
+  baseMat: {fileID: 0}
   necro: {fileID: 1100083572}
   routePosition: 0
   routeStep: 0
-  routeValue: 0
-  stageValue: 0
   isLock: 0
   battleFieldModel: {fileID: 362342852}
   diceText: {fileID: 747618251}
