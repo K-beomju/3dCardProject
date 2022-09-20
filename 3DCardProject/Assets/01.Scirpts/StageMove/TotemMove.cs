@@ -211,6 +211,7 @@ public class TotemMove : MonoBehaviour
 
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
+                if(playerData != null)
                 playerData.ShowTopPanel("ㅤ배틀 시작!");
 
                 battleModelParticle.gameObject.SetActive(true);

@@ -3778,8 +3778,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a601998b92e93c343aac6f378c98c4d1, type: 3}
-    m_FontSize: 100
+    m_Font: {fileID: 12800000, guid: b72a01e4a1ab52a45af3924339a3d18a, type: 3}
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -5839,7 +5839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922f383be33c7184cbbb6ddc54dcc825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   enemyType: 0
   isClear: 0
   uid: 0
@@ -6284,8 +6284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922f383be33c7184cbbb6ddc54dcc825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  enemyType: 1
+  type: 1
+  enemyType: 0
   isClear: 0
   uid: 0
 --- !u!1001 &1189009047
@@ -12380,7 +12380,7 @@ MonoBehaviour:
   rotSpeed: 10
   ease: 1
   spaceGroup: {fileID: 0}
-  isTutorial: 0
+  isTutorial: 1
 --- !u!1 &4754210349454148444
 GameObject:
   m_ObjectHideFlags: 0
