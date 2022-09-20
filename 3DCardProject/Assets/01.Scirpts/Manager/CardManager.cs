@@ -153,7 +153,7 @@ public class CardManager : Singleton<CardManager>
         yield return NewFieldManager.Instance.FieldManagerStartCol();
         yield return BattleCameraController.FocusOnEnemy();
         yield return BattleCameraController.OutFocusFromEnemy();
-        StartCoroutine(SpawnCardCo());
+        StartCoroutine(SpawnCardCo(act));
     }
     private IEnumerator SpawnCardCo(Action act = null)
     {
