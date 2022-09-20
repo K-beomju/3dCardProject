@@ -189,6 +189,7 @@ public class TotemMove : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         rotSpeed = 0;
         SaveManager.Instance.gameData.RouteValue = routePosition - routeStep - SaveManager.Instance.gameData.StageValue;
+        Debug.Log(SaveManager.Instance.gameData.RouteValue);
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
@@ -291,7 +292,7 @@ public class TotemMove : MonoBehaviour
         }
 
         isMove = false;
-
+        SaveManager.Instance.gameData.StageValue = SaveManager.Instance.gameData.RouteValue;
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         isStart = false;
