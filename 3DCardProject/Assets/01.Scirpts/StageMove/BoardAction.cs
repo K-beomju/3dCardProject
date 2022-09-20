@@ -7,6 +7,7 @@ using System;
 [Serializable]
 public enum StageType
 {
+    None,
     Battle,
     Shop,
     GetHP,
