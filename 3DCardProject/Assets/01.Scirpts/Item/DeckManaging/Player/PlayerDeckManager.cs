@@ -11,13 +11,7 @@ public class PlayerDeckManager : DeckManager
 
     public void SetUpPlayerDeckManager()
     {
-        SetupItemBuffer(SaveManager.Instance.saveDeckData.CurDeck.ShallowCopy().DeckData);
+        SetupItemBuffer(CardManager.Instance.defaultDeck.items);
     }
 
-    public void AddCardToDeck(Item InItem)
-    {
-        Item item = InItem.ShallowCopy();
-        SaveManager.Instance.saveDeckData.CurDeck.DeckData.Add(item);
-        AddCardToItemBuffer(item, item.count);
-    }
 }

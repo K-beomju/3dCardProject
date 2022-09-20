@@ -690,6 +690,7 @@ MonoBehaviour:
   cycleBox: {fileID: 181067940}
   cycleTMP: {fileID: 766202565}
   enemyDataArraySO: {fileID: 11400000, guid: 3856d51325399b5409834c666930b95e, type: 2}
+  <defaultDeck>k__BackingField: {fileID: 11400000, guid: 3202f0975cff4cd48b2c682d707dd8ce, type: 2}
 --- !u!114 &2106903846842785243
 MonoBehaviour:
   m_ObjectHideFlags: 0

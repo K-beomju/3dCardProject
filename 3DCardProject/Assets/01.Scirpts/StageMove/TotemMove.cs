@@ -210,7 +210,7 @@ public class TotemMove : MonoBehaviour
 
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
-                playerData.ShowTopPanel("ㅤ배틀 시작!");
+                playerData.ShowTopPanel("배틀 시작!");
 
                 battleModelParticle.gameObject.SetActive(true);
                 battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
@@ -229,7 +229,7 @@ public class TotemMove : MonoBehaviour
         if (type == StageType.Shop)
         {
 
-            playerData.ShowTopPanel("ㅤ상점 이동!");
+            playerData.ShowTopPanel("상점 이동!");
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
             necro.gameObject.SetActive(true);
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
@@ -245,28 +245,28 @@ public class TotemMove : MonoBehaviour
         }
         if (type == StageType.GetHP)
         {
-            playerData.ShowTopPanel("ㅤ체력 회복!");
+            playerData.ShowTopPanel("체력 회복!");
             yield return new WaitForSeconds(3f);
 
             FadeInOut(1, 1, () => RestAction());
         }
         if(type == StageType.GetGold)
         {
-            playerData.ShowTopPanel("ㅤ골드 획득!");
+            playerData.ShowTopPanel("골드 획득!");
             yield return new WaitForSeconds(3f);
 
             playerData.GetGoldIncreaseDirect();
         }
         if(type == StageType.LossGold)
         {
-            playerData.ShowTopPanel("ㅤ골드 감소!");
+            playerData.ShowTopPanel("골드 감소!");
             yield return new WaitForSeconds(3f);
 
             playerData.GetGoldDecreaseDirect();
         }
         if(type == StageType.LossHp)
         {
-            playerData.ShowTopPanel("ㅤ체력 감소!");
+            playerData.ShowTopPanel("체력 감소!");
             yield return new WaitForSeconds(3f);
             rock.transform.position = transform.position + new Vector3(0, 4, 0);
             rock.SetActive(true);
@@ -323,8 +323,8 @@ public class TotemMove : MonoBehaviour
     {
         Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
-        StageManager.Instance.EnemyUid = GetEnemyUid();
-        StageManager.Instance.enemyType = ReturnBtDifficult();
+        EnemyManager.Instance.curEnemyType = ReturnBtDifficult();
+        EnemyManager.Instance.CurEnemyUid = GetEnemyUid();
     }
 
     private void ShopScene()
@@ -347,7 +347,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = UnityEngine.Random.Range(1, 7);
+                steps = 1;//UnityEngine.Random.Range(1, 7);
             }
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);

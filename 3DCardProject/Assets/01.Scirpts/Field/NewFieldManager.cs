@@ -36,8 +36,18 @@ public class NewFieldManager : Singleton<NewFieldManager>
         }
         TurnManager.Instance.CanChangeTurn = false;
         //Item enemyItem = EnemyManager.Instance.enemyItem.ShallowCopy();
-        Item enemyItem = CardManager.Instance.FindEnemyData(EnemyManager.Instance.CurEnemyUid);
-        
+    
+
+    }
+    public IEnumerator FieldManagerStartCol()
+    {
+        uint enemyUid = EnemyManager.Instance.CurEnemyUid;
+        if (enemyUid == 0)
+        {
+            enemyUid = 1001;
+        }
+        Item enemyItem = CardManager.Instance.FindEnemyData(enemyUid);
+
         enemyCard = CardManager.Instance.CreateCard(enemyItem, false);
         enemyCard.DetactiveCardView();
         playerCard = CardManager.Instance.CreateCard(PlayerManager.Instance.playerItem.ShallowCopy(), true);
@@ -52,6 +62,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         EnemyManager.Instance.enemyAvatarCard = enemyCard;
         PlayerManager.Instance.playerAvatarCard = playerCard;
 
+        yield return new WaitForSeconds(2f);
     }
 
     private void Update()

@@ -48,8 +48,6 @@ public class GameManager : Singleton<GameManager>
     {
         if (StageManager.Instance != null&& StageManager.Instance.SceneState == SceneState.BATTLE)
         {
-            EnemyAI.Instance.enemyType = StageManager.Instance.enemyType;
-            EnemyManager.Instance.CurEnemyUid = StageManager.Instance.EnemyUid;
             
             State = GameState.RUNNING;
 

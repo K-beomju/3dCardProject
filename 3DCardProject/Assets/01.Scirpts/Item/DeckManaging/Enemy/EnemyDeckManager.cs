@@ -12,6 +12,6 @@ public class EnemyDeckManager : DeckManager
 
     public void SetUpEnemyDeckManager()
     {
-        SetupItemBuffer(SaveManager.Instance.saveDeckData.CurDeck.ShallowCopy().DeckData);
+        SetupItemBuffer(CardManager.Instance.defaultDeck.items);
     }
 }

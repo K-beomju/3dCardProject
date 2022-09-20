@@ -93,7 +93,7 @@ public class DeckManager : MonoBehaviour
 
         for (int i = 0; i < items.Count; i++)
         {
-            Item item = items[i].item;
+            Item item = items[i].item.ShallowCopy();
             AddCardToItemBuffer(item, item.count);
         }
 

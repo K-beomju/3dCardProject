@@ -11,6 +11,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public DeckManager dm { get; private set; }
     public uint CurEnemyUid;
+    public EnemyType curEnemyType;
 
     private void Start()
     {

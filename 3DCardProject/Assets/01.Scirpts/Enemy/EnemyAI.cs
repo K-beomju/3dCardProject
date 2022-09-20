@@ -185,7 +185,10 @@ public class EnemyAI : Singleton<EnemyAI>
 
 
     };
-
+    private void Start()
+    {
+        enemyType = EnemyManager.Instance.curEnemyType;
+    }
 
     private long currentState = 0b0000_0000_0000_0000_0000_0000_0000_0000;
 

@@ -129,7 +129,7 @@ public class PlayerGameData : ISerializeble
                     break;
             }
 
-            return SaveManager.Instance.saveDeckData.FindItem(uid); ;
+            return CardManager.Instance.FindItem(uid); ;
         }
         set
         {

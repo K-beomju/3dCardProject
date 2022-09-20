@@ -44,31 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ac60d46b71357448ef83ada0041da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyItem:
-    cost: 0
-    uid: 1000
-    name: "\uC801"
-    sprite: {fileID: 21300000, guid: c647bb24286b0b444855d3c9d3cb1b6b, type: 3}
-    IsAvatar: 1
-    CanStandOn: 0
-    IsReflectCard: 0
-    IsUpperCard: 0
-    IsStructCard: 0
-    EffectPrefab: {fileID: 0}
-    HitEffectPrefab: {fileID: 0}
-    spawnModelYPos: 1
-    tribe: 2
-    description: "\uC801\uC785\uB2C8\uB2E4"
-    count: 1
-    OnSpawn: []
-    OnDie:
-    - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
-      condition: []
-    OnAttack: []
-    OnDamage:
-    - action: {fileID: 7449770166191766883, guid: f190c8cb104fb6741a10b3b0a358717e, type: 3}
-      condition: []
-    OnCreate: []
+  isDontDestroyOnLoad: 1
+  enemyAvatarCard: {fileID: 0}
+  deadPt: {fileID: 19853646, guid: 737959db973360b43bdeb1a4874f1af8, type: 3}
+  CurEnemyUid: 0
 --- !u!114 &4565849601157548173
 MonoBehaviour:
   m_ObjectHideFlags: 0

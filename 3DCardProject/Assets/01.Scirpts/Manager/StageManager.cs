@@ -19,8 +19,6 @@ public class StageManager : Singleton<StageManager>
     [field: SerializeField]
     public List<ItemArraySO> stageArray { get; private set; }
 
-    public EnemyType enemyType;
-    public uint EnemyUid;
     public SceneState SceneState = SceneState.Title;
 
     public Action OnLoadBattleScene;
@@ -46,12 +44,6 @@ public class StageManager : Singleton<StageManager>
     {
         PlayerPrefs.DeleteKey("StageValue");
 
-    }
-
-    public List<Item> GetCurrentStageData()
-    {
-        List<Item> data = DeckData.ArraySOToItemList(stageArray[curStageIndex]);
-        return data;
     }
 
 

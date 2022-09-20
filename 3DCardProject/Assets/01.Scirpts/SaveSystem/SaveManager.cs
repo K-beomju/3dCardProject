@@ -34,7 +34,6 @@ public class SaveManager : Singleton<SaveManager>
 
     public List<ISerializeble> ObjToSaveList = new List<ISerializeble>();
 
-    public DeckData saveDeckData = new DeckData();
 
     public PlayerGameData gameData = new PlayerGameData();
     Rijndael myRijndael;
@@ -46,7 +45,6 @@ public class SaveManager : Singleton<SaveManager>
         DontDestroyOnLoad(this);
 
         myRijndael = Rijndael.Create();
-        ObjToSaveList.Add(saveDeckData);
         ObjToSaveList.Add(gameData);
 
     }
@@ -175,15 +173,26 @@ public class SaveManager : Singleton<SaveManager>
            
             for (int i = 0; i < ObjToSaveList.Count; i++)
             {
-                string objJsonData = jSaveGame[ObjToSaveList[i].GetJsonKey()].ToString();
-                ObjToSaveList[i].Desirialize(objJsonData);
+                JToken jToken = jSaveGame[ObjToSaveList[i].GetJsonKey()];
+                if (jToken != null)
+                {
+                    string objJsonData = jToken.ToString();
+                    ObjToSaveList[i].Desirialize(objJsonData);
+                }
+                else
+                {
+                    gameData = new PlayerGameData();
+
+                    SaveGameData();
+                    return;
+                }
             }
 
 
             // 덮어쓰기 할때
             if(gameData.isFirst) // 처음 시작했거나 리셋 했을경우 
             {
-                saveDeckData.CurDeck = new Deck();
+
             }
 
             

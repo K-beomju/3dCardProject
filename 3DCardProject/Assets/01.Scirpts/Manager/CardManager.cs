@@ -99,6 +99,22 @@ public class CardManager : Singleton<CardManager>
 
     [SerializeField] private ItemArraySO enemyDataArraySO;
 
+    [field:SerializeField]
+    public ItemArraySO defaultDeck { get; set; }
+
+    public Item FindItem(uint uid)
+    {
+        if (defaultDeck.items.Count < 1) return null;
+
+        foreach (var item in defaultDeck.items)
+        {
+            if (item.item.uid == uid)
+            {
+                return item.item.ShallowCopy();
+            }
+        }
+        return null;
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -123,7 +139,7 @@ public class CardManager : Singleton<CardManager>
                     StartCoroutine(TutorialSpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
                 }
                 else
-                    StartCoroutine(SpawnCardCo(() => { TurnManager.ChangeTurn(TurnType.Player); }));
+                    StartCoroutine(StartProcess(() => { TurnManager.ChangeTurn(TurnType.Player); }));
 
                 deckManager = GetComponent<DeckManager>();
 
@@ -132,7 +148,13 @@ public class CardManager : Singleton<CardManager>
 
         }
     }
-
+    private IEnumerator StartProcess(Action act =null)
+    {
+        yield return NewFieldManager.Instance.FieldManagerStartCol();
+        yield return BattleCameraController.FocusOnEnemy();
+        yield return BattleCameraController.OutFocusFromEnemy();
+        StartCoroutine(SpawnCardCo());
+    }
     private IEnumerator SpawnCardCo(Action act = null)
     {
         yield return new WaitForSeconds(2f);
@@ -527,7 +549,7 @@ public class CardManager : Singleton<CardManager>
         var card = Global.Pool.GetItem<Card>();
         card.transform.position = cardSpawnPoint.position;
 
-        card.Setup(item, true, isPlayerCard);
+        card.Setup(item, true, isPlayerCard);               
         card.GetComponent<Order>().SetOriginOrder(1);
         return card;
     }
