@@ -210,7 +210,7 @@ public class TotemMove : MonoBehaviour
 
             battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
             {
-                playerData.ShowTopPanel("배틀 시작!");
+                playerData.ShowTopPanel("ㅤ배틀 시작!");
 
                 battleModelParticle.gameObject.SetActive(true);
                 battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
@@ -229,7 +229,7 @@ public class TotemMove : MonoBehaviour
         if (type == StageType.Shop)
         {
 
-            playerData.ShowTopPanel("상점 이동!");
+            playerData.ShowTopPanel("ㅤ상점 이동!");
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
             necro.gameObject.SetActive(true);
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
@@ -245,28 +245,28 @@ public class TotemMove : MonoBehaviour
         }
         if (type == StageType.GetHP)
         {
-            playerData.ShowTopPanel("체력 회복!");
+            playerData.ShowTopPanel("ㅤ체력 회복!");
             yield return new WaitForSeconds(3f);
 
             FadeInOut(1, 1, () => RestAction());
         }
         if(type == StageType.GetGold)
         {
-            playerData.ShowTopPanel("골드 획득!");
+            playerData.ShowTopPanel("ㅤ골드 획득!");
             yield return new WaitForSeconds(3f);
 
             playerData.GetGoldIncreaseDirect();
         }
         if(type == StageType.LossGold)
         {
-            playerData.ShowTopPanel("골드 감소!");
+            playerData.ShowTopPanel("ㅤ골드 감소!");
             yield return new WaitForSeconds(3f);
 
             playerData.GetGoldDecreaseDirect();
         }
         if(type == StageType.LossHp)
         {
-            playerData.ShowTopPanel("체력 감소!");
+            playerData.ShowTopPanel("ㅤ체력 감소!");
             yield return new WaitForSeconds(3f);
             rock.transform.position = transform.position + new Vector3(0, 4, 0);
             rock.SetActive(true);
