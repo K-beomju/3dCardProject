@@ -157,7 +157,6 @@ public class CardManager : Singleton<CardManager>
     }
     private IEnumerator SpawnCardCo(Action act = null)
     {
-        yield return new WaitForSeconds(2f);
         CycleCount++;
         for (int i = 0; i < 5; i++)
         {
@@ -169,9 +168,10 @@ public class CardManager : Singleton<CardManager>
 
     private IEnumerator TutorialSpawnCardCo(Action act = null)
     {
+        yield return NewFieldManager.Instance.FieldManagerStartCol();
         yield return new WaitForSeconds(10.5f);
 
-       
+
 
         TutorialAddCardForStart(103);
         yield return new WaitForSeconds(0.2f);
