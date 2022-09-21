@@ -91,23 +91,25 @@ public class MenuManager : Singleton<MenuManager>
 
     public void MoveTitle()
     {
+        Time.timeScale = 1;
         Global.LoadScene.LoadScene("Title",() => menuPanel.SetActive(false));
     }
         
     public void DescGameRule()
     {
-        middleGroup.DOFade(0, 1).OnComplete(() => gameDescGroup.DOFade(1,1));
-        buttonGroup.DOFade(0, 1).OnComplete(() => buttonGroup.interactable = false);
+        middleGroup.DOFade(0, 1).SetUpdate(true).OnComplete(() => gameDescGroup.DOFade(1,1).SetUpdate(true));
+        buttonGroup.DOFade(0, 1).SetUpdate(true).OnComplete(() => buttonGroup.interactable = false);
         middleGroup.blocksRaycasts = false;
         buttonGroup.blocksRaycasts = false;
         gameDescGroup.interactable = true;
         gameDescGroup.blocksRaycasts = true;
+        Debug.Log(middleGroup.blocksRaycasts);
     }
 
     public void DescDetactive()
     {
-        gameDescGroup.DOFade(0, 1).OnComplete(() => middleGroup.DOFade(1, 1));
-        buttonGroup.DOFade(1, 1).OnComplete(() => buttonGroup.interactable = true);
+        gameDescGroup.DOFade(0, 1).SetUpdate(true).OnComplete(() => middleGroup.DOFade(1, 1).SetUpdate(true));
+        buttonGroup.DOFade(1, 1).SetUpdate(true).OnComplete(() => buttonGroup.interactable = true);
         middleGroup.blocksRaycasts = true;
         buttonGroup.blocksRaycasts = true;
         gameDescGroup.interactable = false;

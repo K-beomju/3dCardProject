@@ -6,7 +6,7 @@ using Cinemachine;
 using DG.Tweening;
 
 
-public class BoardManager : MonoBehaviour
+public class BoardManager : Singleton<BoardManager>
 {
     [SerializeField] private GameObject battleField;
     [SerializeField] private GameObject shopField;
@@ -28,6 +28,7 @@ public class BoardManager : MonoBehaviour
     private Vector3 totemRotateRouteVector;
     public int[] camChangeRouteValue;
 
+    [SerializeField] private ParticleSystem coinPt;
 
     private void Start()
     {
@@ -106,6 +107,13 @@ public class BoardManager : MonoBehaviour
         //    }
         //}
 
+    }
+
+
+    public void GetCoinEffect(Transform trm)
+    {
+        coinPt.transform.position = trm.position;
+        coinPt.Play();
     }
 
     #region

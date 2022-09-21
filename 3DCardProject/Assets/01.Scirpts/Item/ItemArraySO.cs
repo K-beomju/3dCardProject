@@ -15,6 +15,7 @@ public class Item
     public bool IsReflectCard;  // 받아치기 카드인가
     public bool IsUpperCard;    // 위에 올릴 수 있는 카드인가
     public bool IsStructCard;   // 건물, 설치 가능 카드인가
+    public bool IsTitleCard;    // 타이틀 카드인가
     public GameObject EffectPrefab;
     public GameObject HitEffectPrefab;
     public float SpawnModelYPos;
