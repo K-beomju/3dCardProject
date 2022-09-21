@@ -27,6 +27,7 @@ public class BoardManager : Singleton<BoardManager>
     [SerializeField] private GameObject totemCam;
     private Vector3 totemRotateRouteVector;
     public int[] camChangeRouteValue;
+    public bool[] camChangeBool;
 
     [SerializeField] private ParticleSystem coinPt;
 
@@ -154,16 +155,34 @@ public class BoardManager : Singleton<BoardManager>
 
         for (int i = 0; i < camChangeRouteValue.Length; i++)
         {
-            if (totem.routePosition >= camChangeRouteValue[i])
+            if (totem.routePosition >= camChangeRouteValue[i] && !camChangeBool[i])
             {
                 switch (i)
                 {
                     case 0:
+                        camChangeBool[0] = true;
                         totemRotateRouteVector = new Vector3(totemCam.transform.eulerAngles.x, -93, totemCam.transform.eulerAngles.z);
+                        break;
+                    case 1:
+                        camChangeBool[1] = true;
+                        totemRotateRouteVector = new Vector3(18, -170, totemCam.transform.eulerAngles.z);
+                        break;
+                    case 2:
+                        camChangeBool[2] = true;
+                        totemRotateRouteVector = new Vector3(18, -286.5f, totemCam.transform.eulerAngles.z);
+                        break;
+                    case 3:
+                        camChangeBool[3] = true;
+                        totemRotateRouteVector = new Vector3(36.2f, 116.8f, totemCam.transform.eulerAngles.z);
+                        break;
+                    case 4:
+                        camChangeBool[4] = true;
+                        totemRotateRouteVector = new Vector3(36.2f, -392.99f, totemCam.transform.eulerAngles.z);
                         break;
                     default:
                         break;
                 }
+               
 
                 if (soft)
                     totemCam.transform.DORotate(totemRotateRouteVector, 1);

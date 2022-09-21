@@ -18,6 +18,7 @@ public class TotemMove : MonoBehaviour
     [SerializeField] private int steps;
     [SerializeField] private CanvasGroup fadeGroup;
     [SerializeField] private GameObject diceObj;
+    [SerializeField] private Transform diceTrm;
     [SerializeField] private ParticleSystem diceParticle;
     [SerializeField] private ParticleSystem battleModelParticle;
     [SerializeField] private ParticleSystem healParticle;
@@ -65,7 +66,8 @@ public class TotemMove : MonoBehaviour
         StartCoroutine(LookAtCo(lookAtPos));
 
         transform.position = board.boardList[SaveManager.Instance.gameData.StageValue].transform.position + new Vector3(0,0.1f,0);
-        diceObj.transform.DOMoveY(-0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
+        diceObj.transform.position = diceTrm.position;
+        //diceObj.transform.DOMoveY(diceTrm.position.y - 0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
         rotSpeed = 0;
@@ -113,11 +115,6 @@ public class TotemMove : MonoBehaviour
                 isLock = true;
             }
         }
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    StopAllCoroutines();
-        //    Global.LoadScene.LoadScene("Stage");
-        //}
         if (isMove)
             diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
 
@@ -192,105 +189,105 @@ public class TotemMove : MonoBehaviour
         Debug.Log(SaveManager.Instance.gameData.RouteValue);
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
-
+       
         var type = board.boardList[SaveManager.Instance.gameData.RouteValue].type;
 
         yield return new WaitForSeconds(1f);
 
 
-        if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-        {
+        //if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+        //{
 
-            Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
+        //    Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
 
-            battleFieldModel.SetActive(true);
+        //    battleFieldModel.SetActive(true);
 
-            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-            battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
-            battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
+        //    Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+        //    battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
+        //    battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
 
-            battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
-            {
-                if(playerData != null)
-                playerData.ShowTopPanel("ㅤ배틀 시작!");
+        //    battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
+        //    {
+        //        if(playerData != null)
+        //        playerData.ShowTopPanel("ㅤ배틀 시작!");
 
-                battleModelParticle.gameObject.SetActive(true);
-                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
-                battleModelParticle.Play();
-                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
-                OnComplete(() =>
-                {
-                    itemMark.SetActive(true);
-                    itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
-                }).SetDelay(1);
-            });
+        //        battleModelParticle.gameObject.SetActive(true);
+        //        battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
+        //        battleModelParticle.Play();
+        //        this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
+        //        OnComplete(() =>
+        //        {
+        //            itemMark.SetActive(true);
+        //            itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
+        //        }).SetDelay(1);
+        //    });
 
-            yield return new WaitForSeconds(4f);
-            BattleScene();
-        }
-        if (type == StageType.Shop)
-        {
-            if (playerData != null)
-                playerData.ShowTopPanel("ㅤ상점 이동!");
-            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-            necro.gameObject.SetActive(true);
-            necro.transform.position = battlePos + new Vector3(0, .3f, 0);
-            necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
-            necro.transform.Rotate(10, 0, 0);
-            this.transform.DOLookAt(new Vector3(necro.transform.position.x, transform.position.y, necro.transform.position.z), .3f);
+        //    yield return new WaitForSeconds(4f);
+        //    BattleScene();
+        //}
+        //if (type == StageType.Shop)
+        //{
+        //    if (playerData != null)
+        //        playerData.ShowTopPanel("ㅤ상점 이동!");
+        //    Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+        //    necro.gameObject.SetActive(true);
+        //    necro.transform.position = battlePos + new Vector3(0, .3f, 0);
+        //    necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
+        //    necro.transform.Rotate(10, 0, 0);
+        //    this.transform.DOLookAt(new Vector3(necro.transform.position.x, transform.position.y, necro.transform.position.z), .3f);
 
-            yield return new WaitForSeconds(2f);
-            necro.MegaPt(this.transform);
-            yield return new WaitForSeconds(1f);
+        //    yield return new WaitForSeconds(2f);
+        //    necro.MegaPt(this.transform);
+        //    yield return new WaitForSeconds(1f);
 
-            ShopScene();
-        }
-        if (type == StageType.GetHP)
-        {
-            playerData.ShowTopPanel("ㅤ체력 회복!");
-            yield return new WaitForSeconds(3f);
+        //    ShopScene();
+        //}
+        //if (type == StageType.GetHP)
+        //{
+        //    playerData.ShowTopPanel("ㅤ체력 회복!");
+        //    yield return new WaitForSeconds(3f);
 
-            FadeInOut(1, 1, () => RestAction());
-        }
-        if(type == StageType.GetGold)
-        {
-            playerData.ShowTopPanel("ㅤ골드 획득!");
-            yield return new WaitForSeconds(3f);
+        //    FadeInOut(1, 1, () => RestAction());
+        //}
+        //if(type == StageType.GetGold)
+        //{
+        //    playerData.ShowTopPanel("ㅤ골드 획득!");
+        //    yield return new WaitForSeconds(3f);
 
-            playerData.GetGoldIncreaseDirect();
-        }
-        if(type == StageType.LossGold)
-        {
-            playerData.ShowTopPanel("ㅤ골드 감소!");
-            yield return new WaitForSeconds(3f);
+        //    playerData.GetGoldIncreaseDirect();
+        //}
+        //if(type == StageType.LossGold)
+        //{
+        //    playerData.ShowTopPanel("ㅤ골드 감소!");
+        //    yield return new WaitForSeconds(3f);
 
-            playerData.GetGoldDecreaseDirect();
-        }
-        if(type == StageType.LossHp)
-        {
-            playerData.ShowTopPanel("ㅤ체력 감소!");
-            yield return new WaitForSeconds(3f);
-            rock.transform.position = transform.position + new Vector3(0, 4, 0);
-            rock.SetActive(true);
+        //    playerData.GetGoldDecreaseDirect();
+        //}
+        //if(type == StageType.LossHp)
+        //{
+        //    playerData.ShowTopPanel("ㅤ체력 감소!");
+        //    yield return new WaitForSeconds(3f);
+        //    rock.transform.position = transform.position + new Vector3(0, 4, 0);
+        //    rock.SetActive(true);
 
-            Sequence mySeq = DOTween.Sequence();
-            mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
-            mySeq.InsertCallback(0.3f, () =>
-            {
-                rockParticle.gameObject.SetActive(true);
-                rockParticle.transform.position = rock.transform.position;
-                rockParticle.Play();
-                rock.SetActive(false);
-            }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
-            .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
-            .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
+        //    Sequence mySeq = DOTween.Sequence();
+        //    mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
+        //    mySeq.InsertCallback(0.3f, () =>
+        //    {
+        //        rockParticle.gameObject.SetActive(true);
+        //        rockParticle.transform.position = rock.transform.position;
+        //        rockParticle.Play();
+        //        rock.SetActive(false);
+        //    }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
+        //    .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
+        //    .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
             
+                
 
 
+        //    mySeq.Play();
 
-            mySeq.Play();
-
-        }
+        //}
 
         isMove = false;
         SaveManager.Instance.gameData.StageValue = SaveManager.Instance.gameData.RouteValue;
@@ -349,7 +346,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 1;//UnityEngine.Random.Range(1, 7);
+                steps = 5;//UnityEngine.Random.Range(1, 7);
             }
             diceText.gameObject.SetActive(true);
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
@@ -358,10 +355,15 @@ public class TotemMove : MonoBehaviour
 
             if (!isMove)
             {
+                Debug.Log(board.childNodeList.Count - (routePosition + steps));
                 if (routePosition + steps < board.childNodeList.Count)
                 {
                     StartCoroutine(MoveMentCo());
                     print("Move");
+                }
+                else
+                {
+
                 }
             }
 
@@ -390,6 +392,13 @@ public class TotemMove : MonoBehaviour
         yield return null;
         transform.LookAt(pos);
 
+    }
+
+    public void LookAtBoard()
+    {
+        Vector3 nextPoss = board.childNodeList[routePosition + 1].transform.position;
+        Vector3 lookAtPoss = new Vector3(nextPoss.x, transform.position.y, nextPoss.z);
+        transform.DOLookAt(lookAtPoss, 1);
     }
 
 

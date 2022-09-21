@@ -9828,7 +9828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4808731016031427622, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
       propertyPath: camEase
-      value: 14
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 4808731016031427622, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
       propertyPath: resetButton
