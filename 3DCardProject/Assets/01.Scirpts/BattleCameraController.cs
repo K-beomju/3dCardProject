@@ -18,6 +18,16 @@ public class BattleCameraController : MonoBehaviour
     private TMP_Text enemyNameText;
     private Vector3 panelTopOriginPos;
     private Vector3 panelBottomOriginPos;
+
+    [SerializeField]
+    private Transform letterboxTop;
+    [SerializeField]
+    private Transform letterboxBottom;
+    [SerializeField]
+    private TMP_Text SubTextTMP;
+    public UnityEngine.UI.Text dummyTxt;
+    private Vector3 letterboxTopOriginPos;
+    private Vector3 letterboxBottomOriginPos;
     private void Awake()
     {
         Instance = this;
@@ -25,10 +35,15 @@ public class BattleCameraController : MonoBehaviour
         camOriginRot = cam.transform.rotation;
         panelTopOriginPos = focusPanelTop.localPosition;
         panelBottomOriginPos = focusPanelBottom.localPosition;
+        letterboxTopOriginPos = letterboxTop.localPosition;
+        letterboxBottomOriginPos = letterboxBottom.localPosition;
     }
-    [ContextMenu("Focus")]
     public static IEnumerator FocusOnEnemy()
     {
+        foreach (var card in CardManager.Instance.myCards)
+        {
+            card.DetactiveCardView(false);
+        }
         Instance.enemyNameText.text = CardManager.Instance.FindEnemyData(EnemyManager.Instance.CurEnemyUid).itemName;
         Instance.enemyNameText.DOFade(0, 0);
         Vector3 camPos = NewFieldManager.Instance.enemyCard.transform.position;
@@ -37,22 +52,65 @@ public class BattleCameraController : MonoBehaviour
         seq.Append(Instance.cam.transform.DOMove(camPos, 1.5f));
         seq.Join(Instance.cam.transform.DORotate((NewFieldManager.Instance.enemyCard.LinkedModel.transform.position - camPos).normalized, 1.5f));
         seq.SetEase(Ease.InSine);
-        seq.Append(Instance.focusPanelTop.DOLocalMove(Vector3.zero,.7f));
+        yield return new WaitForSeconds(1.5f);
+        yield break;
+    }
+    public static IEnumerator PanelIn()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(Instance.focusPanelTop.DOLocalMove(Vector3.zero, .7f));
         seq.Join(Instance.focusPanelBottom.DOLocalMove(Vector3.zero, .7f));
-        seq.Join(Instance.enemyNameText.transform.DOLocalMoveX(Instance.enemyNameText.transform.localPosition.x - 100f,0f));
-        seq.Join(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y + 50f,0f));
+        seq.Join(Instance.enemyNameText.transform.DOLocalMoveX(Instance.enemyNameText.transform.localPosition.x - 100f, 0f));
+        seq.Join(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y + 50f, 0f));
         seq.Append(Instance.enemyNameText.DOFade(1, .5f));
         seq.Join(Instance.enemyNameText.transform.DOLocalMoveX(Instance.enemyNameText.transform.localPosition.x + 100f, .5f));
         seq.Join(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y - 50f, .5f));
-        seq.AppendInterval(5f);
+        seq.SetEase(Ease.InSine);
+
+        yield return new WaitForSeconds(.5f);
+        yield break;
+    }
+    public static IEnumerator LetterBoxActive(bool isActive)
+    {
+        Sequence seq = DOTween.Sequence();
+        if(isActive)
+        {
+            seq.Append(Instance.letterboxTop.DOLocalMove(Vector3.zero, .7f));
+            seq.Join(Instance.letterboxBottom.DOLocalMove(Vector3.zero, .7f));
+            yield return new WaitForSeconds(1.4f);
+        }
+        else
+        {
+            seq.Append(Instance.letterboxTop.DOLocalMove(Instance.letterboxTopOriginPos, .4f));
+            seq.Join(Instance.letterboxBottom.DOLocalMove(Instance.letterboxBottomOriginPos, .4f));
+            yield return new WaitForSeconds(.8f);
+        }
+        yield break;
+    }
+    public static IEnumerator SubText(string txt = "기본 텍스트",float duration = 0)
+    {
+        if (duration == 0)
+        {
+            duration = txt.Trim().Length * .5f;
+        }
+        Sequence seq = DOTween.Sequence();
+        seq.Append(Instance.dummyTxt.DOText(txt, duration).OnUpdate(() => Instance.SubTextTMP.text = Instance.dummyTxt.text).OnComplete(() => Instance.SubTextTMP.text = ""));
+        seq.SetEase(Ease.InSine);
+        yield return new WaitForSeconds(duration);
+        yield break;
+    }
+    public static IEnumerator PanelOut()
+    {
+        Sequence seq = DOTween.Sequence();
         seq.Append(Instance.focusPanelTop.DOLocalMove(Instance.panelTopOriginPos, .4f));
         seq.Join(Instance.focusPanelBottom.DOLocalMove(Instance.panelBottomOriginPos, .4f));
         seq.Append(Instance.enemyNameText.transform.DOLocalMoveX(Instance.enemyNameText.transform.localPosition.x - 100f, 0f));
         seq.Append(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y + 50f, 0f));
-        yield return new WaitForSeconds(5.2f);
+        seq.SetEase(Ease.InSine);
+
+        yield return new WaitForSeconds(.4f);
         yield break;
     }
-    [ContextMenu("OutFocus")]
     public static IEnumerator OutFocusFromEnemy()
     {
         Sequence seq = DOTween.Sequence();
@@ -63,6 +121,11 @@ public class BattleCameraController : MonoBehaviour
         seq.Join(Instance.cam.transform.DORotateQuaternion(Instance.camOriginRot, 1f));
         seq.SetEase(Ease.Linear);
         yield return new WaitForSeconds(1f);
+
+        foreach (var card in CardManager.Instance.myCards)
+        {
+            card.DetactiveCardView(true);
+        }
         yield break;
     }
 }

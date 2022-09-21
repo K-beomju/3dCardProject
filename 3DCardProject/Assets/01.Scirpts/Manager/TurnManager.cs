@@ -40,10 +40,12 @@ public class TurnManager : Singleton<TurnManager>
                     {
                         if (type == TurnType.Player)
                         {
+                            if(enemyCard != null)
                             enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
                         }
                         else if (type == TurnType.Enemy)
                         {
+                            if(playerCard != null)
                             playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>().OutlineWidth = gc.alpha;
                         }
                     }));
@@ -51,19 +53,26 @@ public class TurnManager : Singleton<TurnManager>
                     {
                         if (type == TurnType.Player)
                         {
-                            mainCard = playerCard;
-                            UnitNameText.text = "Player";
-                            UnitNameText.color = Utils.PlayerColor;
-                            outline = playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
-                            outline.OutlineColor = Utils.PlayerColor;
+                            if(playerCard != null)
+                            {
+                                mainCard = playerCard;
+                                UnitNameText.text = "Player";
+                                UnitNameText.color = Utils.PlayerColor;
+                                outline = playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
+                                outline.OutlineColor = Utils.PlayerColor;
+                            }
+                          
                         }
                         else if (type == TurnType.Enemy)
                         {
-                            mainCard = enemyCard;
-                            UnitNameText.text = "Enemy";
-                            UnitNameText.color = Utils.EnemyColor;
-                            outline = enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
-                            outline.OutlineColor = Utils.EnemyColor;
+                            if(enemyCard != null)
+                            {
+                                mainCard = enemyCard;
+                                UnitNameText.text = "Enemy";
+                                UnitNameText.color = Utils.EnemyColor;
+                                outline = enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
+                                outline.OutlineColor = Utils.EnemyColor;
+                            }
                         }
                     });
                     seq.Append(gc.DOFade(1, .1f).OnUpdate(() =>
