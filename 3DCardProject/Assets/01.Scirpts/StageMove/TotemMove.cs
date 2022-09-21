@@ -230,8 +230,8 @@ public class TotemMove : MonoBehaviour
         }
         if (type == StageType.Shop)
         {
-
-            playerData.ShowTopPanel("ㅤ상점 이동!");
+            if (playerData != null)
+                playerData.ShowTopPanel("ㅤ상점 이동!");
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
             necro.gameObject.SetActive(true);
             necro.transform.position = battlePos + new Vector3(0, .3f, 0);
