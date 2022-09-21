@@ -38,6 +38,8 @@ public class PlayerDataInfo : MonoBehaviour
         Global.Pool.CreatePool<Coin>(coin.gameObject, player.transform);
         topTextRtm = topText.GetComponent<RectTransform>();
         topPanel.gameObject.SetActive(false);
+        SaveManager.Instance.gameData.OnMoneyChange += DataInfoScreen;
+        SaveManager.Instance.gameData.OnHpChange += DataInfoScreen;
 
     }
 
