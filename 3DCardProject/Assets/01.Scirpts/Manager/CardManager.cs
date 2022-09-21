@@ -152,6 +152,9 @@ public class CardManager : Singleton<CardManager>
     {
         yield return NewFieldManager.Instance.FieldManagerStartCol();
         yield return BattleCameraController.FocusOnEnemy();
+        yield return BattleCameraController.PanelIn();
+        yield return new WaitForSeconds(5f);
+        yield return BattleCameraController.PanelOut();
         yield return BattleCameraController.OutFocusFromEnemy();
         StartCoroutine(SpawnCardCo(act));
     }

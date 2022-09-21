@@ -368,7 +368,17 @@ public class Card : MonoBehaviour
         typeTMP.GetComponent<MeshRenderer>().enabled = false;
         
     }
+    public void DetactiveCardView(bool isActive)
+    {
+        GetComponentInChildren<SpriteMask>().enabled = isActive;
+        card.DOFade(isActive ? 1 : 0, .2f);
+        cardImage.DOFade(isActive ? 1 : 0, .2f);
+        cardBorder.DOFade(isActive ? 1 : 0, .2f);
+        nameTMP.GetComponent<MeshRenderer>().enabled = isActive;
+        descriptionTMP.GetComponent<MeshRenderer>().enabled = isActive;
+        typeTMP.GetComponent<MeshRenderer>().enabled = isActive;
 
+    }
     public void DeleteTrapCard()
     {
         card.DOFade(0, 1);

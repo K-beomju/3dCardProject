@@ -185,6 +185,10 @@ public class EnemyAI : Singleton<EnemyAI>
 
 
     };
+
+    private bool isRedFloor = false;
+    private bool isTurn2Phase2 = false;
+
     private void Start()
     {
         enemyType = EnemyManager.Instance.curEnemyType;
@@ -271,14 +275,25 @@ public class EnemyAI : Singleton<EnemyAI>
                 DoAction(mediumActions);
                 break;
             case EnemyType.BOSS:
+                Debug.Log(isPhaseOne);
                 if (isPhaseOne)
                 {
                     DoAction(mediumActions);
                 }
                 else
                 {
-                    // 다음턴에 특정 위치에 있으면 HP--;
-                    DoAction(bossPhaseTwoAction);
+                    if (!isRedFloor)
+                    {
+                        if (isTurn2Phase2)
+                            return;
+
+                        BossAciton(1);
+                    }
+                    else
+                    {
+                        isRedFloor = false;
+                    }
+                    //DoAction(bossPhaseTwoAction);
                 }
                 break;
             default:
@@ -298,6 +313,7 @@ public class EnemyAI : Singleton<EnemyAI>
                 break;
         }
     }
+    //다음턴에 특정 위치에 있으면 HP--;
     public IEnumerator BossActionRedFloor()
     {
         bool isOdd = UnityEngine.Random.Range(0, 1) == 0;
@@ -322,19 +338,28 @@ public class EnemyAI : Singleton<EnemyAI>
 
         yield return new WaitForSeconds(.6f);
         TurnManager.Instance.OnTurnChange2Enemy += () => {
+            Debug.Log("Bombb1");
             for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
             {
                 if (isOdd ? i % 2 != 0 : i % 2 == 0)
                     continue;
-                if(NewFieldManager.Instance.fieldList[i].avatarCard.item.uid == NewFieldManager.Instance.playerCard.item.uid)
+
+                Debug.Log("Bombb2");
+                Card aCard = NewFieldManager.Instance.fieldList[i].avatarCard;
+                if (aCard != null)
                 {
-                    // 체력 감소
-                    SaveManager.Instance.gameData.Hp--;
+                    if (aCard?.item.uid == NewFieldManager.Instance.playerCard.item.uid)
+                    {
+                        // 체력 감소
+                        Debug.Log("Bombb3");
+                        SaveManager.Instance.gameData.Hp--;
+                    }
                 }
             }
             TurnManager.Instance.OnTurnChange2Enemy = null;
+            TurnManager.ChangeTurn();
         };
-
+        isRedFloor = true;
         TurnManager.ChangeTurn();
     }
     public void DoAction(Dictionary<long,Action> actionDict)
@@ -478,13 +503,27 @@ public class EnemyAI : Singleton<EnemyAI>
         return curState;
     }
 
+    [ContextMenu("Turn2Phase2")]
     public void Turn2Phase2()
     {
         StartCoroutine(Turn2Phase2Col());
     }
     private IEnumerator Turn2Phase2Col()
     {
-        yield return new WaitForSeconds(1);
+        isTurn2Phase2 = true;
+        yield return BattleCameraController.FocusOnEnemy();
+        yield return BattleCameraController.LetterBoxActive(true);
+        yield return BattleCameraController.SubText("제법이군");
+        yield return BattleCameraController.SubText("하지만 2 페이즈를 버틸수 있을까?");
+        yield return BattleCameraController.LetterBoxActive(false);
+        yield return BattleCameraController.OutFocusFromEnemy();
+
+        CardModelBrain CMB = NewFieldManager.Instance.enemyCard.LinkedModel;
+        CMB.ModelObject.transform.DOMoveY(CMB.ModelObject.transform.position.y + 15f, 1.5f).SetEase(Ease.InElastic);
+        yield return new WaitForSeconds(2f);
         CardManager.Instance.CardDie(NewFieldManager.Instance.enemyCard);
+        NewFieldManager.Instance.enemyCard = null;
+        isTurn2Phase2 = false;
+        JudgementCard();
     }
 }

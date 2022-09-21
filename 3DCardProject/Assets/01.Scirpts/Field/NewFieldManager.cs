@@ -69,8 +69,26 @@ public class NewFieldManager : Singleton<NewFieldManager>
     { // 수정 예정 
 
         
-        if (TurnManager.Instance != null && (TurnManager.Instance.Type != TurnType.Standby || TurnManager.Instance.Type != TurnType.Change))
-            CheckCardDragSpawnRange(TurnManager.Instance.Type == TurnType.Player ? playerCard.curField : enemyCard.curField);
+        if (TurnManager.Instance != null)
+        {
+            switch (TurnManager.Instance.Type)
+            {
+                case TurnType.Standby:
+                    break;
+                case TurnType.Player:
+                    if (playerCard != null)
+                        CheckCardDragSpawnRange(playerCard.curField);
+                    break;
+                case TurnType.Change:
+                    break;
+                case TurnType.Enemy:
+                    if (enemyCard != null)
+                        CheckCardDragSpawnRange(enemyCard.curField);
+                    break;
+                default:
+                    break;
+            }
+        }
 
         /*if (CanCheckRange)
         {
@@ -299,11 +317,13 @@ public class NewFieldManager : Singleton<NewFieldManager>
         DisableSpawnRange();
 
         var node = fields.GetNodeByData(field);
-        Field prevField = node.PrevNode.Data;
-        Field nextField = node.NextNode.Data;
-        prevField.isEnterRange = true;
-        nextField.isEnterRange = true;
-
+        if(node != null)
+        {
+            Field prevField = node.PrevNode.Data;
+            Field nextField = node.NextNode.Data;
+            prevField.isEnterRange = true;
+            nextField.isEnterRange = true;
+        }
     }
 
     public MyLinkedList<Field>.Node GetNodeByData(Field field)
