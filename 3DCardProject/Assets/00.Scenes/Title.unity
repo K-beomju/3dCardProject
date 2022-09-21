@@ -3652,7 +3652,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 397
+  m_FontSize: 425
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: a601998b92e93c343aac6f378c98c4d1, type: 3}
@@ -4653,7 +4653,7 @@ MonoBehaviour:
   isGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0.859
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: f2e97e1247a2ec34f9283601d075bf2a, type: 2}
 --- !u!4 &1338307108
 Transform:
@@ -5917,7 +5917,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643180073}
   m_LocalRotation: {x: 0.13874105, y: 0, z: 0, w: 0.9903287}
-  m_LocalPosition: {x: 0, y: 4.27, z: -10}
+  m_LocalPosition: {x: 0, y: 4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
