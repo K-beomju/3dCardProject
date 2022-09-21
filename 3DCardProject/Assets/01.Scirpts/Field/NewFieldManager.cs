@@ -67,11 +67,16 @@ public class NewFieldManager : Singleton<NewFieldManager>
 
     private void Update()
     { // 수정 예정 
-        if (CanCheckRange)
+
+        
+        if (TurnManager.Instance != null && (TurnManager.Instance.Type != TurnType.Standby || TurnManager.Instance.Type != TurnType.Change))
+            CheckCardDragSpawnRange(TurnManager.Instance.Type == TurnType.Player ? playerCard.curField : enemyCard.curField);
+
+        /*if (CanCheckRange)
         {
             CheckCardDragSpawnRange();
             CanCheckRange = false;
-        }
+        }*/
     }
     public void AvatarMove(Field field, Action act = null)
     {
@@ -291,10 +296,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     }
     public void CheckCardDragSpawnRange(Field field)
     {
-        for (int i = 0; i < fieldList.Count; i++)
-        {
-            fieldList[i].isEnterRange = false;
-        }
+        DisableSpawnRange();
 
         var node = fields.GetNodeByData(field);
         Field prevField = node.PrevNode.Data;
