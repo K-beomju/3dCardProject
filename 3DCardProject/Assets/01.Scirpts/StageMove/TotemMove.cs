@@ -346,16 +346,12 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 5;//UnityEngine.Random.Range(1, 7);
+                steps = UnityEngine.Random.Range(1, 7);
             }
-            diceText.gameObject.SetActive(true);
-            diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
-            diceText.text = steps.ToString();
-            routeStep = steps;
 
             if (!isMove)
             {
-                Debug.Log(board.childNodeList.Count - (routePosition + steps));
+                int rStep = routePosition + steps - board.childNodeList.Count;
                 if (routePosition + steps < board.childNodeList.Count)
                 {
                     StartCoroutine(MoveMentCo());
@@ -363,9 +359,15 @@ public class TotemMove : MonoBehaviour
                 }
                 else
                 {
+                    steps = rStep;
+                    StartCoroutine(MoveMentCo());
 
                 }
             }
+            diceText.gameObject.SetActive(true);
+            diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
+            diceText.text = steps.ToString();
+            routeStep = steps;
 
         }
 
