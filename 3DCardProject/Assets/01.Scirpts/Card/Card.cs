@@ -138,17 +138,21 @@ public class Card : MonoBehaviour
         costTMP.text = this.item.cost.ToString();
         descriptionTMP.text = this.item.description;
         string tmpTxt = "";
-        if(this.item.IsAvatar)
+        if (this.item.IsAvatar)
         {
             tmpTxt = "아바타";
         }
-        else if(this.item.IsStructCard)
+        else if (this.item.IsStructCard)
         {
             tmpTxt = "설치";
         }
-        else if(this.item.IsReflectCard)
+        else if (this.item.IsReflectCard)
         {
             tmpTxt = "받아치기";
+        }
+        else if(this.item.IsTitleCard)
+        {
+            tmpTxt = "";
         }
         else
         {
