@@ -9440,6 +9440,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6971893489257521641, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6971893489257521642, guid: 91c933273040f354abc7198dc433c25d, type: 3}
       propertyPath: m_RootOrder
       value: 12
