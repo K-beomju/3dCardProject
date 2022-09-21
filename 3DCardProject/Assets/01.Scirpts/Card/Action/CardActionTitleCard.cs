@@ -10,20 +10,22 @@ public class CardActionTitleCard : CardAction
         {
             case 0:
                 // 새 게임
+
+
                 SaveManager.Instance.gameData.isFirst = false;
                 SaveManager.Instance.SaveGameData();
                 if (SaveManager.Instance.gameData.IsTutorialDone)
                 {
-                    Global.LoadScene.LoadScene("Stage");
+                    TitleManager.Instance.CameraMoveAction(() => Global.LoadScene.LoadScene("Stage"));
                 }
                 else
                 {
-                    Global.LoadScene.LoadScene("Tutorials");
+                    TitleManager.Instance.CameraMoveAction(() => Global.LoadScene.LoadScene("Tutorials"));
                 }
                 break;
             case 1:
                 // 이어하기
-                Global.LoadScene.LoadScene("Stage");
+                TitleManager.Instance.CameraMoveAction(() => Global.LoadScene.LoadScene("Stage"));
                 break;
             case 2:
                 // 메뉴

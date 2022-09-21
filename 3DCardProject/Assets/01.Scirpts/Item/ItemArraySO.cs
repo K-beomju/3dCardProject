@@ -38,6 +38,10 @@ public class Item
     //생성되었을 때
     public CardActionCondition[] OnCreate;
 
+    public Vector3 cardImageSize; // 카드 이미지 사이즈 보정 
+    public Vector3 cardImagePos;  // 카드 이미지 위치 보정 
+    public Color cardImageColor;  // 카드 이미지 색상 보정 
+
     private List<int> aa = new List<int>()
     {
         0b0000,

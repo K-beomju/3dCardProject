@@ -153,6 +153,11 @@ public class Card : MonoBehaviour
         else if(this.item.IsTitleCard)
         {
             tmpTxt = "";
+            card.color = new Color32(120, 120, 120, 255);
+            cardBorder.color = new Color32(200, 200, 200, 255);
+            cardImage.transform.localScale = item.cardImageSize;
+            cardImage.transform.position += item.cardImagePos;
+            cardImage.color = item.cardImageColor;
         }
         else
         {

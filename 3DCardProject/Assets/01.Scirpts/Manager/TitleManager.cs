@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : Singleton<TitleManager>
 {
     [SerializeField]
     private Transform[] cardPosTrm;
@@ -13,8 +15,12 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Button resetButton;
 
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private Ease camEase;
+
     private void Start()
     {
+        mainCam = Camera.main;
         resetButton.onClick.AddListener(ResetIsFirstData);
         for (int i = 0; i < cardPosTrm.Length; i++)
         {
@@ -38,4 +44,12 @@ public class TitleManager : MonoBehaviour
         SaveManager.Instance.gameData.isFirst = true;
         SaveManager.Instance.gameData.IsTutorialDone = false;
     }
+
+    public void CameraMoveAction(Action action = null)
+    {
+        Sequence mySeq = DOTween.Sequence();
+        mySeq.Append(mainCam.transform.DOMove(new Vector3(0, 6.34f, 15f), 3).SetEase(camEase).SetUpdate(true));
+        mySeq.InsertCallback(2f, () => action());
+    }
+
 }
