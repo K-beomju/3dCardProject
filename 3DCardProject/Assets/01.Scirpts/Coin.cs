@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
     {
         yield return new WaitForSeconds(detaCount);
         if(isEffect)
-        StageManager.Instance.GetCoinEffect(this.transform);
+        BoardManager.Instance.GetCoinEffect(this.transform);
         gameObject.SetActive(false);
     }    
    

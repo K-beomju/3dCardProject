@@ -25,7 +25,6 @@ public class StageManager : Singleton<StageManager>
     public Action OnLoadShopScene;
     public Action OnLoadStageScene;
 
-    [SerializeField] private ParticleSystem coinPt;
 
 
     protected override void Awake()
@@ -76,10 +75,6 @@ public class StageManager : Singleton<StageManager>
         SceneManager.LoadScene("Minsang 2");
     }
 
-    public void GetCoinEffect(Transform trm)
-    {
-        coinPt.transform.position = trm.position;
-        coinPt.Play();
-    }
+ 
 
 }

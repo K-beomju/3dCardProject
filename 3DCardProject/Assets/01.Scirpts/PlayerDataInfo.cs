@@ -123,6 +123,7 @@ public class PlayerDataInfo : MonoBehaviour
 
     private IEnumerator GetGoldDecreaseDirectCo(int value)
     {
+        coinImage.sprite = goldSprite;
         for (int i = 0; i < value; i++)
         {
             yield return new WaitForSeconds(0.18f);
