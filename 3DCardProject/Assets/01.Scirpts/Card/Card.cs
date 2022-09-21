@@ -200,7 +200,6 @@ public class Card : MonoBehaviour
             Vector3 fieldPos = field.transform.position;
             fieldPos.y += 1f;
             avtar.transform.DOMove(fieldPos, .15f).SetEase(Ease.InElastic).OnComplete(() => {
-
                 avtar.transform.DOMove(firstPos, .3f).OnComplete(() => {
                     act?.Invoke();
                     GetComponent<Order>().SetOriginOrder(originOrder);
@@ -216,6 +215,11 @@ public class Card : MonoBehaviour
                     }
                     else if( field.avatarCard != null)
                     {
+                        if (TurnManager.Instance.Type == TurnType.Player)
+                            PlayerManager.Instance.LookEnemyAvatar();
+                        if (TurnManager.Instance.Type == TurnType.Enemy)
+                            EnemyManager.Instance.LookPlayerAvatar();
+
                         Debug.Log("아바타 카드 공격");
                         field.avatarCard.OnDamage();
                         avtarAnim.SetTrigger("Attack");

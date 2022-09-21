@@ -46,6 +46,7 @@ public class SaveManager : Singleton<SaveManager>
 
         myRijndael = Rijndael.Create();
         ObjToSaveList.Add(gameData);
+        
 
     }
     private void Start()

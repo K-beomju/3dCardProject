@@ -195,36 +195,36 @@ public class TotemMove : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
 
-        //if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-        //{
+        if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+        {
 
-        //    Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
+            Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
 
-        //    battleFieldModel.SetActive(true);
+            battleFieldModel.SetActive(true);
 
-        //    Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-        //    battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
-        //    battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
+            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+            battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
+            battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
 
-        //    battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
-        //    {
-        //        if(playerData != null)
-        //        playerData.ShowTopPanel("ㅤ배틀 시작!");
+            battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
+            {
+                if (playerData != null)
+                    playerData.ShowTopPanel("ㅤ배틀 시작!");
 
-        //        battleModelParticle.gameObject.SetActive(true);
-        //        battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
-        //        battleModelParticle.Play();
-        //        this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
-        //        OnComplete(() =>
-        //        {
-        //            itemMark.SetActive(true);
-        //            itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
-        //        }).SetDelay(1);
-        //    });
+                battleModelParticle.gameObject.SetActive(true);
+                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
+                battleModelParticle.Play();
+                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
+                OnComplete(() =>
+                {
+                    itemMark.SetActive(true);
+                    itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
+                }).SetDelay(1);
+            });
 
-        //    yield return new WaitForSeconds(4f);
-        //    BattleScene();
-        //}
+            yield return new WaitForSeconds(4f);
+            BattleScene();
+        }
         //if (type == StageType.Shop)
         //{
         //    if (playerData != null)
@@ -281,8 +281,8 @@ public class TotemMove : MonoBehaviour
         //    }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
         //    .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
         //    .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
-            
-                
+
+
 
 
         //    mySeq.Play();
@@ -346,7 +346,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = UnityEngine.Random.Range(1, 7);
+                steps = 1; // UnityEngine.Random.Range(1, 7);
             }
 
             if (!isMove)

@@ -87,4 +87,13 @@ public class CardModelBrain : MonoBehaviour
             //NewFieldManager.Instance.isFrontJumping = false;
         });
     }
+
+    //[ContextMenu("LookTarget")]
+    //public void LookTarget()
+    //{
+    //    if(TurnManager.Instance.Type == TurnType.Player)
+    //    modelObject.transform.LookAt()
+    //     else if(TurnManager.Instance.Type == TurnType.Enemy)
+
+    //}
 }

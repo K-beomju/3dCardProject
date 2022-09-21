@@ -15,7 +15,7 @@ public class TitleManager : Singleton<TitleManager>
     [SerializeField]
     private UnityEngine.UI.Button resetButton;
 
-    [SerializeField] private Camera mainCam;
+     private Camera mainCam;
     [SerializeField] private Ease camEase;
 
     private void Start()
@@ -49,7 +49,7 @@ public class TitleManager : Singleton<TitleManager>
     {
         Sequence mySeq = DOTween.Sequence();
         mySeq.Append(mainCam.transform.DOMove(new Vector3(0, 6.34f, 15f), 3).SetEase(camEase).SetUpdate(true));
-        mySeq.InsertCallback(2f, () => action());
+        mySeq.InsertCallback(2.5f, () => action());
     }
 
 }

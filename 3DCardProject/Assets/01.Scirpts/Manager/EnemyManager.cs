@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -168,5 +169,10 @@ public class EnemyManager : Singleton<EnemyManager>
     public void DeadParticle()
     {
         Instantiate(deadPt, enemyAvatarCard.transform.position, Utils.QI);
+    }
+
+    public void LookPlayerAvatar()
+    {
+        enemyAvatarCard.avtar.transform.DOLookAt(PlayerManager.Instance.playerAvatarCard.avtar.transform.position, 0f);
     }
 }
