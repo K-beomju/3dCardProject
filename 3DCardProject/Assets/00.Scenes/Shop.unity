@@ -774,6 +774,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4740731805916729200, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37cd3aef00a5a745805ffe18ed2c6b4, type: 3}
 --- !u!4 &467397149 stripped
@@ -1782,6 +1786,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 508533517}
     m_Modifications:
+    - target: {fileID: 8815395296755265744, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_text
+      value: "\uC774\uB984 :"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395296930757029, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395296930757035, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395296930757035, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395296930757035, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395296930757035, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395297086691686, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 224.5975
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395297086691686, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -26
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395297086691686, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 8815395297318093956, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1848,11 +1888,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8815395297318093956, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -860
+      value: -758.16
       objectReference: {fileID: 0}
     - target: {fileID: 8815395297318093956, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -515
+      value: -424.9
       objectReference: {fileID: 0}
     - target: {fileID: 8815395297318093956, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1869,6 +1909,10 @@ PrefabInstance:
     - target: {fileID: 8815395297318093959, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
       propertyPath: m_Name
       value: CardInfoUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815395298066891884, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 807cc939c8d24c245a2e87df1c840a41, type: 3}
