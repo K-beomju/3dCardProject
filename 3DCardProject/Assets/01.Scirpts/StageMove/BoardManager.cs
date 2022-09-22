@@ -6,8 +6,10 @@ using Cinemachine;
 using DG.Tweening;
 
 
+
 public class BoardManager : Singleton<BoardManager>
 {
+
     [SerializeField] private GameObject battleField;
     [SerializeField] private GameObject shopField;
     [SerializeField] private GameObject getHpField;
@@ -71,6 +73,20 @@ public class BoardManager : Singleton<BoardManager>
                 default:
                     break;
             }
+        }
+
+        switch (SaveManager.Instance.gameData.crossType)
+        {
+            case PlayerGameData.CrossType.None:
+                break;
+            case PlayerGameData.CrossType.Straight:
+                ActiveCrossBoardStraight(true);
+                break;
+            case PlayerGameData.CrossType.Down:
+                ActiveCrossBoardStraight(false);
+                break;
+            default:
+                break;
         }
 
         //for (int i = 0; i < boardList.Count / 9; i++)
@@ -212,6 +228,7 @@ public class BoardManager : Singleton<BoardManager>
                 boardList.Remove(crossDownBoard[i].GetComponent<Board>());
                 childNodeList.Remove(crossDownBoard[i].transform);
             }
+            SaveManager.Instance.gameData.crossType = PlayerGameData.CrossType.Straight; 
         }
         else
         {
@@ -220,6 +237,8 @@ public class BoardManager : Singleton<BoardManager>
                 boardList.Remove(crossUpBoard[i].GetComponent<Board>());
                 childNodeList.Remove(crossUpBoard[i].transform);
             }
+            SaveManager.Instance.gameData.crossType = PlayerGameData.CrossType.Down ;
+
         }
         isEndCross = true;
         totem.isCross = false;

@@ -4,10 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [Serializable]
 public class PlayerGameData : ISerializeble
 {
+    [System.Serializable]
+    public enum CrossType
+    {
+        None,
+        Straight,
+        Down
+        
+    }
+
     public bool isFirst = true;
+
+    public CrossType crossType = CrossType.None;
     private bool isTutorialDone = false;
     public bool IsTutorialDone
     {

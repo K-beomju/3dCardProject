@@ -66,7 +66,7 @@ public class TotemMove : MonoBehaviour
         isLock = isTutorial;
         routePosition = SaveManager.Instance.gameData.StageValue + SaveManager.Instance.gameData.RouteValue;
 
-        Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
+        Vector3 nextPos = board.childNodeList[routePosition + 2].transform.position;
         Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
         StartCoroutine(LookAtCo(lookAtPos));
 
@@ -370,7 +370,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 5;
+                steps = 8;
                 int stepValue = (((board.boardList.Count - 1) * 2) - routePosition) / 2;
                 if (stepValue != 0 && board.isEndCross)
                 {
