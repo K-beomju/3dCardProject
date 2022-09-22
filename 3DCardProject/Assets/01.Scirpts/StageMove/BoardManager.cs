@@ -36,10 +36,12 @@ public class BoardManager : Singleton<BoardManager>
     public List<GameObject> crossUpBoard = new List<GameObject>();
     public List<GameObject> crossDownBoard = new List<GameObject>();
     public bool isEndCross = false;
+    public Canvas crossCanvas;
 
     private void Start()
     {
         FillNodes();
+        crossCanvas.gameObject.SetActive(false);
 
         for (int i = 0; i < childNodeList.Count; i++)
         {
@@ -216,7 +218,7 @@ public class BoardManager : Singleton<BoardManager>
     public void SelectCrossRoadCamera()
     {
         totemCam.transform.DORotate(new Vector3(36.6f, 216, 0), 1);
-
+        crossCanvas.gameObject.SetActive(true);
     }
 
     public void ActiveCrossBoardStraight(bool isStraight)
