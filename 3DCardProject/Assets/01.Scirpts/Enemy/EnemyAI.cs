@@ -170,24 +170,27 @@ public class EnemyAI : Singleton<EnemyAI>
     {
                   {
             0b100000001001000011110111, () => {
-                CardManager.Instance.MountCardSupport(107, MountState.Prev);
+                 if (!Instance.isRedFloor)
+                    {
+                        Instance.StartCoroutine( Instance.BossActionRedFloor());
+                    }
+                    else
+                    {
+                        Instance.isRedFloor = false;
+                    }
         } },
                   {
             0b10011000000000100010000011110010, () => {
-                CardManager.Instance.MountCardSupport(100);
+                Instance.StartCoroutine( Instance.BossActionMountBomb(UnityEngine.Random.Range(0,6)));
         } },
-
-                   {
-            0b1000000000100000100111110110, () => {
-                CardManager.Instance.MountCardSupport(105);
-        } },
-
 
 
     };
 
     private bool isRedFloor = false;
     private bool isTurn2Phase2 = false;
+    private bool isMountBomb = false;
+    private Action OnBombCount;
 
     private void Start()
     {
@@ -282,86 +285,179 @@ public class EnemyAI : Singleton<EnemyAI>
                 }
                 else
                 {
-                    if (!isRedFloor)
+                    if (isTurn2Phase2)
+                        return;
+                    if(isMountBomb)
                     {
-                        if (isTurn2Phase2)
-                            return;
-
-                        BossAciton(1);
+                        OnBombCount?.Invoke();
                     }
                     else
                     {
-                        isRedFloor = false;
+                        DoAction(bossPhaseTwoAction);
                     }
-                    //DoAction(bossPhaseTwoAction);
                 }
                 break;
             default:
                 break;
         }
     }
-    public void BossAciton(int actNum)
+
+    public IEnumerator ActiveOutline(int idx , bool isActive,Color32 color,float term)
     {
-        switch (actNum)
+        yield return new WaitForSeconds(term);
+        NewFieldManager.Instance.fieldList[idx].outline.enabled = isActive;
+        NewFieldManager.Instance.fieldList[idx].outline.OutlineColor = color;
+    }
+    public IEnumerator ActiveOutline(bool isOdd,bool isActive,Color32 color,float term)
+    {
+        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
-            case 0:
-                break;
-            case 1:
-                StartCoroutine(BossActionRedFloor());
-                break;
-            default:
-                break;
+            if (isOdd ? i % 2 != 0 : i % 2 == 0)
+                continue;
+            yield return ActiveOutline(i,isActive,color,term);
         }
+        yield break;
     }
     //다음턴에 특정 위치에 있으면 HP--;
     public IEnumerator BossActionRedFloor()
     {
         bool isOdd = UnityEngine.Random.Range(0, 1) == 0;
+        yield return ActiveOutline(isOdd,true,Utils.EnemyColor,.6f);
+        yield return new WaitForSeconds(.2f);
+        for (int i = 0; i < 6; i++)
+        {
+            yield return ActiveOutline(isOdd, false, Utils.EnemyColor, 0f);
+            yield return new WaitForSeconds(.2f);
+            yield return ActiveOutline(isOdd, true, Utils.EnemyColor, 0f);
+            yield return new WaitForSeconds(.2f);
+        }
+        yield return ActiveOutline(isOdd,false,Utils.EnemyColor,0f);
+
+        TurnManager.Instance.OnTurnChange2Enemy += () => {
+            Debug.Log("Bombb1");
+            StartCoroutine(BossActionRedFloorAttack(isOdd));
+        };
+        isRedFloor = true;
+        TurnManager.ChangeTurn();
+    }
+    public IEnumerator BossActionRedFloorAttack(bool isOdd)
+    {
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
             if (isOdd ? i % 2 != 0 : i % 2 == 0)
                 continue;
 
-            yield return new WaitForSeconds(.6f);
             NewFieldManager.Instance.fieldList[i].outline.enabled = true;
             NewFieldManager.Instance.fieldList[i].outline.OutlineColor = Utils.EnemyColor;
         }
 
-        yield return new WaitForSeconds(.6f);
+        yield return new WaitForSeconds(.5f);
+        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+        {
+            if (isOdd ? i % 2 != 0 : i % 2 == 0)
+                continue;
+            Debug.Log("Bombb2");
+            Field field = NewFieldManager.Instance.fieldList[i];
+
+            Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0, 1, 0);
+            Card aCard = field.avatarCard;
+            if (aCard != null)
+            {
+                if (aCard?.item.uid == NewFieldManager.Instance.playerCard.item.uid)
+                {
+                    // 체력 감소
+                    Debug.Log("Bombb3");
+                    SaveManager.Instance.gameData.Hp--;
+                }
+            }
+        }
+        yield return new WaitForSeconds(.1f);
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
             if (isOdd ? i % 2 != 0 : i % 2 == 0)
                 continue;
 
-            NewFieldManager.Instance.fieldList[i].outline.enabled =false;
+            NewFieldManager.Instance.fieldList[i].outline.enabled = false;
+        }
+        yield return new WaitForSeconds(.5f);
+
+        TurnManager.Instance.OnTurnChange2Enemy = null;
+        TurnManager.ChangeTurn();
+    }
+
+    public IEnumerator BossActionMountBomb(int idx)
+    {
+        yield return new WaitForSeconds(1f);
+        Card card = MountCard(idx,1100);
+        if (card == null) yield break;
+        card.gameObject.AddComponent<BombCard>();
+        BombCard bCard = card.GetComponent<BombCard>();
+        OnBombCount = bCard.Counting;
+        bCard.OnUnderZero = ()=> { StartCoroutine( BossActionBomb(card)); };
+        int fieldCount = NewFieldManager.Instance.fieldList.Count;
+        for (int j = 0; j < 6; j++)
+        {
+            for (int i = 0; i < fieldCount; i++)
+            {
+                yield return ActiveOutline(i, j%2 != 0, Utils.EnemyColor, 0);
+            }
+            yield return new WaitForSeconds(.2f);
+        }
+        TurnManager.ChangeTurn();
+    }
+    public IEnumerator BossActionBomb(Card inBombCard)
+    {
+      
+        int fieldCount = NewFieldManager.Instance.fieldList.Count;
+        yield return new WaitForSeconds(1f);
+        for (int j = 0; j < 6; j++)
+        {
+            for (int i = 0; i < fieldCount; i++)
+            {
+                yield return ActiveOutline(i, j % 2 != 0, Utils.EnemyColor, 0);
+            }
+            yield return new WaitForSeconds(.2f);
+        }
+            
+        BombCard bCard = inBombCard.GetComponent<BombCard>();
+        Destroy(bCard);
+        CardManager.Instance.CardDie(inBombCard);
+
+        for (int i = 0; i < fieldCount; i++)
+        {
+            Field field = NewFieldManager.Instance.fieldList[i];
+
+            Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0, 1, 0);
+        }
+        // 게임오버
+        isMountBomb = false;
+    }
+    public Card MountCard(int idx,uint itemUid)
+    {
+        if (NewFieldManager.Instance.fieldList.Count <= idx)
+        {
+            Debug.LogError("잘못된 필드 위치");
+            return null;
+
         }
 
-        TurnManager.Instance.OnTurnChange2Enemy += () => {
-            Debug.Log("Bombb1");
-            for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
+        Field field = NewFieldManager.Instance.fieldList[idx];
+        if (field.avatarCard == null)
+        {
+            Item item = CardManager.Instance.FindEnemyItem(itemUid);
+            if(item == null)
             {
-                if (isOdd ? i % 2 != 0 : i % 2 == 0)
-                    continue;
-
-                Debug.Log("Bombb2");
-                Field field = NewFieldManager.Instance.fieldList[i];
-                Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0,1,0);
-                Card aCard = field.avatarCard;
-                if (aCard != null)
-                {
-                    if (aCard?.item.uid == NewFieldManager.Instance.playerCard.item.uid)
-                    {
-                        // 체력 감소
-                        Debug.Log("Bombb3");
-                        SaveManager.Instance.gameData.Hp--;
-                    }
-                }
+                Debug.LogError("잘못된 아이템 UID");
+                return null;
             }
-            TurnManager.Instance.OnTurnChange2Enemy = null;
-            TurnManager.ChangeTurn();
-        };
-        isRedFloor = true;
-        TurnManager.ChangeTurn();
+            Card card = Global.Pool.GetItem<Card>();
+            card.Setup(item, true, false);
+            field.SetUp(card);
+            isMountBomb = true;
+
+        }
+        return null;
+
     }
     public void DoAction(Dictionary<long,Action> actionDict)
     {

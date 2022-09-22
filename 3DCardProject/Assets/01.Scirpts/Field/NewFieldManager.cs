@@ -46,7 +46,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
         {
             enemyUid = 1001;
         }
-        Item enemyItem = CardManager.Instance.FindEnemyData(enemyUid);
+        Item enemyItem = CardManager.Instance.FindEnemyItem(enemyUid);
 
         enemyCard = CardManager.Instance.CreateCard(enemyItem, false);
         enemyCard.DetactiveCardView();

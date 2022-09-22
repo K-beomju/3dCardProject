@@ -819,7 +819,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-    public Item FindEnemyData(uint uid)
+    public Item FindEnemyItem(uint uid)
     {
         if (enemyDataArraySO.items.Count < 1) return null;
 

@@ -44,7 +44,7 @@ public class BattleCameraController : MonoBehaviour
         {
             card.DetactiveCardView(false);
         }
-        Instance.enemyNameText.text = CardManager.Instance.FindEnemyData(EnemyManager.Instance.CurEnemyUid).itemName;
+        Instance.enemyNameText.text = CardManager.Instance.FindEnemyItem(EnemyManager.Instance.CurEnemyUid).itemName;
         Instance.enemyNameText.DOFade(0, 0);
         Vector3 camPos = NewFieldManager.Instance.enemyCard.transform.position;
         camPos += new Vector3(0f,5f,-7f);
