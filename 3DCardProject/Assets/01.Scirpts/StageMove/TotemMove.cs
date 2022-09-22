@@ -167,7 +167,7 @@ public class TotemMove : MonoBehaviour
         {
             Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
             Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
-            transform.LookAt(lookAtPos);
+            transform.DOLookAt(lookAtPos, .3f);
 
             while (MoveNextNode(nextPos))
                 yield return null;
@@ -346,7 +346,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps =  UnityEngine.Random.Range(1, 7);
+                steps = 6;//UnityEngine.Random.Range(1, 7);
             }
 
             if (!isMove)
