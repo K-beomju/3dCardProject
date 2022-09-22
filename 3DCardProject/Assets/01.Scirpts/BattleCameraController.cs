@@ -94,7 +94,7 @@ public class BattleCameraController : MonoBehaviour
             duration = txt.Trim().Length * .5f;
         }
         Sequence seq = DOTween.Sequence();
-        seq.Append(Instance.dummyTxt.DOText(txt, duration).OnUpdate(() => Instance.SubTextTMP.text = Instance.dummyTxt.text).OnComplete(() => Instance.SubTextTMP.text = ""));
+        seq.Append(Instance.dummyTxt.DOText(txt, duration).OnUpdate(() => Instance.SubTextTMP.text = Instance.dummyTxt.text).OnComplete(() => { Instance.dummyTxt.text = ""; Instance.SubTextTMP.text = ""; }));
         seq.SetEase(Ease.InSine);
         yield return new WaitForSeconds(duration);
         yield break;

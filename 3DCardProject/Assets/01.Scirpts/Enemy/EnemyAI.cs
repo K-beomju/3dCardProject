@@ -326,17 +326,16 @@ public class EnemyAI : Singleton<EnemyAI>
             NewFieldManager.Instance.fieldList[i].outline.enabled = true;
             NewFieldManager.Instance.fieldList[i].outline.OutlineColor = Utils.EnemyColor;
         }
-        
+
+        yield return new WaitForSeconds(.6f);
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
             if (isOdd ? i % 2 != 0 : i % 2 == 0)
                 continue;
 
-            yield return new WaitForSeconds(.6f);
             NewFieldManager.Instance.fieldList[i].outline.enabled =false;
         }
 
-        yield return new WaitForSeconds(.6f);
         TurnManager.Instance.OnTurnChange2Enemy += () => {
             Debug.Log("Bombb1");
             for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
@@ -345,7 +344,9 @@ public class EnemyAI : Singleton<EnemyAI>
                     continue;
 
                 Debug.Log("Bombb2");
-                Card aCard = NewFieldManager.Instance.fieldList[i].avatarCard;
+                Field field = NewFieldManager.Instance.fieldList[i];
+                Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0,1,0);
+                Card aCard = field.avatarCard;
                 if (aCard != null)
                 {
                     if (aCard?.item.uid == NewFieldManager.Instance.playerCard.item.uid)
