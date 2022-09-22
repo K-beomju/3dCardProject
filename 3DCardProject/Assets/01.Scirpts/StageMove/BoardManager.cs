@@ -31,6 +31,10 @@ public class BoardManager : Singleton<BoardManager>
 
     [SerializeField] private ParticleSystem coinPt;
 
+    public List<GameObject> crossUpBoard = new List<GameObject>();
+    public List<GameObject> crossDownBoard = new List<GameObject>();
+    public bool isEndCross = false;
+
     private void Start()
     {
         FillNodes();
@@ -122,7 +126,7 @@ public class BoardManager : Singleton<BoardManager>
     {
         Gizmos.color = Color.red;
 
-        FillNodes();
+        //FillNodes();
         for (int i = 0; i < childNodeList.Count; i++)
         {
             Vector3 curPos = childNodeList[i].position;
@@ -182,7 +186,7 @@ public class BoardManager : Singleton<BoardManager>
                     default:
                         break;
                 }
-               
+
 
                 if (soft)
                     totemCam.transform.DORotate(totemRotateRouteVector, 1);
@@ -192,6 +196,35 @@ public class BoardManager : Singleton<BoardManager>
             }
         }
     }
+
+    public void SelectCrossRoadCamera()
+    {
+        totemCam.transform.DORotate(new Vector3(36.6f, 216, 0), 1);
+
+    }
+
+    public void ActiveCrossBoardStraight(bool isStraight)
+    {
+        if (isStraight)
+        {
+            for (int i = 0; i < crossDownBoard.Count; i++)
+            {
+                boardList.Remove(crossDownBoard[i].GetComponent<Board>());
+                childNodeList.Remove(crossDownBoard[i].transform);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < crossUpBoard.Count; i++)
+            {
+                boardList.Remove(crossUpBoard[i].GetComponent<Board>());
+                childNodeList.Remove(crossUpBoard[i].transform);
+            }
+        }
+        isEndCross = true;
+        totem.isCross = false;
+    }
+
 
 
     #endregion

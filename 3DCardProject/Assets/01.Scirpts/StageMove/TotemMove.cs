@@ -32,13 +32,17 @@ public class TotemMove : MonoBehaviour
 
     public int routePosition;   // 이동거리 총합 (이벤트 + 이동 필드)
     public int routeStep;       // 주사위 값 저장                     
-         
+
 
     private bool isMove = false;
     [SerializeField]
     private bool isLock = false;
     private bool isStart = false;
+    public bool isCross = false;
     private Animator anim;
+
+
+    [SerializeField] private CanvasGroup spaceGroup;
 
     #region Dice
     public GameObject battleFieldModel;
@@ -47,7 +51,7 @@ public class TotemMove : MonoBehaviour
     public Ease ease;
     #endregion
 
-    [SerializeField] private CanvasGroup spaceGroup;
+
 
 
     private void Awake()
@@ -57,6 +61,7 @@ public class TotemMove : MonoBehaviour
 
     private void Start()
     {
+
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
         routePosition = SaveManager.Instance.gameData.StageValue + SaveManager.Instance.gameData.RouteValue;
@@ -65,9 +70,8 @@ public class TotemMove : MonoBehaviour
         Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
         StartCoroutine(LookAtCo(lookAtPos));
 
-        transform.position = board.boardList[SaveManager.Instance.gameData.StageValue].transform.position + new Vector3(0,0.1f,0);
+        transform.position = board.boardList[SaveManager.Instance.gameData.StageValue].transform.position + new Vector3(0, 0.1f, 0);
         diceObj.transform.position = diceTrm.position;
-        //diceObj.transform.DOMoveY(diceTrm.position.y - 0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
         rotSpeed = 0;
@@ -165,6 +169,14 @@ public class TotemMove : MonoBehaviour
 
         while (steps > 0)
         {
+
+            if (board.boardList[routePosition / 2].isCross && !board.isEndCross) // 갈림길에 도착하였는가? 
+            {
+                isCross = true;
+                StartCoroutine(MoveTotemCO());
+                yield return new WaitUntil(() => !isCross);
+            }
+
             Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
             Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
             transform.DOLookAt(lookAtPos, .3f);
@@ -179,21 +191,18 @@ public class TotemMove : MonoBehaviour
             }
             routePosition++;
             board.CheckRouteCam(true);
+
+            SaveManager.Instance.gameData.RouteValue = routePosition - routeStep - SaveManager.Instance.gameData.StageValue;
+
         }
 
 
         anim.SetBool("isMove", false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.5f);
         rotSpeed = 0;
-        SaveManager.Instance.gameData.RouteValue = routePosition - routeStep - SaveManager.Instance.gameData.StageValue;
-        Debug.Log(SaveManager.Instance.gameData.RouteValue);
+
         diceText.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
-       
         var type = board.boardList[SaveManager.Instance.gameData.RouteValue].type;
-
-        yield return new WaitForSeconds(1f);
-
 
         //if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
         //{
@@ -297,6 +306,21 @@ public class TotemMove : MonoBehaviour
         isLock = false;
     }
 
+    private IEnumerator MoveTotemCO()
+    {
+        Vector3 nextPos = board.childNodeList[routePosition + 1].transform.position;
+        Vector3 lookAtPos = new Vector3(nextPos.x, transform.position.y, nextPos.z);
+        transform.DOLookAt(lookAtPos, .3f);
+
+        while (MoveNextNode(nextPos))
+            yield return null;
+
+        ++routePosition;
+        anim.SetBool("isMove", false);
+        board.SelectCrossRoadCamera();
+    }
+
+
     public uint GetEnemyUid()
     {
         return board.boardList[routePosition / 2].uid;
@@ -309,7 +333,7 @@ public class TotemMove : MonoBehaviour
     private bool MoveNextNode(Vector3 goal)
     {
         anim.SetBool("isMove", true);
-        return goal + new Vector3(0,0.1f,0) != (transform.position = Vector3.MoveTowards(transform.position, goal + new Vector3(0, 0.1f, 0), speed * Time.deltaTime));
+        return goal + new Vector3(0, 0.1f, 0) != (transform.position = Vector3.MoveTowards(transform.position, goal + new Vector3(0, 0.1f, 0), speed * Time.deltaTime));
     }
 
 
@@ -346,22 +370,23 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 6;//UnityEngine.Random.Range(1, 7);
+                steps = 5;
+                int stepValue = (((board.boardList.Count - 1) * 2) - routePosition) / 2;
+                if (stepValue != 0 && board.isEndCross)
+                {
+                    if (steps > stepValue)
+                    {
+                        steps = stepValue;
+                    }
+                }
+
             }
 
             if (!isMove)
             {
-                int rStep = routePosition + steps - board.childNodeList.Count;
                 if (routePosition + steps < board.childNodeList.Count)
                 {
                     StartCoroutine(MoveMentCo());
-                    print("Move");
-                }
-                else
-                {
-                    steps = rStep;
-                    StartCoroutine(MoveMentCo());
-
                 }
             }
             diceText.gameObject.SetActive(true);
