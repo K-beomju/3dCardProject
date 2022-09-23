@@ -204,99 +204,99 @@ public class TotemMove : MonoBehaviour
         diceText.gameObject.SetActive(false);
         var type = board.boardList[SaveManager.Instance.gameData.RouteValue].type;
 
-        //if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
-        //{
+        if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
+        {
 
-        //    Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
+            Vector3 lookAtPos = new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z);
 
-        //    battleFieldModel.SetActive(true);
+            battleFieldModel.SetActive(true);
 
-        //    Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-        //    battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
-        //    battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
+            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+            battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
+            battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
 
-        //    battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
-        //    {
-        //        if (playerData != null)
-        //            playerData.ShowTopPanel("ㅤ배틀 시작!");
+            battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
+            {
+                if (playerData != null)
+                    playerData.ShowTopPanel("ㅤ배틀 시작!");
 
-        //        battleModelParticle.gameObject.SetActive(true);
-        //        battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
-        //        battleModelParticle.Play();
-        //        this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
-        //        OnComplete(() =>
-        //        {
-        //            itemMark.SetActive(true);
-        //            itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
-        //        }).SetDelay(1);
-        //    });
+                battleModelParticle.gameObject.SetActive(true);
+                battleModelParticle.transform.position = battleFieldModel.transform.position + new Vector3(0, 0.2f, 0);
+                battleModelParticle.Play();
+                this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
+                OnComplete(() =>
+                {
+                    itemMark.SetActive(true);
+                    itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
+                }).SetDelay(1);
+            });
 
-        //    yield return new WaitForSeconds(4f);
-        //    BattleScene();
-        //}
-        //if (type == StageType.Shop)
-        //{
-        //    if (playerData != null)
-        //        playerData.ShowTopPanel("ㅤ상점 이동!");
-        //    Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-        //    necro.gameObject.SetActive(true);
-        //    necro.transform.position = battlePos + new Vector3(0, .3f, 0);
-        //    necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
-        //    necro.transform.Rotate(10, 0, 0);
-        //    this.transform.DOLookAt(new Vector3(necro.transform.position.x, transform.position.y, necro.transform.position.z), .3f);
+            yield return new WaitForSeconds(4f);
+            BattleScene();
+        }
+        if (type == StageType.Shop)
+        {
+            if (playerData != null)
+                playerData.ShowTopPanel("ㅤ상점 이동!");
+            Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
+            necro.gameObject.SetActive(true);
+            necro.transform.position = battlePos + new Vector3(0, .3f, 0);
+            necro.transform.LookAt(new Vector3(transform.position.x, necro.transform.position.y, transform.position.z));
+            necro.transform.Rotate(10, 0, 0);
+            this.transform.DOLookAt(new Vector3(necro.transform.position.x, transform.position.y, necro.transform.position.z), .3f);
 
-        //    yield return new WaitForSeconds(2f);
-        //    necro.MegaPt(this.transform);
-        //    yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
+            necro.MegaPt(this.transform);
+            yield return new WaitForSeconds(1f);
 
-        //    ShopScene();
-        //}
-        //if (type == StageType.GetHP)
-        //{
-        //    playerData.ShowTopPanel("ㅤ체력 회복!");
-        //    yield return new WaitForSeconds(3f);
+            ShopScene();
+        }
+        if (type == StageType.GetHP)
+        {
+            playerData.ShowTopPanel("ㅤ체력 회복!");
+            yield return new WaitForSeconds(3f);
 
-        //    FadeInOut(1, 1, () => RestAction());
-        //}
-        //if(type == StageType.GetGold)
-        //{
-        //    playerData.ShowTopPanel("ㅤ골드 획득!");
-        //    yield return new WaitForSeconds(3f);
+            FadeInOut(1, 1, () => RestAction());
+        }
+        if (type == StageType.GetGold)
+        {
+            playerData.ShowTopPanel("ㅤ골드 획득!");
+            yield return new WaitForSeconds(3f);
 
-        //    playerData.GetGoldIncreaseDirect();
-        //}
-        //if(type == StageType.LossGold)
-        //{
-        //    playerData.ShowTopPanel("ㅤ골드 감소!");
-        //    yield return new WaitForSeconds(3f);
+            playerData.GetGoldIncreaseDirect();
+        }
+        if (type == StageType.LossGold)
+        {
+            playerData.ShowTopPanel("ㅤ골드 감소!");
+            yield return new WaitForSeconds(3f);
 
-        //    playerData.GetGoldDecreaseDirect();
-        //}
-        //if(type == StageType.LossHp)
-        //{
-        //    playerData.ShowTopPanel("ㅤ체력 감소!");
-        //    yield return new WaitForSeconds(3f);
-        //    rock.transform.position = transform.position + new Vector3(0, 4, 0);
-        //    rock.SetActive(true);
+            playerData.GetGoldDecreaseDirect();
+        }
+        if (type == StageType.LossHp)
+        {
+            playerData.ShowTopPanel("ㅤ체력 감소!");
+            yield return new WaitForSeconds(3f);
+            rock.transform.position = transform.position + new Vector3(0, 4, 0);
+            rock.SetActive(true);
 
-        //    Sequence mySeq = DOTween.Sequence();
-        //    mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
-        //    mySeq.InsertCallback(0.3f, () =>
-        //    {
-        //        rockParticle.gameObject.SetActive(true);
-        //        rockParticle.transform.position = rock.transform.position;
-        //        rockParticle.Play();
-        //        rock.SetActive(false);
-        //    }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
-        //    .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
-        //    .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
-
-
+            Sequence mySeq = DOTween.Sequence();
+            mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
+            mySeq.InsertCallback(0.3f, () =>
+            {
+                rockParticle.gameObject.SetActive(true);
+                rockParticle.transform.position = rock.transform.position;
+                rockParticle.Play();
+                rock.SetActive(false);
+            }).InsertCallback(.3f, () => anim.SetTrigger("Dead"))
+            .InsertCallback(.3f, () => baseMat.DOColor(Color.red, 0).OnComplete(() => baseMat.DOColor(Color.white, 1)))
+            .InsertCallback(1f, () => playerData.GetHpDecreaseDirect(-3));
 
 
-        //    mySeq.Play();
 
-        //}
+
+            mySeq.Play();
+
+        }
 
         isMove = false;
         SaveManager.Instance.gameData.StageValue = SaveManager.Instance.gameData.RouteValue;
@@ -370,7 +370,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 8;
+                steps = UnityEngine.Random.Range(1, 7);
                 int stepValue = (((board.boardList.Count - 1) * 2) - routePosition) / 2;
                 if (stepValue != 0 && board.isEndCross)
                 {
