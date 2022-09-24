@@ -41,6 +41,7 @@ public class BoardManager : Singleton<BoardManager>
     private void Start()
     {
         FillNodes();
+        if(crossCanvas != null)
         crossCanvas.gameObject.SetActive(false);
 
         for (int i = 0; i < childNodeList.Count; i++)

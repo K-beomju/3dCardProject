@@ -17,6 +17,7 @@ public class TitleManager : Singleton<TitleManager>
 
      private Camera mainCam;
     [SerializeField] private Ease camEase;
+    [SerializeField] private Light dirLight;
 
     private void Start()
     {
@@ -36,6 +37,8 @@ public class TitleManager : Singleton<TitleManager>
             card.transform.rotation = cardPosTrm[i].rotation;
             card.originPRS = new PRS(card.transform);
         }
+
+        SoundManager.Instance.PlayBGMSound("Title");
     }
 
     [ContextMenu("ResetIsFirstData")]
@@ -49,7 +52,9 @@ public class TitleManager : Singleton<TitleManager>
     {
         Sequence mySeq = DOTween.Sequence();
         mySeq.Append(mainCam.transform.DOMove(new Vector3(0, 6.34f, 15f), 3).SetEase(camEase).SetUpdate(true));
+        dirLight.DOIntensity(0, 2).SetDelay(2);
         mySeq.InsertCallback(2.5f, () => action());
+
     }
 
 }

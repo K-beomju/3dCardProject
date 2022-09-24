@@ -1,210 +1,223 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum NotOneShot
+public class SoundManager : Singleton<SoundManager>
 {
-    FirstFalling,
-    YoYoGrap,
-    MaxCount
-}
+    public float MasterVoulme => masterVoulme;
+    public float BGMVolume => bgmVolume * MasterVoulme;
+    public float FxVoulme => fxVoulme * MasterVoulme;
 
-public class SoundManager
-{
-    float masterVolume = 1.0f;
+    public float masterVoulme = 1;
+    public float bgmVolume = 0.5f;
+    public float fxVoulme = 1;
+    public float pitch = 1;
 
-    AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
-    float[] volumes = new float[(int)Define.Sound.MaxCount];
-    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    private AudioSource bgmAudioSource;
+    private List<AudioSource> fxAudioSourceList = new List<AudioSource>();
 
-    // 커스텀
-    Dictionary<NotOneShot, AudioSource> _notOneShotDict = new Dictionary<NotOneShot, AudioSource>();
+    private Dictionary<string, AudioClip> bgmSoundDic = new Dictionary<string, AudioClip>();
+    private Dictionary<string, AudioClip> fxSoundDic = new Dictionary<string, AudioClip>();
 
-    public void Init()
+    public static bool bSoundOff = false;
+
+
+    protected override void Awake()
     {
-        GameObject root = GameObject.Find("@Sound");
-        if (root == null)
+        base.Awake();
+        foreach (var audioClip in Resources.LoadAll<AudioClip>("Sound/BGM")) // Resource �������ִ� ����� ��Ƶα�
         {
-            root = new GameObject { name = "@Sound" };
-            Object.DontDestroyOnLoad(root);
+            bgmSoundDic.Add(audioClip.name, audioClip);
+        }
 
-            string[] soundNames = System.Enum.GetNames(typeof(Define.Sound)); // "Bgm", "Effect"
-            for (int i = 0; i < soundNames.Length - 1; i++)
+    }
+
+
+    private AudioClip GetBGMSound(string name)
+    {
+        AudioClip result;
+        if (!bgmSoundDic.TryGetValue(name, out result))
+        {
+            Debug.LogWarning(name + "Not Found");
+        }
+        return result;
+    }
+
+    private AudioClip GetFxSound(string name)
+    {
+        AudioClip result;
+        if (!fxSoundDic.TryGetValue(name, out result))
+        {
+            result = Resources.Load<AudioClip>("Sound/Fx/" + name);
+            if (result == null)
             {
-                GameObject go = new GameObject { name = soundNames[i] };
-                _audioSources[i] = go.AddComponent<AudioSource>();
-                go.transform.parent = root.transform;
+                Debug.LogWarning(name + "Not Found");
+                return null;
             }
+            fxSoundDic.Add(name, result);
+        }
+        return result;
+    }
 
-            // 커스텀
-            for (int i = 0; i < (int)NotOneShot.MaxCount; i++)
+    private AudioSource MakeAudioSourceObject(string name)
+    {
+        GameObject audioObject = new GameObject();
+        audioObject.name = name;
+        audioObject.transform.SetParent(gameObject.transform);
+
+        return audioObject.AddComponent<AudioSource>();
+    }
+
+    private void SetAudioSource(AudioSource audioSource, AudioClip audioClip, bool isLoop, float volume, bool isMute = false)
+    {
+        audioSource.clip = audioClip;
+        audioSource.loop = isLoop;
+        audioSource.volume = volume;
+        audioSource.mute = isMute;
+    }
+
+    public void AdjustMasterVolume(float newVolume)
+    {
+        masterVoulme = newVolume;
+        AdjustBGMVolume(bgmVolume);
+        AdjustFxVoulme(fxVoulme);
+    }
+
+    public void AdjustBGMVolume(float newVolume)
+    {
+        bgmVolume = newVolume;
+        if (bgmAudioSource != null)
+        {
+            bgmAudioSource.volume = BGMVolume;
+        }
+    }
+
+    public void AdjustFxVoulme(float newVolume)
+    {
+        fxVoulme = newVolume;
+        foreach (var fxAudioSource in fxAudioSourceList)
+        {
+            if (fxAudioSource != null)
             {
-                GameObject go = new GameObject { name = ((NotOneShot)i).ToString() };
-
-                _notOneShotDict.Add((NotOneShot)i, go.AddComponent<AudioSource>());
-                go.transform.parent = root.transform;
+                fxAudioSource.volume = FxVoulme;
             }
-
-            _audioSources[(int)Define.Sound.Bgm].loop = true; // bgm 재생기는 무한 반복 재생
-        }
-
-        // 여기에 저장된 볼륨 불러오기.
-        masterVolume = SecurityPlayerPrefs.GetFloat("option.masterVolume", 0.5f);
-
-        for (int i = 0; i < volumes.Length; i++)
-        {
-            volumes[i] = SecurityPlayerPrefs.GetFloat($"option.{(Define.Sound)i}", 0.5f);
         }
     }
 
-    public void SetMasterVolume(float value)
+    public void AdjustSoundPitch(float pitch)
     {
-        masterVolume = value;
-        SecurityPlayerPrefs.SetFloat("option.masterVolume", masterVolume);
-
-        for (int i = 0; i < (int)Define.Sound.MaxCount; i++)
+        this.pitch = pitch;
+        foreach (var item in fxAudioSourceList)
         {
-            SetVolume((Define.Sound)i, volumes[i]);
+            if (item)
+            {
+                item.DOPitch(pitch, 0.5f).SetUpdate(true);
+            }
+        }
+
+        if (bgmAudioSource)
+        {
+            bgmAudioSource.DOPitch(pitch, 0.5f).SetUpdate(true);
         }
     }
 
-    public float GetMasterVolume()
+    public void PlayBGMSound(string name, float duration = 2)
     {
-        return masterVolume;
-    }
+        if (bSoundOff) return;
 
-    public void SetVolume(Define.Sound soundType, float value)
-    {
-        volumes[(int)soundType] = value;
-        SecurityPlayerPrefs.SetFloat($"option.{soundType}", volumes[(int)soundType]);
-
-        _audioSources[(int)soundType].volume = value * masterVolume;
-    }
-
-    public float[] GetVolumes()
-    {
-        return volumes;
-    }
-
-    public void Clear()
-    {
-        // 재생기 전부 재생 스탑, 음반 빼기
-        foreach (AudioSource audioSource in _audioSources)
+        if (bgmAudioSource == null)
         {
-            audioSource.clip = null;
-            audioSource.Stop();
+            bgmAudioSource = MakeAudioSourceObject("BGMObject");
         }
-        // 효과음 Dictionary 비우기
-        _audioClips.Clear();
-    }
 
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
-    {
-        if (audioClip == null)
-            return;
-
-        if (type == Define.Sound.Bgm)
+        if (bgmAudioSource.isPlaying)
         {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
-            if (audioSource.isPlaying)
-                audioSource.Stop();
-
-            audioSource.pitch = pitch;
-            audioSource.clip = audioClip;
-            audioSource.Play();
+            StartCoroutine(ChangeBGM(BGMVolume, name, duration));
         }
         else
         {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
-            audioSource.pitch = pitch;
-            audioSource.PlayOneShot(audioClip);
+            SetAudioSource(bgmAudioSource, GetBGMSound(name), true, BGMVolume, false);
+            bgmAudioSource.Play();
         }
+
     }
 
-    // 커스텀
-    public void PlayNotOne(string path, NotOneShot type)
+
+    public IEnumerator ChangeBGM(float volume, string name, float duration)
     {
-        AudioClip audioClip = GetOrAddAudioClip(path, Define.Sound.NotOneShot);
-        PlayNotOne(audioClip, type);
-    }
-
-    public void PlayNotOne(AudioClip clip, NotOneShot type)
-    {
-        AudioSource audioSource = _notOneShotDict[type];
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
-
-    public void StopNotOne(string path, NotOneShot type)
-    {
-        AudioClip audioClip = GetOrAddAudioClip(path, Define.Sound.NotOneShot);
-        StopNotOne(audioClip, type);
-    }
-
-    public void StopNotOne(AudioClip clip, NotOneShot type)
-    {
-        AudioSource audioSource = _notOneShotDict[type];
-        audioSource.clip = clip;
-        audioSource.Stop();
-    }
-    //커스텀끝
-
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
-    {
-        AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Play(audioClip, type, pitch);
-    }
-
-    public void Stop(string path, Define.Sound type = Define.Sound.Effect)
-    {
-        AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Stop(audioClip, type);
-    }
-
-    public void Stop(AudioClip audioClip, Define.Sound type = Define.Sound.Effect)
-    {
-        if (audioClip == null)
-            return;
-
-        if (type == Define.Sound.Bgm) // BGM 배경음악 재생
-        {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
-            audioSource.Stop();
-        }
-        else
-        {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
-            audioSource.Stop();
-        }
-    }
-
-    AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
-    {
-        if (path.Contains("Sounds/") == false)
-            path = $"Sounds/{path}";
-        AudioClip audioClip = null;
-
-        if (type == Define.Sound.Bgm) // BGM 배경음악 클립 붙이기
-        {
-            audioClip = Global.Resource.Load<AudioClip>(path);
-        }
-        else if (type == Define.Sound.Effect)// Effect 효과음 클립 붙이기
-        {
-            if (_audioClips.TryGetValue(path, out audioClip) == false)
+        DOTween.To(() => bgmAudioSource.volume, x => bgmAudioSource.volume = x, 0, duration)
+            .OnComplete(() =>
             {
-                audioClip = Global.Resource.Load<AudioClip>(path);
-                _audioClips.Add(path, audioClip);
+                bgmAudioSource.volume = volume * MasterVoulme;
+                SetAudioSource(bgmAudioSource, GetBGMSound(name), true, BGMVolume, false);
+                bgmAudioSource.Play();
+            });
+        yield return null;
+    }
+
+    public void PlayFXSound(string name , float volume = 0)
+    {
+        if (bSoundOff) return;
+
+        foreach (var fxAudioSource in fxAudioSourceList)
+        {
+            if (!fxAudioSource.isPlaying)
+            {
+                SetAudioSource(fxAudioSource, GetFxSound(name), false, FxVoulme + volume, false);
+                fxAudioSource.Play();
+                return;
             }
         }
-        else if (type == Define.Sound.NotOneShot)
+
+        fxAudioSourceList.Add(MakeAudioSourceObject("FxObject"));
+        PlayFXSound(name , volume);
+    }
+
+    public void StopBGMSound(float duration = 2)
+    {
+        DOTween.To(() => bgmAudioSource.volume, x => bgmAudioSource.volume = x, 0, duration)
+            .OnComplete(() =>
+            {
+                bgmAudioSource.Stop();
+            });
+    }
+
+    public void OffSound()
+    {
+        if (bgmAudioSource == null) return;
+
+
+        bgmAudioSource.volume = 0;
+        for (int i = 0; i < fxAudioSourceList.Count; i++)
         {
-            audioClip = Global.Resource.Load<AudioClip>(path);
+            fxAudioSourceList[i].volume = 0;
         }
 
-        if (audioClip == null)
-            Debug.Log($"AudioClip Missing ! {path}");
 
-        return audioClip;
     }
-}
 
+    public void OnSound()
+    {
+        if (bgmAudioSource == null)
+        {
+            bSoundOff = false;
+            SoundManager.Instance.PlayBGMSound("main_bgm");
+        }
+
+
+
+        bgmAudioSource.volume = MasterVoulme * bgmVolume;
+        for (int i = 0; i < fxAudioSourceList.Count; i++)
+        {
+            fxAudioSourceList[i].volume = MasterVoulme * fxVoulme;
+        }
+
+    }
+
+
+
+
+
+}

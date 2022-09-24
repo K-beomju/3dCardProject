@@ -21,13 +21,13 @@ public class Global : MonoBehaviour
 
     UIManager _ui = new UIManager();
     ResourceManager _resource = new ResourceManager();
-    SoundManager _sound = new SoundManager();
+    //SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     LoadingSceneManager _loadScene = new LoadingSceneManager();
 
     public static UIManager UI { get { return Instance._ui; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
-    public static SoundManager Sound { get { return Instance._sound; } }
+    //public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static LoadingSceneManager LoadScene { get { return Instance._loadScene; } }
     #endregion
@@ -59,7 +59,7 @@ public class Global : MonoBehaviour
             DontDestroyOnLoad(managementObj);
 
             //초기화들
-            s_instance._sound.Init();
+            //s_instance._sound.Init();
             Transform poolObjectBox = managementObj.transform.Find("@Pool");
 
             if (poolObjectBox == null)
@@ -76,7 +76,7 @@ public class Global : MonoBehaviour
     public static void Clear()
     {
         // ...
-        Sound.Clear();
+        //Sound.Clear();
         Pool.Clear();
     }
 }

@@ -230,6 +230,10 @@ MonoBehaviour:
   camChangeRouteValue: 
   camChangeBool: 
   coinPt: {fileID: 0}
+  crossUpBoard: []
+  crossDownBoard: []
+  isEndCross: 0
+  crossCanvas: {fileID: 0}
 --- !u!1 &27352682
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +617,7 @@ GameObject:
   - component: {fileID: 100319114}
   - component: {fileID: 100319115}
   - component: {fileID: 100319111}
+  - component: {fileID: 100319116}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -756,6 +761,14 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!81 &100319116
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100319110}
+  m_Enabled: 1
 --- !u!1001 &120536032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3509,6 +3522,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &655404471
 PrefabInstance:
@@ -4424,6 +4438,7 @@ MonoBehaviour:
   type: 0
   enemyType: 1
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &868451975
 PrefabInstance:
@@ -5382,6 +5397,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &1029659607
 PrefabInstance:
@@ -5968,6 +5984,7 @@ MonoBehaviour:
   type: 2
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!114 &1100083572 stripped
 MonoBehaviour:
@@ -6413,6 +6430,7 @@ MonoBehaviour:
   type: 1
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &1189009047
 PrefabInstance:
@@ -8146,6 +8164,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1 &1401795115 stripped
 GameObject:
@@ -8462,6 +8481,7 @@ MonoBehaviour:
   type: 0
   enemyType: 0
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &1554093511
 PrefabInstance:
@@ -10566,6 +10586,7 @@ MonoBehaviour:
   type: 0
   enemyType: 1
   isClear: 0
+  isCross: 0
   uid: 0
 --- !u!1001 &1816401182
 PrefabInstance:
@@ -12506,11 +12527,12 @@ MonoBehaviour:
   routePosition: 0
   routeStep: 0
   isLock: 0
+  isCross: 0
+  spaceGroup: {fileID: 0}
   battleFieldModel: {fileID: 362342852}
   diceText: {fileID: 747618251}
   rotSpeed: 10
   ease: 1
-  spaceGroup: {fileID: 0}
   isTutorial: 1
 --- !u!1 &4754210349454148444
 GameObject:

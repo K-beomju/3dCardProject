@@ -71,6 +71,7 @@ public class Card : MonoBehaviour
         if (StageManager.Instance.SceneState == SceneState.STAGE) return;
         if (curField != null||isDisposable)
         {
+            if (item.IsTitleCard) return;
             CardInfoUI.Instance.ItemData = item;
         }
 
@@ -78,8 +79,15 @@ public class Card : MonoBehaviour
         {
             //Debug.Log("ABABA");
             CardManager.Instance.CardMouseOver(this);
-          
+
         }
+
+    }
+
+    private void OnMouseEnter()
+    {
+        if(CardManager.Instance.selectCard == null)
+        SoundManager.Instance.PlayFXSound("MouseEnterCard", -0.95f);
 
     }
 
@@ -90,6 +98,7 @@ public class Card : MonoBehaviour
         {
             CardManager.Instance.CardMouseExit(this);
         }
+        if(item.IsTitleCard)
         CardInfoUI.Instance.ActiveUI(false);
     }
 
@@ -276,6 +285,7 @@ public class Card : MonoBehaviour
     }
     public void OnSpawn()
     {
+        SoundManager.Instance.PlayFXSound("UsedCard" , -0.7f);
         Debug.Log("ONSPAWN : " + item.itemName);
         Emphasize(() =>
         {
