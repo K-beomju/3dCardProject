@@ -40,19 +40,10 @@ public class BattleCameraController : MonoBehaviour
     }
     public static IEnumerator FocusOnEnemy()
     {
-        foreach (var card in CardManager.Instance.myCards)
-        {
-            card.DetactiveCardView(false);
-        }
+        Debug.Log(EnemyManager.Instance);
         Instance.enemyNameText.text = CardManager.Instance.FindEnemyItem(EnemyManager.Instance.CurEnemyUid).itemName;
         Instance.enemyNameText.DOFade(0, 0);
-        Vector3 camPos = NewFieldManager.Instance.enemyCard.transform.position;
-        camPos += new Vector3(0f,5f,-7f);
-        Sequence seq = DOTween.Sequence();
-        seq.Append(Instance.cam.transform.DOMove(camPos, 1.5f));
-        seq.Join(Instance.cam.transform.DORotate((NewFieldManager.Instance.enemyCard.LinkedModel.transform.position - camPos).normalized, 1.5f));
-        seq.SetEase(Ease.InSine);
-        yield return new WaitForSeconds(1.5f);
+        yield return FocusOn(NewFieldManager.Instance.enemyCard);
         yield break;
     }
     public static IEnumerator PanelIn()
@@ -67,7 +58,7 @@ public class BattleCameraController : MonoBehaviour
         seq.Join(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y - 50f, .5f));
         seq.SetEase(Ease.InSine);
 
-        yield return new WaitForSeconds(.5f);
+        yield return seq;
         yield break;
     }
     public static IEnumerator LetterBoxActive(bool isActive)
@@ -108,10 +99,10 @@ public class BattleCameraController : MonoBehaviour
         seq.Append(Instance.enemyNameText.transform.DOLocalMoveY(Instance.enemyNameText.transform.localPosition.y + 50f, 0f));
         seq.SetEase(Ease.InSine);
 
-        yield return new WaitForSeconds(.4f);
+        yield return seq;
         yield break;
     }
-    public static IEnumerator OutFocusFromEnemy()
+    public static IEnumerator FocusOut()
     {
         Sequence seq = DOTween.Sequence();
 
@@ -120,7 +111,7 @@ public class BattleCameraController : MonoBehaviour
         seq.Append(Instance.cam.transform.DOMove(Instance.camOriginPos, 1f));
         seq.Join(Instance.cam.transform.DORotateQuaternion(Instance.camOriginRot, 1f));
         seq.SetEase(Ease.Linear);
-        yield return new WaitForSeconds(1f);
+        yield return seq;
 
         foreach (var card in CardManager.Instance.myCards)
         {
@@ -128,4 +119,27 @@ public class BattleCameraController : MonoBehaviour
         }
         yield break;
     }
+
+    public static IEnumerator FocusOnPlayer()
+    {
+        yield return FocusOn(NewFieldManager.Instance.playerCard);
+        yield break;
+    }
+    public static IEnumerator FocusOn(Card focusedCard)
+    {
+        foreach (var card in CardManager.Instance.myCards)
+        {
+            card.DetactiveCardView(false);
+        }
+        Vector3 camPos = focusedCard.transform.position;
+        camPos += new Vector3(0f, 5f, -7f);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(Instance.cam.transform.DOMove(camPos, 1.5f));
+        seq.Join(Instance.cam.transform.DORotate((focusedCard.LinkedModel.transform.position - camPos).normalized, 1.5f));
+        seq.SetEase(Ease.InSine);
+        yield return seq;
+        yield break;
+    }
+
+
 }

@@ -155,7 +155,7 @@ public class CardManager : Singleton<CardManager>
         yield return BattleCameraController.PanelIn();
         yield return new WaitForSeconds(5f);
         yield return BattleCameraController.PanelOut();
-        yield return BattleCameraController.OutFocusFromEnemy();
+        yield return BattleCameraController.FocusOut();
         StartCoroutine(SpawnCardCo(act));
     }
     private IEnumerator SpawnCardCo(Action act = null)

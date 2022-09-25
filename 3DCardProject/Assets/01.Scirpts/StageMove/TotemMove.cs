@@ -344,10 +344,12 @@ public class TotemMove : MonoBehaviour
 
     private void BattleScene()
     {
-        Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
         EnemyManager.Instance.curEnemyType = ReturnBtDifficult();
         EnemyManager.Instance.CurEnemyUid = GetEnemyUid();
+
+        Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
+
     }
 
     private void ShopScene()

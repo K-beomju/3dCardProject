@@ -53,6 +53,7 @@ public class TitleManager : Singleton<TitleManager>
         Sequence mySeq = DOTween.Sequence();
         mySeq.Append(mainCam.transform.DOMove(new Vector3(0, 6.34f, 15f), 3).SetEase(camEase).SetUpdate(true));
         dirLight.DOIntensity(0, 2).SetDelay(2);
+        mySeq.AppendInterval(2f);
         mySeq.InsertCallback(2.5f, () => action());
 
     }

@@ -86,6 +86,7 @@ public class PlayerGameData : ISerializeble
             if(hp <= 0)
             {
                 // 게임 오버 이벤트
+                GameOverManager.Instance.GameOver();
             }
             OnHpChange?.Invoke();
         }

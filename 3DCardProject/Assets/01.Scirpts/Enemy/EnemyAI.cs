@@ -352,14 +352,28 @@ public class EnemyAI : Singleton<EnemyAI>
         }
 
         yield return new WaitForSeconds(.5f);
+        Item item = CardManager.Instance.FindEnemyItem(1100);
+        if (item == null)
+        {
+            Debug.LogError("잘못된 아이템 UID");
+            yield break;
+        }
         for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
         {
             if (isOdd ? i % 2 != 0 : i % 2 == 0)
                 continue;
             Debug.Log("Bombb2");
             Field field = NewFieldManager.Instance.fieldList[i];
+            Card card = Global.Pool.GetItem<Card>();
+            card.Setup(item, true, false);
+            card.OnSpawn();
+            card.transform.position = field.transform.position + new Vector3(0, 15, 0);
+            card.transform.DOMove(field.transform.position + new Vector3(0, 1, 0),.6f).OnComplete(()=> {
 
-            Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0, 1, 0);
+                Global.Pool.GetItem<Effect_Spawn>().transform.position = field.transform.position + new Vector3(0, 1, 0);
+                CardManager.Instance.CardDie(card);
+            });
+
             Card aCard = field.avatarCard;
             if (aCard != null)
             {
@@ -613,7 +627,7 @@ public class EnemyAI : Singleton<EnemyAI>
         yield return BattleCameraController.SubText("제법이군");
         yield return BattleCameraController.SubText("하지만 2 페이즈를 버틸수 있을까?");
         yield return BattleCameraController.LetterBoxActive(false);
-        yield return BattleCameraController.OutFocusFromEnemy();
+        yield return BattleCameraController.FocusOut();
 
         CardModelBrain CMB = NewFieldManager.Instance.enemyCard.LinkedModel;
         CMB.ModelObject.transform.DOMoveY(CMB.ModelObject.transform.position.y + 15f, 1.5f).SetEase(Ease.InElastic);

@@ -7,9 +7,11 @@ public class BombCard : MonoBehaviour
 {
     private int bombCount;
     public Action OnUnderZero;
+    public TextMesh CountText;
     public void InitBomb(int inCount)
     {
         bombCount = inCount;
+        TextRefresh();
     }
     public void Counting()
     {
@@ -17,7 +19,11 @@ public class BombCard : MonoBehaviour
         {
             OnUnderZero?.Invoke();
         }
-
+        TextRefresh();
     }
 
+    public void TextRefresh()
+    {
+        CountText.text = bombCount.ToString();
+    }
 }
