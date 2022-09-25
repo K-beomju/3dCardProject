@@ -150,6 +150,7 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
                 TutorialManager.Instance.isTutorial = false;
                 SaveManager.Instance.gameData.IsTutorialDone = true;
+                StageManager.Instance.SceneState = SceneState.STAGE;
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:

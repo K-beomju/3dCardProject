@@ -151,11 +151,11 @@ public class CardManager : Singleton<CardManager>
     private IEnumerator StartProcess(Action act =null)
     {
         yield return NewFieldManager.Instance.FieldManagerStartCol();
-        yield return BattleCameraController.FocusOnEnemy();
+        yield return BattleCameraController.ZoomInEnemy();
         yield return BattleCameraController.PanelIn();
         yield return new WaitForSeconds(5f);
         yield return BattleCameraController.PanelOut();
-        yield return BattleCameraController.FocusOut();
+        yield return BattleCameraController.ZoomOut();
         StartCoroutine(SpawnCardCo(act));
     }
     private IEnumerator SpawnCardCo(Action act = null)

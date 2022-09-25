@@ -622,12 +622,12 @@ public class EnemyAI : Singleton<EnemyAI>
     private IEnumerator Turn2Phase2Col()
     {
         isTurn2Phase2 = true;
-        yield return BattleCameraController.FocusOnEnemy();
+        yield return BattleCameraController.ZoomInEnemy();
         yield return BattleCameraController.LetterBoxActive(true);
         yield return BattleCameraController.SubText("제법이군");
         yield return BattleCameraController.SubText("하지만 2 페이즈를 버틸수 있을까?");
         yield return BattleCameraController.LetterBoxActive(false);
-        yield return BattleCameraController.FocusOut();
+        yield return BattleCameraController.ZoomOut();
 
         CardModelBrain CMB = NewFieldManager.Instance.enemyCard.LinkedModel;
         CMB.ModelObject.transform.DOMoveY(CMB.ModelObject.transform.position.y + 15f, 1.5f).SetEase(Ease.InElastic);

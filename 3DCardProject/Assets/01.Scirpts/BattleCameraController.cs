@@ -38,12 +38,12 @@ public class BattleCameraController : MonoBehaviour
         letterboxTopOriginPos = letterboxTop.localPosition;
         letterboxBottomOriginPos = letterboxBottom.localPosition;
     }
-    public static IEnumerator FocusOnEnemy()
+    public static IEnumerator ZoomInEnemy()
     {
         Debug.Log(EnemyManager.Instance);
         Instance.enemyNameText.text = CardManager.Instance.FindEnemyItem(EnemyManager.Instance.CurEnemyUid).itemName;
         Instance.enemyNameText.DOFade(0, 0);
-        yield return FocusOn(NewFieldManager.Instance.enemyCard);
+        yield return ZoomIn(NewFieldManager.Instance.enemyCard);
         yield break;
     }
     public static IEnumerator PanelIn()
@@ -102,7 +102,7 @@ public class BattleCameraController : MonoBehaviour
         yield return seq;
         yield break;
     }
-    public static IEnumerator FocusOut()
+    public static IEnumerator ZoomOut()
     {
         Sequence seq = DOTween.Sequence();
 
@@ -120,12 +120,12 @@ public class BattleCameraController : MonoBehaviour
         yield break;
     }
 
-    public static IEnumerator FocusOnPlayer()
+    public static IEnumerator ZoomInPlayer()
     {
-        yield return FocusOn(NewFieldManager.Instance.playerCard);
+        yield return ZoomIn(NewFieldManager.Instance.playerCard);
         yield break;
     }
-    public static IEnumerator FocusOn(Card focusedCard)
+    public static IEnumerator ZoomIn(Card focusedCard)
     {
         foreach (var card in CardManager.Instance.myCards)
         {

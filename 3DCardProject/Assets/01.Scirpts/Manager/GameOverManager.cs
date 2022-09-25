@@ -26,9 +26,10 @@ public class GameOverManager : Singleton<GameOverManager>
             case SceneState.Title:
                 break;
             case SceneState.STAGE:
+                yield return BoardManager.Instance.ZoomInTotem();
                 break;
             case SceneState.BATTLE:
-                yield return BattleCameraController.FocusOnPlayer();
+                yield return BattleCameraController.ZoomInPlayer();
                 break;
             case SceneState.SHOP:
                 break;

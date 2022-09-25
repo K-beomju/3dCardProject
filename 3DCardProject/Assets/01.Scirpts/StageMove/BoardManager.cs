@@ -251,6 +251,19 @@ public class BoardManager : Singleton<BoardManager>
 
     #endregion
 
+    public IEnumerator ZoomInTotem()
+    {
+        totemCam.GetComponent<CinemachineVirtualCamera>().enabled = false;
+        CinemachineBrain cam = FindObjectOfType<CinemachineBrain>();
+        Vector3 camPos = totem.transform.position;
+        camPos += new Vector3(0f, .7f, -2.5f);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(cam.transform.DOMove(camPos, 1.5f));
+        seq.Join(cam.transform.DORotate((totem.transform.position - camPos).normalized, 1.5f));
+        seq.SetEase(Ease.InSine);
 
+        yield return seq;
+        yield break;
+    }
 
 }

@@ -16,7 +16,7 @@ public class CardActionTitleCard : CardAction
                 SaveManager.Instance.SaveGameData();
                 if (SaveManager.Instance.gameData.IsTutorialDone)
                 {
-                    TitleManager.Instance.CameraMoveAction(() => Global.LoadScene.LoadScene("Stage"));
+                    TitleManager.Instance.CameraMoveAction(() => { StageManager.Instance.SceneState = SceneState.STAGE; Global.LoadScene.LoadScene("Stage"); });
                 }
                 else
                 {
@@ -25,7 +25,7 @@ public class CardActionTitleCard : CardAction
                 break;
             case 1:
                 // 이어하기
-                TitleManager.Instance.CameraMoveAction(() => Global.LoadScene.LoadScene("Stage"));
+                    TitleManager.Instance.CameraMoveAction(() => { StageManager.Instance.SceneState = SceneState.STAGE; Global.LoadScene.LoadScene("Stage"); });
                 break;
             case 2:
                 // 메뉴
