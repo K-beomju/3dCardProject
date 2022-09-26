@@ -11,9 +11,7 @@ public class CardActionTitleCard : CardAction
             case 0:
                 // »õ °ÔÀÓ
 
-
-                SaveManager.Instance.gameData.isFirst = false;
-                SaveManager.Instance.SaveGameData();
+                SaveManager.Instance.NewGame();
                 if (SaveManager.Instance.gameData.IsTutorialDone)
                 {
                     TitleManager.Instance.CameraMoveAction(() => { StageManager.Instance.SceneState = SceneState.STAGE; Global.LoadScene.LoadScene("Stage"); });

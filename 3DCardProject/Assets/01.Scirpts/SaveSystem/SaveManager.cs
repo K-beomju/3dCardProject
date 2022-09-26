@@ -63,6 +63,12 @@ public class SaveManager : Singleton<SaveManager>
 
         //LoadGameData();
     }
+    public void NewGame()
+    {
+        gameData = new PlayerGameData();
+        gameData.isFirst = false;
+        SaveGameData();
+    }
     string GetFilePath(string fileName)
     {
         return Application.persistentDataPath + "/" + fileName;
