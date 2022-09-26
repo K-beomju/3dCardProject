@@ -104,6 +104,8 @@ public class TotemMove : MonoBehaviour
         {
             if (!isStart)
             {
+                SoundManager.Instance.PlayFXSound("SpawnDice", 0.1f);
+
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
                 isStart = true;
@@ -183,7 +185,10 @@ public class TotemMove : MonoBehaviour
             transform.DOLookAt(lookAtPos, .3f);
 
             while (MoveNextNode(nextPos))
+            {
                 yield return null;
+            }
+
 
             if (board.childNodeList[routePosition].GetSiblingIndex() % 2 == 1)
             {
@@ -213,11 +218,12 @@ public class TotemMove : MonoBehaviour
             battleFieldModel.SetActive(true);
 
             Vector3 battlePos = board.childNodeList[routePosition + 1].transform.position;
-            battleFieldModel.transform.position = battlePos + new Vector3(0, 3, 0);
+            battleFieldModel.transform.position = battlePos + new Vector3(0, 3f, 0);
             battleFieldModel.transform.LookAt(new Vector3(transform.position.x, battleFieldModel.transform.position.y, transform.position.z));
 
-            battleFieldModel.transform.DOMoveY(battlePos.y, .2f).OnComplete(() =>
+            battleFieldModel.transform.DOMoveY(battlePos.y + 0.1f, .2f).OnComplete(() =>
             {
+                SoundManager.Instance.PlayFXSound("BattleTotem", 0.1f);
                 if (playerData != null)
                     playerData.ShowTopPanel("ㅤ배틀 시작!");
 
@@ -227,6 +233,8 @@ public class TotemMove : MonoBehaviour
                 this.transform.DOLookAt(new Vector3(battleFieldModel.transform.position.x, transform.position.y, battleFieldModel.transform.position.z), .5f).
                 OnComplete(() =>
                 {
+                    SoundManager.Instance.PlayFXSound("Dangerous", 0.1f);
+
                     itemMark.SetActive(true);
                     itemMark.transform.DOMoveY(.5f, .2f).SetLoops(2, LoopType.Yoyo);
                 }).SetDelay(1);
@@ -351,6 +359,8 @@ public class TotemMove : MonoBehaviour
 
         Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
+        SoundManager.Instance.bgmVolume = 0.1f;
+        SoundManager.Instance.PlayBGMSound("Battle",3);
     }
 
     private void ShopScene()
@@ -363,6 +373,7 @@ public class TotemMove : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Stage" || SceneManager.GetActiveScene().name == "Tutorials")
         {
+            SoundManager.Instance.PlayFXSound("AttackDice", 0.1f);
             diceObj.SetActive(false);
             diceParticle.gameObject.SetActive(true);
             diceParticle.transform.position = diceObj.transform.position;

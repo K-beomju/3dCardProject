@@ -165,7 +165,8 @@ public class SoundManager : Singleton<SoundManager>
         {
             if (!fxAudioSource.isPlaying)
             {
-                SetAudioSource(fxAudioSource, GetFxSound(name), false, FxVoulme + volume, false);
+                fxVoulme = volume;
+                SetAudioSource(fxAudioSource, GetFxSound(name), false, fxVoulme, false);
                 fxAudioSource.Play();
                 return;
             }
