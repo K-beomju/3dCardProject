@@ -87,7 +87,7 @@ public class Card : MonoBehaviour
     private void OnMouseEnter()
     {
         if(CardManager.Instance.selectCard == null)
-        SoundManager.Instance.PlayFXSound("MouseEnterCard", -0.95f);
+        SoundManager.Instance.PlayFXSound("MouseEnterCard", 0.05f);
 
     }
 
@@ -285,7 +285,7 @@ public class Card : MonoBehaviour
     }
     public void OnSpawn()
     {
-        SoundManager.Instance.PlayFXSound("UsedCard" , -0.7f);
+        SoundManager.Instance.PlayFXSound("UsedCard" , 0.1f);
         Debug.Log("ONSPAWN : " + item.itemName);
         Emphasize(() =>
         {

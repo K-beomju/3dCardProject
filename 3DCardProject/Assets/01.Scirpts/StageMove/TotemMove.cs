@@ -183,7 +183,10 @@ public class TotemMove : MonoBehaviour
             transform.DOLookAt(lookAtPos, .3f);
 
             while (MoveNextNode(nextPos))
+            {
                 yield return null;
+            }
+
 
             if (board.childNodeList[routePosition].GetSiblingIndex() % 2 == 1)
             {
@@ -363,6 +366,7 @@ public class TotemMove : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Stage" || SceneManager.GetActiveScene().name == "Tutorials")
         {
+            SoundManager.Instance.PlayFXSound("AttackDice", 0.1f);
             diceObj.SetActive(false);
             diceParticle.gameObject.SetActive(true);
             diceParticle.transform.position = diceObj.transform.position;
