@@ -1268,7 +1268,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 530.5131}
+  m_SizeDelta: {x: 600, y: 290.4163}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621765782
 MonoBehaviour:
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<size=55><b><color=green>Programing</color><b></size>\n\uAE40\uBC94\uC8FC\n\uAE40\uBBFC\uC0C1\n\n\n\n<size=55><b><color=blue>Design</color><b></size>\n\uAE40\uBBFC\uC0C1\n\uAE40\uBC94\uC8FC\n\n\n\n<size=55><b><color=red>Tools</color><b></size>"
+  m_text: "<size=55><b><color=green>Develop</color><b></size>\n\uAE40\uBC94\uC8FC\n\uAE40\uBBFC\uC0C1\n\n\n\n<size=55><b><color=orange>Tools</color><b></size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
   m_sharedMaterial: {fileID: 8254153204252748337, guid: 46e72a5f14d75c846a0049f4572a5d39, type: 2}
