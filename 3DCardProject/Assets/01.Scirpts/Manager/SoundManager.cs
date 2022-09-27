@@ -45,7 +45,7 @@ public class SoundManager : Singleton<SoundManager>
         return result;
     }
 
-    private AudioClip GetFxSound(string name)
+    public AudioClip GetFxSound(string name)
     {
         AudioClip result;
         if (!fxSoundDic.TryGetValue(name, out result))
