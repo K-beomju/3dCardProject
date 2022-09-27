@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01391ba73555af46a8eb94c5a0747fa, type: 3}
-  m_Name: MenuSO
+  m_Name: CreditSO
   m_EditorClassIdentifier: 
   item:
     cost: 0
     uid: 2
-    itemName: "\uBA54\uB274"
+    itemName: "\uD06C\uB808\uB527"
     sprite: {fileID: 21300000, guid: 1cc3e58d5ce4e7546a707918ce9df647, type: 3}
     IsAvatar: 0
     CanStandOn: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     SpawnModelYPos: 0
     Price: 0
     cardType: 0
-    description: "\uAC1C\uBC1C\uC911 \uC785\uB2C8\uB2E4"
+    description: "\uAC1C\uBC1C \uD06C\uB808\uB527 \uBCF4\uAE30"
     count: 0
     OnSpawn:
     - action: {fileID: 3072118609454833957, guid: 31c8732b021ff3a4a891605f40621ee1, type: 3}

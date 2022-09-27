@@ -17,9 +17,10 @@ public class CreditManager : MonoBehaviour
     }
     private void Start()
     {
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval(2f);
-        seq.Append(cg.DOFade(0, 2f).SetEase(Ease.Linear));
+        Sequence seq1 = DOTween.Sequence();
+        seq1.SetUpdate(true);
+        seq1.AppendInterval(2f);
+        seq1.Append(cg.DOFade(0, 2f).SetEase(Ease.Linear));
         SoundManager.Instance.PlayFXSound("Kill This Love", 1);
         anim.speed = 1;
         float width = 0;
@@ -27,9 +28,13 @@ public class CreditManager : MonoBehaviour
         {
             width += Credit.GetChild(i).GetComponent<RectTransform>().rect.height;
         }
-        Credit.DOAnchorPosY(1080 + width, SoundManager.Instance.GetFxSound("Kill This Love").length).SetRelative().SetEase(Ease.Linear).OnComplete(() => {
-            Debug.Log("END");
-            cg.DOFade(1, 2f).SetEase(Ease.Linear);
+        Sequence seq2 = DOTween.Sequence();
+        seq2.SetEase(Ease.Linear);
+        seq2.SetUpdate(true);
+        seq2.Append(Credit.DOAnchorPosY(1080 + width, SoundManager.Instance.GetFxSound("Kill This Love").length).SetRelative());
+        seq2.Append(cg.DOFade(1, 2f));
+        seq2.AppendCallback(() => {
+            Global.LoadScene.LoadScene("Title");
         });
     }
 }

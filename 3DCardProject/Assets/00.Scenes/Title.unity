@@ -9931,6 +9931,10 @@ PrefabInstance:
       propertyPath: resetButton
       value: 
       objectReference: {fileID: 2142002004}
+    - target: {fileID: 4808731016031427622, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
+      propertyPath: isDontDestroyOnLoad
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4808731016031427623, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
       propertyPath: m_RootOrder
       value: 3

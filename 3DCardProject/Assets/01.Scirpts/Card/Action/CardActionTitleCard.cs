@@ -26,7 +26,8 @@ public class CardActionTitleCard : CardAction
                     TitleManager.Instance.CameraMoveAction(() => { StageManager.Instance.SceneState = SceneState.STAGE; Global.LoadScene.LoadScene("Stage"); });
                 break;
             case 2:
-                // 메뉴
+                // 크레딧
+                TitleManager.Instance.CameraMoveAction(()=>Global.LoadScene.LoadScene("Credit"));
                 break;
             case 3:
                 // 나가기

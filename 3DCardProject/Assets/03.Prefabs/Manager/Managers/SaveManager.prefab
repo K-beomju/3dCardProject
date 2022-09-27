@@ -44,12 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  saveDeckData:
-    deckData:
-      deck: []
-    <defaultDeck>k__BackingField: {fileID: 11400000, guid: 3202f0975cff4cd48b2c682d707dd8ce, type: 2}
   gameData:
-    isFirst: 0
+    isFirst: 1
+    crossType: 0
+    routeValue: 0
     stageValue: 0
     hp: 100
     money: 0

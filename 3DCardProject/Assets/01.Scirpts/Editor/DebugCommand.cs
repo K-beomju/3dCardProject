@@ -19,4 +19,14 @@ public class DebugCommand : EditorWindow
             SaveManager.Instance.gameData.crossType = PlayerGameData.CrossType.None;
         }
     }
+
+    [MenuItem("DataReset", menuItem = "Debug/Stage/DataAllReset")]
+    public static void ResetData()
+    {
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.gameData = new PlayerGameData();
+            SaveManager.Instance.SaveGameData();
+        }
+    }
 }

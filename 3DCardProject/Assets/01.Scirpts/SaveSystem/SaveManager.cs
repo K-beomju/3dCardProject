@@ -46,13 +46,13 @@ public class SaveManager : Singleton<SaveManager>
 
         myRijndael = Rijndael.Create();
         ObjToSaveList.Add(gameData);
-        
+
+        LoadGameData();
 
     }
     private void Start()
     {
 
-        LoadGameData();
         //InvokeRepeating("AutoSave", 0, 30);
         //암호화 복호화 테슽으
         /*string msg = "HelloWorld";
