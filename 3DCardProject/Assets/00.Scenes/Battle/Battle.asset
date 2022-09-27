@@ -16,7 +16,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: -2.37
+    m_Value: -0.8
   contrast:
     m_OverrideState: 1
     m_Value: 0
@@ -148,21 +148,3 @@ MonoBehaviour:
   - {fileID: -3301011089680014184}
   - {fileID: -3828066750817109278}
   - {fileID: -1046155431069084895}
-  - {fileID: 3199208287141581212}
---- !u!114 &3199208287141581212
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  mode:
-    m_OverrideState: 1
-    m_Value: 2
