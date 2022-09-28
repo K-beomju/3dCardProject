@@ -372,4 +372,4 @@ MonoBehaviour:
   panelRTrm: {fileID: 7220287647352419792}
   explainText: {fileID: 7220287646168323751}
   subsPanel: {fileID: 6664958302412917526}
-  isTutorial: 1
+  isTutorial: 0
