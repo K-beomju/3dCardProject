@@ -22,10 +22,11 @@ MonoBehaviour:
     IsReflectCard: 0
     IsUpperCard: 0
     IsStructCard: 1
+    IsTitleCard: 0
     EffectPrefab: {fileID: 7619009876518450769, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
     HitEffectPrefab: {fileID: 0}
     SpawnModelYPos: 0
-    Price: 987
+    Price: 5
     cardType: 6
     description: "\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C \uC774\uB3D9\uD560
       \uACBD\uC6B0 \uC774\uB3D9\uD558\uC9C0 \uC54A\uACE0 \uC774 \uCE74\uB4DC\uAC00
@@ -40,3 +41,6 @@ MonoBehaviour:
     - action: {fileID: 2578117522205261711, guid: 0906af8f685ebc046a1ffd32c94c0cbe, type: 3}
       condition: []
     OnCreate: []
+    cardImageSize: {x: 0, y: 0, z: 0}
+    cardImagePos: {x: 0, y: 0, z: 0}
+    cardImageColor: {r: 0, g: 0, b: 0, a: 0}
