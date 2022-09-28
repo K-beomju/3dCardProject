@@ -272,7 +272,7 @@ public class TotemMove : MonoBehaviour
         {
             playerData.ShowTopPanel("¤Ô°ñµå È¹µæ!");
             yield return new WaitForSeconds(3f);
-            SaveManager.Instance.gameData.Money += 3;
+            SaveManager.Instance.gameData.Money += UnityEngine.Random.Range(3, 6);
 
             playerData.GetGoldIncreaseDirect();
         }
@@ -281,7 +281,15 @@ public class TotemMove : MonoBehaviour
             playerData.ShowTopPanel("¤Ô°ñµå °¨¼Ò!");
 
             yield return new WaitForSeconds(3f);
-            SaveManager.Instance.gameData.Money -= 3;
+            int rand = UnityEngine.Random.Range(3, 6);
+            if(rand <= SaveManager.Instance.gameData.Money)
+            {
+                SaveManager.Instance.gameData.Money -= rand;
+            }
+            else
+            {
+                SaveManager.Instance.gameData.Money = 0;
+            }
 
             playerData.GetGoldDecreaseDirect();
         }
