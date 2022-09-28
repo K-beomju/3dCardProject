@@ -95,7 +95,6 @@ public class TotemMove : MonoBehaviour
 
     [SerializeField]
     private bool isTutorial;
-    private int tutorialValue = 0;
 
     private void Update()
     {
@@ -132,7 +131,7 @@ public class TotemMove : MonoBehaviour
     }
     private IEnumerator TutorialCol()
     {
-        switch (tutorialValue)
+        switch (SaveManager.Instance.gameData.TutorialValue)
         {
             case 0:
                 yield return TutorialManager.Instance.ExplainCol("스테이지에 관한 튜토리얼 입니다.", 0);
@@ -152,13 +151,14 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("튜토리얼은 여기까지 입니다.", 250);
                 TutorialManager.Instance.isTutorial = false;
                 SaveManager.Instance.gameData.IsTutorialDone = true;
+                SaveManager.Instance.gameData.isFirst = false;
                 StageManager.Instance.SceneState = SceneState.STAGE;
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
             default:
                 break;
         }
-        tutorialValue++;
+        SaveManager.Instance.gameData.TutorialValue++;
     }
 
     private IEnumerator MoveMentCo()

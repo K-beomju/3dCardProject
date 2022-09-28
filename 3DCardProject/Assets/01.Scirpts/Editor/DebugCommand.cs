@@ -26,6 +26,7 @@ public class DebugCommand : EditorWindow
         if (SaveManager.Instance != null)
         {
             SaveManager.Instance.gameData = new PlayerGameData();
+            SaveManager.Instance.gameData.Hp = 0;
             SaveManager.Instance.SaveGameData();
         }
     }

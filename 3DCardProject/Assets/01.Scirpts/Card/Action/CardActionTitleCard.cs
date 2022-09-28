@@ -31,6 +31,9 @@ public class CardActionTitleCard : CardAction
                 break;
             case 3:
                 // ³ª°¡±â
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
                 Application.Quit();
                 break;
             default:

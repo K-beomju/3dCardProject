@@ -431,6 +431,7 @@ public class CardManager : Singleton<CardManager>
                     else
                     {
                         hitField = null;
+                    CardInfoUI.Instance.ActiveUI(false);
                     }
 
                 }
@@ -442,6 +443,7 @@ public class CardManager : Singleton<CardManager>
                 else
                 {
                     hitField = null;
+                    CardInfoUI.Instance.ActiveUI(false);
                 }
                 Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
             }
@@ -450,6 +452,7 @@ public class CardManager : Singleton<CardManager>
         else
         {
             hitField = null;
+            CardInfoUI.Instance.ActiveUI(false);
 
         }
 

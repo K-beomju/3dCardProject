@@ -66,7 +66,7 @@ public class SaveManager : Singleton<SaveManager>
     public void NewGame()
     {
         gameData = new PlayerGameData();
-        gameData.isFirst = false;
+        gameData.Hp = 100;
         SaveGameData();
     }
     string GetFilePath(string fileName)
@@ -108,12 +108,12 @@ public class SaveManager : Singleton<SaveManager>
     string Decrypt(byte[] message, byte[] key, byte[] IV)
     {
         AesManaged aes = new AesManaged();
+        //aes.Padding = PaddingMode.ANSIX923;
         ICryptoTransform decrypto = aes.CreateDecryptor(key, IV);
 
         MemoryStream memoryStream = new MemoryStream(message);
         CryptoStream cryptoStream = new CryptoStream(memoryStream, decrypto, CryptoStreamMode.Read);
         StreamReader streamReader = new StreamReader(cryptoStream);
-
         string decryptedMessage = streamReader.ReadToEnd();
 
         streamReader.Close();
@@ -163,17 +163,9 @@ public class SaveManager : Singleton<SaveManager>
             //복호화해서 읽어옴
             /*byte[] decryptedSaveGame = File.ReadAllBytes(GetFilePath(saveFileName));
             string jsonString = Decrypt(decryptedSaveGame, myRijndael.Key, myRijndael.IV);
+*/
+            print(jsonString);
 
-            print(jsonString);*/
-
-            //Json형식으로 채워줌
-            /*JObject jSaveData = JObject.Parse(jsonString);
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                Enemy curEnemy = enemies[i];
-                string enemyJsonString = jSaveData[curEnemy.gameObject.name].ToString();
-                curEnemy.Desirialize(enemyJsonString);
-            }*/
 
             //인터페이스
             JObject jSaveGame = JObject.Parse(jsonString);

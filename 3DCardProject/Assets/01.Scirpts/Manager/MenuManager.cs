@@ -58,6 +58,8 @@ public class MenuManager : Singleton<MenuManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (TutorialManager.Instance  != null && TutorialManager.Instance.isTutorial) return;
+
             isMenuActive = !isMenuActive;
 
             menuPanel.SetActive(isMenuActive);

@@ -20,6 +20,7 @@ public class PlayerGameData : ISerializeble
     public bool isFirst = true;
 
     public CrossType crossType = CrossType.None;
+    public int TutorialValue = 0;
     private bool isTutorialDone = false;
     public bool IsTutorialDone
     {
@@ -31,6 +32,7 @@ public class PlayerGameData : ISerializeble
         {
             if(value)
             {
+                TutorialValue = 0;
                 routeValue = 0;
                 stageValue = 0;
                 disposableItem = 0b0000_0000;
