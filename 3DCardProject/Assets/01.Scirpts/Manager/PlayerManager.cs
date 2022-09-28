@@ -36,6 +36,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void LookEnemyAvatar()
     {
-        playerAvatarCard.avtar.transform.DOLookAt(EnemyManager.Instance.enemyAvatarCard.avtar.transform.position, 0f);
+        playerAvatarCard.LinkedModel.ModelObject.transform.DOLookAt(EnemyManager.Instance.enemyAvatarCard.LinkedModel.ModelObject.transform.position, 0f);
     }
 }
