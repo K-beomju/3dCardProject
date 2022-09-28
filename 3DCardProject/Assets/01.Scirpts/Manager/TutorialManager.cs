@@ -33,6 +33,7 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         yield return new WaitForSeconds(fadeInDelay);
         Explain(msg, posY);
+        SoundManager.Instance.PlayFXSound("SpawnDice",0.1f);
         Fade(true);
         yield return new WaitForSeconds(fadeOutDelay);
         Fade(false);

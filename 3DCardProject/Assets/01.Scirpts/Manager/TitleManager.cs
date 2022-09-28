@@ -55,12 +55,7 @@ public class TitleManager : Singleton<TitleManager>
         dirLight.DOIntensity(0, 2).SetDelay(2);
         mySeq.AppendInterval(2f);
         mySeq.InsertCallback(2.5f, () => action());
-        mySeq.InsertCallback(2.5f, () =>
-        {
-            SoundManager.Instance.bgmVolume = 0.05f;
-            SoundManager.Instance.PlayBGMSound("Stage");
-        });
-
+     
     }
 
 }

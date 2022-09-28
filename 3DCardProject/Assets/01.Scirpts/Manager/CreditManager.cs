@@ -21,7 +21,7 @@ public class CreditManager : MonoBehaviour
         seq1.SetUpdate(true);
         seq1.AppendInterval(2f);
         seq1.Append(cg.DOFade(0, 2f).SetEase(Ease.Linear));
-        SoundManager.Instance.PlayFXSound("Kill This Love", 1);
+        SoundManager.Instance.PlayFXSound("Kill This Love", 0.1f);
         anim.speed = 1;
         float width = 0;
         for (int i = 0; i < Credit.childCount; i++)
