@@ -26,7 +26,7 @@ public class TitleManager : Singleton<TitleManager>
         for (int i = 0; i < cardPosTrm.Length; i++)
         {
             if (cards.Length == i) break;
-            if( (1 == i && SaveManager.Instance.gameData.isFirst) || i == 2)
+            if( 1 == i && SaveManager.Instance.gameData.isFirst)
             {
                 continue;
             }
