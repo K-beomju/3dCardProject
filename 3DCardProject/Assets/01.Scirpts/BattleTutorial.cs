@@ -38,7 +38,8 @@ public class BattleTutorial : Singleton<BattleTutorial>
 
         yield return TutorialManager.Instance.ExplainCol("카드는 드래그하여 발동할수있습니다.", 0,1,3f);
         yield return TutorialManager.Instance.ExplainCol("일반카드는 가운데 필드에 발동할수있으며", 0,1,3f);
-        SoundManager.Instance.PlayFXSound("Dangerous", 0.1f);
+        SoundManager.Instance.PlayFXSound("HilightField", 0.1f);
+        
         Outline hackOutline = FindObjectOfType<Hack>().GetComponent<Outline>();
         hackOutline.OutlineColor = Utils.WhiteColor;
         hackOutline.enabled = true;
@@ -46,7 +47,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         hackOutline.enabled = false;
 
         yield return TutorialManager.Instance.ExplainCol("설치카드는 토템의 좌우에 설치할수있습니다.", 0,1,3f);
-        SoundManager.Instance.PlayFXSound("Dangerous", 0.1f);
+        SoundManager.Instance.PlayFXSound("HilightField", 0.1f);
         var playernode = NewFieldManager.Instance.GetPlayerNodeByData();
         Outline outline = playernode.NextNode.Data.GetComponent<Outline>();
         Outline outline1 = playernode.PrevNode.Data.GetComponent<Outline>();

@@ -264,6 +264,7 @@ public class TotemMove : MonoBehaviour
         {
             playerData.ShowTopPanel("¤ÔÃ¼·Â È¸º¹!");
             yield return new WaitForSeconds(3f);
+            SaveManager.Instance.gameData.Hp += 3;
 
             FadeInOut(1, 1, () => RestAction());
         }
@@ -271,13 +272,16 @@ public class TotemMove : MonoBehaviour
         {
             playerData.ShowTopPanel("¤Ô°ñµå È¹µæ!");
             yield return new WaitForSeconds(3f);
+            SaveManager.Instance.gameData.Money += 3;
 
             playerData.GetGoldIncreaseDirect();
         }
         if (type == StageType.LossGold)
         {
             playerData.ShowTopPanel("¤Ô°ñµå °¨¼Ò!");
+
             yield return new WaitForSeconds(3f);
+            SaveManager.Instance.gameData.Money -= 3;
 
             playerData.GetGoldDecreaseDirect();
         }
@@ -288,6 +292,7 @@ public class TotemMove : MonoBehaviour
             rock.transform.position = transform.position + new Vector3(0, 4, 0);
             rock.SetActive(true);
 
+            SaveManager.Instance.gameData.Hp -= 3;
             Sequence mySeq = DOTween.Sequence();
             mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
             mySeq.InsertCallback(0.3f, () =>
