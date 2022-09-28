@@ -40,6 +40,8 @@ public class ShopManager : Singleton<ShopManager>
     private bool isTutorialDone =false;
     [SerializeField]
     private bool isPurchase = false;
+
+    private bool isShopTutorial = false;
     private void Start()
     {
         deckManager = GetComponent<DeckManager>();
@@ -61,7 +63,7 @@ public class ShopManager : Singleton<ShopManager>
             {
                 Global.LoadScene.LoadScene("Stage", () => { StageManager.Instance.OnLoadStageScene?.Invoke(); StageManager.Instance.SceneState = SceneState.STAGE; });
             }
-            else if(isTutorial && isTutorialDone)
+            else if(isTutorial && isShopTutorial)
             {
                 Global.LoadScene.LoadScene("Tutorials");
             }
@@ -97,6 +99,8 @@ public class ShopManager : Singleton<ShopManager>
         yield return TutorialManager.Instance.ExplainCol("잘하셨습니다.", 0);
         yield return TutorialManager.Instance.ExplainCol("구매한 아이템은 \"전투\"에서 사용하실수 있습니다.", 0);
         yield return TutorialManager.Instance.ExplainCol("\"Exit\"를(을) 눌러 돌아갑시다.", 0);
+
+        isShopTutorial = true;
     }
     public IEnumerator StartProcess()
     {

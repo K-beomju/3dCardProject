@@ -527,6 +527,8 @@ public class CardManager : Singleton<CardManager>
 
     public void AddCard()
     {
+        Debug.Log("ASdASD");
+        SoundManager.Instance.PlayFXSound("DrawCard", .1f);
         Item popItem = deckManager.PopItem();
         if (popItem != null)
         {
@@ -552,6 +554,8 @@ public class CardManager : Singleton<CardManager>
 
     public Card CreateCard(Item item, bool isPlayerCard)
     {
+        SoundManager.Instance.PlayFXSound("DrawCard", .1f);
+
         var card = Global.Pool.GetItem<Card>();
         card.transform.position = cardSpawnPoint.position;
 

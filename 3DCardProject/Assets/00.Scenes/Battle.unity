@@ -443,6 +443,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 832071617}
     m_Modifications:
+    - target: {fileID: 614138816641300899, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_Text
+      value: "\uCDE8\uC18C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 614138816641300899, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: b72a01e4a1ab52a45af3924339a3d18a, type: 3}
     - target: {fileID: 9095151771312819814, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
       propertyPath: m_Name
       value: ReflectBox
@@ -511,6 +519,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9095151771917278049, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_Text
+      value: "\uC0AC\uC6A9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095151771917278049, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: b72a01e4a1ab52a45af3924339a3d18a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6f5ba699ee577499e307b473139f37, type: 3}
 --- !u!224 &314558693 stripped
@@ -1870,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7220287647764342343, guid: 031d10328e0a23f4eb4732ff315befff, type: 3}
       propertyPath: isTutorial
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7220287647764342393, guid: 031d10328e0a23f4eb4732ff315befff, type: 3}
       propertyPath: m_Name

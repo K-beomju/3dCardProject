@@ -118,6 +118,7 @@ public class PlayerDataInfo : MonoBehaviour
             {
                 coinGroup.transform.DOMoveY(camVec.y + 10, .3f);
                 coinGroup.DOFade(0, 0.3f);
+                DataInfoScreen();
             }));
 
         mySeq.Play();
@@ -163,6 +164,8 @@ public class PlayerDataInfo : MonoBehaviour
             {
                 coinGroup.transform.DOMoveY(camVec.y + 10, .3f);
                 coinGroup.DOFade(0, 0.3f);
+                DataInfoScreen();
+
             }));
 
         mySeq.Play();
