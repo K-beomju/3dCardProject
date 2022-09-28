@@ -110,6 +110,8 @@ public class ShopManager : Singleton<ShopManager>
         for (int i = 0; i < cardCount; i++)
         {
             yield return new WaitForSeconds(.5f);
+            SoundManager.Instance.PlayFXSound("DrawCard", .1f);
+
             AddCard();
         }
         yield return new WaitForSeconds(.9f);

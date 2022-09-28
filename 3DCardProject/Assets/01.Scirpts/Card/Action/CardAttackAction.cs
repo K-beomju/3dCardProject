@@ -13,5 +13,6 @@ public class CardAttackAction : CardAction
         }
 
         FindObjectOfType<Hack>().ChangeHack(card);
+        SoundManager.Instance.PlayFXSound("AttackCard", 0.1f);
     }
 }

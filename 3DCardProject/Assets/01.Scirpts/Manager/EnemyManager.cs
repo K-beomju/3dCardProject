@@ -173,6 +173,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void LookPlayerAvatar()
     {
-        enemyAvatarCard.avtar.transform.DOLookAt(PlayerManager.Instance.playerAvatarCard.avtar.transform.position, 0f);
+        enemyAvatarCard.LinkedModel.ModelObject.transform.DOLookAt(PlayerManager.Instance.playerAvatarCard.LinkedModel.ModelObject.transform.position, 0f);
     }
 }
