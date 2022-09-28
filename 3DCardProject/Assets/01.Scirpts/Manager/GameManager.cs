@@ -73,7 +73,8 @@ public class GameManager : Singleton<GameManager>
                 tutorialResultBtn.onClick.AddListener(() =>
                 {
                     SceneManager.LoadScene("Tutorials");
-
+                    SoundManager.Instance.bgmVolume = 0.05f;
+                    SoundManager.Instance.PlayBGMSound("Stage");
                 });
             }
 
