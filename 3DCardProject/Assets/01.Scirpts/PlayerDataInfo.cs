@@ -81,13 +81,21 @@ public class PlayerDataInfo : MonoBehaviour
             for (int i = 0; i < value; i++)
             {
                 yield return new WaitForSeconds(.15f);
-                coin = Global.Pool.GetItem<Coin>();
-                coin.isEffect = true;
-                coin.detaCount = .35f;
+                Sequence coinSeq = DOTween.Sequence();
+                Coin coin = Global.Pool.GetItem<Coin>();
                 coin.transform.position = player.transform.position + new Vector3(0, 2.5f, 0);
                 coin.transform.rotation = Quaternion.Euler(90, 0, 0);
-                coin.transform.DOLocalRotate(new Vector3(90, 90, 0), 1);
-                coin.transform.DOMoveY(0.4f, .4f);
+
+                coinSeq.Append(coin.transform.DOMoveY(0.4f, .4f));
+                coinSeq.Join(coin.transform.DOLocalRotate(new Vector3(90, 90, 0), .4f));
+                coinSeq.AppendCallback(() =>
+                {
+                    Debug.Log("왜 안되냐고");
+                    BoardManager.Instance.GetCoinEffect(coin.transform);
+                    coin.gameObject.SetActive(false);
+
+                });
+                coinSeq.Play();
                 SoundManager.Instance.PlayFXSound("GetGold", 0.2f);
             }
 
@@ -132,8 +140,6 @@ public class PlayerDataInfo : MonoBehaviour
         {
             yield return new WaitForSeconds(0.18f);
             coin = Global.Pool.GetItem<Coin>();
-            coin.isEffect = false;
-            coin.detaCount = 1f;
             coin.transform.position = player.transform.position + new Vector3(0, 1, 0);
             coin.transform.rotation = Quaternion.Euler(90, 0, mainCam.transform.eulerAngles.x + 50);
             coin.transform.DOMoveY(3f, 1.5f).SetEase(Ease.Linear);

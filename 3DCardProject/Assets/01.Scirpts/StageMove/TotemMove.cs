@@ -123,7 +123,11 @@ public class TotemMove : MonoBehaviour
             {
                 if (spaceGroup != null)
                 {
-                    spaceGroup.DOFade(0, 1).OnComplete(() => spaceGroup.gameObject.SetActive(false));
+                    spaceGroup.DOFade(0, 1).OnComplete(() =>
+                    {
+                        DOTween.Kill(spaceGroup);
+                        spaceGroup.gameObject.SetActive(false);
+                    });
                 }
                 anim.SetTrigger("Attack");
                 isLock = true;
@@ -147,16 +151,16 @@ public class TotemMove : MonoBehaviour
         {
             case 0:
                 yield return TutorialManager.Instance.ExplainCol("스테이지에 관한 튜토리얼 입니다.", 0);
-                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
+                yield return TutorialManager.Instance.ExplainCol("\"마우스 좌클릭\"를(을) 누르고 있으세요.", 250);
                 isLock = false;
-                yield return Utils.WaitForInputKey(KeyCode.Space);
-                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
+                yield return Utils.WaitForInputKey(KeyCode.Mouse0);
+                yield return TutorialManager.Instance.ExplainCol("\"마우스 좌클릭\"를(을) 떼봅시다.", 250);
                 break;
             case 1:
-                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 눌러 주사위를 굴러보세요.", 250);
+                yield return TutorialManager.Instance.ExplainCol("\"마우스 좌클릭\"를(을) 누르고 있으세요.", 250);
                 isLock = false;
-                yield return Utils.WaitForInputKey(KeyCode.Space);
-                yield return TutorialManager.Instance.ExplainCol("\"Space\"를(을) 한번 더 눌러 이동합니다.", 250);
+                yield return Utils.WaitForInputKey(KeyCode.Mouse0);
+                yield return TutorialManager.Instance.ExplainCol("\"마우스 좌클릭\"를(을) 떼봅시다.", 250);
                 break;
             case 2:
                 yield return TutorialManager.Instance.ExplainCol("잘 하셨습니다.", 250);
@@ -216,10 +220,11 @@ public class TotemMove : MonoBehaviour
 
 
         anim.SetBool("isMove", false);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f);
+        diceText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
         rotSpeed = 0;
 
-        diceText.gameObject.SetActive(false);
         var type = board.boardList[SaveManager.Instance.gameData.RouteValue].type;
 
         if (type == StageType.Battle) // 만약 도착한 노드의 타입이 배틀이라면
@@ -336,6 +341,12 @@ public class TotemMove : MonoBehaviour
         SaveManager.Instance.gameData.StageValue = SaveManager.Instance.gameData.RouteValue;
         diceText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
+        if (spaceGroup != null)
+        {
+            spaceGroup.alpha = 1;
+            spaceGroup.gameObject.SetActive(true);
+            spaceGroup.DOFade(0.7f, 1).SetLoops(-1, LoopType.Yoyo);
+        }
         isStart = false;
         isLock = false;
     }
@@ -409,7 +420,7 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = UnityEngine.Random.Range(1, 7);
+                steps = 2; // UnityEngine.Random.Range(1, 7);
                 int stepValue = (((board.boardList.Count - 1) * 2) - routePosition) / 2;
                 if (stepValue != 0 && board.isEndCross)
                 {
