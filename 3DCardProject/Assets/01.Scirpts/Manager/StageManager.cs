@@ -25,6 +25,8 @@ public class StageManager : Singleton<StageManager>
     public Action OnLoadShopScene;
     public Action OnLoadStageScene;
 
+    public bool isWin { get; set; } = false;
+    public bool isLose { get; set; } = false;
 
 
     protected override void Awake()

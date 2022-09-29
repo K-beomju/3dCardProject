@@ -87,6 +87,17 @@ public class TotemMove : MonoBehaviour
         {
             StartCoroutine(TutorialCol());
         }
+
+        if (StageManager.Instance.isWin)
+        {
+            playerData.GetGoldIncreaseDirect(10);
+            StageManager.Instance.isWin = false;
+        }
+        else if (StageManager.Instance.isLose)
+        {
+            playerData.GetHpDecreaseDirect(5);
+            StageManager.Instance.isLose = false;
+        }
     }
 
     private float TimeLeft = 1.0f;
@@ -107,7 +118,7 @@ public class TotemMove : MonoBehaviour
                 BoardManager.Instance.ZoomInTotem();
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
-                rotSpeed = 2;
+                rotSpeed = 7;
                 //DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
             }
 
@@ -289,9 +300,10 @@ public class TotemMove : MonoBehaviour
         {
             playerData.ShowTopPanel("¤Ô°ñµå È¹µæ!");
             yield return new WaitForSeconds(3f);
-            SaveManager.Instance.gameData.Money += UnityEngine.Random.Range(3, 6);
+            int val = UnityEngine.Random.Range(3, 6);
+            SaveManager.Instance.gameData.Money += val;
 
-            playerData.GetGoldIncreaseDirect();
+            playerData.GetGoldIncreaseDirect(val);
         }
         if (type == StageType.LossGold)
         {

@@ -36,10 +36,12 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private RectTransform timeDirImage;
 
-
     protected override void Awake()
     {
         base.Awake();
+        OnWinGame = null;
+        OnLoseGame = null;
+
         State = GameState.PREPARE;
         OnWinGame += CallOnWinGame;
         OnLoseGame += CallOnLoseGame;
@@ -48,7 +50,9 @@ public class GameManager : Singleton<GameManager>
     {
         if (StageManager.Instance != null&& StageManager.Instance.SceneState == SceneState.BATTLE)
         {
-            
+            OnWinGame += () => StageManager.Instance.isWin = true;
+            OnLoseGame += () => StageManager.Instance.isLose = true;
+
             State = GameState.RUNNING;
 
             if (resultPanel != null)

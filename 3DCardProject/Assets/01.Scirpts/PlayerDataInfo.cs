@@ -56,7 +56,7 @@ public class PlayerDataInfo : MonoBehaviour
     }
 
     [ContextMenu("GetGoldIncreaseDirect")]
-    public void GetGoldIncreaseDirect()
+    public void GetGoldIncreaseDirect(int value)
     {
         StartCoroutine(GetGoldIncreaseDirectCo(value, true));
     }
