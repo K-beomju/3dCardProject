@@ -75,20 +75,21 @@ public class PlayerDataInfo : MonoBehaviour
     private IEnumerator GetGoldIncreaseDirectCo(int value = 0, bool isGold = true)
     {
         coinImage.sprite = isGold ? goldSprite : hpSprite;
-        
-        if(isGold)
+
+        if (isGold)
         {
-        for (int i = 0; i < value; i++)
-        {
-            yield return new WaitForSeconds(.15f);
-            coin = Global.Pool.GetItem<Coin>();
-            coin.isEffect = true;
-            coin.detaCount = .35f;
-            coin.transform.position = player.transform.position + new Vector3(0, 2.5f, 0);
-            coin.transform.rotation = Quaternion.Euler(90, 0, 0);
-            coin.transform.DOLocalRotate(new Vector3(90, 90, 0), 1);
-            coin.transform.DOMoveY(0.4f, .4f);
-        }
+            for (int i = 0; i < value; i++)
+            {
+                yield return new WaitForSeconds(.15f);
+                coin = Global.Pool.GetItem<Coin>();
+                coin.isEffect = true;
+                coin.detaCount = .35f;
+                coin.transform.position = player.transform.position + new Vector3(0, 2.5f, 0);
+                coin.transform.rotation = Quaternion.Euler(90, 0, 0);
+                coin.transform.DOLocalRotate(new Vector3(90, 90, 0), 1);
+                coin.transform.DOMoveY(0.4f, .4f);
+                SoundManager.Instance.PlayFXSound("GetGold", 0.2f);
+            }
 
         }
 
@@ -179,20 +180,20 @@ public class PlayerDataInfo : MonoBehaviour
         topPanel.gameObject.SetActive(true);
 
         topPanel.alpha = 0;
-        topPanel.transform.localScale = new Vector3(5,2,2);
+        topPanel.transform.localScale = new Vector3(5, 2, 2);
         topTextRtm.anchoredPosition = new Vector2(-10, 0);
         topText.DOFade(0, 0);
         topText.text = text;
 
         Sequence mySeq = DOTween.Sequence();
         mySeq.Append(topPanel.DOFade(1, 0.7f))
-            .Join(topPanel.transform.DOScale(new Vector3(20,2,2) , 0.3f));
+            .Join(topPanel.transform.DOScale(new Vector3(20, 2, 2), 0.3f));
         mySeq.Insert(.5f, topTextRtm.DOAnchorPosX(0, 0.3f).SetEase(topEase))
             .Join(topText.DOFade(1, 0.3f));
         mySeq.Insert(2, topTextRtm.DOAnchorPosX(10, 0.3f))
             .Join(topText.DOFade(0, 0.3f))
-            .Append(topPanel.transform.DOScale(new Vector3(20,0,0), 0.2f));
-       
+            .Append(topPanel.transform.DOScale(new Vector3(20, 0, 0), 0.2f));
+
 
         mySeq.Play();
     }

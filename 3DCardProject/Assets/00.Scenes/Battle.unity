@@ -1598,7 +1598,6 @@ GameObject:
   m_Component:
   - component: {fileID: 799858475}
   - component: {fileID: 799858474}
-  - component: {fileID: 799858473}
   m_Layer: 0
   m_Name: PostProcessing
   m_TagString: Untagged
@@ -1606,23 +1605,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &799858473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799858472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: b59918d6dcea7dd45b86e39b56dec5bd, type: 2}
 --- !u!114 &799858474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2838,9 +2820,9 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.8490566, g: 0.62457156, b: 0.44455323, a: 1}
-  m_Intensity: 230.7
-  m_Range: 26.9
+  m_Color: {r: 0.8207547, g: 0.61734635, b: 0.31359026, a: 1}
+  m_Intensity: 224.02
+  m_Range: 26.5
   m_SpotAngle: 179
   m_InnerSpotAngle: 179
   m_CookieSize: 10

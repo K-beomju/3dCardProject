@@ -25,7 +25,7 @@ MonoBehaviour:
     IsTitleCard: 0
     EffectPrefab: {fileID: 7619009876518450769, guid: 6d8229e80027fc54195fba9200a99df5, type: 3}
     HitEffectPrefab: {fileID: 0}
-    SpawnModelYPos: 0
+    SpawnModelYPos: 1
     Price: 5
     cardType: 6
     description: "\uC774 \uCE74\uB4DC\uC758 \uC704\uCE58\uB85C \uC774\uB3D9\uD560

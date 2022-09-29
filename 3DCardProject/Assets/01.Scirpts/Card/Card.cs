@@ -293,6 +293,15 @@ public class Card : MonoBehaviour
             if(item.IsStructCard || item.IsAvatar)
             {
                 Debug.Log("¸ðµ¨ »ý¼º ½ÃÀÛ : " + item.itemName);
+                switch (item.itemName)
+                {
+                    case "º®":
+                    case "µ£":
+                    SoundManager.Instance.PlayFXSound("WallCard", 0.1f);
+                        break;
+                    default:
+                        break;
+                }
 
                 LinkedModel = Instantiate(modelPrefab, transform.position - new Vector3(0, item.SpawnModelYPos,0), Utils.QI).GetComponent<CardModelBrain>();
                 var model = Resources.Load<GameObject>(item.uid.ToString());

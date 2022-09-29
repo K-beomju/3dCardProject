@@ -10,5 +10,7 @@ public class CardActionChangeDir : CardAction
             BattleTutorial.Instance.isChangeDir = true;
 
         NewFieldManager.Instance.ChangeDir();
+
+        SoundManager.Instance.PlayFXSound("ClockDir", 0.2f);
     }
 }
