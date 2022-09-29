@@ -21,6 +21,7 @@ public class PlayerGameData : ISerializeble
 
     public CrossType crossType = CrossType.None;
     public int TutorialValue = 0;
+    [SerializeField]
     private bool isTutorialDone = false;
     public bool IsTutorialDone
     {
@@ -37,6 +38,7 @@ public class PlayerGameData : ISerializeble
                 stageValue = 0;
                 disposableItem = 0b0000_0000;
                 money = 0;
+                hp = 20;
             }
 
             isTutorialDone = value;
@@ -75,7 +77,7 @@ public class PlayerGameData : ISerializeble
     }
 
     [SerializeField]
-    private int hp;
+    private int hp = 20;
     public int Hp
     {
         get

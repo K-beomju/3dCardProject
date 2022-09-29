@@ -83,7 +83,7 @@ public class ShopManager : Singleton<ShopManager>
         yield return TutorialManager.Instance.ExplainCol("일회성 아이템을 구입할 수 있습니다.", 400);
         yield return TutorialManager.Instance.ExplainCol("가운데 카드를 아래의 블록에 끌어놓아 구입합시다.", 400);
         isPurchaseAble = true;
-        TutorialManager.Instance.Fade(true);
+        yield return TutorialManager.Instance.Fade(true,0);
         foreach (var card in shopCardList)
         {
             card.isPlayerCard = false;

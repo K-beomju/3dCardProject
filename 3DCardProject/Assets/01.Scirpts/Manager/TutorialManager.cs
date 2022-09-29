@@ -20,6 +20,10 @@ public class TutorialManager : Singleton<TutorialManager>
         subsPanel.alpha = 0;
     }
 
+    public IEnumerator Fade(bool inBool, byte nul = 0)
+    {
+        yield return subsPanel.DOFade(inBool ? 1 : 0, .4f);
+    }
     public void Fade(bool inBool)
     {
         subsPanel.DOFade(inBool ? 1 : 0, .4f);
@@ -33,8 +37,8 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         yield return new WaitForSeconds(fadeInDelay);
         Explain(msg, posY);
+        yield return Fade(true,0);
         SoundManager.Instance.PlayFXSound("TutorialExplain", 0.1f);
-        Fade(true);
         yield return new WaitForSeconds(fadeOutDelay);
         Fade(false);
     }

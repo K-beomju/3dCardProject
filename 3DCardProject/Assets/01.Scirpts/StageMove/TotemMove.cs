@@ -99,18 +99,27 @@ public class TotemMove : MonoBehaviour
     private void Update()
     {
         diceObj.transform.Rotate(new Vector3(30, 0, 30) * rotSpeed * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.Space) && !isLock)
+        if (!isLock)
         {
-            if (!isStart)
+            if (Input.GetMouseButtonDown(0))
             {
                 SoundManager.Instance.PlayFXSound("SpawnDice", 0.1f);
-
+                BoardManager.Instance.ZoomInTotem();
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
-                isStart = true;
-                DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
+                rotSpeed = 2;
+                //DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
             }
-            else
+
+            if (Input.GetMouseButton(0))
+            {
+                if (rotSpeed < 20)
+                {
+                    rotSpeed += Time.deltaTime * 3;
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
             {
                 if (spaceGroup != null)
                 {
@@ -120,6 +129,9 @@ public class TotemMove : MonoBehaviour
                 isLock = true;
             }
         }
+
+
+
         if (isMove)
             diceText.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
 

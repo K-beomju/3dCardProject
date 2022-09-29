@@ -47,8 +47,9 @@ MonoBehaviour:
   gameData:
     isFirst: 1
     crossType: 0
+    TutorialValue: 0
     routeValue: 0
     stageValue: 0
-    hp: 100
+    hp: 20
     money: 0
     disposableItem: 0
