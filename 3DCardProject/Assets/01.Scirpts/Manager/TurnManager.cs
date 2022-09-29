@@ -56,10 +56,10 @@ public class TurnManager : Singleton<TurnManager>
                             if(playerCard != null)
                             {
                                 mainCard = playerCard;
-                                UnitNameText.text = "Player";
-                                UnitNameText.color = Utils.PlayerColor;
+                                UnitNameText.text = "";
+                                UnitNameText.color = Utils.WhiteColor;
                                 outline = playerCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
-                                outline.OutlineColor = Utils.PlayerColor;
+                                outline.OutlineColor = Utils.WhiteColor;
                             }
                           
                         }
@@ -68,10 +68,10 @@ public class TurnManager : Singleton<TurnManager>
                             if(enemyCard != null)
                             {
                                 mainCard = enemyCard;
-                                UnitNameText.text = "Enemy";
-                                UnitNameText.color = Utils.EnemyColor;
+                                UnitNameText.text = "";
+                                UnitNameText.color = Utils.WhiteColor;
                                 outline = enemyCard.LinkedModel.ModelObject.GetComponentInChildren<Outline>();
-                                outline.OutlineColor = Utils.EnemyColor;
+                                outline.OutlineColor = Utils.WhiteColor;
                             }
                         }
                     });
@@ -116,7 +116,7 @@ public class TurnManager : Singleton<TurnManager>
     {
         if (mainCard != null)
         {
-            nameTagObj.transform.position = mainCard.LinkedModel.ModelObject.transform.position;
+            nameTagObj.transform.position = mainCard.LinkedModel.ModelObject.transform.position + new Vector3(0.1f,0,0);
         }
     }
     public static void ChangeTurn()
