@@ -56,47 +56,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-    [SerializeField]
-    private UnityEngine.UI.Text dummyText;
-    private int cycleCount = 0;
-    public int CycleCount
-    {
-        get
-        {
-            return cycleCount;
-        }
-        set
-        {
-            cycleCount = value;
-            if(cycleCount > 1)
-            {
-                // Ç¥±â
-                Sequence seq = DOTween.Sequence();
-                dummyText.text = $"{cycleCount - 1} Cycle";
-                CanvasGroup canvasGroup = cycleBox.GetComponent<CanvasGroup>();
-                cycleTMP.transform.DOScale(1.7f, 0f);
-                cycleTMP.transform.DORotate(new Vector3(0,0,20), 0f);
-                seq.Append(cycleBox.transform.DOScale(1.2f,.2f).SetEase(Ease.Linear));
-                seq.Append(cycleBox.transform.DOScale(1f,.2f).SetEase(Ease.Linear));
-                seq.Join(canvasGroup.DOFade(1, .2f));
-                seq.Join(dummyText.DOText($"{cycleCount} Cycle",1).OnUpdate(()=> { cycleTMP.text = dummyText.text; }));
-                seq.Join(cycleTMP.transform.DOScale(1f, .2f).SetEase(Ease.Linear));
-                seq.Join(cycleTMP.transform.DORotate(Vector3.zero, .2f).SetEase(Ease.InSine));
-                seq.Append(cycleBox.transform.DOScale(1.2f,.2f).SetLoops(2,LoopType.Yoyo));
-                seq.Append(canvasGroup.DOFade(0,.2f));
-            }
-        }
-    }
-    [ContextMenu("Test")]
-    public void Test()
-    {
-        CycleCount+= 1;
-    }
-    [SerializeField]
-    private GameObject cycleBox;
-    [SerializeField]
-    private TMP_Text cycleTMP;
-
+   
     [SerializeField] private ItemArraySO enemyDataArraySO;
 
     [field:SerializeField]
@@ -160,7 +120,6 @@ public class CardManager : Singleton<CardManager>
     }
     private IEnumerator SpawnCardCo(Action act = null)
     {
-        CycleCount++;
         for (int i = 0; i < 5; i++)
         {
             AddCardForStart();
@@ -545,10 +504,11 @@ public class CardManager : Singleton<CardManager>
 
         if (myCards.Count < 1)
         {
-            PlayerDeckManager pdm = deckManager as PlayerDeckManager;
-            pdm.SetUpPlayerDeckManager();
+            StartCoroutine(JudgeWinner());
+            //PlayerDeckManager pdm = deckManager as PlayerDeckManager;
+            //pdm.SetUpPlayerDeckManager();
 
-            StartCoroutine(SpawnCardCo());
+            //StartCoroutine(SpawnCardCo());
         }
     }
 
@@ -838,5 +798,27 @@ public class CardManager : Singleton<CardManager>
             }
         }
         return null;
+    }
+
+    public IEnumerator JudgeWinner()
+    {
+        Hack hack = hackField.GetComponent<Hack>();
+        yield return BattleCameraController.ZoomIn(hackField.transform);
+        yield return new WaitForSeconds(3f);
+        if (hack.IsPlayerState())
+        {
+            //Win
+            GameManager.Instance.OnWinGame?.Invoke();
+        }
+        else if(hack.IsEnemyState())
+        {
+            // Lose
+            GameManager.Instance.OnLoseGame?.Invoke();
+        }
+        else
+        {
+            // tie
+            GameManager.Instance.OnTieGame?.Invoke();
+        }
     }
 }

@@ -142,6 +142,7 @@ public class SaveManager : Singleton<SaveManager>
         }
         //파일 저장
         StreamWriter sw = new StreamWriter(GetFilePath(saveFileName));
+        print(jSaveGame.ToString());
          sw.WriteLine(jSaveGame.ToString());
          sw.Close();
         //암호화 저장
@@ -189,7 +190,7 @@ public class SaveManager : Singleton<SaveManager>
 
 
             // 덮어쓰기 할때
-            if(gameData.isFirst) // 처음 시작했거나 리셋 했을경우 
+            if(gameData.IsFirst) // 처음 시작했거나 리셋 했을경우 
             {
 
             }

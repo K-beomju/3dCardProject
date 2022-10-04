@@ -34,7 +34,6 @@ public class BattleTutorial : Singleton<BattleTutorial>
 
         yield return TutorialManager.Instance.ExplainCol("시작과 함께 7장 중 5장을 드로우합니다.", 0,1,3f);
         yield return TutorialManager.Instance.ExplainCol("남은 카드는 플레이어 턴이 될때마다 드로우합니다.", 0,1,3f);
-        yield return TutorialManager.Instance.ExplainCol("소지한 카드가 없을때 다시 5장 드로우 합니다.", 0, 1, 3f);
 
         yield return TutorialManager.Instance.ExplainCol("카드는 드래그하여 발동할수있습니다.", 0,1,3f);
         yield return TutorialManager.Instance.ExplainCol("일반카드는 가운데 필드에 발동할수있으며", 0,1,3f);
@@ -66,7 +65,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         yield return new WaitWhile(() => !isAttak);
 
         yield return TutorialManager.Instance.ExplainCol("공격 카드는 핵의 소유권을 가져올 수 있습니다.", 0,1, 2);
-        yield return TutorialManager.Instance.ExplainCol("상대 토템을 잡거나 3번의 사이클 이후 핵을 소유시 승리입니다.", 0,1, 3);
+        yield return TutorialManager.Instance.ExplainCol("상대 토템 공격 혹은 모든 카드 사용 후 핵을 소유시 승리입니다.", 0,1, 3);
        
         yield return new WaitForSeconds(1f);
         isEnemyTurn = true;

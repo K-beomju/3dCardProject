@@ -88,14 +88,22 @@ public class TotemMove : MonoBehaviour
             StartCoroutine(TutorialCol());
         }
 
-        if (StageManager.Instance.isWin)
+        if(!isTutorial)
         {
-            playerData.GetGoldIncreaseDirect(10);
+            if (StageManager.Instance.isWin)
+            {
+                playerData.GetGoldIncreaseDirect(10);
+                StageManager.Instance.isWin = false;
+            }
+            else if (StageManager.Instance.isLose)
+            {
+                playerData.GetHpDecreaseDirect(5);
+                StageManager.Instance.isLose = false;
+            }
+        }    
+        else
+        {
             StageManager.Instance.isWin = false;
-        }
-        else if (StageManager.Instance.isLose)
-        {
-            playerData.GetHpDecreaseDirect(5);
             StageManager.Instance.isLose = false;
         }
     }
@@ -178,7 +186,7 @@ public class TotemMove : MonoBehaviour
                 yield return TutorialManager.Instance.ExplainCol("∆©≈‰∏ÆæÛ¿∫ ø©±‚±Ó¡ˆ ¿‘¥œ¥Ÿ.", 250);
                 TutorialManager.Instance.isTutorial = false;
                 SaveManager.Instance.gameData.IsTutorialDone = true;
-                SaveManager.Instance.gameData.isFirst = false;
+                SaveManager.Instance.gameData.IsFirst = false;
                 StageManager.Instance.SceneState = SceneState.STAGE;
                 Global.LoadScene.LoadScene("Stage");
                 yield break;
@@ -301,7 +309,6 @@ public class TotemMove : MonoBehaviour
             playerData.ShowTopPanel("§‘∞ÒµÂ »πµÊ!");
             yield return new WaitForSeconds(3f);
             int val = UnityEngine.Random.Range(3, 6);
-            SaveManager.Instance.gameData.Money += val;
 
             playerData.GetGoldIncreaseDirect(val);
         }
@@ -311,16 +318,12 @@ public class TotemMove : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
             int rand = UnityEngine.Random.Range(3, 6);
-            if(rand <= SaveManager.Instance.gameData.Money)
+            if(rand >= SaveManager.Instance.gameData.Money)
             {
-                SaveManager.Instance.gameData.Money -= rand;
+                rand = SaveManager.Instance.gameData.Money;
             }
-            else
-            {
-                SaveManager.Instance.gameData.Money = 0;
-            }
+            playerData.GetGoldDecreaseDirect(rand);
 
-            playerData.GetGoldDecreaseDirect();
         }
         if (type == StageType.LossHp)
         {
