@@ -188,6 +188,11 @@ public class PlayerGameData : ISerializeble
 
         }
     }
+
+    public float masterVolume;
+    public float bgmVolume;
+    public float fxVolume;
+        
     public void Desirialize(string jsonString)
     {
         JsonUtility.FromJsonOverwrite(jsonString, this);

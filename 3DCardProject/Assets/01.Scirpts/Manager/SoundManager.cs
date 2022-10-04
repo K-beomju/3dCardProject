@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -78,9 +79,13 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.mute = isMute;
     }
 
-    public void AdjustMasterVolume(float newVolume)
+    public void AdjustMasterVolume(float newVolume , Text masterText, Text bgmText, Text fxText)
     {
         masterVoulme = newVolume;
+        masterText.text = masterVoulme.ToString("N1");
+        bgmText.text = bgmVolume.ToString("N1");
+        fxText.text = fxVoulme.ToString("N1");
+
         AdjustBGMVolume(bgmVolume);
         AdjustFxVoulme(fxVoulme);
     }

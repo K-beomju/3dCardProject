@@ -10046,29 +10046,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5363099028484149768, guid: 91c933273040f354abc7198dc433c25d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+    - target: {fileID: 208215113, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5363099028484149768, guid: 91c933273040f354abc7198dc433c25d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+    - target: {fileID: 208215113, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5363099028484149768, guid: 91c933273040f354abc7198dc433c25d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+    - target: {fileID: 1848637548, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1848637548, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114733617, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114733617, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621512095692370771, guid: 91c933273040f354abc7198dc433c25d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6971893489257521640, guid: 91c933273040f354abc7198dc433c25d, type: 3}
       propertyPath: m_Name
       value: MenuManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6971893489257521640, guid: 91c933273040f354abc7198dc433c25d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6971893489257521641, guid: 91c933273040f354abc7198dc433c25d, type: 3}
-      propertyPath: isDontDestroyOnLoad
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6971893489257521642, guid: 91c933273040f354abc7198dc433c25d, type: 3}
       propertyPath: m_RootOrder
