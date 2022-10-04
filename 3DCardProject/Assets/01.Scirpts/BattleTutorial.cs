@@ -35,7 +35,6 @@ public class BattleTutorial : Singleton<BattleTutorial>
         yield return TutorialManager.Instance.ExplainCol("시작과 함께 7장 중 5장을 드로우합니다.", 0,1,3f);
         yield return TutorialManager.Instance.ExplainCol("남은 카드는 플레이어 턴이 될때마다 드로우합니다.", 0,1,3f);
 
-        yield return TutorialManager.Instance.ExplainCol("카드는 드래그하여 발동할수있습니다.", 0,1,3f);
         yield return TutorialManager.Instance.ExplainCol("일반카드는 가운데 필드에 발동할수있으며", 0,1,3f);
         SoundManager.Instance.PlayFXSound("HilightField", 0.1f);
         
@@ -45,7 +44,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         yield return new WaitForSeconds(2f);
         hackOutline.enabled = false;
 
-        yield return TutorialManager.Instance.ExplainCol("설치카드는 토템의 좌우에 설치할수있습니다.", 0,1,3f);
+        yield return TutorialManager.Instance.ExplainCol("설치카드는 \"토템\"의 좌우에 설치할수있습니다.", 0,1,3f);
         SoundManager.Instance.PlayFXSound("HilightField", 0.1f);
         var playernode = NewFieldManager.Instance.GetPlayerNodeByData();
         Outline outline = playernode.NextNode.Data.GetComponent<Outline>();
@@ -56,7 +55,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         outline.enabled = false;
         outline1.enabled = false;
 
-        yield return TutorialManager.Instance.ExplainCol("공격 카드를 발동해봅시다.", 0,1,3f);
+        yield return TutorialManager.Instance.ExplainCol("공격 카드를 드래그하여 발동해봅시다.", 0,1,3f);
         yield return new WaitForSeconds(1f);
         hackOutline.OutlineColor = Utils.WhiteColor;
         hackOutline.enabled = true;
@@ -64,13 +63,13 @@ public class BattleTutorial : Singleton<BattleTutorial>
 
         yield return new WaitWhile(() => !isAttak);
 
-        yield return TutorialManager.Instance.ExplainCol("공격 카드는 핵의 소유권을 가져올 수 있습니다.", 0,1, 2);
-        yield return TutorialManager.Instance.ExplainCol("상대 토템 공격 혹은 모든 카드 사용 후 핵을 소유시 승리입니다.", 0,1, 3);
+        yield return TutorialManager.Instance.ExplainCol("공격 카드는 \"나무\"의 소유권을 가져올 수 있습니다.", 0,1, 2);
+        yield return TutorialManager.Instance.ExplainCol("모든 카드 사용 후 \"나무\"을 소유시 승리입니다.", 0,1, 3);
        
         yield return new WaitForSeconds(1f);
         isEnemyTurn = true;
         yield return new WaitForSeconds(1f);
-        yield return TutorialManager.Instance.ExplainCol("카드를 발동하면 토템이 한 칸씩 이동합니다.", 0, 1, 2);
+        yield return TutorialManager.Instance.ExplainCol("카드를 발동하면 \"토템\"이 한 칸씩 이동합니다.", 0, 1, 2);
         yield return new WaitForSeconds(2f);
         isTurnChange = true;
         yield return new WaitWhile(() => !isChangeCard);
@@ -107,7 +106,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         yield return new WaitWhile(() => !isTrap);
         yield return new WaitForSeconds(1f);
 
-        yield return TutorialManager.Instance.ExplainCol("토템이 덫 카드를 밟는다면 손패의 카드중 하나를 버립니다.", 0, 1, 2);
+        yield return TutorialManager.Instance.ExplainCol("\"토템\"이 덫 카드를 밟는다면 손패의 카드중 하나를 버립니다.", 0, 1, 2);
         isTurnChange = false;
 
         yield return new WaitWhile(() => !isNullity);
@@ -121,8 +120,8 @@ public class BattleTutorial : Singleton<BattleTutorial>
         isTurnChange = true;
         yield return new WaitForSeconds(3f);
 
-        yield return TutorialManager.Instance.ExplainCol("적을 잡기 위해선 뜀틀 카드를 써야 합니다", 0, 1, 2);
         yield return TutorialManager.Instance.ExplainCol("뜀틀 카드는 한 칸 더 이동할 수 있습니다", 0, 1, 2);
+        yield return TutorialManager.Instance.ExplainCol("뜀틀 카드를 사용하여 적을 잡아 봅시다.", 0, 1, 2);
 
         NewFieldManager.Instance.GetPlayerNodeByData().NextNode.Data.isEnterRange = false;
         outline = NewFieldManager.Instance.GetPlayerNodeByData().PrevNode.Data.GetComponent<Outline>();
