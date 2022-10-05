@@ -32,6 +32,14 @@ public class Hack : MonoBehaviour
         noneMat.color = rend.material.GetColor("Color_AD284DAE");
         hackTrm.DOMoveY(hackTrm.position.y - .5f, 2f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
     }
+    public bool IsPlayerState()
+    {
+        return state == HackState.Player;
+    }
+    public bool IsEnemyState()
+    {
+        return state == HackState.Enemy;
+    }
     public void ChangeHack(Card card)
     {
         hackTrm.DOScale(.078f, .15f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.Linear);

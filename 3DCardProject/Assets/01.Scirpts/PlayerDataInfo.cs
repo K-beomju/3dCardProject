@@ -67,7 +67,7 @@ public class PlayerDataInfo : MonoBehaviour
     }
 
     [ContextMenu("GetGoldDecreaseDirect")]
-    public void GetGoldDecreaseDirect()
+    public void GetGoldDecreaseDirect(int value)
     {
         StartCoroutine(GetGoldDecreaseDirectCo(value));
     }
@@ -91,6 +91,7 @@ public class PlayerDataInfo : MonoBehaviour
                 coinSeq.AppendCallback(() =>
                 {
                     Debug.Log("왜 안되냐고");
+                    SaveManager.Instance.gameData.Money += 1;
                     BoardManager.Instance.GetCoinEffect(coin.transform);
                     coin.gameObject.SetActive(false);
 
@@ -99,6 +100,10 @@ public class PlayerDataInfo : MonoBehaviour
                 SoundManager.Instance.PlayFXSound("GetGold", 0.2f);
             }
 
+        }
+        else
+        {
+            SaveManager.Instance.gameData.Hp += value;
         }
 
         yield return new WaitForSeconds(1f);
@@ -139,6 +144,7 @@ public class PlayerDataInfo : MonoBehaviour
         for (int i = 0; i < value; i++)
         {
             yield return new WaitForSeconds(0.18f);
+            SaveManager.Instance.gameData.Money -= 1;
             coin = Global.Pool.GetItem<Coin>();
             coin.transform.position = player.transform.position + new Vector3(0, 1, 0);
             coin.transform.rotation = Quaternion.Euler(90, 0, mainCam.transform.eulerAngles.x + 50);

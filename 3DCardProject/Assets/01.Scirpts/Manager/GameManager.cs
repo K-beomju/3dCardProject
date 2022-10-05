@@ -19,6 +19,7 @@ public class GameManager : Singleton<GameManager>
 {
     public Action OnWinGame;
     public Action OnLoseGame;
+    public Action OnTieGame;
 
     [SerializeField]
     private Button[] exitBtn;
@@ -45,6 +46,7 @@ public class GameManager : Singleton<GameManager>
         State = GameState.PREPARE;
         OnWinGame += CallOnWinGame;
         OnLoseGame += CallOnLoseGame;
+        OnTieGame += CallOnTieGame;
     }
     private void Start()
     {
@@ -131,6 +133,29 @@ public class GameManager : Singleton<GameManager>
         //SaveManager.Instance.gameData.Hp--;
     }
 
+    public void CallOnTieGame ()
+    {
+        StartCoroutine(CallOnTieGameCo());
+    }
+
+    public IEnumerator CallOnTieGameCo()
+    {
+        yield return new WaitForSeconds(1f);
+        EnemyManager.Instance.DeadParticle();
+        EnemyManager.Instance.EnemyDie();
+        yield return new WaitForSeconds(3f);
+        resultText.text = "¹«½ÂºÎ";
+        TurnManager.Instance.CanChangeTurn = false;
+        if (TutorialManager.Instance.isTutorial)
+        {
+            tutorialPanel.SetActive(true);
+            //TutorialManager.Instance.isTutorial = false;
+        }
+        else
+            resultPanel.SetActive(true);
+        ReflectBox.Instance.ReflectBoxActive(false);
+        turnPanel.SetActive(false);
+    }
 
     public void ChangeDirection()
     {

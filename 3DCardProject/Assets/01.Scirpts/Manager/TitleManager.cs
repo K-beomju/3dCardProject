@@ -26,7 +26,7 @@ public class TitleManager : Singleton<TitleManager>
         for (int i = 0; i < cardPosTrm.Length; i++)
         {
             if (cards.Length == i) break;
-            if( 1 == i && SaveManager.Instance.gameData.isFirst)
+            if( 1 == i && SaveManager.Instance.gameData.IsFirst)
             {
                 continue;
             }
@@ -44,7 +44,7 @@ public class TitleManager : Singleton<TitleManager>
     [ContextMenu("ResetIsFirstData")]
     public void ResetIsFirstData()
     {
-        SaveManager.Instance.gameData.isFirst = true;
+        SaveManager.Instance.gameData.IsFirst = true;
         SaveManager.Instance.gameData.IsTutorialDone = false;
     }
 

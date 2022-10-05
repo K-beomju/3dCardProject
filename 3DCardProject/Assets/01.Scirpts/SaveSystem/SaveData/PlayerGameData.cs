@@ -17,7 +17,7 @@ public class PlayerGameData : ISerializeble
         
     }
 
-    public bool isFirst = true;
+    public bool IsFirst = true;
 
     public CrossType crossType = CrossType.None;
     public int TutorialValue = 0;
