@@ -85,7 +85,6 @@ public class SoundManager : Singleton<SoundManager>
         masterText.text = masterVoulme.ToString("N1");
         bgmText.text = bgmVolume.ToString("N1");
         fxText.text = fxVoulme.ToString("N1");
-
         AdjustBGMVolume(bgmVolume);
         AdjustFxVoulme(fxVoulme);
     }

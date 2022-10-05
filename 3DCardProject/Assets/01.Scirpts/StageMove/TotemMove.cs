@@ -49,6 +49,8 @@ public class TotemMove : MonoBehaviour
     public Text diceText;
     public float rotSpeed;
     public Ease ease;
+    public Slider diceSlider;
+    private float value;
     #endregion
 
 
@@ -61,6 +63,8 @@ public class TotemMove : MonoBehaviour
 
     private void Start()
     {
+        diceSlider.maxValue = 5;
+        diceSlider.minValue = 2;
 
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
@@ -74,7 +78,6 @@ public class TotemMove : MonoBehaviour
         diceObj.transform.position = diceTrm.position;
         battleFieldModel.SetActive(false);
         itemMark.SetActive(false);
-        rotSpeed = 0;
         if (spaceGroup != null)
         {
             spaceGroup.gameObject.SetActive(true);
@@ -109,17 +112,21 @@ public class TotemMove : MonoBehaviour
 
     private void Update()
     {
-        diceObj.transform.Rotate(new Vector3(30, 0, 30) * rotSpeed * Time.deltaTime);
+        diceObj.transform.Rotate(new Vector3(30 * diceSlider.value, 0, 30 *  diceSlider.value) * Time.deltaTime * 5);
         if (!isLock)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                diceSlider.gameObject.SetActive(true);
+                diceSlider.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(-4f, -1f, 0));
+
                 SoundManager.Instance.PlayFXSound("SpawnDice", 0.1f);
                 BoardManager.Instance.ZoomInTotem();
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
-                rotSpeed = 7;
                 //DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
+                if(diceSlider != null)
+                diceSlider.DOValue(5, 1).SetLoops(-2, LoopType.Yoyo).SetEase(Ease.Linear);
             }
 
             if (Input.GetMouseButton(0))
@@ -132,6 +139,11 @@ public class TotemMove : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
+                if (diceSlider != null)
+                {
+                    DOTween.Kill(diceSlider);
+                    value = diceSlider.value;
+                }
                 if (spaceGroup != null)
                 {
                     spaceGroup.DOFade(0, 1).OnComplete(() =>
@@ -455,6 +467,7 @@ public class TotemMove : MonoBehaviour
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
             diceText.text = steps.ToString();
             routeStep = steps;
+            diceSlider.gameObject.SetActive(false);
 
         }
 
