@@ -35,7 +35,7 @@ public class PlayerDataInfo : MonoBehaviour
 
     private void Awake()
     {
-        Global.Pool.CreatePool<Coin>(coin.gameObject, player.transform);
+        Global.Pool.CreatePool<Coin>(coin.gameObject, player.transform, 20);
         topTextRtm = topText.GetComponent<RectTransform>();
         topPanel.gameObject.SetActive(false);
         SaveManager.Instance.gameData.OnMoneyChange += DataInfoScreen;
@@ -90,7 +90,6 @@ public class PlayerDataInfo : MonoBehaviour
                 coinSeq.Join(coin.transform.DOLocalRotate(new Vector3(90, 90, 0), .4f));
                 coinSeq.AppendCallback(() =>
                 {
-                    Debug.Log("왜 안되냐고");
                     SaveManager.Instance.gameData.Money += 1;
                     BoardManager.Instance.GetCoinEffect(coin.transform);
                     coin.gameObject.SetActive(false);

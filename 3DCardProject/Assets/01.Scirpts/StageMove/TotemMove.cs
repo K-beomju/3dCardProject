@@ -7,6 +7,11 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
+[System.Serializable]
+public struct DiceStruct
+{
+    public List<int> diceValueList;
+}
 
 
 public class TotemMove : MonoBehaviour
@@ -51,9 +56,11 @@ public class TotemMove : MonoBehaviour
     public Ease ease;
     public Slider diceSlider;
     private float value;
+
+    public DiceStruct[] diceStructs;
     #endregion
 
-
+    private bool isDown = false;
 
 
     private void Awake()
@@ -94,7 +101,7 @@ public class TotemMove : MonoBehaviour
             StartCoroutine(TutorialCol());
         }
 
-        if(!isTutorial)
+        if (!isTutorial)
         {
             if (StageManager.Instance.isWin)
             {
@@ -106,7 +113,7 @@ public class TotemMove : MonoBehaviour
                 playerData.GetHpDecreaseDirect(5);
                 StageManager.Instance.isLose = false;
             }
-        }    
+        }
         else
         {
             StageManager.Instance.isWin = false;
@@ -123,8 +130,8 @@ public class TotemMove : MonoBehaviour
 
     private void Update()
     {
-        if(diceSlider != null)
-        diceObj.transform.Rotate(new Vector3(30 * diceSlider.value, 0, 30 *  diceSlider.value) * Time.deltaTime * 5);
+        if (diceSlider != null)
+            diceObj.transform.Rotate(new Vector3(30 * diceSlider.value, 0, 30 * diceSlider.value) * Time.deltaTime * 5);
         else
             diceObj.transform.Rotate(new Vector3(30, 0, 30) * rotSpeed * Time.deltaTime);
 
@@ -134,10 +141,11 @@ public class TotemMove : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                isDown = true;
                 if (diceSlider != null)
                 {
                     diceSlider.gameObject.SetActive(true);
-                diceSlider.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(-4f, -1f, 0));
+                    diceSlider.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(-4f, -1f, 0));
 
                 }
 
@@ -146,8 +154,8 @@ public class TotemMove : MonoBehaviour
                 diceObj.SetActive(true);
                 diceObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), .5f, 2);
                 //DOTween.To(() => rotSpeed, x => rotSpeed = x, 20, 1);
-                if(diceSlider != null)
-                diceSlider.DOValue(5, 1).SetLoops(-2, LoopType.Yoyo).SetEase(Ease.Linear);
+                if (diceSlider != null)
+                    diceSlider.DOValue(5, .5f).SetLoops(-2, LoopType.Yoyo).SetEase(Ease.Linear);
             }
 
             if (Input.GetMouseButton(0))
@@ -158,7 +166,7 @@ public class TotemMove : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && isDown)
             {
                 if (diceSlider != null)
                 {
@@ -175,6 +183,7 @@ public class TotemMove : MonoBehaviour
                 }
                 anim.SetTrigger("Attack");
                 isLock = true;
+                isDown = false;
             }
         }
 
@@ -340,10 +349,10 @@ public class TotemMove : MonoBehaviour
         if (type == StageType.LossGold)
         {
             playerData.ShowTopPanel("¤Ô°ñµå °¨¼Ò!");
-
+            
             yield return new WaitForSeconds(3f);
             int rand = UnityEngine.Random.Range(3, 6);
-            if(rand >= SaveManager.Instance.gameData.Money)
+            if (rand >= SaveManager.Instance.gameData.Money)
             {
                 rand = SaveManager.Instance.gameData.Money;
             }
@@ -436,7 +445,7 @@ public class TotemMove : MonoBehaviour
         Global.LoadScene.LoadScene("Battle", () => { StageManager.Instance.OnLoadBattleScene?.Invoke(); StageManager.Instance.SceneState = SceneState.BATTLE; });
 
         SoundManager.Instance.bgmVolume = 0.1f;
-        SoundManager.Instance.PlayBGMSound("Battle",3);
+        SoundManager.Instance.PlayBGMSound("Battle", 3);
     }
 
     private void ShopScene()
@@ -460,7 +469,27 @@ public class TotemMove : MonoBehaviour
             }
             else
             {
-                steps = 2; // UnityEngine.Random.Range(1, 7);
+                List<int> diceValue = default;
+                if(diceSlider.value <= 3f)
+                {
+                    diceValue = diceStructs[0].diceValueList;
+                }
+                else if(diceSlider.value <= 3.5)
+                {
+                    diceValue = diceStructs[1].diceValueList;
+                }
+                else
+                {
+                    diceValue = diceStructs[2].diceValueList;
+                }
+
+
+                int dice = UnityEngine.Random.Range(0, diceValue.Count);
+                steps = diceValue[dice];
+
+
+
+
                 int stepValue = (((board.boardList.Count - 1) * 2) - routePosition) / 2;
                 if (stepValue != 0 && board.isEndCross)
                 {
@@ -484,8 +513,11 @@ public class TotemMove : MonoBehaviour
             diceText.text = steps.ToString();
             routeStep = steps;
 
-            if(diceSlider != null)
-            diceSlider.gameObject.SetActive(false);
+            if (diceSlider != null)
+            {
+                diceSlider.gameObject.SetActive(false);
+                diceSlider.value = diceSlider.minValue;
+            }
 
         }
 
@@ -496,7 +528,6 @@ public class TotemMove : MonoBehaviour
         healParticle.gameObject.SetActive(true);
         healParticle.transform.position = transform.position + new Vector3(0, 0.5f, 0);
         healParticle.Play();
-        ++SaveManager.Instance.gameData.Hp;
         playerData.DataInfoScreen();
         if (spaceGroup != null)
         {
