@@ -803,7 +803,7 @@ public class CardManager : Singleton<CardManager>
     public IEnumerator JudgeWinner()
     {
         Hack hack = hackField.GetComponent<Hack>();
-        yield return BattleCameraController.ZoomIn(hackField.transform);
+        yield return BattleCameraController.ZoomIn(hack.HackColorObject.transform);
         yield return new WaitForSeconds(3f);
         if (hack.IsPlayerState())
         {

@@ -343,6 +343,7 @@ MonoBehaviour:
   - {fileID: 3277021393663335135}
   playerCard: {fileID: 0}
   enemyCard: {fileID: 0}
+  CanCheckRange: 0
   isFrontJumping: 0
 --- !u!1 &7606532187003924630
 GameObject:
@@ -896,7 +897,7 @@ MonoBehaviour:
   noneMat: {fileID: 2100000, guid: adf2d49f9f5fab84c8479ce40e8986bf, type: 2}
   playerMat: {fileID: 2100000, guid: 828b56f10941ac142a1c2dbd51dab2f0, type: 2}
   enemyMat: {fileID: 2100000, guid: ca8fff76fdbc0814187fb6c7a2538f45, type: 2}
-  hackColorObject: {fileID: 3337192753495869684}
+  HackColorObject: {fileID: 3337192753495869684}
   hackLight: {fileID: 1722146347962286307}
   hackTrm: {fileID: 4778437130905985820}
   playerPt: {fileID: 0}

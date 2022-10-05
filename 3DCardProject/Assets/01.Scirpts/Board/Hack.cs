@@ -17,7 +17,7 @@ public class Hack : MonoBehaviour
     [SerializeField] private Material playerMat;
     [SerializeField] private Material enemyMat;
 
-    [SerializeField] private GameObject hackColorObject;
+    public GameObject HackColorObject;
     private Renderer rend;
     [SerializeField] private Light hackLight;
     [SerializeField] private Transform hackTrm;
@@ -27,7 +27,7 @@ public class Hack : MonoBehaviour
 
     private void Start()
     {
-        rend = hackColorObject.GetComponent<Renderer>();
+        rend = HackColorObject.GetComponent<Renderer>();
 
         noneMat.color = rend.material.GetColor("Color_AD284DAE");
         hackTrm.DOMoveY(hackTrm.position.y - .5f, 2f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);

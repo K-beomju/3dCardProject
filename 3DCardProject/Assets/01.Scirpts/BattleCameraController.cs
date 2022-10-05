@@ -43,7 +43,7 @@ public class BattleCameraController : MonoBehaviour
         Debug.Log(EnemyManager.Instance);
         Instance.enemyNameText.text = CardManager.Instance.FindEnemyItem(EnemyManager.Instance.CurEnemyUid).itemName;
         Instance.enemyNameText.DOFade(0, 0);
-        yield return ZoomIn(NewFieldManager.Instance.enemyCard.LinkedModel.transform);
+        yield return ZoomIn(NewFieldManager.Instance.enemyCard.LinkedModel.ModelObject.transform);
         yield break;
     }
     public static IEnumerator PanelIn()
@@ -122,7 +122,7 @@ public class BattleCameraController : MonoBehaviour
 
     public static IEnumerator ZoomInPlayer()
     {
-        yield return ZoomIn(NewFieldManager.Instance.playerCard.LinkedModel.transform);
+        yield return ZoomIn(NewFieldManager.Instance.playerCard.LinkedModel.ModelObject.transform);
         yield break;
     }
     public static IEnumerator ZoomIn(Transform focusedTrm)
