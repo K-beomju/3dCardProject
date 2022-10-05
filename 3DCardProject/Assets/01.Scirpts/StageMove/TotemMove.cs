@@ -63,8 +63,11 @@ public class TotemMove : MonoBehaviour
 
     private void Start()
     {
-        diceSlider.maxValue = 5;
-        diceSlider.minValue = 2;
+        if (diceSlider != null)
+        {
+            diceSlider.maxValue = 5;
+            diceSlider.minValue = 2;
+        }
 
         isTutorial = TutorialManager.Instance != null && TutorialManager.Instance.isTutorial;
         isLock = isTutorial;
@@ -120,13 +123,23 @@ public class TotemMove : MonoBehaviour
 
     private void Update()
     {
+        if(diceSlider != null)
         diceObj.transform.Rotate(new Vector3(30 * diceSlider.value, 0, 30 *  diceSlider.value) * Time.deltaTime * 5);
+        else
+            diceObj.transform.Rotate(new Vector3(30, 0, 30) * rotSpeed * Time.deltaTime);
+
+
+
         if (!isLock)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                diceSlider.gameObject.SetActive(true);
+                if (diceSlider != null)
+                {
+                    diceSlider.gameObject.SetActive(true);
                 diceSlider.transform.position = cam.WorldToScreenPoint(transform.position + new Vector3(-4f, -1f, 0));
+
+                }
 
                 SoundManager.Instance.PlayFXSound("SpawnDice", 0.1f);
                 BoardManager.Instance.ZoomInTotem();
@@ -470,6 +483,8 @@ public class TotemMove : MonoBehaviour
             diceText.transform.position = cam.WorldToScreenPoint(diceObj.transform.position);
             diceText.text = steps.ToString();
             routeStep = steps;
+
+            if(diceSlider != null)
             diceSlider.gameObject.SetActive(false);
 
         }
