@@ -583,37 +583,104 @@ public class EnemyAI : Singleton<EnemyAI>
             NewFieldManager.Instance.Spawn(setField, card);
         }
     }
-    private Dictionary<long, Action> reflectAction = new Dictionary<long, Action>()
+    private Dictionary<long, Action<Action>> reflectAction = new Dictionary<long, Action<Action>>()
     {
-        {  0b10001010011000, () => {
-
+        {  0b10001010011000, (a) => {
+             if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b10000010011000, () => {
-
+        {  0b10000010011000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b1000000100100110000011, () => {
-
+        {  0b1000000100100110000011, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b10010011000, () => {
-
+        {  0b10010011000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b10011001, () => {
-
+        {  0b10011001, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b1010011000, () => {
-
+        {  0b1010011000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b100001010011000, () => {
-
+        {  0b100001010011000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b10000000000100010010000, () => {
-
+        {  0b10000000000100010010000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
-        {  0b10011000, () => {
-
+        {  0b10011000, (a) => {
+              if(Instance.IsWaitingCard(101))
+            {
+                Instance.Reflect();
+            }
+             else
+            {
+                a?.Invoke();
+            }
         } },
 
     };
+    public bool IsWaitingCard(uint uid)
+    {
+        return Instance.WaitingCard != null && Instance.WaitingCard.item.uid == uid;
+    }
     public void CallOnReflect(Action act)
     {
         StartCoroutine(ReflectJudge(act));
@@ -632,24 +699,9 @@ public class EnemyAI : Singleton<EnemyAI>
             WaitingCard.transform.DOScale(WaitingCard.transform.localScale * 2f, .2f);
             WaitingCard.transform.DOMove(pos, .4f);
             WaitingCard.transform.DORotate(new Vector3(40, 0, 0), .3f);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
 
-            EnemyManager.Instance.PopItem(101);
-            reflectAction[state].Invoke();
-            EnemyManager.Instance.RemoveItem(EnemyManager.Instance.PopItem(101));
-            if (WaitingCard != null)
-            {
-                CardManager.Instance.CardDie(WaitingCard);
-            }
-            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField, () =>
-            {
-                TurnManager.ChangeTurn();
-                if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
-                {
-                    if (BattleTutorial.Instance != null)
-                        BattleTutorial.Instance.isDoneNullity = true;
-                }
-            });
+            reflectAction[state].Invoke(act);
         }
         else
         {
@@ -657,6 +709,24 @@ public class EnemyAI : Singleton<EnemyAI>
         }
 
 
+    }
+    public void Reflect()
+    {
+        EnemyManager.Instance.PopItem(101);
+        EnemyManager.Instance.RemoveItem(EnemyManager.Instance.PopItem(101));
+        if (WaitingCard != null)
+        {
+            CardManager.Instance.CardDie(WaitingCard);
+        }
+        NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField, () =>
+        {
+            TurnManager.ChangeTurn();
+            if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+            {
+                if (BattleTutorial.Instance != null)
+                    BattleTutorial.Instance.isDoneNullity = true;
+            }
+        });
     }
 
     [ContextMenu("Turn2Phase2")]
