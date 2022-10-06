@@ -156,7 +156,22 @@ public class EnemyAI : Singleton<EnemyAI>
 
 
 
+                                                         {
+            0b101000100100000000000111001000 , () => {
+                CardManager.Instance.MountCardSupport(102);
+        } },
 
+                                                                                                         {
+            0b10000000000000000000100100110111 , () => {
+                CardManager.Instance.MountCardSupport(102);
+        } },
+
+
+
+                                                                                                         {
+            0b101000000000001001000111011010 , () => {
+                CardManager.Instance.MountCardSupport(106 , MountState.Prev);
+        } },
 
 
 
