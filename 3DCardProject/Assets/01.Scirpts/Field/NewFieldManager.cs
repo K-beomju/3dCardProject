@@ -173,7 +173,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
             {
 
              
-                if( EnemyAI.Instance != null && EnemyAI.Instance.isReflectOnHand && (TutorialManager.Instance == null || (TutorialManager.Instance != null && !TutorialManager.Instance.isTutorial)))
+                if( EnemyAI.Instance != null && EnemyAI.Instance.IsReflectOnHand && (TutorialManager.Instance == null || (TutorialManager.Instance != null && !TutorialManager.Instance.isTutorial)))
                 {
                     EnemyAI.Instance.WaitingCard = card;
                     EnemyAI.Instance.CallOnReflect(() => field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); }));

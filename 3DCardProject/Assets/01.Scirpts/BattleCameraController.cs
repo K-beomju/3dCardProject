@@ -132,7 +132,7 @@ public class BattleCameraController : MonoBehaviour
             card.DetactiveCardView(false);
         }
         Vector3 camPos = focusedTrm.position;
-        camPos += new Vector3(0f, 5f, -7f);
+        camPos += new Vector3(0f, 3f, -7f);
         Sequence seq = DOTween.Sequence();
         seq.Append(Instance.cam.transform.DOMove(camPos, 1.5f));
         seq.Join(Instance.cam.transform.DORotate((focusedTrm.position - camPos).normalized, 1.5f));

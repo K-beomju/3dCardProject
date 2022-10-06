@@ -120,11 +120,13 @@ public class CardManager : Singleton<CardManager>
     }
     private IEnumerator SpawnCardCo(Action act = null)
     {
+        yield return new WaitForSeconds(1.5f);
         for (int i = 0; i < 5; i++)
         {
             AddCardForStart();
             yield return new WaitForSeconds(0.2f);
         }
+        EnemyManager.Instance.FirstAddCard();
         act?.Invoke();
     }
 
@@ -733,10 +735,12 @@ public class CardManager : Singleton<CardManager>
         if (num == 0)
         {
             cardItem = EnemyManager.Instance.GetRandItem(canCatch);
+            EnemyManager.Instance.RemoveItem(cardItem);
         }
         else
         {
             cardItem = EnemyManager.Instance.PopItem(num);
+            EnemyManager.Instance.RemoveItem(num);
         }
 
         if (cardItem == null)

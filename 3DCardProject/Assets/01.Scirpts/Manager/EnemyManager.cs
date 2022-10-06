@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -13,10 +14,12 @@ public class EnemyManager : Singleton<EnemyManager>
     public DeckManager dm { get; private set; }
     public uint CurEnemyUid;
     public EnemyType curEnemyType;
+    public List<Item> enemyItems = new List<Item>();
 
     private void Start()
     {
         dm = GetComponent<DeckManager>();
+        RemoveAllCard();
     }
 
     public void EnemyAction()
@@ -72,7 +75,7 @@ public class EnemyManager : Singleton<EnemyManager>
     }
     public bool IsHaveItem(uint num)
     {
-        return dm.FindItem(num) != null;
+        return enemyItems.Find(i=>i.uid == num) != null;
     }
     public Item PopItem(uint num = 0)
     {
@@ -109,7 +112,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         bool canPrevField = node.PrevNode.Data.avatarCard == null && ((card.item.IsUpperCard && prevField.upperCard == null) || (!card.item.IsUpperCard && prevField.curCard == null));
         bool canNextField = node.NextNode.Data.avatarCard == null && ((card.item.IsUpperCard && nextField.upperCard == null) || (!card.item.IsUpperCard && nextField.curCard == null));
-        int rand = Random.Range(0, 1);
+        int rand = UnityEngine.Random.Range(0, 1);
 
         if (rand == 0)
         {
@@ -143,6 +146,32 @@ public class EnemyManager : Singleton<EnemyManager>
         }
         return setField;
     }
+    public void FirstAddCard()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            AddCard();
+        }
+
+        if (EnemyAI.Instance != null)
+        {
+            bool test = EnemyAI.Instance.IsReflectOnHand;
+        }
+    }
+    public void AddCard()
+    {
+        Item popItem = dm.PopItem();
+        if (popItem == null)
+        {
+            (dm as EnemyDeckManager).SetUpEnemyDeckManager();
+            popItem = dm.PopItem();
+        }
+        enemyItems.Add(popItem);
+    }
+    public void RemoveAllCard()
+    {
+        enemyItems.Clear();
+    }
     public Item GetRandItem(bool canCatch)
     {
         Item cardItem = null;
@@ -174,5 +203,18 @@ public class EnemyManager : Singleton<EnemyManager>
     public void LookPlayerAvatar()
     {
         enemyAvatarCard.LinkedModel.ModelObject.transform.DOLookAt(PlayerManager.Instance.playerAvatarCard.LinkedModel.ModelObject.transform.position, 0f);
+    }
+
+    public void RemoveItem(Item cardItem)
+    {
+        if (enemyItems.Contains(cardItem))
+            enemyItems.Remove(cardItem);
+    }
+
+    public void RemoveItem(uint num)
+    {
+        Item item = enemyItems.Find(i => i.uid == num);
+        if (item != null)
+            enemyItems.Remove(item);
     }
 }

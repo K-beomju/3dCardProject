@@ -26,11 +26,28 @@ public class EnemyAI : Singleton<EnemyAI>
     private MountState mountState;
     private Action action;
     public bool isPhaseOne = true;
-    public bool isReflectOnHand
+
+    private bool checkOnce = false;
+    [SerializeField]
+    private bool isReflectOnHand;
+    public bool IsReflectOnHand
     {
         get
         {
-            return UnityEngine.Random.Range(0,2) == 0 &&  EnemyManager.Instance.IsHaveItem(101);
+            bool ishaveItem = EnemyManager.Instance.IsHaveItem(101);
+            if(!checkOnce)
+            {
+                isReflectOnHand = ishaveItem;
+                checkOnce = true;
+            }
+            else
+            {
+                if(!isReflectOnHand && !ishaveItem)
+                {
+                    isReflectOnHand = true;
+                }
+            }
+            return isReflectOnHand;
         }
     }
     public Card WaitingCard;
@@ -232,6 +249,36 @@ public class EnemyAI : Singleton<EnemyAI>
         for (int i = 0; i < dm.itemBuffer.Count; i++)
         {
             switch (dm.itemBuffer[i].uid)
+            {
+                case 100:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_1000_0000;
+                    break;
+                case 101:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0100_0000;
+                    break;
+                case 102:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0010_0000;
+                    break;
+                case 103:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0001_0000;
+                    break;
+                case 104:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_1000;
+                    break;
+                case 105:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0100;
+                    break;
+                case 106:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0010;
+                    break;
+                case 107:
+                    currentState += 0b0000_0000_0000_0000_0000_0000_0000_0001;
+                    break;
+            }
+        }
+        for (int i = 0; i < EnemyManager.Instance.enemyItems.Count; i++)
+        {
+            switch (EnemyManager.Instance.enemyItems[i].uid)
             {
                 case 100:
                     currentState += 0b0000_0000_0000_0000_0000_0000_1000_0000;
@@ -523,7 +570,19 @@ public class EnemyAI : Singleton<EnemyAI>
     }
     private Dictionary<long, Action> reflectAction = new Dictionary<long, Action>()
     {
-        {  0b111111111111, () => {
+        {  0b1001001100000000000, () => {
+
+        } },
+        {  0b10000101001100000000000, () => {
+
+        } },
+        {  0b1001100000000000, () => {
+
+        } },  
+        {  0b101001100000000000, () => {
+
+        } },
+        {  0b1000001001100000000000, () => {
 
         } },
     };
@@ -533,7 +592,9 @@ public class EnemyAI : Singleton<EnemyAI>
     }
     private IEnumerator ReflectJudge(Action act)
     {
-        long state = GetCurrentStateForReflect();
+        InitState();
+        Debug.LogError("CurrentState : " + Convert.ToString(currentState, 2));
+        long state = currentState;
 
         if (reflectAction.ContainsKey(state))
         {
@@ -545,73 +606,15 @@ public class EnemyAI : Singleton<EnemyAI>
             yield return new WaitForSeconds(3);
 
             EnemyManager.Instance.PopItem(101);
-            reflectAction[state].Invoke();
+            reflectAction[state].Invoke(); 
             if (WaitingCard != null)
             {
                 CardManager.Instance.CardDie(WaitingCard);
             }
         }
-        else
-        {
-            act?.Invoke();
-        }
+        act?.Invoke();
 
 
-    }
-    public long GetCurrentStateForReflect()
-    {
-
-        long curState = 0b0_00_00_00_00_00_00_00000000;
-
-        for (int i = 0; i < NewFieldManager.Instance.fieldList.Count; i++)
-        {
-            var field = NewFieldManager.Instance.fieldList[i];
-
-            if (field.avatarCard != null)
-            {
-                if (field.avatarCard.isPlayerCard)
-                {
-                    curState += 0b0_00_00_00_00_00_00_00000000;
-                }
-                curState += 0b0_00_00_00_00_00_00_00000000;
-            }
-            if (field.upperCard != null)
-                curState += 0b0_00_00_00_00_00_00_00000000;
-            else if (field.curCard != null)
-                curState += 0b0_00_00_00_00_00_00_00000000;
-
-            if (i != NewFieldManager.Instance.fieldList.Count - 1)
-                curState <<= 4;
-        }
-
-        switch (WaitingCard.item.uid)
-        {
-            case 100:
-                currentState += 0b0000_0000_0000_0000_0000_0000_1000_0000;
-                break;
-            case 101:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0100_0000;
-                break;
-            case 102:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0010_0000;
-                break;
-            case 103:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0001_0000;
-                break;
-            case 104:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0000_1000;
-                break;
-            case 105:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0100;
-                break;
-            case 106:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0010;
-                break;
-            case 107:
-                currentState += 0b0000_0000_0000_0000_0000_0000_0000_0001;
-                break;
-        }
-        return curState;
     }
 
     [ContextMenu("Turn2Phase2")]
