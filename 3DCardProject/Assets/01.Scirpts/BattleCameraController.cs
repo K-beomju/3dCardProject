@@ -125,20 +125,24 @@ public class BattleCameraController : MonoBehaviour
         yield return ZoomIn(NewFieldManager.Instance.playerCard.LinkedModel.ModelObject.transform);
         yield break;
     }
-    public static IEnumerator ZoomIn(Transform focusedTrm)
+    public static IEnumerator ZoomIn(Vector3 focusedPos)
     {
         foreach (var card in CardManager.Instance.myCards)
         {
             card.DetactiveCardView(false);
         }
-        Vector3 camPos = focusedTrm.position;
+        Vector3 camPos = focusedPos;
         camPos += new Vector3(0f, 3f, -7f);
         Sequence seq = DOTween.Sequence();
         seq.Append(Instance.cam.transform.DOMove(camPos, 1.5f));
-        seq.Join(Instance.cam.transform.DORotate((focusedTrm.position - camPos).normalized, 1.5f));
+        seq.Join(Instance.cam.transform.DORotate((focusedPos - camPos).normalized, 1.5f));
         seq.SetEase(Ease.InSine);
         yield return seq;
         yield break;
+    }
+    public static IEnumerator ZoomIn(Transform focusedTrm)
+    {
+        yield return ZoomIn(focusedTrm.position);
     }
 
 

@@ -843,6 +843,7 @@ MonoBehaviour:
   isDontDestroyOnLoad: 1
   enemyType: 1
   isPhaseOne: 0
+  isReflectOnHand: 0
   WaitingCard: {fileID: 0}
 --- !u!4 &484031662
 Transform:
@@ -4433,6 +4434,14 @@ PrefabInstance:
     - target: {fileID: 9175305580422761643, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175305582391560498, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
+      propertyPath: CurEnemyUid
+      value: 1001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175305582391560498, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}
+      propertyPath: curEnemyType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afeaadd39f41ef545807c8cec8848ede, type: 3}

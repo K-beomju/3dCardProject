@@ -570,21 +570,34 @@ public class EnemyAI : Singleton<EnemyAI>
     }
     private Dictionary<long, Action> reflectAction = new Dictionary<long, Action>()
     {
-        {  0b1001001100000000000, () => {
+        {  0b10001010011000, () => {
 
         } },
-        {  0b10000101001100000000000, () => {
+        {  0b10000010011000, () => {
 
         } },
-        {  0b1001100000000000, () => {
-
-        } },  
-        {  0b101001100000000000, () => {
+        {  0b1000000100100110000011, () => {
 
         } },
-        {  0b1000001001100000000000, () => {
+        {  0b10010011000, () => {
 
         } },
+        {  0b10011001, () => {
+
+        } },
+        {  0b1010011000, () => {
+
+        } },
+        {  0b100001010011000, () => {
+
+        } },
+        {  0b10000000000100010010000, () => {
+
+        } },
+        {  0b10011000, () => {
+
+        } },
+
     };
     public void CallOnReflect(Action act)
     {
@@ -593,6 +606,7 @@ public class EnemyAI : Singleton<EnemyAI>
     private IEnumerator ReflectJudge(Action act)
     {
         InitState();
+        currentState = currentState >> 8;
         Debug.LogError("CurrentState : " + Convert.ToString(currentState, 2));
         long state = currentState;
 
@@ -606,13 +620,26 @@ public class EnemyAI : Singleton<EnemyAI>
             yield return new WaitForSeconds(3);
 
             EnemyManager.Instance.PopItem(101);
-            reflectAction[state].Invoke(); 
+            reflectAction[state].Invoke();
+            EnemyManager.Instance.RemoveItem(EnemyManager.Instance.PopItem(101));
             if (WaitingCard != null)
             {
                 CardManager.Instance.CardDie(WaitingCard);
             }
+            NewFieldManager.Instance.AvatarMove(NewFieldManager.Instance.playerCard.curField, () =>
+            {
+                TurnManager.ChangeTurn();
+                if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
+                {
+                    if (BattleTutorial.Instance != null)
+                        BattleTutorial.Instance.isDoneNullity = true;
+                }
+            });
         }
-        act?.Invoke();
+        else
+        {
+            act?.Invoke();
+        }
 
 
     }
