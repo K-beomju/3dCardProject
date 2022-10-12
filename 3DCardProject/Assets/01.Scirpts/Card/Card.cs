@@ -24,6 +24,9 @@ public class Card : MonoBehaviour
     [SerializeField] private GameObject modelPrefab;
     [SerializeField] private GameObject outline;
     [SerializeField] private TMP_Text typeTMP;
+    [SerializeField] private SpriteRenderer typeSr;
+    [SerializeField] private Sprite installSr;
+    [SerializeField] private Sprite commonStallSr;
 
     [field:SerializeField]
     public CardModelBrain LinkedModel { get; private set; }
@@ -154,6 +157,7 @@ public class Card : MonoBehaviour
         else if (this.item.IsStructCard)
         {
             tmpTxt = "설치";
+            typeSr.sprite = installSr;
         }
         else if (this.item.IsReflectCard)
         {
@@ -171,6 +175,8 @@ public class Card : MonoBehaviour
         else
         {
             tmpTxt = "일반";
+            typeSr.sprite = commonStallSr;
+
         }
         typeTMP.text = tmpTxt;
     }
@@ -385,7 +391,8 @@ public class Card : MonoBehaviour
         nameTMP.GetComponent<MeshRenderer>().enabled = false;
         descriptionTMP.GetComponent<MeshRenderer>().enabled = false;
         typeTMP.GetComponent<MeshRenderer>().enabled = false;
-        
+        typeSr.enabled = false;
+
     }
     public void DetactiveCardView(bool isActive)
     {
@@ -405,7 +412,8 @@ public class Card : MonoBehaviour
         cardBorder.DOFade(0, 1);
         nameTMP.DOFade(0, 1);
         descriptionTMP.DOFade(0, 1);
-
+        typeTMP.DOFade(0, 1);
+        typeSr.material.DOFade(0, 1);
     }
 
     public void SelectOutlineCard()

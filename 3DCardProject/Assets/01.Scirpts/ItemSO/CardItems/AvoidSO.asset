@@ -28,7 +28,7 @@ MonoBehaviour:
     SpawnModelYPos: 0
     Price: 20
     cardType: 1
-    description: "\uC0C1\uB300\uBC29\uC758 \uCE74\uB4DC\uB97C \uBB34\uD6A8\uD55C\uB2E4"
+    description: "\uC0C1\uB300\uBC29\uC758 \uCE74\uB4DC\uB97C \uBB34\uD6A8\uD569\uB2C8\uB2E4."
     count: 1
     OnSpawn:
     - action: {fileID: 7963094845367381733, guid: 4f6af4abe7f07ec43b8522a0fdb2cef5, type: 3}
