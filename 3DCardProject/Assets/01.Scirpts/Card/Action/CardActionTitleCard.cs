@@ -12,7 +12,15 @@ public class CardActionTitleCard : CardAction
                 // 새 게임
 
                 SaveManager.Instance.NewGame();
-                if (SaveManager.Instance.gameData.IsTutorialDone)
+
+                TitleManager.Instance.CameraMoveAction(() => {
+                    StageManager.Instance.SceneState = SceneState.STAGE;
+                    Global.LoadScene.LoadScene("Stage");
+                    SoundManager.Instance.bgmVolume = 0.05f;
+                    SoundManager.Instance.PlayBGMSound("Stage");
+                });
+
+              /*  if (SaveManager.Instance.gameData.IsTutorialDone)
                 {
                     TitleManager.Instance.CameraMoveAction(() => { 
                         StageManager.Instance.SceneState = SceneState.STAGE; 
@@ -28,16 +36,22 @@ public class CardActionTitleCard : CardAction
                         SoundManager.Instance.bgmVolume = 0.05f;
                         SoundManager.Instance.PlayBGMSound("Stage");
                     });
-                }
+                }*/
                 break;
             case 1:
-                // 이어하기
-                    TitleManager.Instance.CameraMoveAction(() => {
+                // 전 이어하기
+                // 튜토리얼
+                    /*TitleManager.Instance.CameraMoveAction(() => {
                         StageManager.Instance.SceneState = SceneState.STAGE; 
                         Global.LoadScene.LoadScene("Stage");
                         SoundManager.Instance.bgmVolume = 0.05f;
                         SoundManager.Instance.PlayBGMSound("Stage");
-                    });
+                    });*/
+                TitleManager.Instance.CameraMoveAction(() => {
+                    Global.LoadScene.LoadScene("Tutorials");
+                    SoundManager.Instance.bgmVolume = 0.05f;
+                    SoundManager.Instance.PlayBGMSound("Stage");
+                });
                 break;
             case 2:
                 // 크레딧
