@@ -26,10 +26,10 @@ public class TitleManager : Singleton<TitleManager>
         for (int i = 0; i < cardPosTrm.Length; i++)
         {
             if (cards.Length == i) break;
-            if( 1 == i && SaveManager.Instance.gameData.IsFirst)
+           /* if( 1 == i && SaveManager.Instance.gameData.IsFirst)
             {
                 continue;
-            }
+            }*/
             Card card = Global.Pool.GetItem<Card>();
             card.transform.localScale = new Vector3(.35f, .35f, .35f);
             card.Setup(cards[i].item, true, true);
