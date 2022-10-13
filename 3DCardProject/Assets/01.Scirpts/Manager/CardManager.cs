@@ -75,7 +75,7 @@ public class CardManager : Singleton<CardManager>
         }
         return null;
     }
-    public bool isCardUsable = true;;
+    public bool isCardUsable = true;
     protected override void Awake()
     {
         base.Awake();
