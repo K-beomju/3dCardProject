@@ -45,12 +45,14 @@ public class ShopManager : Singleton<ShopManager>
     private void Start()
     {
         deckManager = GetComponent<DeckManager>();
-        if (!isTutorial)
+        if (!isTutorial || SaveManager.Instance.gameData.IsTutorialDone)
         {
+            isTutorial = false;
             StartCoroutine(StartProcess());
         }
         else
         {
+            isTutorial = true;
             StartCoroutine(ShopTutorialProcess());
         }
 

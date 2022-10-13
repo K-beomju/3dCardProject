@@ -49,6 +49,7 @@ public class CardActionTitleCard : CardAction
                     });*/
                 SaveManager.Instance.NewGame();
                 TitleManager.Instance.CameraMoveAction(() => {
+                    SaveManager.Instance.gameData.IsTutorialDone = false;
                     Global.LoadScene.LoadScene("Tutorials");
                     SoundManager.Instance.bgmVolume = 0.05f;
                     SoundManager.Instance.PlayBGMSound("Stage");
