@@ -153,6 +153,7 @@ public class NewFieldManager : Singleton<NewFieldManager>
     }
     public void Spawn(Field field, Card card, Action act = null)
     {
+
         if (field != null)
         {
             Debug.Log(card.name);
@@ -172,8 +173,9 @@ public class NewFieldManager : Singleton<NewFieldManager>
             else
             {
 
-             
-                if( EnemyAI.Instance != null && EnemyAI.Instance.IsReflectOnHand && (TutorialManager.Instance == null || (TutorialManager.Instance != null && !TutorialManager.Instance.isTutorial)))
+                CardManager.Instance.isCardUsable = false;
+
+                if ( EnemyAI.Instance != null && EnemyAI.Instance.IsReflectOnHand && (TutorialManager.Instance == null || (TutorialManager.Instance != null && !TutorialManager.Instance.isTutorial)))
                 {
                     EnemyAI.Instance.WaitingCard = card;
                     EnemyAI.Instance.CallOnReflect(() => field.SetUp(card, () => { card.OnSpawn(); act?.Invoke(); }));

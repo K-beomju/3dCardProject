@@ -161,6 +161,8 @@ public class TurnManager : Singleton<TurnManager>
                         }
                         else
                         {
+                            CardManager.Instance.isCardUsable = true;
+
                             if (TutorialManager.Instance != null && TutorialManager.Instance.isTutorial)
                             {
                                 CardManager.Instance.TutorialAddCard();
