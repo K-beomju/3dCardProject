@@ -37,7 +37,7 @@ public class TitleManager : Singleton<TitleManager>
             card.transform.rotation = cardPosTrm[i].rotation;
             card.originPRS = new PRS(card.transform);
         }
-        SoundManager.Instance.PlayBGMSound("Title");
+        SoundManager.Instance.PlayBGMSound("Title", 0);
         StartCoroutine(TitleFieldBlink());
     }
 
