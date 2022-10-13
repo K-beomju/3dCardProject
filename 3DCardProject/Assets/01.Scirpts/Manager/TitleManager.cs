@@ -18,7 +18,7 @@ public class TitleManager : Singleton<TitleManager>
      private Camera mainCam;
     [SerializeField] private Ease camEase;
     [SerializeField] private Light dirLight;
-
+    public Field titleField;
     private void Start()
     {
         mainCam = Camera.main;
@@ -37,10 +37,20 @@ public class TitleManager : Singleton<TitleManager>
             card.transform.rotation = cardPosTrm[i].rotation;
             card.originPRS = new PRS(card.transform);
         }
-
         SoundManager.Instance.PlayBGMSound("Title");
+        StartCoroutine(TitleFieldBlink());
     }
 
+    private IEnumerator TitleFieldBlink()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+
+            yield return new WaitForSeconds(0.5f);
+            titleField.GetComponent<Outline>().enabled = !titleField.GetComponent<Outline>().enabled;
+        }
+
+    }
     [ContextMenu("ResetIsFirstData")]
     public void ResetIsFirstData()
     {

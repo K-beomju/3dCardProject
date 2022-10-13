@@ -13,6 +13,7 @@ public class GameOverManager : Singleton<GameOverManager>
         gameOverUI = Instantiate(GameOverUIPrefab, transform);
         cg = gameOverUI.GetComponent<CanvasGroup>();
         cg.alpha = 0;
+        cg.gameObject.SetActive(false);
     }
     [ContextMenu("GAMEOVER")]
     public void GameOver()
@@ -36,6 +37,7 @@ public class GameOverManager : Singleton<GameOverManager>
             default:
                 break;
         }
+        cg.gameObject.SetActive(true);
 
         yield return cg.DOFade(1, 1f);
     }

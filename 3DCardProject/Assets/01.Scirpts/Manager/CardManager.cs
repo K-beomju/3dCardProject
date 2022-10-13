@@ -225,6 +225,11 @@ public class CardManager : Singleton<CardManager>
         //Destroy(card.gameObject, 1);
         card.gameObject.SetActive(false);
     }
+    public void RemoveCard(Card card)
+    {
+        selectCard = card;
+        RemoveCard();
+    }
     private void RemoveCard(bool killTween = false)
     {
         var a = selectCard;

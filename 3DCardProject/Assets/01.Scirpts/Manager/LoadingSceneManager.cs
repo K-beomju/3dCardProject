@@ -41,6 +41,28 @@ public class LoadingSceneManager
 
     IEnumerator LoadAsynSceneCoroutine()
     {
+        switch (nextScene)
+        {
+            case "Battle":
+                StageManager.Instance.SceneState = SceneState.BATTLE;
+                break;
+            case "Credit":
+                break;
+            case "Title":
+                StageManager.Instance.SceneState = SceneState.Title;
+                break;
+            case "Tutorials":
+                break;
+            case "Shop":
+                StageManager.Instance.SceneState = SceneState.SHOP;
+                break;
+            default:
+                break;
+        }
+        if(SoundManager.Instance != null)
+        {
+            //SoundManager.Instance.StopBGMSound();
+        }    
         operation = SceneManager.LoadSceneAsync(nextScene);
         operation.allowSceneActivation = false;
 

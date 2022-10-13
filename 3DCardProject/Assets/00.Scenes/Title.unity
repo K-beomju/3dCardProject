@@ -2743,6 +2743,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6154664adff843044a09e75393ecc430, type: 3}
+--- !u!114 &701377286 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2682930410129885988, guid: 6154664adff843044a09e75393ecc430, type: 3}
+  m_PrefabInstance: {fileID: 701377285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb331eb02c7b84041977385411f2be85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &701868321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1253206332365320514, guid: e0c8b66364f2f4642ac91b34080c00cb, type: 3}
@@ -9760,6 +9771,10 @@ PrefabInstance:
       propertyPath: camEase
       value: 26
       objectReference: {fileID: 0}
+    - target: {fileID: 4808731016031427622, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
+      propertyPath: titleField
+      value: 
+      objectReference: {fileID: 701377286}
     - target: {fileID: 4808731016031427622, guid: 7a5447ff04843924796e8bfc5369ae00, type: 3}
       propertyPath: resetButton
       value: 

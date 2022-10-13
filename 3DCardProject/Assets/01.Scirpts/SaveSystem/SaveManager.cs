@@ -66,7 +66,9 @@ public class SaveManager : Singleton<SaveManager>
     public void NewGame()
     {
         gameData = new PlayerGameData();
-        gameData.Hp = 100;
+        gameData.Hp = 20;
+        gameData.IsTutorialDone = true;
+        gameData.IsFirst = false;
         SaveGameData();
     }
     string GetFilePath(string fileName)

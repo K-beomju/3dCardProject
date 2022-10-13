@@ -47,6 +47,7 @@ public class CardActionTitleCard : CardAction
                         SoundManager.Instance.bgmVolume = 0.05f;
                         SoundManager.Instance.PlayBGMSound("Stage");
                     });*/
+                SaveManager.Instance.NewGame();
                 TitleManager.Instance.CameraMoveAction(() => {
                     Global.LoadScene.LoadScene("Tutorials");
                     SoundManager.Instance.bgmVolume = 0.05f;
@@ -55,13 +56,16 @@ public class CardActionTitleCard : CardAction
                 break;
             case 2:
                 // 크레딧
+                SaveManager.Instance.NewGame();
                 TitleManager.Instance.CameraMoveAction(()=>Global.LoadScene.LoadScene("Credit"));
                 break;
             case 3:
                 // 나가기
 #if UNITY_EDITOR
+                SaveManager.Instance.NewGame();
                 UnityEditor.EditorApplication.isPlaying = false;
 #endif
+                SaveManager.Instance.NewGame();
                 Application.Quit();
                 break;
             default:

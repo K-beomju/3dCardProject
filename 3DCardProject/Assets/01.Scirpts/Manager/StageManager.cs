@@ -74,7 +74,7 @@ public class StageManager : Singleton<StageManager>
 
     public void ChangeScene()
     {
-        SceneManager.LoadScene("Minsang 2");
+        //SceneManager.LoadScene("Minsang 2");
     }
 
  

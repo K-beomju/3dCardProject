@@ -97,8 +97,10 @@ public class MenuManager : Singleton<MenuManager>
     public void ExitGame()
     {
 #if UNITY_EDITOR
+        SaveManager.Instance.NewGame();
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+        SaveManager.Instance.NewGame();
         Application.Quit();
     }
 
