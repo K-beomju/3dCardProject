@@ -79,6 +79,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         hackOutline.OutlineColor = Utils.WhiteColor;
         hackOutline.enabled = true;
         CardManager.Instance.TutorialCardOutLine(102);
+        CardManager.Instance.isCardUsable = true;
         isChangeCard = true;
         yield return new WaitWhile(() => !isChangeDir);
         yield return new WaitForSeconds(1f);
@@ -102,6 +103,7 @@ public class BattleTutorial : Singleton<BattleTutorial>
         outline.enabled = true;
         CardManager.Instance.TutorialCardOutLine(106);
         isTurnChange = true;
+        CardManager.Instance.isCardUsable = true;
 
         yield return new WaitWhile(() => !isTrap);
         yield return new WaitForSeconds(1f);
@@ -128,6 +130,8 @@ public class BattleTutorial : Singleton<BattleTutorial>
         outline.OutlineColor = Utils.WhiteColor;
         outline.enabled = true;
         CardManager.Instance.TutorialCardOutLine(103);
+        CardManager.Instance.isCardUsable = true;
+
         yield return null;
     }
 
