@@ -200,6 +200,7 @@ public class TurnManager : Singleton<TurnManager>
 
                     NewFieldManager.Instance.CanCheckRange = true;
 
+                    CardManager.Instance.isCardUsable = true;
                     CardManager.Instance.AddCard();
                 }
             }

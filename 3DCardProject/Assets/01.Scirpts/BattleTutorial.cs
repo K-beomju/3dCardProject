@@ -76,9 +76,9 @@ public class BattleTutorial : Singleton<BattleTutorial>
         isChangeCard = false;
         yield return TutorialManager.Instance.ExplainCol("벽 카드가 설치된곳으로 이동하려하면 벽 카드만 사라집니다.", 0, 1, 2);
         yield return TutorialManager.Instance.ExplainCol("체인지 카드를 발동해봅시다", 0, 1, 2);
+        CardManager.Instance.TutorialCardOutLine(102);
         hackOutline.OutlineColor = Utils.WhiteColor;
         hackOutline.enabled = true;
-        CardManager.Instance.TutorialCardOutLine(102);
         isChangeCard = true;
         yield return new WaitWhile(() => !isChangeDir);
         yield return new WaitForSeconds(1f);

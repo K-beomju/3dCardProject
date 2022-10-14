@@ -226,10 +226,13 @@ public class CardManager : Singleton<CardManager>
         //Destroy(card.gameObject, 1);
         card.gameObject.SetActive(false);
     }
-    public void RemoveCard(Card card)
+    public void RemoveCard(Card a)
     {
-        selectCard = card;
-        RemoveCard();
+        myCards.Remove(a);
+        a?.GetComponent<Order>().SetOriginOrder(0);
+
+        SetOriginOrder();
+        CardAlignment();
     }
     private void RemoveCard(bool killTween = false)
     {

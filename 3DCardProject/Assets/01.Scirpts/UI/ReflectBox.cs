@@ -103,6 +103,7 @@ public class ReflectBox : Singleton<ReflectBox>
             CardManager.Instance.SetOriginOrder();
             CardManager.Instance.CardAlignment();
             CardManager.Instance.RemoveCard(uiCard.linkedCard);
+            CardManager.Instance.CardDie(uiCard.linkedCard);
             if (WaitingCard != null)
             {
                 CardManager.Instance.CardDie(WaitingCard);

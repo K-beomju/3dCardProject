@@ -14,6 +14,7 @@ public class CardActionTitleCard : CardAction
                 SaveManager.Instance.NewGame();
 
                 TitleManager.Instance.CameraMoveAction(() => {
+                    SaveManager.Instance.gameData.IsTutorialDone = true;
                     StageManager.Instance.SceneState = SceneState.STAGE;
                     Global.LoadScene.LoadScene("Stage");
                     SoundManager.Instance.bgmVolume = 0.05f;
