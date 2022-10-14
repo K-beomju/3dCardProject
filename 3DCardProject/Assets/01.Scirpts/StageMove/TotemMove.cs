@@ -366,7 +366,6 @@ public class TotemMove : MonoBehaviour
             rock.transform.position = transform.position + new Vector3(0, 4, 0);
             rock.SetActive(true);
 
-            SaveManager.Instance.gameData.Hp -= 3;
             Sequence mySeq = DOTween.Sequence();
             mySeq.Append(rock.transform.DOMoveY(transform.position.y, 0.3f));
             mySeq.InsertCallback(0.3f, () =>

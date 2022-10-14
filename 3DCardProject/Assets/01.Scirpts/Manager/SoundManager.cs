@@ -12,7 +12,7 @@ public class SoundManager : Singleton<SoundManager>
     public float FxVoulme => fxVoulme * MasterVoulme;
 
     public float masterVoulme = 1;
-    public float bgmVolume = 0.5f;
+    public float bgmVolume = 1;
     public float fxVoulme = 1;
     public float pitch = 1;
 
@@ -36,7 +36,7 @@ public class SoundManager : Singleton<SoundManager>
     }
 
 
-    private AudioClip GetBGMSound(string name)
+    public AudioClip GetBGMSound(string name)
     {
         AudioClip result;
         if (!bgmSoundDic.TryGetValue(name, out result))
@@ -79,7 +79,7 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.mute = isMute;
     }
 
-    public void AdjustMasterVolume(float newVolume , Text masterText, Text bgmText, Text fxText)
+    public void AdjustMasterVolume(float newVolume, Text masterText, Text bgmText, Text fxText)
     {
         masterVoulme = newVolume;
         masterText.text = masterVoulme.ToString("N1");
@@ -127,7 +127,7 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void PlayBGMSound(string name, float duration = 2)
+    public void PlayBGMSound(string name, float duration = 2, bool isLoop = true)
     {
         if (bSoundOff) return;
 
@@ -142,7 +142,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         else
         {
-            SetAudioSource(bgmAudioSource, GetBGMSound(name), true, BGMVolume, false);
+            SetAudioSource(bgmAudioSource, GetBGMSound(name), isLoop, BGMVolume, false);
             bgmAudioSource.Play();
         }
 
@@ -161,7 +161,7 @@ public class SoundManager : Singleton<SoundManager>
         yield return null;
     }
 
-    public void PlayFXSound(string name , float volume = 0)
+    public void PlayFXSound(string name, float volume = 0)
     {
         if (bSoundOff) return;
 
@@ -177,7 +177,7 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         fxAudioSourceList.Add(MakeAudioSourceObject("FxObject"));
-        PlayFXSound(name , volume);
+        PlayFXSound(name, volume);
     }
 
     public void StopBGMSound(float duration = 2)

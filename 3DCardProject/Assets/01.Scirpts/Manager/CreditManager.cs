@@ -21,7 +21,7 @@ public class CreditManager : MonoBehaviour
         seq1.SetUpdate(true);
         seq1.AppendInterval(2f);
         seq1.Append(cg.DOFade(0, 2f).SetEase(Ease.Linear));
-        SoundManager.Instance.PlayFXSound("Kill This Love", 0.1f);
+        SoundManager.Instance.PlayBGMSound("Kill This Love",.2f, false);
         anim.speed = 1;
         float width = 0;
         for (int i = 0; i < Credit.childCount; i++)
@@ -31,10 +31,11 @@ public class CreditManager : MonoBehaviour
         Sequence seq2 = DOTween.Sequence();
         seq2.SetEase(Ease.Linear);
         seq2.SetUpdate(true);
-        seq2.Append(Credit.DOAnchorPosY(1080 + width, SoundManager.Instance.GetFxSound("Kill This Love").length).SetRelative());
+        seq2.Append(Credit.DOAnchorPosY(1080 + width, SoundManager.Instance.GetBGMSound("Kill This Love").length).SetRelative());
         seq2.Append(cg.DOFade(1, 2f));
         seq2.AppendCallback(() => {
             Global.LoadScene.LoadScene("Title");
+            SoundManager.Instance.StopBGMSound();
         });
     }
 }
